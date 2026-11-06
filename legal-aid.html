@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المساعدة القانونية — AADALA.MA</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="header"></div>
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>🤝 المساعدة القانونية والقضائية</h2>
+        <p>مسارات واضحة، حقوق، وثائق، جهات مختصة</p>
+      </div>
+      <div class="alert alert-info mb-3">
+        <strong>ملاحظة:</strong> AADALA.MA لا تقدم تمثيلاً قضائياً ولا منحاً لمساعدة قضائية رسمية. المعلومات توضيحية. للحالات عالية المخاطر، استشر محامياً.
+      </div>
+      <div class="service-grid">
+        <div class="card"><h3>📋 دليل المساطر</h3><p class="text-muted">الإجراءات الإدارية والقضائية</p></div>
+        <div class="card"><h3>📄 نماذج طلبات</h3><p class="text-muted">طلب، شكاية، مقال، مذكرة، طعن</p></div>
+        <div class="card"><h3>⚖️ حقوقك</h3><p class="text-muted">حقوق المستهلك، الشغل، الأسرة، العقار...</p></div>
+        <div class="card"><h3>🏛️ جهات مختصة</h3><p class="text-muted"> tribunaux، administrations، centres</p></div>
+        <div class="card"><h3>💰 المساعدة القضائية</h3><p class="text-muted">شروط وإجراءات (من مصادر رسمية)</p></div>
+        <div class="card"><h3>📖 مصطلحات</h3><p class="text-muted">شرح المصطلحات القانونية</p></div>
+        <div class="card"><h3>⏱️ آجال</h3><p class="text-muted">الآجال القانونية المهمة</p></div>
+        <div class="card"><h3>📝 مولد وثائق</h3><p class="text-muted">إنشاء مسودة من نموذج</p></div>
+      </div>
+      <div class="card mt-3">
+        <h3>مسار: "أين أبدأ؟"</h3>
+        <div class="timeline">
+          <div class="timeline-item"><strong>1. فهم المشكلة</strong><br><span class="text-muted">استخدم المساعد القانوني لتحديد المجال.</span></div>
+          <div class="timeline-item"><strong>2. جمع الوثائق</strong><br><span class="text-muted">عقود، إثباتات، تبليغات.</span></div>
+          <div class="timeline-item"><strong>3. التحقق من الآجال</strong><br><span class="text-muted">المسطرة المدنية/الجنائية.</span></div>
+          <div class="timeline-item"><strong>4. اختيار الجهة</strong><br><span class="text-muted"> tribunal، administration، médiation.</span></div>
+          <div class="timeline-item"><strong>5. تقديم الطلب</strong><br><span class="text-muted">مع مراجعة مختص.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div id="footer"></div>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/legal-content.js"></script>
+  <script>
+    document.getElementById('header').innerHTML = renderHeader('legal-aid.html');
+    document.getElementById('footer').innerHTML = renderFooter();
+    updateAuthUI();
+  </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ال burglary الرسمية — أرشيف تشريعي — AADALA.MA</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="header"></div>
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>📰 أرشيف الجريدة الرسمية</h2>
+        <p>ال burglary الرسمية — النصوص، الظهائر، المراسيم، القرارات</p>
+      </div>
+      <div class="alert alert-info mb-3">
+        <strong>ملاحظة:</strong> الأرشيف قيد البناء. سيتم جمع وفهرسة الأعداد من المصادر الرسمية (www.sgg.gov.ma). لا ندّعِ اكتمال الأرشيف دون دليل.
+      </div>
+      <div class="card">
+        <h3 class="mb-2">بحث في الأرشيف</h3>
+        <div class="flex gap-2 mb-3">
+          <input type="text" class="form-input" id="gazetteSearch" placeholder="بحث (سنة، عدد، موضوع، رقم ظهير...)">
+          <button class="btn btn-primary" onclick="searchGazette()">بحث</button>
+        </div>
+        <div class="stats-grid mb-3">
+          <div class="stat-card"><div class="stat-value" id="gTotal">0</div><div class="stat-label">أعداد مكتشفة</div></div>
+          <div class="stat-card"><div class="stat-value" id="gProcessed">0</div><div class="stat-label">أعداد معالجة</div></div>
+          <div class="stat-card"><div class="stat-value" id="gOCR">0</div><div class="stat-label">OCR مراجع</div></div>
+          <div class="stat-card"><div class="stat-value" id="gPending">0</div><div class="stat-label">قيد المعالجة</div></div>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>السنة</th><th>العدد</th><th>التاريخ</th><th>اللغة</th><th>الحالة</th><th>المصدر</th></tr></thead>
+          <tbody id="gazetteBody">
+            <tr><td colspan="6" class="text-muted text-center">لا توجد أعداد مفهرسة حالياً. سيتم إضافتها من المصادر الرسمية.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card mt-3">
+        <h3>هيكل الأرشيف (كل عدد)</h3>
+        <ul style="list-style:none; line-height:2;">
+          <li>• رقم العدد والتاريخ</li>
+          <li>• نوع النشرة (عربية/فرنسية/ثنائية)</li>
+          <li>• PDF الأصلي</li>
+          <li>• النص المستخرج (OCR) — خام / مصحح / مراجع</li>
+          <li>• الوثائق الواردة (ظهائر، قوانين، مراسيم، قرارات)</li>
+          <li>• رابط المصدر (sgg.gov.ma)</li>
+          <li>• حالة التحقق والمعالجة</li>
+          <li>• درجة جودة OCR</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <div id="footer"></div>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/legal-content.js"></script>
+  <script>
+    document.getElementById('header').innerHTML = renderHeader('gazette.html');
+    document.getElementById('footer').innerHTML = renderFooter();
+    updateAuthUI();
+    function searchGazette() {
+      const q = document.getElementById('gazetteSearch').value.trim();
+      AADALA.toast('بحث في الأرشيف (قيد البناء): ' + q, 'info');
+      Admin.log('gazette_search', { query: q });
+    }
+  </script>
+</body>
+</html>

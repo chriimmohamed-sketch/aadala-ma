@@ -264,10 +264,12 @@ function renderHeader(activePage) {
   const pages = [
     { href: 'index.html', label: 'الرئيسية' },
     { href: 'legal-ai.html', label: 'المساعد القانوني' },
+    { href: 'gazette.html', label: ' burglary الرسمية' },
     { href: 'encyclopedia.html', label: 'الموسوعة' },
+    { href: 'case-law.html', label: 'الاجتهاد' },
     { href: 'inheritance.html', label: 'المواريث' },
-    { href: 'procedures.html', label: 'المساطر والوثائق' },
-    { href: 'academic.html', label: 'الفضاء الأكاديمي' },
+    { href: 'legal-aid.html', label: 'المساعدة' },
+    { href: 'academic.html', label: 'الأكاديمية' },
   ];
   const links = pages.map(p => `<li><a href="${p.href}" class="${p.href === activePage ? 'active' : ''}">${p.label}</a></li>`).join('');
   return `

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الاجتهاد القضائي — AADALA.MA</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="header"></div>
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>⚖️ الاجتهاد القضائي</h2>
+        <p>قرارات محكمة النقض ومحاكم الاستئناف والابتدائية — منشورة ومتاحة قانونياً</p>
+      </div>
+      <div class="alert alert-info mb-3">
+        <strong>ملاحظة:</strong> قاعدة الاجتهاد قيد البناء. سيتم إضافة القرارات المنشورة من المصادر الرسمية (www.courdecassation.ma). لا نختلق قرارات أو أرقاماً أو مبادئ.
+      </div>
+      <div class="card">
+        <h3 class="mb-2">بحث في الاجتهاد</h3>
+        <div class="flex gap-2 mb-3 flex-wrap">
+          <input type="text" class="form-input" id="caseSearch" placeholder="بحث (محكمة، رقم، موضوع، مادة...)">
+          <select class="form-select" id="courtFilter" style="width:auto;">
+            <option value="">جميع المحاكم</option>
+            <option value="cassation">محكمة النقض</option>
+            <option value="appel">محكمة الاستئناف</option>
+            <option value="premiere">المحكمة الابتدائية</option>
+            <option value="admin">المحكمة الإدارية</option>
+            <option value="commerce">المحكمة التجارية</option>
+          </select>
+          <button class="btn btn-primary" onclick="searchCases()">بحث</button>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>المحكمة</th><th>الغرفة</th><th>رقم القرار</th><th>التاريخ</th><th>الموضوع</th><th>المبدأ</th></tr></thead>
+          <tbody id="casesBody">
+            <tr><td colspan="6" class="text-muted text-center">لا توجد قرارات مفهرسة حالياً. سيتم إضافتها من المصادر الرسمية.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card mt-3">
+        <h3>هيكل قرار (كل قرار)</h3>
+        <ul style="list-style:none; line-height:2;">
+          <li>• المحكمة والغرفة</li>
+          <li>• رقم القرار / الملف</li>
+          <li>• التاريخ</li>
+          <li>• الموضوع والكلمات المفتاحية</li>
+          <li>• الوقائع المنشورة</li>
+          <li>• التعليل والمنطوق</li>
+          <li>• المبدأ القضائي المستخلص (بعد المراجعة)</li>
+          <li>• النصوص المطبقة</li>
+          <li>• المصدر وحالة التحقق</li>
+        </ul>
+        <div class="alert alert-warning mt-2">
+          ⚠️ لا نكشف بيانات محمية. لا نصف اتجاهاً مستقراً بناء على قرار منفرد. المبدأ المستخلص يتطلب مراجعة.
+        </div>
+      </div>
+    </div>
+  </section>
+  <div id="footer"></div>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/legal-content.js"></script>
+  <script>
+    document.getElementById('header').innerHTML = renderHeader('case-law.html');
+    document.getElementById('footer').innerHTML = renderFooter();
+    updateAuthUI();
+    function searchCases() {
+      const q = document.getElementById('caseSearch').value.trim();
+      AADALA.toast('بحث في الاجتهاد (قيد البناء): ' + q, 'info');
+      Admin.log('case_law_search', { query: q });
+    }
+  </script>
+</body>
+</html>
