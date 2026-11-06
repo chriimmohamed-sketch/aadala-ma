@@ -327,10 +327,10 @@ function renderFooter() {
         <div>
           <h4>قانوني</h4>
           <ul style="list-style:none; line-height:2;">
-            <li><a href="#">شروط الاستخدام</a></li>
-            <li><a href="#">سياسة الخصوصية</a></li>
+            <li><a href="terms.html">شروط الاستخدام</a></li>
+            <li><a href="privacy.html">سياسة الخصوصية</a></li>
             <li><a href="#">إخلاء المسؤولية</a></li>
-            <li><a href="admin/dashboard.html">لوحة الإدارة</a></li>
+            <li><a href="contact.html">اتصل بنا</a></li>
           </ul>
         </div>
       </div>

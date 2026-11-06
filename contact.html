@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>اتصل بنا — AADALA.MA</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="header"></div>
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>📞 اتصل بنا</h2>
+        <p>للاستفسارات والاقتراحات والتصحيحات</p>
+      </div>
+      <div class="card" style="max-width:600px;margin:0 auto;">
+        <div class="form-group">
+          <label class="form-label">الاسم</label>
+          <input type="text" class="form-input" id="contactName">
+        </div>
+        <div class="form-group">
+          <label class="form-label">البريد الإلكتروني</label>
+          <input type="email" class="form-input" id="contactEmail">
+        </div>
+        <div class="form-group">
+          <label class="form-label">الرسالة</label>
+          <textarea class="form-textarea" id="contactMsg"></textarea>
+        </div>
+        <button class="btn btn-primary" style="width:100%;" onclick="submitContact()">إرسال</button>
+        <div id="contactResult" class="mt-2"></div>
+      </div>
+      <div class="alert alert-info mt-3" style="max-width:600px;margin:0 auto;">
+        <strong>ملاحظة:</strong> AADALA.MA منصة مستقلة. لا تمثل وزارة العدل. للمسائل القانونية العاجلة، استشر محامياً.
+      </div>
+    </div>
+  </section>
+  <div id="footer"></div>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/legal-content.js"></script>
+  <script>
+    document.getElementById('header').innerHTML = renderHeader('contact.html');
+    document.getElementById('footer').innerHTML = renderFooter();
+    updateAuthUI();
+    function submitContact() {
+      const name = document.getElementById('contactName').value.trim();
+      const email = document.getElementById('contactEmail').value.trim();
+      const msg = document.getElementById('contactMsg').value.trim();
+      if (!name || !email || !msg) { AADALA.toast('يرجى ملء جميع الحقول','error'); return; }
+      document.getElementById('contactResult').innerHTML = '<div class="alert alert-success">تم إرسال رسالتك (demo). سنرد عليك قريباً.</div>';
+      Admin.log('contact_form', { name, email });
+    }
+  </script>
+</body>
+</html>

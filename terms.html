@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شروط الاستخدام — AADALA.MA</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="header"></div>
+  <section class="section">
+    <div class="container">
+      <div class="card" style="max-width:800px;margin:0 auto;">
+        <h1 class="mb-3">شروط الاستخدام</h1>
+        <p class="text-muted mb-3">آخر تحديث: 6 نوفمبر 2026</p>
+
+        <h3>1. قبول الشروط</h3>
+        <p>باستخدام AADALA.MA، فإنك توافق على هذه الشروط. إذا لم توافق، لا تستخدم المنصة.</p>
+
+        <h3>2. طبيعة الخدمة</h3>
+        <p>المعلومات المقدمة توضيحية وليست استشارة قانونية. AADALA.MA منصة مستقلة، لا تمثل وزارة العدل أو أي مؤسسة رسمية.</p>
+
+        <h3>3. حساب المستخدم</h3>
+        <p>أنت مسؤول عن أمان حسابك. لا تشارك كلمة المرور. أنت مسؤول عن جميع الأنشطة في حسابك.</p>
+
+        <h3>4. المحتوى</h3>
+        <p>لا تنشر محتوى مخالف للقانون أو مسيئاً أو ينتهك حقوق الآخرين. نحتفظ بحق إزالة أي محتوى.</p>
+
+        <h3>5. المسؤولية</h3>
+        <p>لا نتحمل مسؤولية عن القرارات المتخذة بناءً على المعلومات المقدمة. استشر محامياً مختصاً.</p>
+
+        <h3>6. التعديلات</h3>
+        <p>قد نُعدّل هذه الشروط. استمرارك في الاستخدام يعني قبول التعديلات.</p>
+
+        <div class="alert alert-warning mt-3">
+          ⚠️ لا تمثل AADALA.MA وزارة العدل أو أي مؤسسة رسمية.
+        </div>
+      </div>
+    </div>
+  </section>
+  <div id="footer"></div>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/legal-content.js"></script>
+  <script>
+    document.getElementById('header').innerHTML = renderHeader('terms.html');
+    document.getElementById('footer').innerHTML = renderFooter();
+    updateAuthUI();
+  </script>
+</body>
+</html>
