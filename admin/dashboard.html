@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة الإدارة — AADALA.MA</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="header"></div>
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>🛠️ لوحة الإدارة</h2>
+        <p>للمخولين فقط</p>
+      </div>
+      <div id="accessDenied" class="alert alert-danger hidden">
+        ⚠️ الوصول مرفوض. هذه اللوحة للمخولين (admin/reviewer/editor) فقط.
+      </div>
+      <div id="adminPanel" class="hidden">
+        <div class="service-grid mb-4">
+          <div class="card"><h3>👥 المستخدمون</h3><p class="text-muted" id="userCount">0</p></div>
+          <div class="card"><h3>📜 النصوص</h3><p class="text-muted">0</p></div>
+          <div class="card"><h3>📝 المقالات</h3><p class="text-muted">0</p></div>
+          <div class="card"><h3>📋 سجلات التدقيق</h3><p class="text-muted" id="logCount">0</p></div>
+        </div>
+        <div class="card">
+          <h3 class="mb-2">سجلات التدقيق (Audit Logs)</h3>
+          <div style="max-height:400px;overflow-y:auto;">
+            <table class="data-table" id="logsTable">
+              <thead><tr><th>الوقت</th><th>المستخدم</th><th>العمل</th><th>التفاصيل</th></tr></thead>
+              <tbody id="logsBody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card mt-3">
+          <h3 class="mb-2">إدارة المستخدمين (demo)</h3>
+          <p class="text-muted">في النسخة الإنتاجية، يُدار عبر قاعدة البيانات والصلاحيات.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div id="footer"></div>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    document.getElementById('header').innerHTML = renderHeader('admin/dashboard.html');
+    document.getElementById('footer').innerHTML = renderFooter();
+    updateAuthUI();
+    // Access check
+    if (!AADALA.isLoggedIn()) {
+      document.getElementById('accessDenied').classList.remove('hidden');
+    } else {
+      // Demo: allow any logged-in user to view admin (in production, check role)
+      document.getElementById('adminPanel').classList.remove('hidden');
+      renderLogs();
+    }
+    function renderLogs() {
+      const logs = Admin.getLogs();
+      document.getElementById('logCount').textContent = logs.length;
+      document.getElementById('logsBody').innerHTML = logs.slice(0,50).map(l =>
+        `<tr><td>${AADALA.formatDate(l.timestamp)}</td><td>${AADALA.escape(l.user)}</td><td>${AADALA.escape(l.action)}</td><td>${AADALA.escape(JSON.stringify(l.details))}</td></tr>`
+      ).join('') || '<tr><td colspan="4" class="text-muted">لا توجد سجلات</td></tr>';
+    }
+  </script>
+</body>
+</html>

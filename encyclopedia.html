@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الموسوعة القانونية — AADALA.MA</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="header"></div>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>📚 الموسوعة القانونية المغربية</h2>
+        <p>النصوص، المواد، التعديلات، حالة السريان</p>
+      </div>
+
+      <div class="alert alert-info mb-3">
+        <strong>ملاحظة:</strong> قاعدة البيانات القانونية قيد البناء. النصوص المدرجة هنا هي هياكل مرجعية. سيتم إضافة النصوص complète مع المواد والمصادر من الجريدة الرسمية.
+      </div>
+
+      <!-- Search -->
+      <div class="mb-3">
+        <input type="text" class="form-input" id="encSearch" placeholder="بحث في الموسوعة..." oninput="filterEnc()">
+      </div>
+
+      <!-- Categories -->
+      <div class="category-grid" id="encCategories"></div>
+
+      <!-- Text detail -->
+      <div id="textDetail" class="mt-4 hidden"></div>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.getElementById('header').innerHTML = renderHeader('encyclopedia.html');
+    document.getElementById('footer').innerHTML = renderFooter();
+    updateAuthUI();
+
+    const grid = document.getElementById('encCategories');
+    grid.innerHTML = LegalEncyclopedia.categories.map(c =>
+      `<div class="category-item" onclick="showCategory('${c.id}')">
+        <div class="category-icon">${c.icon}</div>
+        <div><strong>${c.name}</strong><br><span class="text-muted text-sm">${c.desc}</span></div>
+      </div>`
+    ).join('');
+
+    function showCategory(id) {
+      const cat = LegalEncyclopedia.categories.find(c => c.id === id);
+      const detail = document.getElementById('textDetail');
+      detail.classList.remove('hidden');
+      detail.innerHTML = `
+        <div class="card">
+          <h3>${cat.icon} ${cat.name}</h3>
+          <p class="text-muted">${cat.desc}</p>
+          <div class="alert alert-warning mt-2">
+            <strong>قيد البناء:</strong> مواد هذا النص (رقم النص، تاريخ الصدور، المواد، التعديلات) ستُضاف من المصادر الرسمية (الجريدة الرسمية). 
+            <br>المصدر: <a href="https://www.sgg.gov.ma" target="_blank">www.sgg.gov.ma</a>
+          </div>
+          <div class="mt-3">
+            <h4>هيكل النص (template):</h4>
+            <ul style="list-style:none; line-height:2;">
+              <li>• رقم النص / Dahir</li>
+              <li>• عنوان النص</li>
+              <li>• تاريخ صدوره ودخل حيز التنفيذ</li>
+              <li>• المواد (أرقام + نص)</li>
+              <li>• التعديلات (رقم + تاريخ)</li>
+              <li>• حالة السريان (نافذ / معدّل / ملغى)</li>
+              <li>• المصدر (الجريدة الرسمية)</li>
+            </ul>
+          </div>
+        </div>`;
+      detail.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function filterEnc() {
+      const q = document.getElementById('encSearch').value.toLowerCase();
+      document.querySelectorAll('.category-item').forEach(el => {
+        const txt = el.textContent.toLowerCase();
+        el.style.display = txt.includes(q) ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
