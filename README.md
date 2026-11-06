@@ -35,7 +35,11 @@ This is a static-first prototype. Several features are in demo mode and clearly 
 - Cloudflare Workers/OpenNext
 - GitHub Actions CI/CD
 
-## Running Locally
+## Live URL
+
+🌐 **https://aadala-ma.cheraimmohamed20.workers.dev**
+
+Deployed on Cloudflare Workers (Pages). All pages and assets are live.
 
 Simply open `index.html` in a modern browser. No build step required.
 
