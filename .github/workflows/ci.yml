@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check files
+        run: |
+          echo "Files in repo:"
+          ls -la
+          echo "---"
+          echo "HTML files:"
+          find . -name "*.html" | wc -l
+      - name: Validate HTML (basic)
+        run: |
+          for f in $(find . -name "*.html"); do
+            if ! grep -q "<!DOCTYPE html>" "$f"; then
+              echo "Missing DOCTYPE in $f"
+              exit 1
+            fi
+          done
+          echo "All HTML files have DOCTYPE"
+      - name: Check for secrets
+        run: |
+          if grep -rn "ghp_\|sk-\|password=" --include="*.html" --include="*.js" --include="*.css" . ; then
+            echo "WARNING: Possible secrets found"
+            exit 1
+          fi
+          echo "No secrets found in tracked files"
