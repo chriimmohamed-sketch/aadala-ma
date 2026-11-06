@@ -1,59 +1,31 @@
-# AADALA.MA — IMPLEMENTATION PLAN
+# AADALA.MA — Implementation Plan
 
-## Phase 0 — Discovery (DONE)
-- Environment checked: Node.js v24.20.0, npm 11.19.0, Git 2.55.0
-- No gh CLI, no wrangler, no PostgreSQL, no Python available
-- Project folder: C:\Users\Mohamed Chraim\Downloads\.opera\aadala-ma
+## Phase 0 — Discovery (done)
+- Inspected environment: Node v24.20.0, npm 11.19.0, git 2.55.0. No gh/wrangler installed.
+- Working directory contains unrelated CHRVVIM Campus project; AADALA.MA isolated in `aadala-ma/` subfolder to avoid mixing.
+- Scaffolded Next.js 16.4.5 (App Router, TS, Tailwind v4, ESLint). Turbopack unavailable on win32/x64; build uses Webpack.
 
-## Phase 1 — Architecture (DONE)
-- Modular monolith (static-first, upgradeable to Next.js)
-- Decision log in DECISIONS.md
+## Phase 1 — Architecture (done)
+- Modular monolith, src/ modules, App Router locale segment for 10 locales.
+- PostgreSQL planned; documented schema in PROJECT_SPEC.md §9. Local dev uses in-memory/mock data labeled as mock.
 
-## Phase 2 — Foundation (IN PROGRESS)
-- ✅ Design system (CSS) with RTL Arabic, dark mode
-- ✅ Shared JS (auth, AI, inheritance, admin)
-- ✅ Homepage, Legal AI, Encyclopedia, Inheritance, Procedures, Criminal, Real Estate, Fiqh, Academic, Founder, Auth, Admin pages
-- ✅ .env.example, .gitignore
+## Phase 2 — Foundation (done)
+- Next.js 16.4.5, TypeScript, Tailwind v4, ESLint, Vitest, proxy-based i18n routing.
+- Build (webpack), lint, typecheck, tests pass.
 
-## Phase 3 — Platform UI (IN PROGRESS)
-- ✅ All main pages created
-- ⚠️ i18n structure (10 languages) — planned, Arabic only for now
-- ⚠️ Founder page — created with spec data only
+## Phase 3 — Platform UI (partial)
+- Home + all module routes created; incomplete features marked "قيد التطوير".
+- Header/Footer, language labels. RTL/LTR via html dir.
+- Modular monolith, src/ modules, App Router locale segment.
+- PostgreSQL planned; using documented schema + migrations later. Local dev uses in-memory/mock data labeled as mock.
 
-## Phase 4 — Identity & Admin (PARTIAL)
-- ✅ Login/Register with localStorage (demo)
-- ✅ Admin dashboard (demo, audit logs)
-- ⚠️ Real backend auth — requires server + DB
+## Phases 2-12 — see PROJECT_SPEC.md ordering.
+- Foundation, design system, i18n (10 langs, ar first), public pages, auth, admin, DB, legal knowledge, search, AI/RAG, case law, inheritance engine, property, criminal lab, procedures, sharia, academic, updates, founder, PDF, hardening, tests, GitHub/CF.
 
-## Phase 5 — Legal Knowledge (PLANNED)
-- Structure ready, content to be added from verified sources
+## Risks
+- No Cloudflare/GitHub CLIs; auth steps deferred to user.
+- No real legal data; mock/demo data clearly labeled.
+- Turbopack unavailable; webpack builds slower but functional.
 
-## Phase 6 — AI & RAG (PARTIAL)
-- ✅ Legal AI with structured template responses
-- ⚠️ Real RAG — requires vector DB + LLM API
-
-## Phase 7 — Specialized Tools (PARTIAL)
-- ✅ Inheritance calculator (demo, needs expert validation)
-- ✅ Criminal analysis (educational template)
-- ✅ Real estate (structure)
-
-## Phase 8 — Academic, Sharia & Updates (PARTIAL)
-- ✅ Academic page, Fiqh page (structure)
-
-## Phase 9 — Founder Profile (DONE)
-- ✅ Founder page with spec data only
-
-## Phase 10 — Hardening (PENDING)
-- Security review, accessibility, performance
-
-## Phase 11 — GitHub & Cloudflare (PENDING)
-- Requires gh CLI + wrangler + user approval
-
-## Phase 12 — Launch (PENDING)
-
-## Known Limitations
-- No Next.js build (npm too slow in this environment)
-- No PostgreSQL (using localStorage)
-- No real RAG (template responses)
-- No real auth backend
-- Static site deployable to any static host
+## Decisions
+- See DECISIONS.md.
