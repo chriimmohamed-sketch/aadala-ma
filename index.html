@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AADALA.MA — العدالة والذكاء القانوني المغربي</title>
+  <meta name="description" content="منصة العدالة والذكاء القانوني المغربي — فهم القانون، معرفة الحقوق، تحليل المسائل القانونية.">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="header"></div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>AADALA.MA</h1>
+        <p class="subtitle">العدالة والذكاء القانوني المغربي — «القانون مفهوم، والحق معلوم.»</p>
+        <div class="hero-search">
+          <input type="text" id="heroSearch" placeholder="ابحث في النصوص القانونية المغربية..." onkeypress="if(event.key==='Enter')doSearch()">
+          <button onclick="doSearch()">بحث</button>
+        </div>
+        <div class="hero-actions">
+          <a href="legal-ai.html" class="btn btn-accent btn-lg">🤖 اسأل المساعد القانوني</a>
+          <a href="encyclopedia.html" class="btn btn-outline btn-lg" style="border-color:white;color:white;">📚 الموسوعة القانونية</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="section" style="background:var(--color-surface);">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-value">16+</div><div class="stat-label">مجال قانوني</div></div>
+        <div class="stat-card"><div class="stat-value">100%</div><div class="stat-label">عربي RTL أصلي</div></div>
+        <div class="stat-card"><div class="stat-value">24/7</div><div class="stat-label">مساعد قانوني</div></div>
+        <div class="stat-card"><div class="stat-value">3</div><div class="stat-label">لغات (AR/FR/EN)</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>الخدمات الرئيسية</h2>
+        <p>أدوات قانونية ذكية مبنية على التشريع المغربي</p>
+      </div>
+      <div class="service-grid">
+        <a href="legal-ai.html" class="card service-card">
+          <div class="service-icon">🤖</div>
+          <h3>المساعد القانوني الذكي</h3>
+          <p>طرح أسئلة قانونية، تحليل نزاعات، معرفة الحقوق والإجراءات</p>
+        </a>
+        <a href="encyclopedia.html" class="card service-card">
+          <div class="service-icon">📚</div>
+          <h3>الموسوعة القانونية</h3>
+          <p>الدستور، قانون الالتزامات، القانون الجنائي، الأسرة، الشغل...</p>
+        </a>
+        <a href="inheritance.html" class="card service-card">
+          <div class="service-icon">⚖️</div>
+          <h3>حساب المواريث</h3>
+          <p>حساب الفروض، التعصيب، العول، الرد، وتوزيع التركة</p>
+        </a>
+        <a href="real-estate.html" class="card service-card">
+          <div class="service-icon">🏠</div>
+          <h3>الحقوق العينية</h3>
+          <p>الشياع، القسمة، التحفيظ، الرهن، الانتفاع</p>
+        </a>
+        <a href="criminal.html" class="card service-card">
+          <div class="service-icon">🔒</div>
+          <h3>التحليل الجنائي</h3>
+          <p>التكييف، الأركان، العقوبات، الدفوع (تعليمي)</p>
+        </a>
+        <a href="procedures.html" class="card service-card">
+          <div class="service-icon">📋</div>
+          <h3>المساطر والوثائق</h3>
+          <p>دلائل، نماذج، مولد وثائق، تحميل PDF</p>
+        </a>
+        <a href="fiqh.html" class="card service-card">
+          <div class="service-icon">🕌</div>
+          <h3>الفقه (المواريث)</h3>
+          <p>آيات، أحاديث، فقه مالكي، قواعد فقهية</p>
+        </a>
+        <a href="academic.html" class="card service-card">
+          <div class="service-icon">🎓</div>
+          <h3>الفضاء الأكاديمي</h3>
+          <p>مقالات، شروحات، مصطلحات، اجتهادات</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Legal Categories -->
+  <section class="section" style="background:var(--color-surface);">
+    <div class="container">
+      <div class="section-title">
+        <h2>مجالات القانون المغربي</h2>
+        <p>تصفح النصوص حسب المجال</p>
+      </div>
+      <div class="category-grid" id="categoryGrid"></div>
+    </div>
+  </section>
+
+  <!-- Latest Updates -->
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>مستجدات قانونية</h2>
+        <p>آخر النصوص والتعديلات</p>
+      </div>
+      <div class="card">
+        <div class="alert alert-info">
+          <strong>ملاحظة:</strong> يتم تحديث قاعدة البيانات القانونية يدوياً من قِبل المحررين القانونيين. تحقق من تاريخ آخر تحديث لكل نص.
+        </div>
+        <ul style="list-style:none; line-height:2.2;">
+          <li>📌 <strong>الدستور المغربي 2011</strong> — نافذ</li>
+          <li>📌 <strong>مدونة الأسرة (2004)</strong> — نافذ مع تعديلات</li>
+          <li>📌 <strong>مدونة الشغل (2003)</strong> — نافذ</li>
+          <li>📌 <strong>قانون الالتزامات والعقود</strong> — نافذ (مع تعديلات متعددة)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section" style="background:var(--color-surface);">
+    <div class="container">
+      <div class="section-title">
+        <h2>عن AADALA.MA</h2>
+      </div>
+      <div class="card" style="max-width:800px;margin:0 auto;">
+        <p>AADALA.MA هي منصة رقمية مغربية مستقلة تهدف إلى تسهيل الوصول إلى المعرفة القانونية، وفهم الحقوق والالتزامات، وتحليل المسائل القانونية، وتقديم أدوات حسابية وخدمات رقمية مبنية على التشريع المغربي.</p>
+        <div class="alert alert-warning mt-3">
+          <strong>⚠️ إخلاء مسؤولية:</strong> هذه المنصة مستقلة وغير حكومية، ولا تمثل وزارة العدل أو أي مؤسسة رسمية. المعلومات المقدمة توضيحية وليست استشارة قانونية. يُوصى بمراجعة محامٍ مغربي مختص.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.getElementById('header').innerHTML = renderHeader('index.html');
+    document.getElementById('footer').innerHTML = renderFooter();
+    updateAuthUI();
+
+    // Render categories
+    const grid = document.getElementById('categoryGrid');
+    if (grid) {
+      grid.innerHTML = LegalEncyclopedia.categories.map(c =>
+        `<div class="category-item" onclick="location.href='encyclopedia.html?cat=${c.id}'">
+          <div class="category-icon">${c.icon}</div>
+          <div><strong>${c.name}</strong><br><span class="text-muted text-sm">${c.desc}</span></div>
+        </div>`
+      ).join('');
+    }
+
+    function doSearch() {
+      const q = document.getElementById('heroSearch').value.trim();
+      if (q) location.href = 'encyclopedia.html?q=' + encodeURIComponent(q);
+    }
+  </script>
+</body>
+</html>

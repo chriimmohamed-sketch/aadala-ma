@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عن المؤسس — AADALA.MA</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="header"></div>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>عن المؤسس</h2>
+        <p>MOHAMED CHRAIM — محمد شرايم</p>
+      </div>
+
+      <div class="card" style="max-width:800px;margin:0 auto;">
+        <div class="alert alert-info mb-3">
+          معاينة قبل النشر. السيرة متعددة اللغات وقابلة للطباعة. لا تُنشر بيانات شخصية (هاتف، بريد، عنوان، صورة) دون موافقة صريحة.
+        </div>
+
+        <h3 class="mb-2">التعليم</h3>
+        <p>طالب بكلية العلوم القانونية والاقتصادية والاجتماعية، جامعة ابن زهر بأكادير. السنة الأولى الجامعية، القانون الخاص — العلوم الجنائية.</p>
+
+        <h3 class="mb-2 mt-3">التجارب</h3>
+        <ul style="list-style:none; line-height:2;">
+          <li>• تسيير وتشغيل محلات تجارية وخدمة المطاعم.</li>
+          <li>• تجربة تطوعية في الإشراف على داخلية مؤسسة تحضيرية، تأطير الطلبة، تنظيم الأنشطة والرحلات.</li>
+          <li>• تنسيق الفرق والأنشطة الرياضية والتحكيم في كرة القدم.</li>
+        </ul>
+
+        <h3 class="mb-2 mt-3">المهارات والاهتمامات</h3>
+        <p>التواصل والإقناع، خدمة العملاء، العمليات التجارية والمحاسبية الأساسية، القيادة، الانضباط، إعداد التقارير والمحاضر، التحدث أمام الجمهور، العمل تحت الضغط، التصوير والتصميم، والبحث القانوني.</p>
+
+        <h3 class="mb-2 mt-3">اللغات</h3>
+        <p>العربية والأمازيغية، ومستوى أساسي في الفرنسية والإنجليزية.</p>
+
+        <div class="alert alert-warning mt-3">
+          ⚠️ لا يتم تقديم المؤسس بصفة محامٍ أو قاضٍ أو مهني قانوني مرخص. AADALA.MA منصة مستقلة.
+        </div>
+
+        <div class="mt-3 flex gap-2">
+          <button class="btn btn-outline btn-sm" onclick="window.print()">🖨️ طباعة السيرة</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    document.getElementById('header').innerHTML = renderHeader('founder');
+    document.getElementById('footer').innerHTML = renderFooter();
+    updateAuthUI();
+  </script>
+</body>
+</html>

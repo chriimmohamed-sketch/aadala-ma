@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إنشاء حساب — AADALA.MA</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--color-bg);">
+  <div class="card" style="max-width:420px;width:100%;">
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <div class="logo-icon" style="margin:0 auto 0.75rem;">⚖</div>
+      <h2>إنشاء حساب</h2>
+    </div>
+    <div class="form-group">
+      <label class="form-label">الاسم الكامل</label>
+      <input type="text" class="form-input" id="name">
+    </div>
+    <div class="form-group">
+      <label class="form-label">البريد الإلكتروني</label>
+      <input type="email" class="form-input" id="email">
+    </div>
+    <div class="form-group">
+      <label class="form-label">كلمة المرور</label>
+      <input type="password" class="form-input" id="password">
+    </div>
+    <button class="btn btn-primary" style="width:100%;" onclick="doRegister()">إنشاء</button>
+    <p class="text-center mt-3 text-sm">لديك حساب؟ <a href="login.html">دخول</a></p>
+    <div id="err" class="alert alert-danger mt-2 hidden"></div>
+  </div>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    function doRegister() {
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const r = AADALA.register(name, email, password);
+      if (r.ok) { AADALA.toast('تم إنشاء الحساب','success'); setTimeout(()=>location.href='../index.html',800); }
+      else { const e=document.getElementById('err'); e.textContent=r.error; e.classList.remove('hidden'); }
+    }
+  </script>
+</body>
+</html>
