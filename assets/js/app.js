@@ -243,6 +243,11 @@ document.addEventListener('DOMContentLoaded', () => {
   AADALA.init();
   // Update auth UI
   updateAuthUI();
+  // Populate language selector
+  const langArea = document.getElementById('langSelectorArea');
+  if (langArea && window.I18N) {
+    langArea.innerHTML = I18N.renderSelector();
+  }
 });
 
 function updateAuthUI() {
@@ -264,10 +269,12 @@ function renderHeader(activePage) {
   const pages = [
     { href: 'index.html', label: 'الرئيسية' },
     { href: 'legal-ai.html', label: 'المساعد القانوني' },
+    { href: 'gazette.html', label: ' burglary الرسمية' },
     { href: 'encyclopedia.html', label: 'الموسوعة' },
+    { href: 'case-law.html', label: 'الاجتهاد' },
     { href: 'inheritance.html', label: 'المواريث' },
-    { href: 'procedures.html', label: 'المساطر والوثائق' },
-    { href: 'academic.html', label: 'الفضاء الأكاديمي' },
+    { href: 'legal-aid.html', label: 'المساعدة' },
+    { href: 'academic.html', label: 'الأكاديمية' },
   ];
   const links = pages.map(p => `<li><a href="${p.href}" class="${p.href === activePage ? 'active' : ''}">${p.label}</a></li>`).join('');
   return `
@@ -280,6 +287,7 @@ function renderHeader(activePage) {
         </a>
         <ul class="nav-links" id="navLinks">${links}</ul>
         <div class="nav-actions">
+          <div id="langSelectorArea"></div>
           <button onclick="AADALA.toggleTheme()" class="btn btn-ghost btn-sm" title="تبديل المظهر">🌙</button>
           <div id="authArea">
             <a href="auth/login.html" class="btn btn-outline btn-sm" id="loginBtn">تسجيل الدخول</a>
@@ -327,10 +335,10 @@ function renderFooter() {
         <div>
           <h4>قانوني</h4>
           <ul style="list-style:none; line-height:2;">
-            <li><a href="#">شروط الاستخدام</a></li>
-            <li><a href="#">سياسة الخصوصية</a></li>
+            <li><a href="terms.html">شروط الاستخدام</a></li>
+            <li><a href="privacy.html">سياسة الخصوصية</a></li>
             <li><a href="#">إخلاء المسؤولية</a></li>
-            <li><a href="admin/dashboard.html">لوحة الإدارة</a></li>
+            <li><a href="contact.html">اتصل بنا</a></li>
           </ul>
         </div>
       </div>
