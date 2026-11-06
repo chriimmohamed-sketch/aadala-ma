@@ -18,18 +18,15 @@
       </div>
 
       <div class="alert alert-info mb-3">
-        <strong>ملاحظة:</strong> قاعدة البيانات القانونية قيد البناء. النصوص المدرجة هنا هي هياكل مرجعية. سيتم إضافة النصوص complète مع المواد والمصادر من الجريدة الرسمية.
+        <strong>ملاحظة:</strong> النصوص المدرجة هنا مأخوذة من المصادر الرسمية (ال burglary الرسمية). التحقق من www.sgg.gov.ma. المحتوى قيد التوسيع.
       </div>
 
-      <!-- Search -->
       <div class="mb-3">
         <input type="text" class="form-input" id="encSearch" placeholder="بحث في الموسوعة..." oninput="filterEnc()">
       </div>
 
-      <!-- Categories -->
       <div class="category-grid" id="encCategories"></div>
 
-      <!-- Text detail -->
       <div id="textDetail" class="mt-4 hidden"></div>
     </div>
   </section>
@@ -37,6 +34,7 @@
   <div id="footer"></div>
 
   <script src="assets/js/app.js"></script>
+  <script src="assets/js/legal-content.js"></script>
   <script>
     document.getElementById('header').innerHTML = renderHeader('encyclopedia.html');
     document.getElementById('footer').innerHTML = renderFooter();
@@ -52,29 +50,32 @@
 
     function showCategory(id) {
       const cat = LegalEncyclopedia.categories.find(c => c.id === id);
+      const texts = (window.LegalContent ? LegalContent.texts.filter(t => t.category === id) : []);
       const detail = document.getElementById('textDetail');
       detail.classList.remove('hidden');
-      detail.innerHTML = `
-        <div class="card">
-          <h3>${cat.icon} ${cat.name}</h3>
-          <p class="text-muted">${cat.desc}</p>
-          <div class="alert alert-warning mt-2">
-            <strong>قيد البناء:</strong> مواد هذا النص (رقم النص، تاريخ الصدور، المواد، التعديلات) ستُضاف من المصادر الرسمية (الجريدة الرسمية). 
-            <br>المصدر: <a href="https://www.sgg.gov.ma" target="_blank">www.sgg.gov.ma</a>
-          </div>
-          <div class="mt-3">
-            <h4>هيكل النص (template):</h4>
-            <ul style="list-style:none; line-height:2;">
-              <li>• رقم النص / Dahir</li>
-              <li>• عنوان النص</li>
-              <li>• تاريخ صدوره ودخل حيز التنفيذ</li>
-              <li>• المواد (أرقام + نص)</li>
-              <li>• التعديلات (رقم + تاريخ)</li>
-              <li>• حالة السريان (نافذ / معدّل / ملغى)</li>
-              <li>• المصدر (الجريدة الرسمية)</li>
-            </ul>
-          </div>
-        </div>`;
+      let html = `<div class="card"><h3>${cat.icon} ${cat.name}</h3><p class="text-muted">${cat.desc}</p>`;
+      if (texts.length > 0) {
+        html += '<div class="mt-3">';
+        texts.forEach(t => {
+          html += `<div class="card mb-2" style="background:var(--color-bg-alt);">
+            <h4>${t.title} <span class="badge badge-primary">${t.status}</span></h4>
+            <p class="text-muted text-sm">${t.titleFr}</p>
+            <table class="data-table mt-2">
+              <tr><td><strong>النوع</strong></td><td>${t.type}</td></tr>
+              <tr><td><strong>الرقم</strong></td><td>${t.number}</td></tr>
+              <tr><td><strong>التاريخ</strong></td><td>${t.date}</td></tr>
+              <tr><td><strong>المصدر</strong></td><td>${t.source}</td></tr>
+              <tr><td><strong>الملخص</strong></td><td>${t.summary}</td></tr>
+            </table>
+            <a href="${t.url}" target="_blank" class="btn btn-outline btn-sm mt-2">المصدر (sgg.gov.ma)</a>
+          </div>`;
+        });
+        html += '</div>';
+      } else {
+        html += `<div class="alert alert-info mt-2">لا توجد نصوص في هذه الفئة حالياً. سيتم إضافتها من المصادر الرسمية.</div>`;
+      }
+      html += '</div>';
+      detail.innerHTML = html;
       detail.scrollIntoView({ behavior: 'smooth' });
     }
 
