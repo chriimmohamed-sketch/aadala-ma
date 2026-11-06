@@ -1,26 +1,87 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --aadala-navy: #0B1D3A;
+  --aadala-navy-soft: #13294B;
+  --aadala-gold: #C9A227;
+  --aadala-gold-soft: #E6C96A;
+  --aadala-ivory: #F7F3EA;
+  --aadala-ivory-deep: #EFE7D6;
+  --aadala-graphite: #2B2B2B;
+  --aadala-graphite-soft: #5A5A5A;
+  --aadala-surface: #FFFFFF;
+  --aadala-border: #D9D2C3;
+  --aadala-danger: #9B2C2C;
+  --aadala-success: #2F6B4F;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-navy: var(--aadala-navy);
+  --color-navy-soft: var(--aadala-navy-soft);
+  --color-gold: var(--aadala-gold);
+  --color-gold-soft: var(--aadala-gold-soft);
+  --color-ivory: var(--aadala-ivory);
+  --color-ivory-deep: var(--aadala-ivory-deep);
+  --color-graphite: var(--aadala-graphite);
+  --color-graphite-soft: var(--aadala-graphite-soft);
+  --color-surface: var(--aadala-surface);
+  --color-border: var(--aadala-border);
+  --color-danger: var(--aadala-danger);
+  --color-success: var(--aadala-success);
+  --font-sans: "Tajawal", "Cairo", "Noto Sans Arabic", "Segoe UI", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--aadala-ivory);
+  color: var(--aadala-graphite);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Legal editorial typography */
+.aadala-prose {
+  line-height: 1.9;
+  font-size: 1.05rem;
+}
+
+.aadala-card {
+  background: var(--aadala-surface);
+  border: 1px solid var(--aadala-border);
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 2px rgba(11,29,58,0.04);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.aadala-card:hover {
+  box-shadow: 0 6px 18px rgba(11,29,58,0.08);
+  transform: translateY(-2px);
+}
+
+.aadala-btn-primary {
+  background: var(--aadala-navy);
+  color: var(--aadala-ivory);
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+.aadala-btn-primary:hover { background: var(--aadala-navy-soft); }
+
+.aadala-btn-gold {
+  background: var(--aadala-gold);
+  color: var(--aadala-navy);
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+}
+.aadala-btn-gold:hover { background: var(--aadala-gold-soft); }
+
+.aadala-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--aadala-gold), transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
 }

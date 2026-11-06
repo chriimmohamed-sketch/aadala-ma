@@ -1,46 +1,83 @@
 import { getMessages } from "@/lib/i18n/getMessages";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Link from "next/link";
+
+const modules = [
+  { title: "الموسوعة القانونية", href: "/legal", desc: "نصوص، مواد، تعديلات" },
+  { title: "الاجتهاد القضائي", href: "/case-law", desc: "قرارات منشورة" },
+  { title: "المساعد القانوني", href: "/ai", desc: "RAG موثق المصادر" },
+  { title: "محرك الإرث", href: "/inheritance", desc: "حسابات حتمية" },
+  { title: "العقار والشياع", href: "/property", desc: "حقوق عينية" },
+  { title: "المختبر الجنائي", href: "/criminal", desc: "تحليل أركان" },
+  { title: "المساطر والوثائق", href: "/procedures", desc: "نماذج" },
+  { title: "الشريعة والفقه", href: "/sharia", desc: "نصوص موثقة" },
+];
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const messages = await getMessages(locale);
   const h = (messages.home ?? {}) as Record<string, string>;
-  const dev = ((messages.status as Record<string,string>)?.inDevelopment) ?? "قيد التطوير";
+  const dev = ((messages.status as Record<string, string>)?.inDevelopment) ?? "قيد التطوير";
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-ivory">
       <Header locale={locale} messages={messages} />
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
-        <section className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-          <h1 className="text-3xl font-bold text-slate-900">{h.heroTitle}</h1>
-          <p className="mt-3 text-slate-600">{h.heroSubtitle}</p>
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <input
-              className="flex-1 rounded border border-slate-300 px-4 py-2 text-sm"
-              placeholder={h.searchPlaceholder}
-              aria-label={h.searchPlaceholder}
-            />
-            <a href={`/${locale}/ai`} className="rounded bg-slate-900 px-5 py-2 text-center text-sm text-white">
-              {h.aiCta}
-            </a>
+      <main className="flex-1">
+        {/* Hero */}
+        <section className="relative overflow-hidden bg-navy text-ivory">
+          <div className="mx-auto max-w-6xl px-4 py-20 md:py-28">
+            <div className="max-w-3xl">
+              <div className="mb-4 inline-block rounded-full border border-gold/40 px-3 py-1 text-xs text-gold">
+                AADALA.MA — منصة العدالة والذكاء القانوني المغربي
+              </div>
+              <h1 className="text-4xl font-bold leading-tight md:text-6xl">
+                {h.heroTitle ?? "AADALA.MA"}
+              </h1>
+              <p className="mt-5 text-lg text-ivory/80 md:text-xl">
+                {h.heroSubtitle ?? "تسهيل الوصول إلى المعرفة القانونية المغربية."}
+              </p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <input
+                  className="flex-1 rounded-lg border border-ivory/20 bg-navy-soft px-5 py-3 text-sm text-ivory placeholder-ivory/50 focus:border-gold focus:outline-none"
+                  placeholder={h.searchPlaceholder ?? "ابحث..."}
+                  aria-label={h.searchPlaceholder ?? "ابحث"}
+                />
+                <Link href={`/${locale}/ai`} className="aadala-btn-gold text-center">
+                  {h.aiCta ?? "اسأل المساعد"}
+                </Link>
+              </div>
+              <p className="mt-4 text-xs text-ivory/50">{h.disclaimer}</p>
+            </div>
           </div>
-          <p className="mt-4 text-xs text-amber-700">{h.disclaimer}</p>
+          <div className="aadala-divider" />
         </section>
 
-        <section className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
-          {[
-            { title: "الموسوعة القانونية", href: "/legal", note: dev },
-            { title: "الاجتهاد القضائي", href: "/case-law", note: dev },
-            { title: "محرك الإرث", href: "/inheritance", note: "تجريبي" },
-            { title: "العقار والشياع", href: "/property", note: dev },
-            { title: "المختبر الجنائي", href: "/criminal", note: dev },
-            { title: "المساطر والوثائق", href: "/procedures", note: dev },
-          ].map((c) => (
-            <a key={c.href} href={`/${locale}${c.href}`} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm hover:shadow">
-              <h2 className="font-semibold text-slate-900">{c.title}</h2>
-              <p className="mt-1 text-xs text-slate-500">{c.note}</p>
-            </a>
-          ))}
+        {/* Modules */}
+        <section className="mx-auto max-w-6xl px-4 py-16">
+          <h2 className="text-2xl font-bold text-navy">الأقسام</h2>
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {modules.map((m) => (
+              <Link key={m.href} href={`/${locale}${m.href}`} className="aadala-card block p-5">
+                <div className="h-1 w-10 bg-gold" />
+                <h3 className="mt-3 font-semibold text-navy">{m.title}</h3>
+                <p className="mt-1 text-xs text-graphite-soft">{m.desc}</p>
+                <span className="mt-3 inline-block text-xs text-gold">{dev}</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* Founder teaser */}
+        <section className="bg-navy-soft text-ivory">
+          <div className="mx-auto max-w-6xl px-4 py-12">
+            <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
+              <div>
+                <h2 className="text-2xl font-bold">عن المؤسس</h2>
+                <p className="mt-2 text-sm text-ivory/70">MOHAMED CHRAIM — محمد شرايم</p>
+              </div>
+              <Link href={`/${locale}/founder`} className="aadala-btn-gold">اقرأ السيرة</Link>
+            </div>
+          </div>
         </section>
       </main>
       <Footer locale={locale} messages={messages} />
