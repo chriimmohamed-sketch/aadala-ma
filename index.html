@@ -3,118 +3,155 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#101D32">
-<title>AADALA.MA — بوابة العدالة الرقمية المغربية</title>
-<meta name="description" content="منظومة مغربية للقانون والذكاء القانوني والمساعدة القانونية. مصادر قابلة للتحقق.">
+<meta name="theme-color" content="#0A1628">
+<title>AADALA.MA — بوابة العدالة الرقمية</title>
+<meta name="description" content="منظومة قانونية مغربية ذكية: مكتبة، اجتهادات، حاسبات قانونية، ومساعد قانوني.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;700;800&family=Noto+Naskh+Arabic:wght@400;500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-/* ============================================================
-   AADALA.MA — DESIGN SYSTEM
-   Codename: THE ARCHITECTURE OF JUSTICE
-   ============================================================ */
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-/* ---- 1. TOKENS ---------------------------------------------- */
+<style>
+/* ================================================================
+   AADALA.MA — DESIGN SYSTEM v3.0 (merged, 3 themes)
+   light  = "THE MANUSCRIPT" (light) — Noto Kufi/Naskh, ivory/gold/teal
+   dark   = "THE MANUSCRIPT" (dark)  = "Justice Axis" dark — navy/gold/teal
+   paper  = "الهامش والمتن" — Amiri serif, paper/gold-leaf
+   Cycle with the theme button in the header: light → dark → paper → light
+   ================================================================ */
+
+/* ---- 1. TOKENS ---- */
 :root {
-  /* Base palette (raw) */
-  --navy:        #101D32;
-  --navy-2:      #172B45;
-  --navy-3:      #243B5A;
+  /* Core Palette */
+  --navy:        #0A1628;
+  --navy-2:      #142238;
+  --navy-3:      #1E3050;
   --gold:        #C6A56B;
   --gold-deep:   #A88952;
-  --gold-soft:   #E2D2AE;
-  --ivory:       #F4F1E9;
-  --paper:       #FCFBF8;
-  --sand:        #D9CBB4;
-  --teal:        #167C80;
-  --teal-deep:   #0F5C60;
-  --graphite:    #252B33;
-  --graphite-2:  #3D4550;
-  --stone:       #E3E1DB;
+  --gold-light:  #E2D2AE;
+  --ivory:       #F5F1E8;
+  --paper:       #FBF9F3;
+  --graphite:    #2B2E35;
+  --graphite-2:  #4A4E58;
+  --stone:       #E8E3D5;
+  --stone-2:     #DDD7C4;
+  --teal:        #1A6B6E;
+  --teal-deep:   #0F5254;
+  --teal-light:  #4A9DA0;
 
-  /* Semantic — Light theme (default) */
+  /* Semantic — Light (default) */
   --bg:          var(--ivory);
+  --bg-alt:      var(--paper);
   --surface:     var(--paper);
   --surface-2:   #FFFFFF;
-  --surface-3:   #EFEBE0;
-  --text:        #1A1F28;
-  --text-2:      #4A5568;
-  --text-3:      #6B7A8F;
-  --text-inv:    #F6F4EF;
+  --surface-3:   #EFEAD9;
+  --text:        #0F1A2B;
+  --text-2:      #4A5260;
+  --text-3:      #7A8290;
+  --text-inv:    #F8F5EC;
   --border:      var(--stone);
-  --border-2:    #D6D2C7;
+  --border-2:    var(--stone-2);
   --accent:      var(--gold-deep);
   --accent-hi:   var(--gold);
   --primary:     var(--navy);
   --verified:    var(--teal);
-  --danger:      #A0322A;
-  --warning:     #B4821F;
+  --danger:      #A8352B;
+  --warning:     #B5851F;
+  --success:     #2E6B3E;
 
-  /* Dark surfaces (used inside light theme for hero, footer, etc.) */
+  /* Dark theme */
   --dark-bg:     var(--navy);
   --dark-surface:var(--navy-2);
-  --dark-border: rgba(255,255,255,.13);
-  --dark-text:   #F6F4EF;
-  --dark-text-2: #D1D9E2;
-  --dark-text-3: #AAB5C4;
-  --dark-accent: var(--gold);
+  --dark-border: rgba(255,255,255,.10);
 
   /* Typography */
-  --font-display: "Noto Kufi Arabic", system-ui, sans-serif;
-  --font-body:    "Noto Naskh Arabic", "Times New Roman", serif;
-  --font-ui:      "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-latin:   "Inter", system-ui, sans-serif;
-  --font-mono:    "IBM Plex Mono", ui-monospace, monospace;
+  --font-display:"Noto Kufi Arabic", "Inter", system-ui, sans-serif;
+  --font-body:   "Noto Naskh Arabic", "Georgia", serif;
+  --font-ui:     "Noto Kufi Arabic", system-ui, sans-serif;
+  --font-latin:  "Inter", system-ui, sans-serif;
+  --font-mono:   "IBM Plex Mono", ui-monospace, monospace;
 
-  /* Scale */
-  --fs-xs:   12px;
-  --fs-sm:   14px;
-  --fs-base: 16px;
-  --fs-lg:   18px;
-  --fs-xl:   22px;
-  --fs-2xl:  28px;
-  --fs-3xl:  36px;
-  --fs-4xl:  48px;
-  --fs-5xl:  64px;
+  /* Type Scale */
+  --fs-xs:   11px;
+  --fs-sm:   13px;
+  --fs-base: 15px;
+  --fs-lg:   17px;
+  --fs-xl:   20px;
+  --fs-2xl:  26px;
+  --fs-3xl:  34px;
+  --fs-4xl:  44px;
+  --fs-5xl:  60px;
 
   /* Spacing */
-  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px;
-  --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
-  --s9: 96px;
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px;
+  --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px; --s9: 96px;
 
   /* Radius */
-  --r1: 3px; --r2: 6px; --r3: 10px; --r4: 16px;
+  --r1: 2px; --r2: 4px; --r3: 8px; --r4: 12px;
 
   /* Shadows */
-  --shadow-1: 0 1px 2px rgba(16,29,50,.06);
-  --shadow-2: 0 4px 16px rgba(16,29,50,.08);
-  --shadow-3: 0 12px 32px rgba(16,29,50,.12);
+  --shadow-1: 0 1px 2px rgba(10,22,40,.05);
+  --shadow-2: 0 4px 16px rgba(10,22,40,.07);
+  --shadow-3: 0 12px 32px rgba(10,22,40,.12);
+  --shadow-gold: 0 8px 24px rgba(198,165,107,.18);
 
   /* Layout */
   --container: 1240px;
-  --reading:   720px;
 }
 
-/* Dark theme */
 [data-theme="dark"] {
-  --bg:          #0B1424;
-  --surface:     #111E31;
-  --surface-2:   #172B45;
-  --surface-3:   #1E3A5C;
-  --text:        #F6F4EF;
-  --text-2:      #D1D9E2;
-  --text-3:      #AAB5C4;
-  --border:      rgba(255,255,255,.13);
-  --border-2:    rgba(255,255,255,.22);
-  --accent:      var(--gold);
-  --accent-hi:   var(--gold-soft);
-  --primary:     var(--gold);
+  --bg:         #070F1E;
+  --bg-alt:     #0A1628;
+  --surface:    #0E1D33;
+  --surface-2:  #142238;
+  --surface-3:  #1B2C48;
+  --text:       #F2EDE0;
+  --text-2:     #B8BFCC;
+  --text-3:     #7A8394;
+  --border:     rgba(255,255,255,.08);
+  --border-2:   rgba(255,255,255,.14);
+  --accent:     var(--gold);
+  --primary:    var(--gold);
 }
 
-/* ---- 2. RESET ---------------------------------------------- */
+/* ---- 1.b THIRD THEME — "الهامش والمتن" (paper & gold-leaf, Amiri serif) ---- */
+[data-theme="paper"] {
+  --bg:          #F2EBD9;
+  --bg-alt:      #FAF5E6;
+  --surface:     #FAF5E6;
+  --surface-2:   #FFFFFF;
+  --surface-3:   #E8DEC5;
+  --text:        #1A1F2E;
+  --text-2:      #2E3A4E;
+  --text-3:      #5A6578;
+  --text-inv:    #FAF5E6;
+  --border:      rgba(26,31,46,.14);
+  --border-2:    rgba(26,31,46,.22);
+  --accent:      #A8884F;
+  --accent-hi:   #C9A961;
+  --primary:     #1A1F2E;
+  --verified:    #1F6B6E;
+  --danger:      #8B2A1F;
+  --warning:     #7A5A1F;
+  --success:     #2E6B3E;
+  --navy:        #1A1F2E;
+  --navy-2:      #2E3A4E;
+  --navy-3:      #3E4C66;
+  --gold:        #A8884F;
+  --gold-deep:   #8A6F40;
+  --gold-light:  #C9A961;
+  --teal:        #1F6B6E;
+  --teal-deep:   #164F51;
+  --teal-light:  #2A9195;
+  --font-display:"Amiri", "Noto Kufi Arabic", Georgia, serif;
+  --font-ui:     "Noto Kufi Arabic", system-ui, sans-serif;
+}
+[data-theme="paper"] .btn-primary { background: var(--navy); color: var(--text-inv); border-color: var(--navy); }
+[data-theme="paper"] .hero { background: linear-gradient(135deg, #1A1F2E 0%, #2E3A4E 65%, #1A1F2E 100%); }
+[data-theme="paper"] .hero-title { color: #FAF5E6; }
+
+/* ---- 2. RESET ---- */
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
@@ -133,86 +170,73 @@ img, svg { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
 input, textarea, select { font: inherit; color: inherit; }
-h1, h2, h3, h4, h5, h6 { margin: 0; line-height: 1.25; letter-spacing: -.01em; }
+h1, h2, h3, h4, h5, h6 { margin: 0; line-height: 1.25; }
 p { margin: 0; }
 ul, ol { margin: 0; padding-inline-start: 1.25em; }
-::selection { background: var(--accent); color: var(--navy); }
+::selection { background: var(--gold); color: var(--navy); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
 
-/* Focus */
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: var(--r1);
-}
-
-/* ---- 3. SKIP LINK ------------------------------------------ */
-.skip {
-  position: fixed; inset-inline-start: 12px; top: -100px;
-  background: var(--navy); color: var(--gold);
-  padding: 12px 20px; border-radius: var(--r2);
-  font-weight: 700; z-index: 9999;
-  border: 1px solid var(--gold);
-}
-.skip:focus { top: 12px; }
-
-/* ---- 4. LAYOUT --------------------------------------------- */
+/* ---- 3. LAYOUT PRIMITIVES ---- */
 .container {
   width: 100%;
   max-width: var(--container);
   margin-inline: auto;
-  padding-inline: var(--s5);
+  padding-inline: var(--s4);
 }
 @media (min-width: 768px) { .container { padding-inline: var(--s6); } }
+@media (min-width: 1240px) { .container { padding-inline: var(--s5); } }
 
 .stack > * + * { margin-top: var(--s4); }
-.stack-lg > * + * { margin-top: var(--s6); }
+.row { display: flex; align-items: center; gap: var(--s4); }
+.row-between { display: flex; align-items: center; justify-content: space-between; gap: var(--s4); flex-wrap: wrap; }
 
-.row { display: flex; gap: var(--s4); align-items: center; }
-.row-between { display: flex; justify-content: space-between; align-items: center; gap: var(--s4); flex-wrap: wrap; }
+.grid-2 { display: grid; gap: var(--s4); grid-template-columns: 1fr; }
+.grid-3 { display: grid; gap: var(--s4); grid-template-columns: 1fr; }
+.grid-4 { display: grid; gap: var(--s3); grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 640px) { .grid-2 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px) {
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+}
 
-/* ---- 5. TYPOGRAPHY ----------------------------------------- */
+/* ---- 4. TYPOGRAPHY ---- */
 .t-display {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 800;
   line-height: 1.15;
   letter-spacing: -.02em;
 }
 .t-h1 {
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 4vw, 2.5rem);
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.25;
 }
 .t-h2 {
   font-family: var(--font-display);
-  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  font-size: clamp(1.25rem, 2.5vw, 1.6rem);
   font-weight: 700;
 }
 .t-h3 {
   font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 700;
 }
 .t-h4 {
   font-family: var(--font-ui);
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 700;
 }
-.t-body {
-  font-family: var(--font-body);
-  font-size: 1.0625rem;
-  line-height: 1.85;
-}
-.t-body-lg {
-  font-family: var(--font-body);
-  font-size: 1.25rem;
-  line-height: 1.75;
-}
-.t-caption {
-  font-size: var(--fs-xs);
-  color: var(--text-3);
-  letter-spacing: .04em;
+.t-body { font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.85; }
+.t-body-sm { font-family: var(--font-body); font-size: .95rem; line-height: 1.75; }
+.t-eyebrow {
+  font-family: var(--font-latin);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
 .t-label {
   font-size: var(--fs-xs);
@@ -221,8 +245,9 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   text-transform: uppercase;
   color: var(--accent);
 }
+.t-caption { font-size: var(--fs-xs); color: var(--text-3); letter-spacing: .03em; }
 .t-mono { font-family: var(--font-mono); font-size: .9em; }
-.t-num { font-family: var(--font-latin); font-feature-settings: "tnum"; }
+.t-latin { font-family: var(--font-latin); }
 
 .text-2 { color: var(--text-2); }
 .text-3 { color: var(--text-3); }
@@ -230,96 +255,141 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
 .text-inv { color: var(--text-inv); }
 .text-center { text-align: center; }
 
-/* ---- 6. SIGNATURE ELEMENTS --------------------------------- */
-/* The balance axis — divider */
+/* ---- 5. SIGNATURE ELEMENTS ---- */
+/* Manuscript margin — vertical dotted gold line */
+.manuscript {
+  padding-inline-start: var(--s5);
+  border-inline-start: 1px solid var(--border-2);
+  position: relative;
+}
+.manuscript::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: -1px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      var(--accent) 0 4px,
+      transparent 4px 10px
+    );
+  opacity: .6;
+}
+
+/* The Axis — section divider with diamond */
 .axis {
-  display: flex; align-items: center; gap: var(--s3);
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
   margin: var(--s6) 0;
   color: var(--accent);
 }
 .axis::before, .axis::after {
-  content: ""; flex: 1; height: 1px;
-  background: linear-gradient(to var(--dir, right), transparent, var(--accent), transparent);
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to left, transparent, var(--border-2), transparent);
 }
 .axis-diamond {
-  width: 8px; height: 8px;
+  width: 7px; height: 7px;
   transform: rotate(45deg);
   background: var(--accent);
+  flex-shrink: 0;
 }
 
-/* Section number (large ghost numeral) */
+/* Section number — huge ghost Arabic numeral */
 .section-num {
   font-family: var(--font-display);
   font-weight: 800;
   color: var(--accent);
-  opacity: .18;
-  font-size: clamp(4rem, 12vw, 8rem);
+  opacity: .10;
+  font-size: clamp(3rem, 10vw, 6rem);
   line-height: .8;
   position: absolute;
   inset-inline-start: 0;
-  top: -.15em;
+  top: -.2em;
   pointer-events: none;
   user-select: none;
+  letter-spacing: -.04em;
 }
+
 .section-header {
   position: relative;
   padding-block-end: var(--s3);
   margin-block-end: var(--s5);
   border-bottom: 1px solid var(--border);
 }
-.section-header .eyebrow {
-  color: var(--accent);
-  font-family: var(--font-latin);
-  font-size: var(--fs-xs);
-  font-weight: 700;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  margin-block-end: var(--s2);
-}
+.section-header .t-eyebrow { margin-block-end: var(--s2); }
 
-/* Manuscript margin — vertical gold line for legal text */
-.manuscript {
-  padding-inline-start: var(--s5);
-  border-inline-start: 2px solid var(--accent);
-  position: relative;
-}
-.manuscript::before {
-  content: "";
-  position: absolute;
-  inset-inline-start: -6px;
-  top: 0;
-  width: 2px;
-  height: 100%;
-  background: repeating-linear-gradient(to bottom, var(--accent) 0 6px, transparent 6px 12px);
-  opacity: .35;
-}
-
-/* Verified seal */
+/* Seal — verified status badge */
 .seal {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 11px;
+  gap: 5px;
+  font-family: var(--font-latin);
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: .08em;
+  letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--verified);
-  padding: 4px 10px;
+  padding: 3px 9px;
   border: 1px solid currentColor;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--verified) 8%, transparent);
+  background: color-mix(in srgb, var(--verified) 6%, transparent);
 }
-.seal::before { content: "◆"; font-size: 8px; }
+.seal::before { content: "◆"; font-size: 7px; }
 .seal.draft { color: var(--accent); }
 .seal.unknown { color: var(--text-3); }
 
-/* ---- 7. BUTTONS -------------------------------------------- */
+/* Arabic-Indic counter */
+.num-ar {
+  font-family: var(--font-display);
+  font-feature-settings: "ss01";
+  font-variant-numeric: tabular-nums;
+}
+
+/* Corner ornament for premium cards */
+.ornament {
+  position: relative;
+}
+.ornament::before,
+.ornament::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: var(--gold);
+  border-style: solid;
+  opacity: .35;
+  pointer-events: none;
+}
+.ornament::before {
+  top: 8px; inset-inline-start: 8px;
+  border-width: 1px 0 0 1px;
+}
+.ornament::after {
+  bottom: 8px; inset-inline-end: 8px;
+  border-width: 0 1px 1px 0;
+}
+
+/* Geometric pattern background (Khatim — 8-pointed star) */
+.khatim-bg {
+  background-image:
+    radial-gradient(circle at center, transparent 40%, var(--surface) 41%),
+    repeating-linear-gradient(45deg, transparent 0 20px, color-mix(in srgb, var(--gold) 6%, transparent) 20px 21px),
+    repeating-linear-gradient(-45deg, transparent 0 20px, color-mix(in srgb, var(--gold) 6%, transparent) 20px 21px);
+}
+
+/* ---- 6. BUTTONS ---- */
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--s2);
-  padding: 12px 20px;
-  min-height: 44px;
+  padding: 11px 20px;
+  min-height: 42px;
   font-family: var(--font-ui);
   font-size: var(--fs-sm);
   font-weight: 700;
@@ -328,6 +398,7 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   transition: all .18s ease;
   white-space: nowrap;
   text-decoration: none;
+  cursor: pointer;
 }
 .btn-primary {
   background: var(--primary);
@@ -335,8 +406,10 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   border-color: var(--primary);
 }
 .btn-primary:hover { background: var(--navy-3); border-color: var(--navy-3); }
-[data-theme="dark"] .btn-primary { background: var(--gold); color: var(--navy); border-color: var(--gold); }
-[data-theme="dark"] .btn-primary:hover { background: var(--gold-soft); border-color: var(--gold-soft); }
+[data-theme="dark"] .btn-primary {
+  background: var(--gold); color: var(--navy); border-color: var(--gold);
+}
+[data-theme="dark"] .btn-primary:hover { background: var(--gold-light); }
 
 .btn-gold {
   background: var(--gold);
@@ -359,10 +432,10 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
 }
 .btn-quiet:hover { color: var(--accent); }
 
-.btn-sm { padding: 8px 14px; min-height: 36px; font-size: var(--fs-xs); }
-.btn-lg { padding: 16px 26px; min-height: 52px; font-size: var(--fs-base); }
+.btn-sm { padding: 7px 13px; min-height: 32px; font-size: var(--fs-xs); }
+.btn-lg { padding: 15px 28px; min-height: 52px; font-size: var(--fs-base); }
 
-/* ---- 8. FORMS ---------------------------------------------- */
+/* ---- 7. FORMS ---- */
 .field { display: flex; flex-direction: column; gap: 6px; }
 .field label {
   font-size: var(--fs-sm);
@@ -371,25 +444,25 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
 }
 .input, .select, .textarea {
   width: 100%;
-  padding: 12px 14px;
-  min-height: 44px;
+  padding: 11px 13px;
+  min-height: 42px;
   font-family: var(--font-ui);
   font-size: var(--fs-base);
   background: var(--surface);
   color: var(--text);
   border: 1px solid var(--border-2);
   border-radius: var(--r2);
-  transition: border-color .15s ease, box-shadow .15s ease;
+  transition: border-color .15s, box-shadow .15s;
 }
 .input:focus, .select:focus, .textarea:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
 }
 .input::placeholder { color: var(--text-3); }
 .textarea { min-height: 100px; resize: vertical; line-height: 1.6; }
 
-/* Search field — signature */
+/* Search — signature */
 .search {
   display: flex;
   align-items: center;
@@ -397,12 +470,12 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   background: var(--surface);
   border: 1px solid var(--border-2);
   border-radius: var(--r3);
-  padding: 6px 6px 6px 18px;
-  transition: border-color .15s ease, box-shadow .15s ease;
+  padding: 5px 5px 5px 16px;
+  transition: border-color .15s, box-shadow .15s;
 }
 .search:focus-within {
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 14%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 12%, transparent);
 }
 .search input {
   flex: 1;
@@ -416,24 +489,23 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
 }
 .search-icon { color: var(--text-3); flex-shrink: 0; }
 
-/* ---- 9. CARDS ---------------------------------------------- */
-/* Document card — flat with top gold bar */
+/* ---- 8. CARDS ---- */
 .doc-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r2);
   padding: var(--s5);
   position: relative;
-  transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+  transition: border-color .18s, transform .18s, box-shadow .18s;
 }
 .doc-card::before {
   content: "";
   position: absolute;
   inset-inline: 0;
   top: 0;
-  height: 3px;
-  background: var(--accent);
-  border-radius: var(--r2) var(--r2) 0 0;
+  height: 2px;
+  background: linear-gradient(to left, transparent, var(--accent), transparent);
+  opacity: .5;
 }
 .doc-card:hover {
   border-color: var(--accent);
@@ -441,7 +513,6 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   box-shadow: var(--shadow-2);
 }
 
-/* Plain surface card */
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -449,7 +520,6 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   padding: var(--s5);
 }
 
-/* Pathway card — for quick paths */
 .pathway {
   display: flex;
   flex-direction: column;
@@ -461,24 +531,27 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   text-align: start;
   transition: all .2s ease;
   min-height: 160px;
+  cursor: pointer;
 }
 .pathway:hover {
   border-color: var(--accent);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   box-shadow: var(--shadow-2);
 }
 .pathway-icon {
-  width: 44px; height: 44px;
+  width: 42px; height: 42px;
   display: grid; place-items: center;
   border-radius: var(--r2);
-  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
   color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
 }
 .pathway h3 {
   font-family: var(--font-display);
   font-size: var(--fs-base);
   font-weight: 700;
   color: var(--text);
+  margin-top: var(--s2);
 }
 .pathway p {
   font-size: var(--fs-sm);
@@ -486,25 +559,26 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   line-height: 1.6;
 }
 
-/* ---- 10. BADGES -------------------------------------------- */
+/* ---- 9. BADGES ---- */
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 11px;
+  gap: 5px;
+  font-size: 10px;
   font-weight: 700;
+  letter-spacing: .04em;
   padding: 3px 9px;
   border-radius: 999px;
   border: 1px solid var(--border-2);
   color: var(--text-2);
   background: var(--surface);
 }
-.badge-gold { color: var(--gold-deep); border-color: var(--gold-deep); background: color-mix(in srgb, var(--gold) 10%, transparent); }
-.badge-teal { color: var(--teal); border-color: var(--teal); background: color-mix(in srgb, var(--teal) 10%, transparent); }
-.badge-navy { color: var(--navy); border-color: var(--navy); background: color-mix(in srgb, var(--navy) 8%, transparent); }
-[data-theme="dark"] .badge-navy { color: var(--gold-soft); border-color: var(--gold-soft); background: transparent; }
+.badge-gold { color: var(--gold-deep); border-color: var(--gold-deep); background: color-mix(in srgb, var(--gold) 8%, transparent); }
+.badge-teal { color: var(--teal); border-color: var(--teal); background: color-mix(in srgb, var(--teal) 8%, transparent); }
+.badge-navy { color: var(--navy); border-color: var(--navy); background: color-mix(in srgb, var(--navy) 6%, transparent); }
+[data-theme="dark"] .badge-navy { color: var(--gold-light); border-color: var(--gold-light); background: transparent; }
 
-/* ---- 11. TABLES -------------------------------------------- */
+/* ---- 10. TABLES ---- */
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -516,25 +590,25 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
 }
 .table thead th {
   text-align: start;
-  padding: 12px 16px;
+  padding: 11px 14px;
   font-weight: 700;
   color: var(--text-2);
   background: var(--surface-3);
-  font-size: var(--fs-xs);
-  letter-spacing: .04em;
+  font-size: 10px;
+  letter-spacing: .08em;
   text-transform: uppercase;
   border-bottom: 1px solid var(--border);
 }
 .table tbody td {
-  padding: 14px 16px;
+  padding: 13px 14px;
   border-bottom: 1px solid var(--border);
   color: var(--text);
   vertical-align: top;
 }
 .table tbody tr:last-child td { border-bottom: 0; }
-.table tbody tr:hover { background: color-mix(in srgb, var(--accent) 5%, transparent); }
+.table tbody tr:hover { background: color-mix(in srgb, var(--accent) 4%, transparent); }
 
-/* ---- 12. LEGAL ARTICLE VIEW -------------------------------- */
+/* ---- 11. ARTICLE VIEW ---- */
 .article {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -555,7 +629,10 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   margin-block-end: var(--s3);
 }
 .article-num::after {
-  content: ""; flex: 1; height: 1px; background: var(--border);
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
 }
 .article-body {
   font-family: var(--font-body);
@@ -574,20 +651,20 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   flex-wrap: wrap;
 }
 
-/* ---- 13. NAV / HEADER -------------------------------------- */
+/* ---- 12. HEADER / NAVIGATION ---- */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: color-mix(in srgb, var(--bg) 92%, transparent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
 }
 .header-inner {
   display: flex;
   align-items: center;
-  gap: var(--s5);
+  gap: var(--s4);
   padding-block: var(--s3);
 }
 .brand {
@@ -595,82 +672,75 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   align-items: center;
   gap: var(--s3);
   flex-shrink: 0;
+  cursor: pointer;
 }
 .brand-mark {
-  width: 40px; height: 40px;
+  width: 38px; height: 38px;
   display: grid; place-items: center;
   border: 1.5px solid var(--gold);
   border-radius: var(--r2);
   color: var(--gold);
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 800;
   position: relative;
+  background: color-mix(in srgb, var(--gold) 4%, transparent);
 }
 .brand-mark::before {
   content: "";
   position: absolute;
   inset: 3px;
   border: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
-  border-radius: 2px;
-}
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
+  border-radius: 1px;
 }
 .brand-text b {
+  display: block;
   font-family: var(--font-latin);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 800;
   letter-spacing: .14em;
   color: var(--text);
 }
 .brand-text span {
-  font-size: 10px;
+  display: block;
+  font-size: 9px;
   color: var(--text-3);
   letter-spacing: .14em;
-  margin-block-start: 4px;
+  margin-block-start: 3px;
 }
-
-.nav-main {
-  display: none;
-  gap: var(--s1);
-  flex: 1;
-}
+.nav-main { display: none; gap: 2px; flex: 1; }
 .nav-main a {
-  padding: 8px 12px;
+  padding: 7px 11px;
   font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text-2);
   border-radius: var(--r1);
-  transition: color .15s ease, background .15s ease;
+  transition: color .15s, background .15s;
+  cursor: pointer;
+  white-space: nowrap;
 }
-.nav-main a:hover, .nav-main a.active { color: var(--text); background: color-mix(in srgb, var(--accent) 8%, transparent); }
-
+.nav-main a:hover { color: var(--text); background: color-mix(in srgb, var(--accent) 6%, transparent); }
+.nav-main a.active { color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, transparent); }
 .header-actions {
   display: flex;
   gap: var(--s2);
   align-items: center;
   margin-inline-start: auto;
 }
-
 .icon-btn {
-  width: 40px; height: 40px;
+  width: 38px; height: 38px;
   display: grid; place-items: center;
   border-radius: var(--r2);
   color: var(--text-2);
-  transition: background .15s ease, color .15s ease;
+  transition: background .15s, color .15s;
 }
-.icon-btn:hover { background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--accent); }
-
+.icon-btn:hover { background: color-mix(in srgb, var(--accent) 8%, transparent); color: var(--accent); }
 .mobile-toggle { display: grid; }
-@media (min-width: 1024px) {
+@media (min-width: 1100px) {
   .nav-main { display: flex; }
   .mobile-toggle { display: none; }
 }
 
-/* Mobile drawer */
 .mobile-drawer {
   position: fixed;
   inset: 0;
@@ -681,27 +751,28 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   padding: var(--s5);
   display: flex;
   flex-direction: column;
-  gap: var(--s3);
+  gap: var(--s2);
   overflow-y: auto;
 }
 .mobile-drawer.open { transform: translateX(0); }
 .mobile-drawer a {
   display: block;
-  padding: 14px 0;
+  padding: 13px 0;
   border-bottom: 1px solid var(--border);
   font-family: var(--font-display);
   font-size: var(--fs-lg);
   font-weight: 600;
   color: var(--text);
+  cursor: pointer;
 }
 .mobile-drawer a:last-child { border-bottom: 0; }
 
-/* ---- 14. HERO ---------------------------------------------- */
+/* ---- 13. HERO ---- */
 .hero {
   position: relative;
   background:
-    radial-gradient(ellipse at 80% 10%, rgba(22,124,128,.30), transparent 40%),
-    radial-gradient(ellipse at 10% 90%, rgba(198,165,107,.18), transparent 35%),
+    radial-gradient(ellipse at 85% 10%, rgba(26,107,110,.28), transparent 45%),
+    radial-gradient(ellipse at 10% 90%, rgba(198,165,107,.15), transparent 40%),
     linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 65%, var(--navy) 100%);
   color: var(--text-inv);
   overflow: hidden;
@@ -710,29 +781,29 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   content: "";
   position: absolute;
   inset: 0;
-  opacity: .14;
+  opacity: .10;
   pointer-events: none;
   background-image:
-    linear-gradient(30deg, transparent 48%, rgba(198,165,107,.4) 49%, transparent 50%),
-    linear-gradient(150deg, transparent 48%, rgba(198,165,107,.22) 49%, transparent 50%);
-  background-size: 78px 78px;
-  -webkit-mask-image: linear-gradient(to left, black, transparent 75%);
-  mask-image: linear-gradient(to left, black, transparent 75%);
+    linear-gradient(30deg, transparent 48%, var(--gold) 49%, transparent 50%),
+    linear-gradient(150deg, transparent 48%, var(--gold) 49%, transparent 50%);
+  background-size: 64px 64px;
+  -webkit-mask-image: linear-gradient(to left, black, transparent 70%);
+  mask-image: linear-gradient(to left, black, transparent 70%);
 }
 .hero-inner {
   position: relative;
-  padding-block: var(--s8) var(--s7);
+  padding-block: var(--s7) var(--s6);
 }
-@media (min-width: 1024px) {
-  .hero-inner { padding-block: var(--s9) var(--s8); }
+@media (min-width: 900px) {
+  .hero-inner { padding-block: var(--s8) var(--s7); }
 }
 .hero-grid {
   display: grid;
   gap: var(--s6);
   align-items: center;
 }
-@media (min-width: 1024px) {
-  .hero-grid { grid-template-columns: 1.1fr .9fr; gap: var(--s8); }
+@media (min-width: 900px) {
+  .hero-grid { grid-template-columns: 1.15fr .85fr; gap: var(--s8); }
 }
 .hero-eyebrow {
   font-family: var(--font-latin);
@@ -741,114 +812,91 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   letter-spacing: .24em;
   text-transform: uppercase;
   color: var(--gold);
-  margin-block-end: var(--s4);
+  margin-block-end: var(--s3);
 }
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 5.5vw, 3.75rem);
+  font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 800;
   line-height: 1.15;
   letter-spacing: -.02em;
   margin-block-end: var(--s4);
+  color: #fff;
 }
 .hero-title em {
   font-style: normal;
   color: var(--gold);
+  font-family: var(--font-body);
+  font-weight: 700;
 }
 .hero-sub {
   font-family: var(--font-body);
   font-size: 1.0625rem;
   line-height: 1.75;
-  color: rgba(255,255,255,.82);
+  color: rgba(255,255,255,.80);
   max-width: 52ch;
-  margin-block-end: var(--s6);
+  margin-block-end: var(--s5);
 }
-.hero-search {
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(198,165,107,.35);
-  border-radius: var(--r3);
-  padding: 6px;
+.hero-actions {
   display: flex;
-  gap: 4px;
-  align-items: center;
-  margin-block-end: var(--s4);
-}
-.hero-search input {
-  flex: 1;
-  min-width: 0;
-  padding: 12px 14px;
-  background: transparent;
-  border: 0;
-  color: #fff;
-  font-size: var(--fs-base);
-  outline: none;
-}
-.hero-search input::placeholder { color: rgba(255,255,255,.55); }
-.hero-trust {
-  display: flex;
-  gap: var(--s4);
+  gap: var(--s3);
   flex-wrap: wrap;
-  font-size: var(--fs-xs);
-  color: rgba(255,255,255,.6);
-  align-items: center;
 }
-.hero-trust span { display: inline-flex; align-items: center; gap: 6px; }
-
-/* Hero gateway SVG illustration */
-.gateway-svg {
+.hero-svg {
   width: 100%;
-  max-width: 420px;
+  max-width: 380px;
   margin-inline: auto;
   display: block;
-  filter: drop-shadow(0 20px 40px rgba(0,0,0,.3));
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,.35));
 }
 
-/* ---- 15. FOOTER -------------------------------------------- */
+/* ---- 14. FOOTER ---- */
 .site-footer {
   background: var(--navy);
-  color: var(--dark-text-2);
-  padding-block: var(--s8) var(--s5);
-  margin-block-start: var(--s9);
+  color: var(--text-inv);
+  padding-block: var(--s7) var(--s4);
+  margin-block-start: var(--s8);
 }
 .footer-grid {
   display: grid;
-  gap: var(--s6);
+  gap: var(--s5);
   grid-template-columns: 1fr;
-  margin-block-end: var(--s7);
+  margin-block-end: var(--s6);
 }
 @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; } }
 .footer-grid h4 {
-  font-size: var(--fs-xs);
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: .16em;
   text-transform: uppercase;
   color: var(--gold);
-  margin-block-end: var(--s4);
+  margin-block-end: var(--s3);
 }
 .footer-grid a {
   display: block;
   font-size: var(--fs-sm);
-  color: var(--dark-text-2);
-  padding-block: 6px;
-  transition: color .15s ease;
+  color: rgba(255,255,255,.65);
+  padding-block: 5px;
+  transition: color .15s;
+  cursor: pointer;
 }
 .footer-grid a:hover { color: var(--gold); }
 .footer-bottom {
-  padding-block-start: var(--s5);
-  border-top: 1px solid var(--dark-border);
+  padding-block-start: var(--s4);
+  border-top: 1px solid rgba(255,255,255,.10);
   font-size: var(--fs-xs);
-  color: var(--dark-text-3);
+  color: rgba(255,255,255,.45);
   display: flex;
   justify-content: space-between;
-  gap: var(--s4);
+  gap: var(--s3);
   flex-wrap: wrap;
 }
 
-/* ---- 16. PAGE HEADER --------------------------------------- */
+/* ---- 15. PAGE HEADER ---- */
 .page-header {
-  padding-block: var(--s6);
+  padding-block: var(--s6) var(--s5);
   border-bottom: 1px solid var(--border);
-  margin-block-end: var(--s6);
+  margin-block-end: var(--s5);
 }
 .breadcrumb {
   display: flex;
@@ -858,89 +906,58 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   margin-block-end: var(--s3);
   flex-wrap: wrap;
 }
-.breadcrumb a:hover { color: var(--accent); }
-.breadcrumb-sep { color: var(--text-3); opacity: .6; }
+.breadcrumb a:hover { color: var(--accent); cursor: pointer; }
+.breadcrumb-sep { opacity: .6; }
 
-/* ---- 17. LAYOUTS ------------------------------------------- */
-.grid-2 { display: grid; gap: var(--s5); grid-template-columns: 1fr; }
-.grid-3 { display: grid; gap: var(--s5); grid-template-columns: 1fr; }
-.grid-4 { display: grid; gap: var(--s4); grid-template-columns: 1fr; }
-@media (min-width: 640px) {
-  .grid-2 { grid-template-columns: repeat(2, 1fr); }
-  .grid-4 { grid-template-columns: repeat(2, 1fr); }
-}
-@media (min-width: 900px) {
-  .grid-3 { grid-template-columns: repeat(3, 1fr); }
-  .grid-4 { grid-template-columns: repeat(4, 1fr); }
-}
-
-.sidebar-layout {
-  display: grid;
-  gap: var(--s6);
-  grid-template-columns: 1fr;
-}
-@media (min-width: 1024px) {
-  .sidebar-layout { grid-template-columns: 260px 1fr; }
-}
-.sidebar {
-  align-self: start;
-}
-@media (min-width: 1024px) {
-  .sidebar { position: sticky; top: 90px; }
-}
+/* ---- 16. LAYOUTS ---- */
+.sidebar-layout { display: grid; gap: var(--s5); grid-template-columns: 1fr; }
+@media (min-width: 1024px) { .sidebar-layout { grid-template-columns: 240px 1fr; } }
+.sidebar { align-self: start; }
+@media (min-width: 1024px) { .sidebar { position: sticky; top: 90px; } }
 .sidebar-nav { display: flex; flex-direction: column; gap: 2px; }
 .sidebar-nav a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 9px 12px;
+  padding: 8px 11px;
   border-radius: var(--r1);
   font-size: var(--fs-sm);
   color: var(--text-2);
-  transition: background .15s ease, color .15s ease;
+  transition: background .15s, color .15s;
+  cursor: pointer;
 }
 .sidebar-nav a:hover, .sidebar-nav a.active {
-  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
   color: var(--accent);
 }
 .sidebar-nav a .count {
   font-family: var(--font-latin);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--text-3);
 }
 
-/* ---- 18. AI WORKSPACE -------------------------------------- */
-.ai-layout {
-  display: grid;
-  gap: var(--s5);
-  grid-template-columns: 1fr;
-}
-@media (min-width: 1024px) {
-  .ai-layout { grid-template-columns: 1fr 340px; }
-}
+/* ---- 17. AI CHAT ---- */
+.ai-layout { display: grid; gap: var(--s5); grid-template-columns: 1fr; }
+@media (min-width: 1024px) { .ai-layout { grid-template-columns: 1fr 320px; } }
 .chat {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r3);
   padding: var(--s5);
-  min-height: 500px;
+  min-height: 480px;
   display: flex;
   flex-direction: column;
-  gap: var(--s5);
+  gap: var(--s4);
 }
-.msg {
-  display: flex;
-  gap: var(--s3);
-  max-width: 100%;
-}
+.msg { display: flex; gap: var(--s3); max-width: 100%; }
 .msg-avatar {
-  width: 32px; height: 32px;
+  width: 30px; height: 30px;
   border-radius: var(--r2);
   display: grid; place-items: center;
   flex-shrink: 0;
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: 14px;
+  font-size: 13px;
 }
 .msg-user .msg-avatar { background: var(--navy); color: var(--gold); }
 .msg-ai .msg-avatar { background: var(--teal); color: #fff; }
@@ -951,18 +968,18 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   border-radius: var(--r2);
   background: var(--surface-3);
   font-family: var(--font-body);
-  font-size: 1rem;
+  font-size: .98rem;
   line-height: 1.75;
 }
-.msg-user .msg-content { background: color-mix(in srgb, var(--navy) 8%, var(--surface)); }
+.msg-user .msg-content { background: color-mix(in srgb, var(--navy) 6%, var(--surface)); }
 .msg-ai .msg-content { background: var(--surface); border: 1px solid var(--border); }
 
-.ai-answer-section {
-  margin-block-end: var(--s4);
+.ai-section {
+  margin-block-end: var(--s3);
   padding-inline-start: var(--s3);
   border-inline-start: 2px solid var(--border);
 }
-.ai-answer-section h5 {
+.ai-section h5 {
   font-family: var(--font-display);
   font-size: var(--fs-sm);
   font-weight: 700;
@@ -972,29 +989,32 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   align-items: baseline;
   gap: var(--s2);
 }
-.ai-answer-section h5 .num {
+.ai-section h5 .num {
   font-family: var(--font-latin);
-  font-size: 11px;
+  font-size: 10px;
   opacity: .6;
 }
-.ai-answer-section p { font-family: var(--font-body); font-size: .95rem; line-height: 1.75; color: var(--text-2); }
+.ai-section p {
+  font-family: var(--font-body);
+  font-size: .95rem;
+  line-height: 1.75;
+  color: var(--text-2);
+}
 
 .citation {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 2px 8px;
-  font-size: 12px;
+  padding: 1px 7px;
+  font-size: 11px;
   font-family: var(--font-latin);
   color: var(--teal);
-  background: color-mix(in srgb, var(--teal) 10%, transparent);
-  border-radius: 4px;
-  border: 1px solid color-mix(in srgb, var(--teal) 30%, transparent);
-  cursor: help;
+  background: color-mix(in srgb, var(--teal) 8%, transparent);
+  border-radius: 3px;
+  border: 1px solid color-mix(in srgb, var(--teal) 25%, transparent);
   vertical-align: baseline;
-  margin-inline: 2px;
 }
-.citation::before { content: "◆"; font-size: 8px; }
+.citation::before { content: "◆"; font-size: 7px; }
 
 .sources-panel {
   background: var(--surface);
@@ -1010,15 +1030,11 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   border: 1px solid var(--border);
   margin-block-end: var(--s3);
   font-size: var(--fs-sm);
-  transition: border-color .15s ease;
+  transition: border-color .15s;
 }
 .source-item:hover { border-color: var(--accent); }
-.source-item .source-title {
-  font-weight: 700;
-  color: var(--text);
-  margin-block-end: 4px;
-}
-.source-item .source-meta {
+.source-title { font-weight: 700; color: var(--text); margin-block-end: 4px; }
+.source-meta {
   font-size: var(--fs-xs);
   color: var(--text-3);
   display: flex;
@@ -1026,27 +1042,11 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   flex-wrap: wrap;
 }
 
-/* ---- 19. DEMO / EXAMPLE BANNERS --------------------------- */
-.demo-banner {
-  background: color-mix(in srgb, var(--warning) 12%, var(--surface));
-  border: 1px solid var(--warning);
-  color: var(--warning);
-  padding: var(--s3) var(--s4);
-  border-radius: var(--r2);
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: var(--s3);
-  margin-block-end: var(--s5);
-}
-.demo-banner::before { content: "⚠"; font-size: 18px; }
-
-/* ---- 20. STAT / METRIC ------------------------------------- */
+/* ---- 18. STATS ---- */
 .stat {
-  padding: var(--s4) 0;
-  border-inline-start: 1px solid var(--border);
-  padding-inline-start: var(--s4);
+  padding: var(--s4);
+  border-inline-start: 2px solid var(--accent);
+  background: var(--surface);
 }
 .stat-value {
   font-family: var(--font-display);
@@ -1062,31 +1062,23 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   letter-spacing: .04em;
 }
 
-/* ---- 21. TIMELINE ------------------------------------------ */
-.timeline {
-  position: relative;
-  padding-inline-start: var(--s5);
-}
+/* ---- 19. TIMELINE ---- */
+.timeline { position: relative; padding-inline-start: var(--s5); }
 .timeline::before {
   content: "";
   position: absolute;
   inset-inline-start: 6px;
-  top: 8px;
-  bottom: 8px;
+  top: 8px; bottom: 8px;
   width: 1px;
-  background: var(--border);
+  background: var(--border-2);
 }
-.timeline-item {
-  position: relative;
-  padding-block-end: var(--s5);
-}
+.timeline-item { position: relative; padding-block-end: var(--s4); }
 .timeline-item::before {
   content: "";
   position: absolute;
   inset-inline-start: calc(-1 * var(--s5) + 3px);
   top: 6px;
-  width: 7px;
-  height: 7px;
+  width: 7px; height: 7px;
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 0 3px var(--bg);
@@ -1099,119 +1091,150 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   letter-spacing: .04em;
 }
 
-/* ---- 22. TOAST --------------------------------------------- */
-.toast {
-  position: fixed;
-  bottom: 24px;
-  inset-inline-start: 24px;
-  background: var(--navy);
-  color: var(--gold-soft);
-  padding: 12px 20px;
+/* ---- 20. DEMO BANNER ---- */
+.demo-banner {
+  background: color-mix(in srgb, var(--warning) 8%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--warning) 40%, var(--surface));
+  color: var(--warning);
+  padding: var(--s3) var(--s4);
   border-radius: var(--r2);
-  border: 1px solid var(--gold);
+  font-size: var(--fs-sm);
   font-weight: 600;
-  z-index: 9999;
-  box-shadow: var(--shadow-3);
-  animation: toastIn .25s ease;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s3);
+  margin-block-end: var(--s5);
+  line-height: 1.5;
 }
-@keyframes toastIn {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+.demo-banner::before { content: "⚠"; font-size: 16px; flex-shrink: 0; }
+
+/* ---- 21. ALERTS ---- */
+.alert {
+  padding: var(--s3) var(--s4);
+  border-radius: var(--r2);
+  font-size: var(--fs-sm);
+  display: flex;
+  gap: var(--s3);
+  align-items: flex-start;
+  margin-block: var(--s4);
+  border: 1px solid;
+  line-height: 1.6;
 }
+.alert-info { background: color-mix(in srgb, var(--teal) 6%, var(--surface)); border-color: var(--teal); color: var(--teal-deep); }
+.alert-warning { background: color-mix(in srgb, var(--warning) 8%, var(--surface)); border-color: var(--warning); color: var(--warning); }
+.alert-danger { background: color-mix(in srgb, var(--danger) 6%, var(--surface)); border-color: var(--danger); color: var(--danger); }
 
-/* ---- 23. UTILITIES ----------------------------------------- */
-.mt-2 { margin-top: var(--s2); } .mt-4 { margin-top: var(--s4); }
-.mt-5 { margin-top: var(--s5); } .mt-6 { margin-top: var(--s6); }
-.mb-4 { margin-bottom: var(--s4); } .mb-5 { margin-bottom: var(--s5); }
-.mb-6 { margin-bottom: var(--s6); }
-.hide-mobile { display: none; }
-@media (min-width: 768px) { .hide-mobile { display: initial; } }
-.hide-desktop { display: initial; }
-@media (min-width: 1024px) { .hide-desktop { display: none; } }
-
-/* Page transitions */
+/* ---- 22. PAGE TRANSITIONS ---- */
 [data-page] { display: none; }
-[data-page].active { display: block; animation: fadeUp .3s ease; }
+[data-page].active {
+  display: block;
+  animation: fadeUp .35s cubic-bezier(.4,0,.2,1);
+}
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* ---- 23. UTILITIES ---- */
+.mt-2 { margin-top: var(--s2); } .mt-3 { margin-top: var(--s3); }
+.mt-4 { margin-top: var(--s4); } .mt-5 { margin-top: var(--s5); }
+.mt-6 { margin-top: var(--s6); } .mt-7 { margin-top: var(--s7); }
+.mb-2 { margin-bottom: var(--s2); } .mb-3 { margin-bottom: var(--s3); }
+.mb-4 { margin-bottom: var(--s4); } .mb-5 { margin-bottom: var(--s5); }
+.mb-6 { margin-bottom: var(--s6); }
+.hidden { display: none !important; }
+
+/* ---- 24. SKIP LINK ---- */
+.skip {
+  position: fixed;
+  inset-inline-start: 12px;
+  top: -100px;
+  background: var(--navy);
+  color: var(--gold);
+  padding: 10px 18px;
+  border-radius: var(--r2);
+  font-weight: 700;
+  z-index: 9999;
+  border: 1px solid var(--gold);
+}
+.skip:focus { top: 12px; }
+
+/* ---- 25. TABLE WRAPPER ---- */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table-wrap .table { min-width: 500px; }
 </style>
 </head>
 <body>
 
 <a href="#main" class="skip">تخطَّ إلى المحتوى</a>
 
-<!-- ============================================================
-     HEADER
-     ============================================================ -->
+<!-- ============================================================ HEADER ============================================================ -->
 <header class="site-header">
   <div class="container">
     <div class="header-inner">
-      <a href="#/" class="brand" aria-label="AADALA.MA — الصفحة الرئيسية">
-        <div class="brand-mark" aria-hidden="true">ع</div>
+      <a href="#/" class="brand" onclick="event.preventDefault();navigate('/')">
+        <div class="brand-mark">ع</div>
         <div class="brand-text">
           <b>AADALA.MA</b>
           <span>LEGAL INTELLIGENCE</span>
         </div>
       </a>
-      <nav class="nav-main" aria-label="التنقل الرئيسي">
-        <a href="#/" data-nav="/">الرئيسية</a>
-        <a href="#/library" data-nav="/library">المكتبة</a>
-        <a href="#/search" data-nav="/search">البحث</a>
-        <a href="#/ai" data-nav="/ai">AADALA AI</a>
-        <a href="#/miyar" data-nav="/miyar">مِعيار</a>
-        <a href="#/case-law" data-nav="/case-law">الاجتهاد</a>
-        <a href="#/legal-aid" data-nav="/legal-aid">المساعدة</a>
+      <nav class="nav-main" id="navMain">
+        <a data-nav="/">الرئيسية</a>
+        <a data-nav="/library">المكتبة</a>
+        <a data-nav="/search">البحث</a>
+        <a data-nav="/ai">AADALA AI</a>
+        <a data-nav="/miyar">مِعيار</a>
+        <a data-nav="/property">العقار</a>
+        <a data-nav="/case-law">الاجتهاد</a>
+        <a data-nav="/legal-aid">المساعدة</a>
+        <a data-nav="/updates">الرادار</a>
+        <a data-nav="/procedures">المساطر</a>
+        <a data-nav="/criminal-lab">المختبر الجنائي</a>
+        <a data-nav="/student">الطالب</a>
       </nav>
       <div class="header-actions">
-        <a href="#/search" class="icon-btn" aria-label="البحث">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        </a>
-        <button class="icon-btn" id="theme-toggle" aria-label="تبديل النمط">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <button class="icon-btn" id="themeToggle" aria-label="تبديل النمط">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
         </button>
-        <a href="#/admin" class="btn btn-primary btn-sm hide-mobile">لوحة الإدارة</a>
-        <button class="icon-btn mobile-toggle" id="mobile-toggle" aria-label="القائمة">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <a href="#/admin" class="btn btn-primary btn-sm" onclick="event.preventDefault();navigate('/admin')" style="display:none" id="adminLink">الإدارة</a>
+        <button class="icon-btn mobile-toggle" id="mobileToggle" aria-label="القائمة">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
       </div>
     </div>
   </div>
 </header>
 
-<div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
-  <div class="row-between mb-5">
+<!-- Mobile Drawer -->
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="row-between mb-4">
     <div class="brand">
       <div class="brand-mark">ع</div>
       <div class="brand-text"><b>AADALA.MA</b><span>LEGAL INTELLIGENCE</span></div>
     </div>
-    <button class="icon-btn" id="mobile-close" aria-label="إغلاق">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    <button class="icon-btn" id="mobileClose" aria-label="إغلاق">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
   </div>
-  <a href="#/">الرئيسية</a>
-  <a href="#/library">المكتبة القانونية</a>
-  <a href="#/search">البحث</a>
-  <a href="#/ai">AADALA AI</a>
-  <a href="#/miyar">مِعيار — الإرث</a>
-  <a href="#/property">العقار</a>
-  <a href="#/case-law">الاجتهادات</a>
-  <a href="#/legal-aid">المساعدة القانونية</a>
-  <a href="#/student">الطالب والباحث</a>
-  <a href="#/admin">لوحة الإدارة</a>
-  <a href="#/design-system">نظام التصميم</a>
+  <a onclick="navigate('/')">الرئيسية</a>
+  <a onclick="navigate('/library')">المكتبة القانونية</a>
+  <a onclick="navigate('/search')">البحث</a>
+  <a onclick="navigate('/ai')">AADALA AI</a>
+  <a onclick="navigate('/miyar')">مِعيار — الإرث</a>
+  <a onclick="navigate('/property')">العقار</a>
+  <a onclick="navigate('/case-law')">الاجتهادات</a>
+  <a onclick="navigate('/legal-aid')">المساعدة القانونية</a>
+  <a onclick="navigate('/student')">الطالب والباحث</a>
+  <a onclick="navigate('/admin')">لوحة الإدارة</a>
 </div>
 
-<!-- ============================================================
-     MAIN
-     ============================================================ -->
+<!-- ============================================================ MAIN ============================================================ -->
 <main id="main">
 
-<!-- ============ PAGE: HOME ============ -->
+<!-- ==================== PAGE: HOME ==================== -->
 <section data-page="/" class="active">
 
-  <!-- HERO -->
   <div class="hero">
     <div class="container hero-inner">
       <div class="hero-grid">
@@ -1219,108 +1242,119 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
           <p class="hero-eyebrow">بوابة العدالة الرقمية المغربية</p>
           <h1 class="hero-title">العدالة تبدأ<br><em>بالمعرفة.</em></h1>
           <p class="hero-sub">
-            اكتشف القانون المغربي، افهم حقوقك، وابحث في التشريع والاجتهاد القضائي
-            بمساعدة أدوات ذكية ومصادر قابلة للتحقق.
+‎            اكتشف القانون المغربي، افهم حقوقك، وابحث في التشريع والاجتهاد القضائي بمساعدة أدوات ذكية ومصادر قابلة للتحقق.
           </p>
-          <div class="hero-search">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C6A56B" stroke-width="1.8" stroke-linecap="round" style="margin-inline-start:12px;flex-shrink:0"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-            <input type="search" placeholder="ابحث عن قانون، مادة، قرار، أو اطرح سؤالاً..." aria-label="البحث القانوني">
-            <a href="#/search" class="btn btn-gold btn-sm" style="padding-inline:18px">بحث</a>
+          <div class="hero-actions">
+            <a href="#/library" class="btn btn-gold" onclick="event.preventDefault();navigate('/library')">
+‎              استكشاف المكتبة
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </a>
+            <a href="#/ai" class="btn btn-ghost" onclick="event.preventDefault();navigate('/ai')" style="color:#fff;border-color:rgba(255,255,255,.3)">جرب المساعد الذكي</a>
           </div>
-          <div class="hero-trust">
-            <span>◆ مصادر رسمية موثقة</span>
+          <div style="display:flex;gap:var(--s4);flex-wrap:wrap;margin-top:var(--s5);font-size:var(--fs-xs);color:rgba(255,255,255,.55)">
+            <span>◆ مصادر موثقة</span>
             <span>◆ إحالات قابلة للتحقق</span>
             <span>◆ منصة مستقلة</span>
           </div>
         </div>
         <div>
-          <!-- Gateway SVG -->
-          <svg class="gateway-svg" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <svg class="hero-svg" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
-              <linearGradient id="g-gold" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="hg" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0" stop-color="#E2D2AE"/>
                 <stop offset="1" stop-color="#A88952"/>
               </linearGradient>
-              <linearGradient id="g-teal" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#167C80" stop-opacity=".6"/>
-                <stop offset="1" stop-color="#167C80" stop-opacity="0"/>
+              <linearGradient id="ht" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#1A6B6E" stop-opacity=".7"/>
+                <stop offset="1" stop-color="#1A6B6E" stop-opacity="0"/>
               </linearGradient>
             </defs>
-            <!-- Gateway arch -->
-            <path d="M 80 340 L 80 180 C 80 100, 200 60, 200 60 C 200 60, 320 100, 320 180 L 320 340" stroke="url(#g-gold)" stroke-width="2" fill="none"/>
-            <path d="M 100 340 L 100 195 C 100 130, 200 95, 200 95 C 200 95, 300 130, 300 195 L 300 340" stroke="#C6A56B" stroke-width="1" fill="none" opacity=".5"/>
+            <!-- Outer arch -->
+            <path d="M 70 340 L 70 170 C 70 90, 200 45, 200 45 C 200 45, 330 90, 330 170 L 330 340"
+                  stroke="url(#hg)" stroke-width="1.5" fill="none"/>
             <!-- Inner arch -->
-            <path d="M 130 340 L 130 215 C 130 170, 200 145, 200 145 C 200 145, 270 170, 270 215 L 270 340" stroke="#C6A56B" stroke-width="1" fill="none" opacity=".3"/>
-            <!-- Balance axis -->
-            <line x1="40" y1="260" x2="360" y2="260" stroke="#C6A56B" stroke-width="1" opacity=".7"/>
-            <circle cx="200" cy="260" r="6" fill="#C6A56B"/>
-            <circle cx="200" cy="260" r="12" fill="none" stroke="#C6A56B" stroke-width="1" opacity=".4"/>
-            <!-- Radial lines from center -->
-            <line x1="200" y1="60" x2="200" y2="145" stroke="#C6A56B" stroke-width="1" opacity=".4"/>
-            <line x1="200" y1="380" x2="200" y2="340" stroke="#C6A56B" stroke-width="1" opacity=".4"/>
+            <path d="M 95 340 L 95 185 C 95 115, 200 80, 200 80 C 200 80, 305 115, 305 185 L 305 340"
+                  stroke="#C6A56B" stroke-width="1" fill="none" opacity=".5"/>
+            <!-- Central balance axis -->
+            <line x1="30" y1="255" x2="370" y2="255" stroke="#C6A56B" stroke-width="1" opacity=".6"/>
+            <!-- Scale pivot -->
+            <circle cx="200" cy="255" r="5" fill="#C6A56B"/>
+            <circle cx="200" cy="255" r="11" fill="none" stroke="#C6A56B" stroke-width="1" opacity=".4"/>
+            <!-- Vertical axis -->
+            <line x1="200" y1="80" x2="200" y2="255" stroke="#C6A56B" stroke-width="1" opacity=".35"/>
+            <!-- Scale arms (diagonal) -->
+            <line x1="200" y1="130" x2="80" y2="200" stroke="#C6A56B" stroke-width="1" opacity=".4"/>
+            <line x1="200" y1="130" x2="320" y2="200" stroke="#C6A56B" stroke-width="1" opacity=".4"/>
+            <!-- Scale pans -->
+            <ellipse cx="80" cy="210" rx="30" ry="6" fill="none" stroke="#1A6B6E" stroke-width="1.5" opacity=".7"/>
+            <ellipse cx="320" cy="210" rx="30" ry="6" fill="none" stroke="#1A6B6E" stroke-width="1.5" opacity=".7"/>
             <!-- Knowledge nodes -->
-            <circle cx="80" cy="180" r="3" fill="#167C80"/>
-            <circle cx="320" cy="180" r="3" fill="#167C80"/>
-            <circle cx="130" cy="215" r="2.5" fill="#C6A56B" opacity=".7"/>
-            <circle cx="270" cy="215" r="2.5" fill="#C6A56B" opacity=".7"/>
-            <!-- Ground line -->
-            <line x1="60" y1="340" x2="340" y2="340" stroke="#C6A56B" stroke-width="1" opacity=".6"/>
-            <line x1="40" y1="356" x2="360" y2="356" stroke="#C6A56B" stroke-width="1" opacity=".3"/>
+            <circle cx="70" cy="170" r="2.5" fill="#1A6B6E"/>
+            <circle cx="330" cy="170" r="2.5" fill="#1A6B6E"/>
+            <circle cx="200" cy="45" r="2.5" fill="#C6A56B"/>
+            <!-- Base lines -->
+            <line x1="50" y1="340" x2="350" y2="340" stroke="#C6A56B" stroke-width="1" opacity=".6"/>
+            <line x1="30" y1="355" x2="370" y2="355" stroke="#C6A56B" stroke-width="1" opacity=".3"/>
+            <!-- Pattern corner dots -->
+            <circle cx="60" cy="60" r="1.5" fill="#C6A56B" opacity=".5"/>
+            <circle cx="340" cy="60" r="1.5" fill="#C6A56B" opacity=".5"/>
+            <circle cx="60" cy="340" r="1.5" fill="#C6A56B" opacity=".5"/>
+            <circle cx="340" cy="340" r="1.5" fill="#C6A56B" opacity=".5"/>
           </svg>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- QUICK PATHWAYS -->
-  <div class="container" style="margin-top: var(--s8)">
+  <!-- Quick Pathways -->
+  <div class="container" style="padding-block:var(--s7)">
     <div class="section-header">
       <span class="section-num" aria-hidden="true">١</span>
-      <p class="eyebrow">START HERE</p>
-      <h2 class="t-h2">مسارات سريعة</h2>
-      <p class="text-2 mt-2" style="font-family:var(--font-body);font-size:1.05rem;max-width:60ch">
-        بوابات مركّزة إلى أعمق ما تحتاجه: النصوص الرسمية، الاجتهادات، والأدوات التحليلية.
+      <p class="t-eyebrow">START HERE</p>
+      <h2 class="t-h2 mt-2">مسارات سريعة</h2>
+      <p class="t-body-sm text-2 mt-2" style="max-width:60ch;font-size:1.02rem">
+‎        بوابات مركّزة إلى أعمق ما تحتاجه: النصوص الرسمية، الاجتهادات، والأدوات التحليلية.
       </p>
     </div>
     <div class="grid-3">
-      <a href="#/library" class="pathway">
+      <a href="#/library" class="pathway" onclick="event.preventDefault();navigate('/library')">
         <div class="pathway-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4h12a2 2 0 0 1 2 2v14H6a2 2 0 0 1-2-2V4z"/><path d="M8 8h6M8 12h6M8 16h4"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4h12a2 2 0 0 1 2 2v14H6a2 2 0 0 1-2-2V4z"/><path d="M8 8h6M8 12h6M8 16h4"/></svg>
         </div>
         <h3>المكتبة القانونية</h3>
         <p>الدستور، المدونات، القوانين التنظيمية، والنصوص الرسمية مصنّفة ومربوطة بمصادرها.</p>
       </a>
-      <a href="#/case-law" class="pathway">
+      <a href="#/case-law" class="pathway" onclick="event.preventDefault();navigate('/case-law')">
         <div class="pathway-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3v18M5 21h14M5 7l-3 6h6zM19 7l-3 6h6z"/><path d="M8 7h8"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3v18M5 21h14M5 7l-3 6h6zM19 7l-3 6h6z"/><path d="M8 7h8"/></svg>
         </div>
         <h3>الاجتهادات القضائية</h3>
         <p>قرارات ومبادئ قضائية منشورة، مع تمييز واضح بين النص الكامل والملخص والمبدأ.</p>
       </a>
-      <a href="#/ai" class="pathway">
+      <a href="#/ai" class="pathway" onclick="event.preventDefault();navigate('/ai')">
         <div class="pathway-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="4" y="6" width="16" height="12" rx="3"/><circle cx="9" cy="12" r="1.5" fill="currentColor"/><circle cx="15" cy="12" r="1.5" fill="currentColor"/><path d="M12 3v3M8 3v2M16 3v2"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="4" y="6" width="16" height="12" rx="3"/><circle cx="9" cy="12" r="1.2" fill="currentColor"/><circle cx="15" cy="12" r="1.2" fill="currentColor"/><path d="M12 3v3M8 3v2M16 3v2"/></svg>
         </div>
         <h3>AADALA AI</h3>
-        <p>مساعد قانوني متخصص يفهم الدارجة والعربية، يجيب بإحالات قابلة للتحقق ودرجة يقين معلنة.</p>
+        <p>مساعد قانوني متخصص يفهم العربية والدارجة، يجيب بإحالات قابلة للتحقق ودرجة يقين معلنة.</p>
       </a>
-      <a href="#/miyar" class="pathway">
+      <a href="#/miyar" class="pathway" onclick="event.preventDefault();navigate('/miyar')">
         <div class="pathway-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3v18M8 21h8"/><circle cx="12" cy="9" r="5"/><path d="M9 9h6"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3v18M8 21h8"/><circle cx="12" cy="9" r="5"/><path d="M9 9h6"/></svg>
         </div>
         <h3>مِعيار — الإرث</h3>
         <p>محرك حساب حتمي للفرائض والتعصيب والعول، مع شرح خطوة بخطوة ومراجعة مختص.</p>
       </a>
-      <a href="#/property" class="pathway">
+      <a href="#/property" class="pathway" onclick="event.preventDefault();navigate('/property')">
         <div class="pathway-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6"/></svg>
         </div>
         <h3>العقار والحقوق العينية</h3>
         <p>التحفيظ، الشياع، القسمة، الرهون، والارتفاقات — مربوطة بمدونة 39.08.</p>
       </a>
-      <a href="#/legal-aid" class="pathway">
+      <a href="#/legal-aid" class="pathway" onclick="event.preventDefault();navigate('/legal-aid')">
         <div class="pathway-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/></svg>
         </div>
         <h3>المساعدة القانونية</h3>
         <p>أدلة حقوق ومساطر بلغة واضحة. لا نمثّلك قضائياً، لكن نساعدك على فهم الخطوة التالية.</p>
@@ -1328,172 +1362,38 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
     </div>
   </div>
 
-  <!-- GAZETTE FEATURE -->
-  <div class="container" style="margin-top: var(--s9)">
+  <!-- Trust Section -->
+  <div class="container" style="padding-block:var(--s7)">
     <div class="section-header">
       <span class="section-num" aria-hidden="true">٢</span>
-      <p class="eyebrow">OFFICIAL GAZETTE</p>
-      <h2 class="t-h2">الجريدة الرسمية</h2>
-      <p class="text-2 mb-5" style="font-family:var(--font-body);font-size:1.05rem;max-width:60ch">
-        الأرشيف التشريعي المغربي، من الأعداد الأولى إلى آخر عدد منشور — كل صفحة موثّقة بمصدرها.
-      </p>
-    </div>
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r3);padding:var(--s6);position:relative;overflow:hidden">
-      <div style="display:grid;gap:var(--s6);grid-template-columns:1fr" class="lg-2col">
-        <div>
-          <span class="badge badge-teal mb-4">◆ التحقق: مستمر</span>
-          <h3 class="t-h3 mb-4">العدد 7437 — 15 ربيع الأول 1447 / 8 سبتمبر 2025</h3>
-          <p class="text-2 mb-5" style="font-family:var(--font-body);line-height:1.8">
-            نموذج تطبيقي على بنية العرض في الأرشيف: نص أصلي PDF، نص مستخرج OCR موسوم بجودته،
-            وفهرس مواد داخل العدد. يحتوي هذا العدد على ظهير تنفيذ القانون 03.23 المعدّل
-            للقانون 22.01 المتعلق بالمسطرة الجنائية.
-          </p>
-          <div style="display:flex;gap:var(--s3);flex-wrap:wrap">
-            <a href="#/library" class="btn btn-gold btn-sm">تصفح العدد</a>
-            <a href="#/library" class="btn btn-ghost btn-sm">أرشيف الجريدة</a>
-          </div>
-        </div>
-        <div style="background:var(--surface-3);border-radius:var(--r2);padding:var(--s5);font-family:var(--font-mono);font-size:12px;color:var(--text-2);line-height:1.9">
-          <div style="color:var(--text-3);margin-bottom:8px;font-family:var(--font-ui);font-size:11px;letter-spacing:.08em">GAZETTE ISSUE</div>
-          <div><span style="color:var(--text-3)">Number:</span> 7437</div>
-          <div><span style="color:var(--text-3)">Date:</span> 2025-09-08</div>
-          <div><span style="color:var(--text-3)">Hijri:</span> 1447-03-15</div>
-          <div><span style="color:var(--text-3)">Pages:</span> 78</div>
-          <div><span style="color:var(--text-3)">PDF:</span> ◆ verified</div>
-          <div><span style="color:var(--text-3)">OCR:</span> ◆ reviewed</div>
-          <div style="margin-top:12px;padding-top:12px;border-top:1px dashed var(--border)">
-            <span style="color:var(--text-3)">Contents:</span> 12 items
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- LEGAL RADAR -->
-  <div class="container" style="margin-top: var(--s9)">
-    <div class="section-header">
-      <span class="section-num" aria-hidden="true">٣</span>
-      <p class="eyebrow">LEGAL RADAR</p>
-      <h2 class="t-h2">المستجدات القانونية</h2>
-      <p class="text-2 mb-5" style="font-family:var(--font-body);font-size:1.05rem;max-width:60ch">
-        نصوص جديدة، تعديلات، إلغاءات — بمصدرها وتاريخ سريانها.
-      </p>
-    </div>
-    <div class="grid-3">
-      <div class="doc-card">
-        <span class="badge badge-gold">تعديل</span>
-        <h3 class="t-h4 mt-4">القانون 03.23 — تعديل المسطرة الجنائية</h3>
-        <p class="text-2 mt-2" style="font-size:var(--fs-sm);line-height:1.6">
-          ظهير تنفيذ القانون رقم 03.23 المعدّل للقانون 22.01 المتعلق بالمسطرة الجنائية.
-        </p>
-        <div class="row mt-4" style="gap:var(--s2);flex-wrap:wrap;font-size:var(--fs-xs);color:var(--text-3)">
-          <span>◆ ج.ر 7437</span><span>◆ 2025-09-08</span>
-        </div>
-      </div>
-      <div class="doc-card">
-        <span class="badge badge-teal">نافذ</span>
-        <h3 class="t-h4 mt-4">مدونة الحقوق العينية 39.08</h3>
-        <p class="text-2 mt-2" style="font-size:var(--fs-sm);line-height:1.6">
-          الصيغة الموحدة بتاريخ 2025-08-25، تشمل تعديلات متعددة على مدونة الحقوق العينية.
-        </p>
-        <div class="row mt-4" style="gap:var(--s2);flex-wrap:wrap;font-size:var(--fs-xs);color:var(--text-3)">
-          <span>◆ صيغة موحدة</span><span>◆ 2025-08-25</span>
-        </div>
-      </div>
-      <div class="doc-card">
-        <span class="badge badge-navy">مشروع</span>
-        <h3 class="t-h4 mt-4">مشروع قانون — قيد المناقشة</h3>
-        <p class="text-2 mt-2" style="font-size:var(--fs-sm);line-height:1.6">
-          الوضع القانوني: مشروع / لم يُنشر بعد في الجريدة الرسمية. لن يُدرج كنافذ.
-        </p>
-        <div class="row mt-4" style="gap:var(--s2);flex-wrap:wrap;font-size:var(--fs-xs);color:var(--text-3)">
-          <span>◆ مسودة</span><span>◆ غير نافذ</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- KNOWLEDGE GRAPH PREVIEW -->
-  <div class="container" style="margin-top: var(--s9)">
-    <div class="section-header">
-      <span class="section-num" aria-hidden="true">٤</span>
-      <p class="eyebrow">KNOWLEDGE CONNECTIONS</p>
-      <h2 class="t-h2">خريطة المعرفة</h2>
-      <p class="text-2 mb-5" style="font-family:var(--font-body);font-size:1.05rem;max-width:60ch">
-        كل مادة قانونية مرتبطة بما يعدّلها، بما يفسّرها، وما يطبّقها من اجتهادات.
-      </p>
-    </div>
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r3);padding:var(--s6);text-align:center">
-      <svg viewBox="0 0 600 260" style="width:100%;max-width:600px;margin:auto" aria-label="معاينة لخريطة معرفية">
-        <defs>
-          <linearGradient id="edge" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#C6A56B" stop-opacity=".15"/>
-            <stop offset=".5" stop-color="#C6A56B" stop-opacity=".6"/>
-            <stop offset="1" stop-color="#C6A56B" stop-opacity=".15"/>
-          </linearGradient>
-        </defs>
-        <!-- edges -->
-        <line x1="300" y1="60" x2="150" y2="130" stroke="url(#edge)" stroke-width="1.5"/>
-        <line x1="300" y1="60" x2="450" y2="130" stroke="url(#edge)" stroke-width="1.5"/>
-        <line x1="300" y1="60" x2="300" y2="200" stroke="url(#edge)" stroke-width="1.5"/>
-        <line x1="150" y1="130" x2="300" y2="200" stroke="url(#edge)" stroke-width="1.5"/>
-        <line x1="450" y1="130" x2="300" y2="200" stroke="url(#edge)" stroke-width="1.5"/>
-        <line x1="150" y1="130" x2="80" y2="200" stroke="url(#edge)" stroke-width="1.5"/>
-        <line x1="450" y1="130" x2="520" y2="200" stroke="url(#edge)" stroke-width="1.5"/>
-        <!-- nodes -->
-        <g font-family="var(--font-display)" font-size="11" text-anchor="middle" fill="#F6F4EF">
-          <circle cx="300" cy="60" r="26" fill="#101D32" stroke="#C6A56B" stroke-width="2"/>
-          <text x="300" y="64" font-size="12" font-weight="700">الدستور</text>
-          <circle cx="150" cy="130" r="22" fill="#172B45" stroke="#C6A56B" stroke-width="1.5"/>
-          <text x="150" y="134" font-size="10">مدونة الأسرة</text>
-          <circle cx="450" cy="130" r="22" fill="#172B45" stroke="#C6A56B" stroke-width="1.5"/>
-          <text x="450" y="134" font-size="10">الحقوق العينية</text>
-          <circle cx="300" cy="200" r="22" fill="#167C80" stroke="#C6A56B" stroke-width="1.5"/>
-          <text x="300" y="204" font-size="10">الالتزامات</text>
-          <circle cx="80" cy="200" r="18" fill="#172B45" stroke="#C6A56B" stroke-width="1"/>
-          <text x="80" y="204" font-size="9">مسطرة مدنية</text>
-          <circle cx="520" cy="200" r="18" fill="#172B45" stroke="#C6A56B" stroke-width="1"/>
-          <text x="520" y="204" font-size="9">مسطرة جنائية</text>
-        </g>
-      </svg>
-      <p class="text-3 mt-4" style="font-size:var(--fs-xs)">
-        معاينة توضيحية — البيانات الحقيقية ستُبنى من قاعدة المصادر.
-      </p>
-    </div>
-  </div>
-
-  <!-- TRUST -->
-  <div class="container" style="margin-top: var(--s9);margin-bottom: var(--s8)">
-    <div class="section-header">
-      <span class="section-num" aria-hidden="true">٥</span>
-      <p class="eyebrow">TRUST &amp; METHOD</p>
-      <h2 class="t-h2">لماذا تثق بنا</h2>
+      <p class="t-eyebrow">TRUST &amp; METHOD</p>
+      <h2 class="t-h2 mt-2">لماذا تثق بنا</h2>
     </div>
     <div class="grid-4">
       <div class="card">
-        <div class="pathway-icon mb-4" style="background:color-mix(in srgb,var(--teal) 12%,transparent);color:var(--teal)">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 5-3.5 8-9 9-5.5-1-9-4-9-9V5l9-3 9 3z"/></svg>
+        <div class="pathway-icon mb-4" style="color:var(--teal);background:color-mix(in srgb,var(--teal) 8%,transparent);border-color:color-mix(in srgb,var(--teal) 25%,transparent)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 5-3.5 8-9 9-5.5-1-9-4-9-9V5l9-3 9 3z"/></svg>
         </div>
         <h4 class="t-h4 mb-2">مصادر موثقة</h4>
         <p class="text-2" style="font-size:var(--fs-sm);line-height:1.6">كل نص يحمل معرّف مصدره وتاريخ نشره وتاريخ آخر تحقق منه.</p>
       </div>
       <div class="card">
-        <div class="pathway-icon mb-4" style="background:color-mix(in srgb,var(--teal) 12%,transparent);color:var(--teal)">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <div class="pathway-icon mb-4" style="color:var(--teal);background:color-mix(in srgb,var(--teal) 8%,transparent);border-color:color-mix(in srgb,var(--teal) 25%,transparent)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
         </div>
         <h4 class="t-h4 mb-2">آخر تحقق</h4>
         <p class="text-2" style="font-size:var(--fs-sm);line-height:1.6">نُظهر تاريخ آخر مراجعة لكل مادة، ونفرّق بين النافذ والمعدّل والملغى.</p>
       </div>
       <div class="card">
-        <div class="pathway-icon mb-4" style="background:color-mix(in srgb,var(--teal) 12%,transparent);color:var(--teal)">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3l9 4v6c0 5-3.5 8-9 9-5.5-1-9-4-9-9V7z"/></svg>
+        <div class="pathway-icon mb-4" style="color:var(--teal);background:color-mix(in srgb,var(--teal) 8%,transparent);border-color:color-mix(in srgb,var(--teal) 25%,transparent)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3l9 4v6c0 5-3.5 8-9 9-5.5-1-9-4-9-9V7z"/></svg>
         </div>
         <h4 class="t-h4 mb-2">استقلال واضح</h4>
-        <p class="text-2" style="font-size:var(--fs-sm);line-height:1.6">منصة خاصة. لا نمثّل جهة حكومية أو قضائية. التوجيه لا يُعدّ استشارة مهنية.</p>
+        <p class="text-2" style="font-size:var(--fs-sm);line-height:1.6">منصة خاصة. لا نمثّل جهة حكومية. التوجيه لا يُعدّ استشارة مهنية.</p>
       </div>
       <div class="card">
-        <div class="pathway-icon mb-4" style="background:color-mix(in srgb,var(--teal) 12%,transparent);color:var(--teal)">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>
+        <div class="pathway-icon mb-4" style="color:var(--teal);background:color-mix(in srgb,var(--teal) 8%,transparent);border-color:color-mix(in srgb,var(--teal) 25%,transparent)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>
         </div>
         <h4 class="t-h4 mb-2">شفافية الحدود</h4>
         <p class="text-2" style="font-size:var(--fs-sm);line-height:1.6">عندما لا نملك مصدراً كافياً، نقول ذلك — لا نملأ الفراغ بالتخمين.</p>
@@ -1503,45 +1403,39 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
 
 </section>
 
-<!-- ============ PAGE: LIBRARY ============ -->
+<!-- ==================== PAGE: LIBRARY ==================== -->
 <section data-page="/library">
   <div class="container">
     <div class="page-header">
-      <nav class="breadcrumb" aria-label="مسار">
-        <a href="#/">الرئيسية</a><span class="breadcrumb-sep">/</span>
+      <nav class="breadcrumb">
+        <a onclick="navigate('/')">الرئيسية</a><span class="breadcrumb-sep">/</span>
         <span>المكتبة القانونية</span>
       </nav>
       <h1 class="t-h1">المكتبة القانونية</h1>
-      <p class="text-2 mt-4" style="font-family:var(--font-body);max-width:65ch;font-size:1.05rem">
-        كل نص قانوني مغربي، مُصنّف تحت شجرة موضوعية، مع نسخه التاريخية وتعديلاته ومصادره.
+      <p class="t-body-sm text-2 mt-3" style="max-width:65ch">
+‎        كل نص قانوني مغربي، مُصنّف تحت شجرة موضوعية، مع نسخه التاريخية وتعديلاته ومصادره.
       </p>
     </div>
 
     <div class="demo-banner">
-      هذه معاينة للبنية. النصوص المعروضة هنا للمقاربة الوظيفية فقط، ولا تُعد نصاً قانونياً نافذاً. تحقّق دائماً من الجريدة الرسمية.
+‎      هذه معاينة للبنية. النصوص المعروضة هنا للمقاربة الوظيفية فقط. تحقّق دائماً من الجريدة الرسمية.
     </div>
 
     <div class="sidebar-layout">
       <aside class="sidebar">
         <h4 class="t-label mb-4">التصنيفات</h4>
         <nav class="sidebar-nav">
-          <a href="#" class="active">الدستور والنصوص الأساسية <span class="count">12</span></a>
-          <a href="#">القوانين التنظيمية <span class="count">24</span></a>
-          <a href="#">القوانين العادية <span class="count">218</span></a>
-          <a href="#">مدونة الأسرة <span class="count">1</span></a>
-          <a href="#">الالتزامات والعقود <span class="count">1</span></a>
-          <a href="#">القانون الجنائي <span class="count">1</span></a>
-          <a href="#">المسطرة الجنائية <span class="count">1</span></a>
-          <a href="#">المسطرة المدنية <span class="count">1</span></a>
-          <a href="#">الحقوق العينية <span class="count">1</span></a>
-          <a href="#">التحفيظ العقاري <span class="count">1</span></a>
-          <a href="#">مدونة التجارة <span class="count">1</span></a>
-          <a href="#">قانون الشغل <span class="count">1</span></a>
-          <a href="#">قوانين الشركات <span class="count">6</span></a>
-          <a href="#">القوانين الإدارية <span class="count">34</span></a>
-          <a href="#">النصوص الضريبية <span class="count">28</span></a>
-          <a href="#">التشريعات العقارية <span class="count">18</span></a>
-          <a href="#">الحريات والحقوق <span class="count">15</span></a>
+          <a class="active">الدستور والنصوص الأساسية <span class="count">12</span></a>
+          <a>القوانين التنظيمية <span class="count">24</span></a>
+          <a>القوانين العادية <span class="count">218</span></a>
+          <a>مدونة الأسرة <span class="count">1</span></a>
+          <a>الالتزامات والعقود <span class="count">1</span></a>
+          <a>القانون الجنائي <span class="count">1</span></a>
+          <a>المسطرة الجنائية <span class="count">1</span></a>
+          <a>الحقوق العينية <span class="count">1</span></a>
+          <a>مدونة التجارة <span class="count">1</span></a>
+          <a>قانون الشغل <span class="count">1</span></a>
+          <a>القوانين الإدارية <span class="count">34</span></a>
         </nav>
       </aside>
 
@@ -1552,39 +1446,35 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
         </div>
 
         <div class="doc-card mb-5">
-          <div class="row-between">
-            <div>
-              <span class="badge badge-teal">◆ نافذ</span>
-              <h3 class="t-h3 mt-4">الدستور المغربي 2011</h3>
-              <p class="text-2 mt-2" style="font-family:var(--font-body);max-width:60ch">
-                دستور المملكة المغربية، صادر بموجب الاستفتاء الشعبي في فاتح يوليو 2011، ومنشور بالجريدة الرسمية.
-              </p>
-            </div>
+          <div class="row mb-3" style="gap:var(--s2)">
+            <span class="seal">◆ نافذ</span>
+            <span class="badge badge-gold">دستور</span>
           </div>
-          <div style="display:grid;gap:var(--s3);grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin-top:var(--s5);padding-top:var(--s4);border-top:1px solid var(--border)">
-            <div><div class="t-label">النوع</div><div class="mt-1">دستور</div></div>
-            <div><div class="t-label">تاريخ الإصدار</div><div class="mt-1">2011-07-01</div></div>
-            <div><div class="t-label">النشر</div><div class="mt-1">2011-07-30</div></div>
-            <div><div class="t-label">المواد</div><div class="mt-1">180 مادة</div></div>
-            <div><div class="t-label">آخر تحقق</div><div class="mt-1">2025-11-01</div></div>
-            <div><div class="t-label">المصدر</div><div class="mt-1">الجريدة الرسمية</div></div>
+          <h3 class="t-h3">الدستور المغربي 2011</h3>
+          <p class="t-body-sm text-2 mt-2" style="max-width:60ch">
+‎            دستور المملكة المغربية، صادر بموجب الاستفتاء الشعبي في فاتح يوليو 2011، ومنشور بالجريدة الرسمية.
+          </p>
+          <div style="display:grid;gap:var(--s3);grid-template-columns:repeat(auto-fit,minmax(120px,1fr));margin-top:var(--s5);padding-top:var(--s4);border-top:1px solid var(--border)">
+            <div><div class="t-label">النوع</div><div class="mt-1" style="font-size:var(--fs-sm)">دستور</div></div>
+            <div><div class="t-label">الإصدار</div><div class="mt-1 t-mono" style="font-size:var(--fs-sm)">2011-07-01</div></div>
+            <div><div class="t-label">المواد</div><div class="mt-1" style="font-size:var(--fs-sm)">180 مادة</div></div>
+            <div><div class="t-label">آخر تحقق</div><div class="mt-1 t-mono" style="font-size:var(--fs-sm)">2025-11-01</div></div>
           </div>
-          <div class="row mt-5" style="gap:var(--s3);flex-wrap:wrap">
-            <a href="#/" class="btn btn-primary btn-sm">قراءة النص الكامل</a>
-            <a href="#/" class="btn btn-ghost btn-sm">النسخ التاريخية</a>
-            <a href="#/" class="btn btn-ghost btn-sm">المصادر</a>
+          <div class="row mt-5" style="gap:var(--s2);flex-wrap:wrap">
+            <a href="#" class="btn btn-primary btn-sm">قراءة النص الكامل</a>
+            <a href="#" class="btn btn-ghost btn-sm">النسخ التاريخية</a>
+            <a href="#" class="btn btn-ghost btn-sm">المصادر</a>
           </div>
         </div>
 
-        <!-- Article preview -->
-        <div class="manuscript" style="margin-top:var(--s5)">
+        <div class="manuscript">
           <div class="article">
             <div class="article-num">
-              <span>الفصل 1 — ١</span>
-              <span class="badge badge-teal">مثال</span>
+              <span>الفصل الأول</span>
+              <span class="seal" style="font-size:9px">مثال</span>
             </div>
             <p class="article-body">
-              نظام الحكم بالمغرب نظام ملكية دستورية، ديمقراطية برلمانية واجتماعية. يقوم النظام الدستوري للمملكة على أساس فصل السلط، وتوازنها وتعاونها، والديمقراطية المواطنة والتشاركية، وعلى مبادئ الحكامة الجيدة، وربط المسؤولية بالمحاسبة.
+‎              نظام الحكم بالمغرب نظام ملكية دستورية، ديمقراطية برلمانية واجتماعية. يقوم النظام الدستوري للمملكة على أساس فصل السلط، وتوازنها وتعاونها، والديمقراطية المواطنة والتشاركية، وعلى مبادئ الحكامة الجيدة، وربط المسؤولية بالمحاسبة.
             </p>
             <div class="article-source">
               <span>◆ مصدر: الدستور 2011</span>
@@ -1594,109 +1484,93 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
           </div>
         </div>
 
-        <p class="text-3 mt-5" style="font-size:var(--fs-sm)">
-          المادة أعلاه معروضة كـ<b>مثال توضيحي على بنية العرض فقط</b>. لا تُعتمد كنص رسمي — الرجوع للجريدة الرسمية إلزامي.
+        <p class="t-caption mt-4">
+‎          المادة أعلاه معروضة كـ<b>مثال توضيحي على بنية العرض فقط</b>. الرجوع للجريدة الرسمية إلزامي.
         </p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ PAGE: SEARCH ============ -->
+<!-- ==================== PAGE: SEARCH ==================== -->
 <section data-page="/search">
   <div class="container">
     <div class="page-header">
-      <nav class="breadcrumb" aria-label="مسار">
-        <a href="#/">الرئيسية</a><span class="breadcrumb-sep">/</span>
+      <nav class="breadcrumb">
+        <a onclick="navigate('/')">الرئيسية</a><span class="breadcrumb-sep">/</span>
         <span>البحث</span>
       </nav>
       <h1 class="t-h1">البحث القانوني</h1>
     </div>
 
     <div class="search mb-5">
-      <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input type="search" placeholder="ابحث عن قانون، مادة، قرار، أو كلمة مفتاحية..." value="القانون الجنائي" aria-label="البحث">
+      <svg class="search-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="search" id="searchInput" placeholder="ابحث عن قانون، مادة، قرار، أو كلمة مفتاحية..." value="القانون الجنائي">
+      <button class="btn btn-gold btn-sm" onclick="runSearch()">بحث</button>
     </div>
 
     <div style="display:grid;gap:var(--s5);grid-template-columns:1fr" class="lg-sidebar">
       <div>
         <div class="row-between mb-5">
           <h2 class="t-h3">النتائج</h2>
-          <span class="text-3" style="font-size:var(--fs-sm)">مثال توضيحي · 4 نتائج</span>
+          <span class="text-3" style="font-size:var(--fs-sm)" id="resultsCount">4 نتائج</span>
         </div>
 
         <div class="demo-banner">
-          النتائج التالية <b>مثال توضيحي للبنية فقط</b> — بيانات حقيقية ستُبنى من قاعدة المصادر.
+‎          النتائج التالية <b>مثال توضيحي للبنية فقط</b> — بيانات حقيقية ستُبنى من قاعدة المصادر.
         </div>
 
-        <div class="article mb-4">
-          <div class="row-between mb-3">
-            <div class="row" style="gap:var(--s2);flex-wrap:wrap">
-              <span class="badge badge-gold">القانون الجنائي</span>
-              <span class="badge">مادة</span>
+        <div id="searchResults">
+          <div class="article mb-4">
+            <div class="row-between mb-3">
+              <div class="row" style="gap:var(--s2);flex-wrap:wrap">
+                <span class="badge badge-gold">القانون الجنائي</span>
+                <span class="badge">مادة</span>
+              </div>
+              <span class="seal">◆ متحقق</span>
             </div>
-            <span class="seal">◆ متحقق</span>
-          </div>
-          <h3 class="t-h4 mb-2">الفصل 392 — القتل العمد</h3>
-          <p class="text-2" style="font-family:var(--font-body);font-size:1rem;line-height:1.75">
-            كل من تسبب عمداً في قتل شخص آخر يعد قاتلاً، ويعاقب بالسجن المؤبد...
-          </p>
-          <div class="article-source">
-            <span>◆ مجموعة القانون الجنائي</span>
-            <span>◆ آخر تحقق: 2025-10-15</span>
-          </div>
-        </div>
-
-        <div class="article mb-4">
-          <div class="row-between mb-3">
-            <div class="row" style="gap:var(--s2);flex-wrap:wrap">
-              <span class="badge badge-gold">المسطرة الجنائية</span>
-              <span class="badge">مادة</span>
+            <h3 class="t-h4 mb-2">الفصل 392 — القتل العمد</h3>
+            <p class="t-body-sm text-2">
+‎              كل من تسبب عمداً في قتل شخص آخر يعد قاتلاً، ويعاقب بالسجن المؤبد...
+            </p>
+            <div class="article-source">
+              <span>◆ مجموعة القانون الجنائي</span>
+              <span>◆ آخر تحقق: 2025-10-15</span>
             </div>
-            <span class="seal">◆ متحقق</span>
           </div>
-          <h3 class="t-h4 mb-2">المادة 66 — الحراسة النظرية</h3>
-          <p class="text-2" style="font-family:var(--font-body);font-size:1rem;line-height:1.75">
-            يمكن لضابط الشرطة القضائية أن يحتفظ بشخص أو عدة أشخاص تحت الحراسة النظرية...
-          </p>
-          <div class="article-source">
-            <span>◆ القانون 22.01 المعدّل</span>
-            <span>◆ آخر تحقق: 2025-10-15</span>
-          </div>
-        </div>
-
-        <div class="article mb-4">
-          <div class="row-between mb-3">
-            <div class="row" style="gap:var(--s2);flex-wrap:wrap">
-              <span class="badge badge-teal">اجتهاد</span>
-              <span class="badge">قرار</span>
+          <div class="article mb-4">
+            <div class="row-between mb-3">
+              <div class="row" style="gap:var(--s2);flex-wrap:wrap">
+                <span class="badge badge-gold">المسطرة الجنائية</span>
+                <span class="badge">مادة</span>
+              </div>
+              <span class="seal">◆ متحقق</span>
             </div>
-            <span class="seal">◆ متحقق</span>
-          </div>
-          <h3 class="t-h4 mb-2">قرار — محكمة النقض، الغرفة الجنائية</h3>
-          <p class="text-2" style="font-family:var(--font-body);font-size:1rem;line-height:1.75">
-            مبدأ قضائي حول تطبيق الفصل 392 من مجموعة القانون الجنائي...
-          </p>
-          <div class="article-source">
-            <span>◆ رقم القرار: —</span>
-            <span>◆ التاريخ: —</span>
-          </div>
-        </div>
-
-        <div class="article">
-          <div class="row-between mb-3">
-            <div class="row" style="gap:var(--s2);flex-wrap:wrap">
-              <span class="badge">جريدة رسمية</span>
+            <h3 class="t-h4 mb-2">المادة 66 — الحراسة النظرية</h3>
+            <p class="t-body-sm text-2">
+‎              يمكن لضابط الشرطة القضائية أن يحتفظ بشخص أو عدة أشخاص تحت الحراسة النظرية...
+            </p>
+            <div class="article-source">
+              <span>◆ القانون 22.01 المعدّل</span>
+              <span>◆ آخر تحقق: 2025-10-15</span>
             </div>
-            <span class="seal">◆ متحقق</span>
           </div>
-          <h3 class="t-h4 mb-2">ج.ر 7437 — القانون 03.23</h3>
-          <p class="text-2" style="font-family:var(--font-body);font-size:1rem;line-height:1.75">
-            ظهير تنفيذ القانون رقم 03.23 المعدّل للقانون 22.01 المتعلق بالمسطرة الجنائية...
-          </p>
-          <div class="article-source">
-            <span>◆ ج.ر 7437</span>
-            <span>◆ 2025-09-08</span>
+          <div class="article mb-4">
+            <div class="row-between mb-3">
+              <div class="row" style="gap:var(--s2);flex-wrap:wrap">
+                <span class="badge badge-teal">اجتهاد</span>
+                <span class="badge">قرار</span>
+              </div>
+              <span class="seal">◆ متحقق</span>
+            </div>
+            <h3 class="t-h4 mb-2">قرار — محكمة النقض، الغرفة الجنائية</h3>
+            <p class="t-body-sm text-2">
+‎              مبدأ قضائي حول تطبيق الفصل 392 من مجموعة القانون الجنائي...
+            </p>
+            <div class="article-source">
+              <span>◆ رقم القرار: —</span>
+              <span>◆ التاريخ: —</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1706,8 +1580,8 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
           <h4 class="t-label mb-4">تصفية النتائج</h4>
           <div class="stack">
             <div class="field">
-              <label for="f1">نوع المصدر</label>
-              <select class="select" id="f1">
+              <label>نوع المصدر</label>
+              <select class="select">
                 <option>الكل</option>
                 <option>الدستور</option>
                 <option>مدونات وقوانين</option>
@@ -1716,18 +1590,17 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
               </select>
             </div>
             <div class="field">
-              <label for="f2">الحالة القانونية</label>
-              <select class="select" id="f2">
+              <label>الحالة القانونية</label>
+              <select class="select">
                 <option>الكل</option>
                 <option>نافذ</option>
                 <option>معدّل</option>
                 <option>ملغى</option>
-                <option>غير متحقق</option>
               </select>
             </div>
             <div class="field">
-              <label for="f3">اللغة</label>
-              <select class="select" id="f3">
+              <label>اللغة</label>
+              <select class="select">
                 <option>العربية</option>
                 <option>الفرنسية</option>
                 <option>الإنجليزية</option>
@@ -1740,22 +1613,22 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   </div>
 </section>
 
-<!-- ============ PAGE: AI WORKSPACE ============ -->
+<!-- ==================== PAGE: AI ==================== -->
 <section data-page="/ai">
   <div class="container">
     <div class="page-header">
-      <nav class="breadcrumb" aria-label="مسار">
-        <a href="#/">الرئيسية</a><span class="breadcrumb-sep">/</span>
+      <nav class="breadcrumb">
+        <a onclick="navigate('/')">الرئيسية</a><span class="breadcrumb-sep">/</span>
         <span>AADALA AI</span>
       </nav>
       <h1 class="t-h1">AADALA AI — مساحة البحث القانوني</h1>
-      <p class="text-2 mt-4" style="font-family:var(--font-body);max-width:65ch;font-size:1.05rem">
-        مساعد قانوني متخصص في القانون المغربي. كل جواب يبين مصادره، افتراضاته، درجة يقينه، ونواقصه.
+      <p class="t-body-sm text-2 mt-3" style="max-width:65ch">
+‎        مساعد قانوني متخصص في القانون المغربي. كل جواب يبين مصادره، افتراضاته، درجة يقينه، ونواقصه.
       </p>
     </div>
 
     <div class="demo-banner">
-      هذه <b>محادثة مثال</b> توضح بنية الإجابة. AADALA AI الحقيقي غير مُفعّل في هذه المعاينة. لا تُعتمد الإجابات هنا كاستشارة قانونية.
+‎      هذه <b>محادثة مثال</b> توضح بنية الإجابة. لا تُعتمد الإجابات هنا كاستشارة قانونية.
     </div>
 
     <div class="ai-layout">
@@ -1763,10 +1636,9 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
         <div class="msg msg-user">
           <div class="msg-avatar">أ</div>
           <div class="msg-content">
-            شخص اشترى سيارة، وبعد 3 أشهر اكتشف أنها كانت مبيعة لشخص آخر برهن. ما حقوقه؟
+‎            شخص اشترى سيارة، وبعد 3 أشهر اكتشف أنها كانت مبيعة لشخص آخر برهن. ما حقوقه؟
           </div>
         </div>
-
         <div class="msg msg-ai">
           <div class="msg-avatar">ع</div>
           <div class="msg-content">
@@ -1774,62 +1646,40 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
               <span class="badge badge-teal">◆ RAG — مصادر مسترجعة</span>
               <span class="badge">درجة اليقين: متوسطة</span>
             </div>
-
-            <div class="ai-answer-section">
+            <div class="ai-section">
               <h5><span class="num">01</span> الوقائع المفترضة</h5>
-              <p>المستخدم اشترى سيارة من بائع، وبعد 3 أشهر اكتشف وجود رهن مسجل لصالح طرف ثالث. غير محدد: هل كان الرهن مسجلاً في تاريخ البيع؟ هل المشتري تصرف بحسن نية؟</p>
+              <p>المشتري اشترى سيارة، وبعد 3 أشهر اكتشف وجود رهن مسجل لصالح طرف ثالث. غير محدد: هل كان الرهن مسجلاً في تاريخ البيع؟ هل المشتري تصرف بحسن نية؟</p>
             </div>
-
-            <div class="ai-answer-section">
+            <div class="ai-section">
               <h5><span class="num">02</span> الإشكال القانوني</h5>
               <p>مدى أثر الرهن المنشأ على مال منقول بيع لطرف حسن النية، وحقوق المشتري تجاه البائع والدائن المرتهن.</p>
             </div>
-
-            <div class="ai-answer-section">
+            <div class="ai-section">
               <h5><span class="num">03</span> الأساس القانوني</h5>
               <p>
-                ظهير الالتزامات والعقود، في باب البيع — أحكام ضمان الاستحقاق
-                <span class="citation">UOC · Book 2 · § 532</span>،
-                والقواعد العامة في المسؤولية العقدية.
-                <br>
-                <span class="badge badge-gold">قيد التحقق: يجب مطابقة النص الحالي للجريدة الرسمية</span>
+‎                ظهير الالتزامات والعقود، باب البيع — أحكام ضمان الاستحقاق
+                <span class="citation">UOC · Book 2 · § 532</span>
+‎                والقواعد العامة في المسؤولية العقدية.
               </p>
             </div>
-
-            <div class="ai-answer-section">
+            <div class="ai-section">
               <h5><span class="num">04</span> التحليل</h5>
               <p>يُرجّح أن للمشتري حق الرجوع على البائع بالضمان، مع فروق جوهرية بين الحالات: علم المشتري بالرهن، تسجيل الرهن في السجل، وحسن نيته في تاريخ الشراء.</p>
             </div>
-
-            <div class="ai-answer-section">
-              <h5><span class="num">05</span> التطبيقات المحتملة</h5>
-              <p>فسخ البيع، إنقاص الثمن، التعويض، ورهن المسار الإجرائي على ما يثبته السجل.</p>
-            </div>
-
-            <div class="ai-answer-section">
-              <h5><span class="num">06</span> المراجع</h5>
-              <p>ظهير الالتزامات والعقود — الباب الثاني، الفرع الثاني (ضمان الاستحقاق). يلزم التأكد من النسخة النافذة.</p>
-            </div>
-
-            <div class="ai-answer-section">
-              <h5><span class="num">07</span> درجة اليقين</h5>
-              <p>متوسطة. تعتمد النتيجة على وقائع لم تُثبت بعد (تاريخ الرهن، علم المشتري، التسجيل).</p>
-            </div>
-
-            <div class="ai-answer-section">
-              <h5><span class="num">08</span> المعلومات الناقصة</h5>
-              <p>تاريخ تسجيل الرهن، وثيقة البيع، وطبيعة علم المشتري. يُنصح بمراجعة مختص قانوني بعد استكمالها.</p>
+            <div class="ai-section">
+              <h5><span class="num">05</span> درجة اليقين</h5>
+              <p>متوسطة. تعتمد النتيجة على وقائع لم تُثبت بعد.</p>
             </div>
           </div>
         </div>
-
-        <div class="row mt-5" style="gap:var(--s3);flex-wrap:wrap">
+        <div class="row mt-4" style="gap:var(--s2);flex-wrap:wrap">
           <div class="search" style="flex:1;min-width:200px">
             <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-            <input type="search" placeholder="اسأل سؤالاً قانونياً..." aria-label="سؤال جديد">
+            <input type="search" placeholder="اسأل سؤالاً قانونياً..." id="chatInput">
           </div>
-          <button class="btn btn-gold btn-sm" disabled title="غير مُفعّل في المعاينة">إرسال</button>
+          <button class="btn btn-gold btn-sm" onclick="sendChat()">إرسال</button>
         </div>
+        <div id="chatExtra"></div>
       </div>
 
       <aside class="sources-panel">
@@ -1839,7 +1689,7 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
           <div class="source-meta">
             <span>◆ كتاب ثاني</span>
             <span>◆ باب البيع</span>
-            <span class="badge badge-teal" style="font-size:10px">مطابقة</span>
+            <span class="badge badge-teal" style="font-size:9px">مطابقة</span>
           </div>
         </div>
         <div class="source-item">
@@ -1853,67 +1703,61 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
           <div class="source-title">ج.ر 7437</div>
           <div class="source-meta">
             <span>◆ 2025-09-08</span>
-            <span class="badge badge-teal" style="font-size:10px">مطابقة</span>
+            <span class="badge badge-teal" style="font-size:9px">مطابقة</span>
           </div>
         </div>
-        <p class="text-3 mt-4" style="font-size:var(--fs-xs);line-height:1.6">
-          الإحالات في الجواب يجب أن ترتبط بمعرّف المصدر والمقطع الفعلي، لا بذاكرة النموذج.
+        <p class="t-caption mt-4">
+‎          الإحالات في الجواب يجب أن ترتبط بمعرّف المصدر والمقطع الفعلي، لا بذاكرة النموذج.
         </p>
       </aside>
     </div>
   </div>
 </section>
 
-<!-- ============ PAGE: MIYAR ============ -->
+<!-- ==================== PAGE: MIYAR (Inheritance) ==================== -->
 <section data-page="/miyar">
   <div class="container">
     <div class="page-header">
-      <nav class="breadcrumb" aria-label="مسار">
-        <a href="#/">الرئيسية</a><span class="breadcrumb-sep">/</span>
-        <span>مِعيار — الإرث والقسمة</span>
+      <nav class="breadcrumb">
+        <a onclick="navigate('/')">الرئيسية</a><span class="breadcrumb-sep">/</span>
+        <span>مِعيار — الإرث</span>
       </nav>
       <h1 class="t-h1">مِعيار — منظومة الإرث والقسمة</h1>
-      <p class="text-2 mt-4" style="font-family:var(--font-body);max-width:65ch;font-size:1.05rem">
-        محرك حساب حتمي للفروض والتعصيب، مع شرح خطوة بخطوة ومراجعة بشرية.
+      <p class="t-body-sm text-2 mt-3" style="max-width:65ch">
+‎        محرك حساب حتمي للفروض والتعصيب، مع شرح خطوة بخطوة ومراجعة بشرية.
       </p>
     </div>
 
     <div class="demo-banner">
-      هذه <b>معاينة لواجهة الحساب</b> بأرقام مثال. المحرك الحقيقي سيُبنى على قواعد مدونة الأسرة، ويُراجع من مختص.
+‎      هذه <b>معاينة لواجهة الحساب</b>. المحرك الحقيقي سيُبنى على قواعد مدونة الأسرة، ويُراجع من مختص.
     </div>
 
     <div class="grid-2">
       <div>
         <div class="card">
           <h3 class="t-h3 mb-4">الورثة المدخلون</h3>
-          <div class="table" style="display:block;overflow-x:auto">
-            <table style="width:100%;border-collapse:collapse">
+          <div class="table-wrap">
+            <table class="table">
               <thead>
-                <tr>
-                  <th style="text-align:start;padding:10px 12px;font-size:var(--fs-xs);color:var(--text-3);background:var(--surface-3);border-bottom:1px solid var(--border)">الوارث</th>
-                  <th style="text-align:start;padding:10px 12px;font-size:var(--fs-xs);color:var(--text-3);background:var(--surface-3);border-bottom:1px solid var(--border)">الصفة</th>
-                  <th style="text-align:start;padding:10px 12px;font-size:var(--fs-xs);color:var(--text-3);background:var(--surface-3);border-bottom:1px solid var(--border)">الفرض</th>
-                </tr>
+                <tr><th>الوارث</th><th>الصفة</th><th>الفرض</th></tr>
               </thead>
               <tbody>
-                <tr><td style="padding:10px 12px;border-bottom:1px solid var(--border)">الزوجة</td><td style="padding:10px 12px;border-bottom:1px solid var(--border)">زوجة</td><td style="padding:10px 12px;border-bottom:1px solid var(--border)">1/8</td></tr>
-                <tr><td style="padding:10px 12px;border-bottom:1px solid var(--border)">الابن</td><td style="padding:10px 12px;border-bottom:1px solid var(--border)">ابن</td><td style="padding:10px 12px;border-bottom:1px solid var(--border)">تعصيب</td></tr>
-                <tr><td style="padding:10px 12px;border-bottom:1px solid var(--border)">البنت</td><td style="padding:10px 12px;border-bottom:1px solid var(--border)">بنت</td><td style="padding:10px 12px;border-bottom:1px solid var(--border)">تعصيب</td></tr>
-                <tr><td style="padding:10px 12px;border-bottom:1px solid var(--border)">الأم</td><td style="padding:10px 12px;border-bottom:1px solid var(--border)">أم</td><td style="padding:10px 12px;border-bottom:1px solid var(--border)">1/6</td></tr>
+                <tr><td>الزوجة</td><td>زوجة</td><td class="t-mono">1/8</td></tr>
+                <tr><td>الابن</td><td>ابن</td><td>تعصيب</td></tr>
+                <tr><td>البنت</td><td>بنت</td><td>تعصيب</td></tr>
+                <tr><td>الأم</td><td>أم</td><td class="t-mono">1/6</td></tr>
               </tbody>
             </table>
           </div>
-          <p class="text-3 mt-4" style="font-size:var(--fs-xs)">
-            مثال توضيحي — الوقائع الحقيقية تُبنى من مدخلات المستخدم.
-          </p>
+          <p class="t-caption mt-4">مثال توضيحي — الوقائع الحقيقية تُبنى من مدخلات المستخدم.</p>
         </div>
 
         <div class="card mt-5">
           <h3 class="t-h3 mb-4">محرك الحساب</h3>
-          <p class="text-2" style="font-family:var(--font-body);font-size:1rem;line-height:1.75">
-            الحساب يُجرى في محرك حتمي مستقل عن LLM. النموذج اللغوي يشرح ولا يحسب.
+          <p class="t-body-sm text-2">
+‎            الحساب يُجرى في محرك حتمي مستقل عن LLM. النموذج اللغوي يشرح ولا يحسب.
           </p>
-          <div class="row mt-4" style="gap:var(--s3);flex-wrap:wrap">
+          <div class="row mt-4" style="gap:var(--s2);flex-wrap:wrap">
             <span class="badge badge-teal">◆ deterministic</span>
             <span class="badge">◆ كسور دقيقة</span>
             <span class="badge">◆ اختبارات مرجعية</span>
@@ -1924,20 +1768,20 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
       <div>
         <div class="card">
           <h3 class="t-h3 mb-4">جدول الأنصبة</h3>
-          <table class="table">
-            <thead>
-              <tr><th>الوارث</th><th>النسبة</th><th>من 1,000,000 د.م</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>الزوجة</td><td class="t-num">1/8</td><td class="t-num">125,000</td></tr>
-              <tr><td>الأم</td><td class="t-num">1/6</td><td class="t-num">166,666.67</td></tr>
-              <tr><td>الابن (تعصيب)</td><td class="t-num">14/24</td><td class="t-num">583,333.33</td></tr>
-              <tr><td>البنت (تعصيب)</td><td class="t-num">7/24</td><td class="t-num">291,666.67</td></tr>
-            </tbody>
-          </table>
-          <p class="text-3 mt-4" style="font-size:var(--fs-xs);line-height:1.6">
-            الأرقام أعلاه مثال حسابي فقط. النسب تحتاج إلى مراجعة مختص بعد إدخال الوقائع الكاملة.
-          </p>
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr><th>الوارث</th><th>النسبة</th><th>من 1,000,000 د.م</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>الزوجة</td><td class="t-mono">1/8</td><td class="t-mono">125,000</td></tr>
+                <tr><td>الأم</td><td class="t-mono">1/6</td><td class="t-mono">166,666.67</td></tr>
+                <tr><td>الابن (تعصيب)</td><td class="t-mono">14/24</td><td class="t-mono">583,333.33</td></tr>
+                <tr><td>البنت (تعصيب)</td><td class="t-mono">7/24</td><td class="t-mono">291,666.67</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="t-caption mt-4">الأرقام أعلاه مثال حسابي فقط.</p>
         </div>
 
         <div class="card mt-5">
@@ -1948,37 +1792,33 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
               <span>لم تُدخل قيمة التركة بعد الديون والوصايا. الأرقام أعلاه تقديرية.</span>
             </li>
             <li class="row" style="gap:var(--s2);align-items:flex-start;font-size:var(--fs-sm);color:var(--text-2)">
-              <span style="color:var(--warning);flex-shrink:0">⚠</span>
-              <span>عدم وجود وصية واردة في المعطيات. الرجاء التحقق.</span>
-            </li>
-            <li class="row" style="gap:var(--s2);align-items:flex-start;font-size:var(--fs-sm);color:var(--text-2)">
               <span style="color:var(--teal);flex-shrink:0">◆</span>
               <span>المحرك الحتمي سيتحقق من العول والحجب والرد وفق مدونة الأسرة.</span>
             </li>
           </ul>
-          <a href="#/" class="btn btn-gold btn-sm mt-5" style="display:inline-flex">تصدير تقرير PDF</a>
+          <button class="btn btn-gold btn-sm mt-5" onclick="alert('نسخة توضيحية — التصدير قيد التطوير')">تصدير تقرير PDF</button>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ PAGE: PROPERTY ============ -->
+<!-- ==================== PAGE: PROPERTY ==================== -->
 <section data-page="/property">
   <div class="container">
     <div class="page-header">
-      <nav class="breadcrumb" aria-label="مسار">
-        <a href="#/">الرئيسية</a><span class="breadcrumb-sep">/</span>
+      <nav class="breadcrumb">
+        <a onclick="navigate('/')">الرئيسية</a><span class="breadcrumb-sep">/</span>
         <span>العقار والحقوق العينية</span>
       </nav>
       <h1 class="t-h1">مختبر العقار والحقوق العينية</h1>
-      <p class="text-2 mt-4" style="font-family:var(--font-body);max-width:65ch;font-size:1.05rem">
-        التحفيظ، الشياع، القسمة، الرهون، والارتفاقات — مع ربط كل معلومة بمصدرها في مدونة 39.08 والتحفيظ العقاري.
+      <p class="t-body-sm text-2 mt-3" style="max-width:65ch">
+‎        التحفيظ، الشياع، القسمة، الرهون، والارتفاقات — مع ربط كل معلومة بمصدرها في مدونة 39.08.
       </p>
     </div>
 
     <div class="demo-banner">
-      هذه <b>معاينة للواجهة</b>. لم يتم إدخال وثيقة عقارية حقيقية. الواجهة توضح بنية التحليل فقط.
+‎      هذه <b>معاينة للواجهة</b>. لم يتم إدخال وثيقة عقارية حقيقية. الواجهة توضح بنية التحليل فقط.
     </div>
 
     <div class="grid-2">
@@ -1989,7 +1829,14 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
             <span class="badge badge-gold">قيد الإدخال</span>
           </div>
           <div class="stack">
-            <div class="field"><label>نوع العقار</label><select class="select"><option>عقار محفظ</option><option>عقار غير محفظ</option><option>في طور التحفيظ</option></select></div>
+            <div class="field">
+              <label>نوع العقار</label>
+              <select class="select">
+                <option>عقار محفظ</option>
+                <option>عقار غير محفظ</option>
+                <option>في طور التحفيظ</option>
+              </select>
+            </div>
             <div class="field"><label>رقم الرسم العقاري</label><input class="input" placeholder="—"></div>
             <div class="field"><label>الموقع</label><input class="input" placeholder="الجهة، العمالة، الجماعة"></div>
             <div class="field"><label>المساحة (م²)</label><input class="input" type="number" placeholder="—"></div>
@@ -2001,17 +1848,17 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
           <div class="timeline">
             <div class="timeline-item">
               <div class="timeline-date">2010-03-15</div>
-              <div class="t-h4 mt-1">تقييد الملكية الأولي</div>
+              <div class="t-h4 mt-2">تقييد الملكية الأولي</div>
               <p class="text-2" style="font-size:var(--fs-sm)">المالك: [بيانات مثال]</p>
             </div>
             <div class="timeline-item">
               <div class="timeline-date">2015-08-22</div>
-              <div class="t-h4 mt-1">تقييد رهن رسمي</div>
+              <div class="t-h4 mt-2">تقييد رهن رسمي</div>
               <p class="text-2" style="font-size:var(--fs-sm)">لصالح [دائن] — قيد التحقق</p>
             </div>
             <div class="timeline-item">
               <div class="timeline-date">2021-11-04</div>
-              <div class="t-h4 mt-1">تشطيب الرهن</div>
+              <div class="t-h4 mt-2">تشطيب الرهن</div>
               <p class="text-2" style="font-size:var(--fs-sm)">—</p>
             </div>
           </div>
@@ -2022,43 +1869,41 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
         <div class="card">
           <h3 class="t-h3 mb-4">توزيع الحصص الشائعة</h3>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--s3);margin-bottom:var(--s5)">
-            <div style="text-align:center;padding:var(--s4);background:var(--surface-3);border-radius:var(--r2)">
-              <div class="stat-value" style="color:var(--accent)">50%</div>
+            <div style="text-align:center;padding:var(--s3);background:var(--surface-3);border-radius:var(--r2)">
+              <div class="stat-value" style="color:var(--accent);font-size:var(--fs-xl)">50%</div>
               <div class="stat-label">الشريك أ</div>
             </div>
-            <div style="text-align:center;padding:var(--s4);background:var(--surface-3);border-radius:var(--r2)">
-              <div class="stat-value" style="color:var(--accent)">30%</div>
+            <div style="text-align:center;padding:var(--s3);background:var(--surface-3);border-radius:var(--r2)">
+              <div class="stat-value" style="color:var(--accent);font-size:var(--fs-xl)">30%</div>
               <div class="stat-label">الشريك ب</div>
             </div>
-            <div style="text-align:center;padding:var(--s4);background:var(--surface-3);border-radius:var(--r2)">
-              <div class="stat-value" style="color:var(--accent)">20%</div>
+            <div style="text-align:center;padding:var(--s3);background:var(--surface-3);border-radius:var(--r2)">
+              <div class="stat-value" style="color:var(--accent);font-size:var(--fs-xl)">20%</div>
               <div class="stat-label">الشريك ج</div>
             </div>
           </div>
-          <div style="height:10px;background:var(--surface-3);border-radius:999px;overflow:hidden;display:flex">
+          <div style="height:8px;background:var(--surface-3);border-radius:999px;overflow:hidden;display:flex">
             <div style="width:50%;background:var(--gold)"></div>
             <div style="width:30%;background:var(--teal)"></div>
             <div style="width:20%;background:var(--navy-3)"></div>
           </div>
-          <p class="text-3 mt-4" style="font-size:var(--fs-xs)">
-            الحصة الشائعة ≠ المساحة الحسابية ≠ القطعة المفرزة. الواجهة تُظهر التمييز.
-          </p>
+          <p class="t-caption mt-4">الحصة الشائعة ≠ المساحة الحسابية ≠ القطعة المفرزة.</p>
         </div>
 
         <div class="card mt-5">
           <h3 class="t-h3 mb-4">تشخيص قابلية القسمة</h3>
           <div class="stack">
-            <div class="row" style="justify-content:space-between;padding-block:var(--s3);border-bottom:1px solid var(--border)">
+            <div class="row-between" style="padding-block:var(--s3);border-bottom:1px solid var(--border)">
               <span class="text-2">عدد الشركاء</span><span class="t-h4">3</span>
             </div>
-            <div class="row" style="justify-content:space-between;padding-block:var(--s3);border-bottom:1px solid var(--border)">
-              <span class="text-2">القسمة العينية</span><span><span class="badge badge-gold">قيد التحقق</span></span>
+            <div class="row-between" style="padding-block:var(--s3);border-bottom:1px solid var(--border)">
+              <span class="text-2">القسمة العينية</span><span class="badge badge-gold">قيد التحقق</span>
             </div>
-            <div class="row" style="justify-content:space-between;padding-block:var(--s3);border-bottom:1px solid var(--border)">
-              <span class="text-2">الارتفاقات</span><span><span class="badge">—</span></span>
+            <div class="row-between" style="padding-block:var(--s3);border-bottom:1px solid var(--border)">
+              <span class="text-2">الارتفاقات</span><span class="badge">—</span>
             </div>
-            <div class="row" style="justify-content:space-between;padding-block:var(--s3)">
-              <span class="text-2">القيود التعميرية</span><span><span class="badge">غير متحقق</span></span>
+            <div class="row-between" style="padding-block:var(--s3)">
+              <span class="text-2">القيود التعميرية</span><span class="badge">غير متحقق</span>
             </div>
           </div>
         </div>
@@ -2067,27 +1912,27 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   </div>
 </section>
 
-<!-- ============ PAGE: CASE LAW ============ -->
+<!-- ==================== PAGE: CASE LAW ==================== -->
 <section data-page="/case-law">
   <div class="container">
     <div class="page-header">
-      <nav class="breadcrumb" aria-label="مسار">
-        <a href="#/">الرئيسية</a><span class="breadcrumb-sep">/</span>
+      <nav class="breadcrumb">
+        <a onclick="navigate('/')">الرئيسية</a><span class="breadcrumb-sep">/</span>
         <span>الاجتهادات القضائية</span>
       </nav>
       <h1 class="t-h1">الاجتهادات القضائية</h1>
-      <p class="text-2 mt-4" style="font-family:var(--font-body);max-width:65ch;font-size:1.05rem">
-        قرارات ومبادئ قضائية منشورة، مع تمييز صريح بين النص الكامل، الملخص، والمبدأ المستخلص.
+      <p class="t-body-sm text-2 mt-3" style="max-width:65ch">
+‎        قرارات ومبادئ قضائية منشورة، مع تمييز صريح بين النص الكامل، الملخص، والمبدأ المستخلص.
       </p>
     </div>
 
     <div class="demo-banner">
-      هذه معاينة توضيحية للبنية. القرارات الفعلية ستُستمد من مصادر قضائية منشورة ومتاحة قانونياً.
+‎      هذه معاينة توضيحية للبنية. القرارات الفعلية ستُستمد من مصادر قضائية منشورة ومتاحة قانونياً.
     </div>
 
     <div class="search mb-5">
-      <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input type="search" placeholder="ابحث بالقرار، الملف، المبدأ، أو المادة..." aria-label="البحث في الاجتهادات">
+      <svg class="search-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="search" placeholder="ابحث بالقرار، الملف، المبدأ، أو المادة...">
     </div>
 
     <div class="grid-2">
@@ -2097,54 +1942,43 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
           <span class="seal">◆ متحقق</span>
         </div>
         <h3 class="t-h4 mt-3">قرار — الغرفة الجنائية</h3>
-        <p class="text-2 mt-2" style="font-family:var(--font-body);font-size:1rem;line-height:1.7">
-          مبدأ مستخلص: [نص المبدأ — قيد التحقق من المصدر].
-        </p>
+        <p class="t-body-sm text-2 mt-2">مبدأ مستخلص: [نص المبدأ — قيد التحقق من المصدر].</p>
         <div class="row mt-4" style="gap:var(--s2);flex-wrap:wrap;font-size:var(--fs-xs);color:var(--text-3)">
           <span>◆ رقم: —</span><span>◆ تاريخ: —</span><span>◆ مادة: 392 ق.ج</span>
         </div>
         <a href="#" class="btn btn-ghost btn-sm mt-4" style="display:inline-flex">قراءة القرار</a>
       </div>
-
       <div class="doc-card">
         <div class="row-between mb-3">
           <span class="badge badge-gold">محكمة النقض</span>
           <span class="seal">◆ متحقق</span>
         </div>
         <h3 class="t-h4 mt-3">قرار — الغرفة المدنية</h3>
-        <p class="text-2 mt-2" style="font-family:var(--font-body);font-size:1rem;line-height:1.7">
-          مبدأ مستخلص: [نص المبدأ — قيد التحقق من المصدر].
-        </p>
+        <p class="t-body-sm text-2 mt-2">مبدأ مستخلص: [نص المبدأ — قيد التحقق من المصدر].</p>
         <div class="row mt-4" style="gap:var(--s2);flex-wrap:wrap;font-size:var(--fs-xs);color:var(--text-3)">
           <span>◆ رقم: —</span><span>◆ تاريخ: —</span><span>◆ موضوع: عقار</span>
         </div>
         <a href="#" class="btn btn-ghost btn-sm mt-4" style="display:inline-flex">قراءة القرار</a>
       </div>
-
       <div class="doc-card">
         <div class="row-between mb-3">
           <span class="badge badge-gold">محكمة استئناف</span>
           <span class="seal draft">◆ قيد المراجعة</span>
         </div>
         <h3 class="t-h4 mt-3">قرار — الدار البيضاء</h3>
-        <p class="text-2 mt-2" style="font-family:var(--font-body);font-size:1rem;line-height:1.7">
-          مبدأ مستخلص: [نص المبدأ — قيد التحقق من المصدر].
-        </p>
+        <p class="t-body-sm text-2 mt-2">مبدأ مستخلص: [نص المبدأ — قيد التحقق].</p>
         <div class="row mt-4" style="gap:var(--s2);flex-wrap:wrap;font-size:var(--fs-xs);color:var(--text-3)">
           <span>◆ رقم: —</span><span>◆ تاريخ: —</span>
         </div>
         <a href="#" class="btn btn-ghost btn-sm mt-4" style="display:inline-flex">قراءة القرار</a>
       </div>
-
       <div class="doc-card">
         <div class="row-between mb-3">
           <span class="badge badge-gold">محكمة النقض</span>
           <span class="seal">◆ متحقق</span>
         </div>
         <h3 class="t-h4 mt-3">قرار — الغرفة الاجتماعية</h3>
-        <p class="text-2 mt-2" style="font-family:var(--font-body);font-size:1rem;line-height:1.7">
-          مبدأ مستخلص: [نص المبدأ — قيد التحقق من المصدر].
-        </p>
+        <p class="t-body-sm text-2 mt-2">مبدأ مستخلص: [نص المبدأ — قيد التحقق].</p>
         <div class="row mt-4" style="gap:var(--s2);flex-wrap:wrap;font-size:var(--fs-xs);color:var(--text-3)">
           <span>◆ رقم: —</span><span>◆ تاريخ: —</span>
         </div>
@@ -2154,146 +1988,146 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   </div>
 </section>
 
-<!-- ============ PAGE: LEGAL AID ============ -->
+<!-- ==================== PAGE: LEGAL AID ==================== -->
 <section data-page="/legal-aid">
   <div class="container">
     <div class="page-header">
-      <nav class="breadcrumb" aria-label="مسار">
-        <a href="#/">الرئيسية</a><span class="breadcrumb-sep">/</span>
+      <nav class="breadcrumb">
+        <a onclick="navigate('/')">الرئيسية</a><span class="breadcrumb-sep">/</span>
         <span>المساعدة القانونية</span>
       </nav>
       <h1 class="t-h1">المساعدة القانونية</h1>
-      <p class="text-2 mt-4" style="font-family:var(--font-body);max-width:65ch;font-size:1.05rem">
-        أدلة حقوق ومساطر بلغة واضحة. لا نُمثّلك قضائياً، لكن نساعدك على فهم حقوقك والخطوة التالية.
+      <p class="t-body-sm text-2 mt-3" style="max-width:65ch">
+‎        أدلة حقوق ومساطر بلغة واضحة. لا نُمثّلك قضائياً، لكن نساعدك على فهم حقوقك والخطوة التالية.
       </p>
     </div>
 
     <div class="grid-3">
       <a href="#" class="pathway">
         <div class="pathway-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6"/></svg>
         </div>
         <h3>حقوق السكن والكراء</h3>
         <p>ما يجب أن تعرفه عن عقد الكراء، الإخلاء، والزيادة في السومة.</p>
       </a>
       <a href="#" class="pathway">
         <div class="pathway-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3v18M5 21h14"/><circle cx="12" cy="9" r="5"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3v18M5 21h14"/><circle cx="12" cy="9" r="5"/></svg>
         </div>
         <h3>حقوق الشغل</h3>
         <p>ما يجب أن تعرفه عن الأجر، ساعات العمل، الفصل، والتقاعد.</p>
       </a>
       <a href="#" class="pathway">
         <div class="pathway-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
         </div>
         <h3>حقوق الأسرة</h3>
         <p>ما يجب أن تعرفه عن الزواج، الطلاق، النفقة، والحضانة.</p>
       </a>
       <a href="#" class="pathway">
         <div class="pathway-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>
         </div>
         <h3>الطعن الإداري</h3>
         <p>كيف تعترض على قرار إداري، والآجال والمستندات المطلوبة.</p>
       </a>
       <a href="#" class="pathway">
         <div class="pathway-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3l9 4v6c0 5-3.5 8-9 9-5.5-1-9-4-9-9V7z"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3l9 4v6c0 5-3.5 8-9 9-5.5-1-9-4-9-9V7z"/></svg>
         </div>
         <h3>المساعدة القضائية</h3>
         <p>شروط الاستفادة من المساعدة القضائية، والوثائق المطلوبة.</p>
       </a>
       <a href="#" class="pathway">
         <div class="pathway-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="10"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20"/></svg>
         </div>
         <h3>حقوق المستهلك</h3>
         <p>الضمان، الاسترجاع، والشكايات تجاه المتاجر والخدمات.</p>
       </a>
     </div>
 
-    <div class="card mt-6" style="max-width:720px;margin-inline:auto;margin-top:var(--s7);text-align:center">
-      <p style="font-family:var(--font-body);font-size:1.05rem;line-height:1.8;color:var(--text-2)">
-        إذا كان وضعك يتضمن تهديداً أو مساساً بحقوقك، ننصحك بالتواصل مع محامٍ أو مؤسسة مختصة.
-        المساعدة هنا للتوجيه، ولا تُغني عن استشارة مهنية.
+    <div class="card mt-6" style="max-width:720px;margin-inline:auto;text-align:center">
+      <p class="t-body text-2">
+‎        إذا كان وضعك يتضمن تهديداً أو مساساً بحقوقك، ننصحك بالتواصل مع محامٍ أو مؤسسة مختصة.
+‎        المساعدة هنا للتوجيه، ولا تُغني عن استشارة مهنية.
       </p>
     </div>
   </div>
 </section>
 
-<!-- ============ PAGE: STUDENT ============ -->
+<!-- ==================== PAGE: STUDENT ==================== -->
 <section data-page="/student">
   <div class="container">
     <div class="page-header">
-      <nav class="breadcrumb" aria-label="مسار">
-        <a href="#/">الرئيسية</a><span class="breadcrumb-sep">/</span>
+      <nav class="breadcrumb">
+        <a onclick="navigate('/')">الرئيسية</a><span class="breadcrumb-sep">/</span>
         <span>الطالب والباحث</span>
       </nav>
       <h1 class="t-h1">الطالب والباحث</h1>
-      <p class="text-2 mt-4" style="font-family:var(--font-body);max-width:65ch;font-size:1.05rem">
-        مسارات تعلم، معجم قانوني، بطاقات مراجعة، منهجية التعليق على القرارات والبحث القانوني.
+      <p class="t-body-sm text-2 mt-3" style="max-width:65ch">
+‎        مسارات تعلم، معجم قانوني، بطاقات مراجعة، ومنهجية التعليق على القرارات والبحث القانوني.
       </p>
     </div>
 
     <div class="grid-3">
       <a href="#" class="doc-card">
         <div class="pathway-icon mb-4">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
         </div>
         <h3 class="t-h4 mb-2">مسار: المدخل إلى القانون</h3>
-        <p class="text-2" style="font-size:var(--fs-sm);line-height:1.6">8 دروس · مستوى مبتدئ</p>
+        <p class="text-2" style="font-size:var(--fs-sm)">8 دروس · مستوى مبتدئ</p>
       </a>
       <a href="#" class="doc-card">
         <div class="pathway-icon mb-4">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 20V10M6 20V4M18 20v-6"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 20V10M6 20V4M18 20v-6"/></svg>
         </div>
         <h3 class="t-h4 mb-2">منهجية التعليق على قرار</h3>
-        <p class="text-2" style="font-size:var(--fs-sm);line-height:1.6">4 دروس · مستوى متوسط</p>
+        <p class="text-2" style="font-size:var(--fs-sm)">4 دروس · مستوى متوسط</p>
       </a>
       <a href="#" class="doc-card">
         <div class="pathway-icon mb-4">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
         </div>
         <h3 class="t-h4 mb-2">المعجم القانوني</h3>
-        <p class="text-2" style="font-size:var(--fs-sm);line-height:1.6">عربي · فرنسي · إنجليزي</p>
+        <p class="text-2" style="font-size:var(--fs-sm)">عربي · فرنسي · إنجليزي</p>
       </a>
     </div>
 
-    <div class="card mt-6" style="margin-top:var(--s6)">
+    <div class="card mt-6">
       <h3 class="t-h3 mb-4">بطاقة مراجعة — مثال</h3>
       <div style="background:var(--surface-3);border-radius:var(--r2);padding:var(--s5)">
-        <p class="text-3" style="font-size:var(--fs-xs);letter-spacing:.08em;text-transform:uppercase;margin-bottom:var(--s2)">TERM</p>
-        <p class="t-h4 mb-4">قرينة البراءة</p>
-        <p class="text-3" style="font-size:var(--fs-xs);letter-spacing:.08em;text-transform:uppercase;margin-bottom:var(--s2)">DEFINITION</p>
-        <p class="text-2" style="font-family:var(--font-body);line-height:1.75">
-          مبدأ قانوني يقتضي اعتبار كل متهم بريئاً حتى تثبت إدانته بقرار قضائي حائز لقوة الشيء المقضي به.
+        <p class="t-label mb-2">TERM</p>
+        <p class="t-h4 mb-4" style="font-family:var(--font-display);font-size:var(--fs-lg)">قرينة البراءة</p>
+        <p class="t-label mb-2">DEFINITION</p>
+        <p class="t-body-sm text-2">
+‎          مبدأ قانوني يقتضي اعتبار كل متهم بريئاً حتى تثبت إدانته بقرار قضائي حائز لقوة الشيء المقضي به.
         </p>
-        <p class="text-3 mt-4" style="font-size:var(--fs-xs)">◆ مرجع: المسطرة الجنائية · المادة 1</p>
+        <p class="t-caption mt-4">◆ مرجع: المسطرة الجنائية · المادة 1</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ PAGE: ADMIN ============ -->
+<!-- ==================== PAGE: ADMIN ==================== -->
 <section data-page="/admin">
   <div class="container">
     <div class="page-header">
-      <nav class="breadcrumb" aria-label="مسار">
-        <a href="#/">الرئيسية</a><span class="breadcrumb-sep">/</span>
+      <nav class="breadcrumb">
+        <a onclick="navigate('/')">الرئيسية</a><span class="breadcrumb-sep">/</span>
         <span>لوحة الإدارة</span>
       </nav>
       <h1 class="t-h1">لوحة الإدارة</h1>
-      <p class="text-2 mt-4" style="font-family:var(--font-body);max-width:65ch;font-size:1.05rem">
-        محمية بالأدوار. تتيح إدارة المصادر، المراجعة، النشر، المستخدمين، وسجلات التدقيق.
+      <p class="t-body-sm text-2 mt-3" style="max-width:65ch">
+‎        محمية بالأدوار. تتيح إدارة المصادر، المراجعة، النشر، المستخدمين، وسجلات التدقيق.
       </p>
     </div>
 
     <div class="demo-banner">
-      هذه <b>معاينة للوحة الإدارة</b>. الدخول محمي في النسخة الحقيقية بـ auth وأدوار على الخادم.
+‎      هذه <b>معاينة للوحة الإدارة</b>. الدخول محمي في النسخة الحقيقية بـ auth وأدوار على الخادم.
     </div>
 
-    <div class="grid-4 mb-6" style="margin-bottom:var(--s6)">
+    <div class="grid-4 mb-6">
       <div class="card">
         <div class="stat-value">12</div>
         <div class="stat-label">مصادر قيد المراجعة</div>
@@ -2317,45 +2151,60 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
         <h3 class="t-h3">قائمة المراجعة</h3>
         <span class="badge badge-gold">◆ قيد المراجعة</span>
       </div>
-      <div class="table" style="overflow-x:auto;display:block">
-        <table style="width:100%;border-collapse:collapse;min-width:600px">
+      <div class="table-wrap">
+        <table class="table">
           <thead>
-            <tr>
-              <th style="text-align:start;padding:10px 14px;font-size:var(--fs-xs);color:var(--text-3);background:var(--surface-3);border-bottom:1px solid var(--border)">العنصر</th>
-              <th style="text-align:start;padding:10px 14px;font-size:var(--fs-xs);color:var(--text-3);background:var(--surface-3);border-bottom:1px solid var(--border)">النوع</th>
-              <th style="text-align:start;padding:10px 14px;font-size:var(--fs-xs);color:var(--text-3);background:var(--surface-3);border-bottom:1px solid var(--border)">الحالة</th>
-              <th style="text-align:start;padding:10px 14px;font-size:var(--fs-xs);color:var(--text-3);background:var(--surface-3);border-bottom:1px solid var(--border)">آخر تعديل</th>
-            </tr>
+            <tr><th>العنصر</th><th>النوع</th><th>الحالة</th><th>آخر تعديل</th></tr>
           </thead>
           <tbody>
-            <tr><td style="padding:10px 14px;border-bottom:1px solid var(--border)">ج.ر 7437 — صفحة 3</td><td style="padding:10px 14px;border-bottom:1px solid var(--border)">OCR</td><td style="padding:10px 14px;border-bottom:1px solid var(--border)"><span class="badge badge-gold">مراجعة</span></td><td style="padding:10px 14px;border-bottom:1px solid var(--border)">2025-10-12</td></tr>
-            <tr><td style="padding:10px 14px;border-bottom:1px solid var(--border)">مدونة 39.08 — المادة 14</td><td style="padding:10px 14px;border-bottom:1px solid var(--border)">نص</td><td style="padding:10px 14px;border-bottom:1px solid var(--border)"><span class="badge badge-gold">مراجعة</span></td><td style="padding:10px 14px;border-bottom:1px solid var(--border)">2025-10-11</td></tr>
-            <tr><td style="padding:10px 14px;border-bottom:1px solid var(--border)">قرار النقض — الغرفة الجنائية</td><td style="padding:10px 14px;border-bottom:1px solid var(--border)">اجتهاد</td><td style="padding:10px 14px;border-bottom:1px solid var(--border)"><span class="badge badge-teal">معتمد</span></td><td style="padding:10px 14px;border-bottom:1px solid var(--border)">2025-10-09</td></tr>
-            <tr><td style="padding:10px 14px;border-bottom:1px solid var(--border)">ترجمة fr — المادة 392</td><td style="padding:10px 14px;border-bottom:1px solid var(--border)">ترجمة</td><td style="padding:10px 14px;border-bottom:1px solid var(--border)"><span class="badge badge-gold">مراجعة</span></td><td style="padding:10px 14px;border-bottom:1px solid var(--border)">2025-10-08</td></tr>
-            <tr><td style="padding:10px 14px;border-bottom:1px solid var(--border)">المستخدم — طلب صلاحية</td><td style="padding:10px 14px;border-bottom:1px solid var(--border)">حساب</td><td style="padding:10px 14px;border-bottom:1px solid var(--border)"><span class="badge">منتظر</span></td><td style="padding:10px 14px;border-bottom:1px solid var(--border)">2025-10-07</td></tr>
+            <tr>
+              <td>ج.ر 7437 — صفحة 3</td><td>OCR</td>
+              <td><span class="badge badge-gold">مراجعة</span></td>
+              <td class="t-mono">2025-10-12</td>
+            </tr>
+            <tr>
+              <td>مدونة 39.08 — المادة 14</td><td>نص</td>
+              <td><span class="badge badge-gold">مراجعة</span></td>
+              <td class="t-mono">2025-10-11</td>
+            </tr>
+            <tr>
+              <td>قرار النقض — الغرفة الجنائية</td><td>اجتهاد</td>
+              <td><span class="badge badge-teal">معتمد</span></td>
+              <td class="t-mono">2025-10-09</td>
+            </tr>
+            <tr>
+              <td>ترجمة fr — المادة 392</td><td>ترجمة</td>
+              <td><span class="badge badge-gold">مراجعة</span></td>
+              <td class="t-mono">2025-10-08</td>
+            </tr>
+            <tr>
+              <td>المستخدم — طلب صلاحية</td><td>حساب</td>
+              <td><span class="badge">منتظر</span></td>
+              <td class="t-mono">2025-10-07</td>
+            </tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <div class="grid-3 mt-6" style="margin-top:var(--s6)">
+    <div class="grid-3 mt-6">
       <a href="#" class="pathway">
         <div class="pathway-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4h16v16H4z"/><path d="M4 10h16M10 4v16"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4h16v16H4z"/><path d="M4 10h16M10 4v16"/></svg>
         </div>
         <h3>إدارة المصادر</h3>
         <p>مصادر، نسخ، تعديلات، سجلات تحقق.</p>
       </a>
       <a href="#" class="pathway">
         <div class="pathway-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
         <h3>صلاحيات وأدوار</h3>
         <p>إدارة أدوار المستخدمين والتحقق من الصلاحيات.</p>
       </a>
       <a href="#" class="pathway">
         <div class="pathway-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
         </div>
         <h3>سجل التدقيق</h3>
         <p>كل تغيير مسجّل: من، ماذا، متى.</p>
@@ -2364,213 +2213,43 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
   </div>
 </section>
 
-<!-- ============ PAGE: DESIGN SYSTEM ============ -->
-<section data-page="/design-system">
-  <div class="container">
-    <div class="page-header">
-      <nav class="breadcrumb" aria-label="مسار">
-        <a href="#/">الرئيسية</a><span class="breadcrumb-sep">/</span>
-        <span>نظام التصميم</span>
-      </nav>
-      <h1 class="t-h1">نظام التصميم</h1>
-      <p class="text-2 mt-4" style="font-family:var(--font-body);max-width:65ch;font-size:1.05rem">
-        مرجع حي للهوية البصرية، الألوان، الخطوط، المكونات، الحالات، وRTL/LTR.
-      </p>
-    </div>
-
-    <!-- Colors -->
-    <div class="card mb-5">
-      <h3 class="t-h3 mb-4">الألوان</h3>
-      <div class="grid-4">
-        <div>
-          <div style="height:70px;border-radius:var(--r2);background:var(--navy);margin-bottom:var(--s2)"></div>
-          <div class="t-h4">Midnight Navy</div>
-          <div class="t-caption t-mono">#101D32</div>
-        </div>
-        <div>
-          <div style="height:70px;border-radius:var(--r2);background:var(--navy-2);margin-bottom:var(--s2)"></div>
-          <div class="t-h4">Midnight Blue</div>
-          <div class="t-caption t-mono">#172B45</div>
-        </div>
-        <div>
-          <div style="height:70px;border-radius:var(--r2);background:var(--gold);margin-bottom:var(--s2)"></div>
-          <div class="t-h4">Royal Gold</div>
-          <div class="t-caption t-mono">#C6A56B</div>
-        </div>
-        <div>
-          <div style="height:70px;border-radius:var(--r2);background:var(--ivory);border:1px solid var(--border);margin-bottom:var(--s2)"></div>
-          <div class="t-h4">Ivory</div>
-          <div class="t-caption t-mono">#F4F1E9</div>
-        </div>
-        <div>
-          <div style="height:70px;border-radius:var(--r2);background:var(--teal);margin-bottom:var(--s2)"></div>
-          <div class="t-h4">Digital Teal</div>
-          <div class="t-caption t-mono">#167C80</div>
-        </div>
-        <div>
-          <div style="height:70px;border-radius:var(--r2);background:var(--graphite);margin-bottom:var(--s2)"></div>
-          <div class="t-h4">Graphite</div>
-          <div class="t-caption t-mono">#252B33</div>
-        </div>
-        <div>
-          <div style="height:70px;border-radius:var(--r2);background:var(--sand);margin-bottom:var(--s2)"></div>
-          <div class="t-h4">Sand</div>
-          <div class="t-caption t-mono">#D9CBB4</div>
-        </div>
-        <div>
-          <div style="height:70px;border-radius:var(--r2);background:var(--stone);margin-bottom:var(--s2)"></div>
-          <div class="t-h4">Stone</div>
-          <div class="t-caption t-mono">#E3E1DB</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Typography -->
-    <div class="card mb-5">
-      <h3 class="t-h3 mb-4">الخطوط</h3>
-      <div class="stack-lg">
-        <div>
-          <div class="t-label mb-2">Display — Noto Kufi Arabic</div>
-          <div class="t-display">العدالة تبدأ بالمعرفة</div>
-        </div>
-        <div>
-          <div class="t-label mb-2">Heading — Noto Kufi Arabic</div>
-          <div class="t-h2">المكتبة القانونية</div>
-        </div>
-        <div>
-          <div class="t-label mb-2">Body — Noto Naskh Arabic</div>
-          <div class="t-body" style="max-width:65ch">
-            نظام الحكم بالمغرب نظام ملكية دستورية، ديمقراطية برلمانية واجتماعية. يقوم النظام الدستوري للمملكة على أساس فصل السلط.
-          </div>
-        </div>
-        <div>
-          <div class="t-label mb-2">UI — IBM Plex Sans Arabic</div>
-          <div style="font-family:var(--font-ui);font-size:1rem">أزرار، تنقل، تسميات، عناصر تفاعلية.</div>
-        </div>
-        <div>
-          <div class="t-label mb-2">Mono — IBM Plex Mono</div>
-          <div class="t-mono">GAZETTE 7437 — 2025-09-08</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Buttons -->
-    <div class="card mb-5">
-      <h3 class="t-h3 mb-4">الأزرار</h3>
-      <div class="row" style="gap:var(--s3);flex-wrap:wrap">
-        <button class="btn btn-primary">أساسي</button>
-        <button class="btn btn-gold">ذهبي</button>
-        <button class="btn btn-ghost">خافت</button>
-        <button class="btn btn-quiet">هادئ</button>
-        <button class="btn btn-primary" disabled style="opacity:.5;cursor:not-allowed">معطّل</button>
-      </div>
-    </div>
-
-    <!-- Badges & seals -->
-    <div class="card mb-5">
-      <h3 class="t-h3 mb-4">الحالات والشارات</h3>
-      <div class="row" style="gap:var(--s3);flex-wrap:wrap">
-        <span class="seal">◆ متحقق</span>
-        <span class="seal draft">◆ قيد المراجعة</span>
-        <span class="seal unknown">◆ غير متحقق</span>
-        <span class="badge badge-gold">تعديل</span>
-        <span class="badge badge-teal">نافذ</span>
-        <span class="badge badge-navy">مشروع</span>
-        <span class="badge">عام</span>
-      </div>
-    </div>
-
-    <!-- Forms -->
-    <div class="card mb-5">
-      <h3 class="t-h3 mb-4">النماذج</h3>
-      <div class="grid-2">
-        <div class="field">
-          <label for="ds1">حقل نص</label>
-          <input class="input" id="ds1" placeholder="أدخل النص">
-        </div>
-        <div class="field">
-          <label for="ds2">قائمة اختيار</label>
-          <select class="select" id="ds2"><option>خيار 1</option><option>خيار 2</option></select>
-        </div>
-      </div>
-      <div class="field mt-4">
-        <label for="ds3">منطقة نص</label>
-        <textarea class="textarea" id="ds3" placeholder="اكتب هنا..."></textarea>
-      </div>
-      <div class="search mt-4">
-        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input type="search" placeholder="بحث..." aria-label="بحث">
-      </div>
-    </div>
-
-    <!-- Article -->
-    <div class="card mb-5">
-      <h3 class="t-h3 mb-4">عرض المادة القانونية</h3>
-      <div class="manuscript">
-        <div class="article">
-          <div class="article-num">
-            <span>الفصل 1 — ١</span>
-            <span class="badge badge-teal">مثال</span>
-          </div>
-          <p class="article-body">
-            نظام الحكم بالمغرب نظام ملكية دستورية، ديمقراطية برلمانية واجتماعية.
-          </p>
-          <div class="article-source">
-            <span>◆ مصدر: الدستور 2011</span>
-            <span>◆ آخر تحقق: 2025-11-01</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Empty state -->
-    <div class="card">
-      <h3 class="t-h3 mb-4">الحالة الفارغة</h3>
-      <div class="text-center" style="padding:var(--s7) 0">
-        <div style="font-size:48px;color:var(--text-3);margin-bottom:var(--s3)">◆</div>
-        <h4 class="t-h4 mb-2">لا توجد نتائج بعد</h4>
-        <p class="text-2" style="font-size:var(--fs-sm)">جرّب تعديل كلمات البحث أو التصنيف.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 </main>
 
-<!-- ============================================================
-     FOOTER
-     ============================================================ -->
+<!-- ============================================================ FOOTER ============================================================ -->
 <footer class="site-footer">
   <div class="container">
     <div class="footer-grid">
       <div>
         <div class="brand">
-          <div class="brand-mark" style="border-color:var(--gold);color:var(--gold)">ع</div>
-          <div class="brand-text"><b style="color:var(--gold)">AADALA.MA</b><span style="color:var(--dark-text-3)">LEGAL INTELLIGENCE</span></div>
+          <div class="brand-mark" style="border-color:var(--gold);color:var(--gold);background:rgba(198,165,107,.05)">ع</div>
+          <div class="brand-text">
+            <b style="color:var(--gold)">AADALA.MA</b>
+            <span style="color:rgba(255,255,255,.5)">LEGAL INTELLIGENCE</span>
+          </div>
         </div>
-        <p class="mt-4" style="font-family:var(--font-body);font-size:1.05rem;color:var(--dark-text-2);max-width:40ch">
-          منظومة مغربية مستقلة للمعرفة القانونية والذكاء الاصطناعي المسؤول والمساعدة القانونية.
+        <p class="t-body-sm mt-4" style="color:rgba(255,255,255,.65);max-width:40ch;font-size:.95rem">
+‎          منظومة مغربية مستقلة للمعرفة القانونية والذكاء الاصطناعي المسؤول والمساعدة القانونية.
         </p>
       </div>
       <div>
         <h4>المنصة</h4>
-        <a href="#/library">المكتبة</a>
-        <a href="#/ai">AADALA AI</a>
-        <a href="#/miyar">مِعيار</a>
-        <a href="#/property">العقار</a>
+        <a onclick="navigate('/library')">المكتبة</a>
+        <a onclick="navigate('/ai')">AADALA AI</a>
+        <a onclick="navigate('/miyar')">مِعيار</a>
+        <a onclick="navigate('/property')">العقار</a>
       </div>
       <div>
         <h4>المساعدة</h4>
-        <a href="#/legal-aid">المساعدة القانونية</a>
-        <a href="#/student">الطالب والباحث</a>
-        <a href="#/search">البحث</a>
+        <a onclick="navigate('/legal-aid')">المساعدة القانونية</a>
+        <a onclick="navigate('/student')">الطالب والباحث</a>
+        <a onclick="navigate('/search')">البحث</a>
       </div>
       <div>
         <h4>المنهج</h4>
-        <a href="#">سياسة المصادر</a>
-        <a href="#">الخصوصية</a>
-        <a href="#">الشروط</a>
-        <a href="#">إخلاء المسؤولية</a>
+        <a>سياسة المصادر</a>
+        <a>الخصوصية</a>
+        <a>الشروط</a>
+        <a>إخلاء المسؤولية</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -2581,27 +2260,42 @@ ul, ol { margin: 0; padding-inline-start: 1.25em; }
 </footer>
 
 <script>
-/* ---- Theme ---- */
-(function(){
-  const stored = localStorage.getItem('theme');
-  if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    document.documentElement.setAttribute('data-theme', 'dark');
+/* ============================================================
+   AADALA.MA — CLIENT SCRIPT
+   ============================================================ */
+
+/* ---- 1. THEME (3-way: light → dark → paper → light) ---- */
+const THEME_CYCLE = ['light', 'dark', 'paper'];
+(function initTheme(){
+  let stored = localStorage.getItem('theme');
+  if (!stored) {
+    stored = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
+  if (stored !== 'light') document.documentElement.setAttribute('data-theme', stored);
 })();
 
-document.getElementById('theme-toggle').addEventListener('click', () => {
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  localStorage.setItem('theme', isDark ? 'light' : 'dark');
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme') || 'light';
+  const next = THEME_CYCLE[(THEME_CYCLE.indexOf(current) + 1) % THEME_CYCLE.length];
+  if (next === 'light') {
+    document.documentElement.removeAttribute('data-theme');
+  } else {
+    document.documentElement.setAttribute('data-theme', next);
+  }
+  localStorage.setItem('theme', next);
 });
 
-/* ---- Router ---- */
+/* ---- 2. ROUTER ---- */
 const pages = document.querySelectorAll('[data-page]');
 const navLinks = document.querySelectorAll('[data-nav]');
 
 function getRoute() {
-  const h = location.hash || '#/';
-  return h.replace(/^#/, '') || '/';
+  return (location.hash || '#/').replace(/^#/, '') || '/';
+}
+
+function navigate(route) {
+  if (!route.startsWith('/')) route = '/' + route;
+  location.hash = '#' + route;
 }
 
 function showPage(route) {
@@ -2614,11 +2308,9 @@ function showPage(route) {
       p.classList.remove('active');
     }
   });
-  if (!matched && pages[0]) {
-    pages[0].classList.add('active');
-  }
+  if (!matched && pages[0]) pages[0].classList.add('active');
   navLinks.forEach(l => {
-    l.classList.toggle('active', l.getAttribute('href') === '#' + route);
+    l.classList.toggle('active', l.getAttribute('data-nav') === route);
   });
   window.scrollTo({ top: 0, behavior: 'auto' });
 }
@@ -2626,29 +2318,106 @@ function showPage(route) {
 window.addEventListener('hashchange', () => showPage(getRoute()));
 showPage(getRoute());
 
-/* ---- Mobile drawer ---- */
-const drawer = document.getElementById('mobile-drawer');
-document.getElementById('mobile-toggle').addEventListener('click', () => {
-  drawer.classList.add('open');
-  drawer.setAttribute('aria-hidden', 'false');
-});
-document.getElementById('mobile-close').addEventListener('click', () => {
-  drawer.classList.remove('open');
-  drawer.setAttribute('aria-hidden', 'true');
-});
-drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-  drawer.classList.remove('open');
-  drawer.setAttribute('aria-hidden', 'true');
-}));
+/* ---- 3. MOBILE DRAWER ---- */
+const drawer = document.getElementById('mobileDrawer');
+document.getElementById('mobileToggle').addEventListener('click', () => drawer.classList.add('open'));
+document.getElementById('mobileClose').addEventListener('click', () => drawer.classList.remove('open'));
+drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => drawer.classList.remove('open')));
 
-/* ---- Toast utility (global) ---- */
-window.aadalaToast = function(msg) {
-  const el = document.createElement('div');
-  el.className = 'toast';
-  el.textContent = msg;
-  document.body.appendChild(el);
-  setTimeout(() => el.remove(), 2400);
-};
+/* ---- 4. SEARCH ---- */
+const SEARCH_DATA = [
+  {type:'مادة', source:'القانون الجنائي', title:'الفصل 392 — القتل العمد', snippet:'كل من تسبب عمداً في قتل شخص آخر يعد قاتلاً، ويعاقب بالسجن المؤبد...', verified:true},
+  {type:'مادة', source:'المسطرة الجنائية', title:'المادة 66 — الحراسة النظرية', snippet:'يمكن لضابط الشرطة القضائية أن يحتفظ بشخص أو عدة أشخاص تحت الحراسة النظرية...', verified:true},
+  {type:'اجتهاد', source:'محكمة النقض', title:'قرار — الغرفة الجنائية', snippet:'مبدأ قضائي حول تطبيق الفصل 392 من مجموعة القانون الجنائي...', verified:true},
+  {type:'جريدة رسمية', source:'ج.ر 7437', title:'القانون 03.23', snippet:'ظهير تنفيذ القانون رقم 03.23 المعدّل للقانون 22.01 المتعلق بالمسطرة الجنائية...', verified:true},
+];
+
+function escapeHTML(s) {
+  return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function runSearch() {
+  const q = document.getElementById('searchInput').value.trim();
+  const container = document.getElementById('searchResults');
+  const countEl = document.getElementById('resultsCount');
+  
+  const filtered = q ? SEARCH_DATA.filter(item => 
+    item.title.includes(q) || item.snippet.includes(q) || item.source.includes(q)
+  ) : SEARCH_DATA;
+
+  countEl.textContent = filtered.length + ' نتائج';
+  
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="empty-state" style="text-align:center;padding:var(--s7) var(--s4);color:var(--text-3)">
+      <div style="font-size:2.5rem;opacity:.4;margin-bottom:var(--s3)">◆</div>
+      <h3 class="t-h3 mb-2">لا توجد نتائج</h3>
+      <p>جرّب كلمات مفتاحية أخرى.</p>
+    </div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(item => `
+    <div class="article mb-4">
+      <div class="row-between mb-3">
+        <div class="row" style="gap:var(--s2);flex-wrap:wrap">
+          <span class="badge ${item.type === 'اجتهاد' ? 'badge-teal' : 'badge-gold'}">${item.source}</span>
+          <span class="badge">${item.type}</span>
+        </div>
+        ${item.verified ? '<span class="seal">◆ متحقق</span>' : ''}
+      </div>
+      <h3 class="t-h4 mb-2">${escapeHTML(item.title)}</h3>
+      <p class="t-body-sm text-2">${escapeHTML(item.snippet)}</p>
+    </div>
+  `).join('');
+}
+
+// Initialize results on load
+runSearch();
+
+/* ---- 5. AI CHAT ---- */
+function sendChat() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+  
+  const chatContainer = document.querySelector('.chat');
+  const extra = document.getElementById('chatExtra');
+  
+  const userMsg = document.createElement('div');
+  userMsg.className = 'msg msg-user';
+  userMsg.innerHTML = `
+    <div class="msg-avatar">أ</div>
+    <div class="msg-content">${escapeHTML(text)}</div>
+  `;
+  
+  const aiMsg = document.createElement('div');
+  aiMsg.className = 'msg msg-ai';
+  aiMsg.innerHTML = `
+    <div class="msg-avatar">ع</div>
+    <div class="msg-content">
+      <div class="ai-section">
+        <h5><span class="num">01</span> تحليل مبدئي</h5>
+        <p>هذا رد توضيحي. النسخة الحقيقية ستستخدم RAG مع قاعدة المصادر القانونية، وستعرض كل مادة مسترجعة مع معرّفها.</p>
+      </div>
+      <div class="ai-section">
+        <h5><span class="num">02</span> درجة اليقين</h5>
+        <p>منخفضة (مثال فقط). في الإنتاج، ستُحسب بناءً على تطابق المصادر.</p>
+      </div>
+    </div>
+  `;
+  
+  extra.appendChild(userMsg);
+  extra.appendChild(aiMsg);
+  input.value = '';
+  aiMsg.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+}
+
+document.getElementById('chatInput')?.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') sendChat();
+});
+
+/* ---- 6. INIT ---- */
+console.log('%c AADALA.MA ', 'background:#C6A56B;color:#0A1628;padding:4px 8px;font-weight:800;border-radius:3px', 'Design System v2.0 — The Manuscript');
 </script>
 </body>
 </html>
