@@ -243,6 +243,11 @@ document.addEventListener('DOMContentLoaded', () => {
   AADALA.init();
   // Update auth UI
   updateAuthUI();
+  // Populate language selector
+  const langArea = document.getElementById('langSelectorArea');
+  if (langArea && window.I18N) {
+    langArea.innerHTML = I18N.renderSelector();
+  }
 });
 
 function updateAuthUI() {
@@ -282,6 +287,7 @@ function renderHeader(activePage) {
         </a>
         <ul class="nav-links" id="navLinks">${links}</ul>
         <div class="nav-actions">
+          <div id="langSelectorArea"></div>
           <button onclick="AADALA.toggleTheme()" class="btn btn-ghost btn-sm" title="تبديل المظهر">🌙</button>
           <div id="authArea">
             <a href="auth/login.html" class="btn btn-outline btn-sm" id="loginBtn">تسجيل الدخول</a>
