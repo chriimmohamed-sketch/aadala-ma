@@ -41,3 +41,4 @@ desktop.ini
 .dev.vars*
 !.dev.vars.example
 !.env.example
+.vercel
