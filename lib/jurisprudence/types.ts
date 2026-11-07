@@ -23,6 +23,7 @@ export interface DecisionSearchFilters {
   court?: string;
   chamber?: string;
   decisionNumber?: string;
+  fileNumber?: string;
   dateFrom?: string;
   dateTo?: string;
   legalDomain?: string;
