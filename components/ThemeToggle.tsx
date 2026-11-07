@@ -1,23 +1,24 @@
 "use client";
 import { useEffect, useState } from "react";
 
+function initialDark(): boolean {
+  if (typeof window === "undefined") return false;
+  const stored = localStorage.getItem("aadala-theme");
+  if (stored) return stored === "dark";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches;
+}
+
 export default function ThemeToggle() {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(initialDark);
 
   useEffect(() => {
-    const root = document.documentElement;
-    const stored = localStorage.getItem("aadala-theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const isDark = stored ? stored === "dark" : prefersDark;
-    setDark(isDark);
-    root.setAttribute("data-theme", isDark ? "dark" : "light");
-  }, []);
+    document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+  }, [dark]);
 
   function toggle() {
-    const root = document.documentElement;
     const next = !dark;
     setDark(next);
-    root.setAttribute("data-theme", next ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", next ? "dark" : "light");
     localStorage.setItem("aadala-theme", next ? "dark" : "light");
   }
 
