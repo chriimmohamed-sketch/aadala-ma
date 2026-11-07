@@ -20,18 +20,35 @@ export async function POST(req: Request) {
 
   const context = chunks.map((c, i) => `[${i + 1}] ${c.title}${c.location ? " — " + c.location : ""}\n${c.excerpt}`).join("\n\n");
 
-  const prompt = `أنت مساعد قانوني متخصص في القانون المغربي. أجب باللغة ${locale}.
+  const prompt = `أنت AADALA AI، مساعد قانوني متخصص في القانون المغربي. أجب باللغة ${locale} (العربية، الدارجة، أو الفرنسية).
 
-استخدم فقط السياق المسترجع أدناه. لا تخترع مواد أو أحكام، ولا تذكر رقم فصل أو مادة إلا إذا ورد في عنوان مقطع من السياق. إذا لم تكف المصادر، صرح بذلك.
+استخدم فقط السياق المسترجع أدناه. لا تخترع مواد أو أحكام أو مراجع. لا تذكر رقم مادة إلا إذا ورد في عنوان مقطع من السياق. إذا لم تكف المصادر، صرح بذلك.
 
-السياق:
+السياق (RAG):
 ${context || "(لا توجد مقاطع مسترجعة)"}
 
 السؤال:
 ${question}
 
-أعد JSON (فقط) بالشكل:
-{"factsAssumed":"","legalIssue":"","legalBasis":"","analysis":"","possibleApplications":"","certainty":"high|medium|low|insufficient_sources","missingInfo":[],"disclaimer":""}`;
+أعد JSON (فقط) بالشكل (13 حقل):
+{"factsAssumed":"","legalIssue":"","legalBasis":"","analysis":"","possibleApplications":"","references":[],"certainty":"high|medium|low|insufficient_sources","missingInfo":[],"disclaimer":"","textInterpretation":"","oldVsNewComparison":"","procedurePath":[],"documentList":[],"legalSummary":"","draftTemplate":""}
+
+الحقول:
+1. factsAssumed: الوقائع المفترضة
+2. legalIssue: الإشكال القانوني
+3. legalBasis: الأساس القانوني (مواد + نصوص)
+4. analysis: التحليل (مع الافتراضات)
+5. possibleApplications: التطبيقات المحتملة
+6. references: قائمة المراجع (مصدر + مقطع)
+7. certainty: درجة اليقين
+8. missingInfo: المعلومات الناقصة
+9. disclaimer: إخلاء المسؤولية (ليس استشارة مهنية)
+10. textInterpretation: تفسير النصوص
+11. oldVsNewComparison: مقارنة النصوص القديمة والجديدة (إن وجدت)
+12. procedurePath: مسار إجرائي أولي (مصفوفة)
+13. documentList: قائمة الوثائق المحتملة (مصفوفة)
+14. legalSummary: ملخص قانوني
+15. draftTemplate: مسودة أولية (طلب/شكاية/إنذار/مذكرة) قابلة للتعديل`;
 
   const raw = await callProvider(prompt);
 
@@ -53,6 +70,12 @@ ${question}
     certainty: parsed?.certainty ?? (chunks.length ? "low" : "insufficient_sources"),
     missingInfo: parsed?.missingInfo ?? ["AI provider API key", "وقائع إضافية"],
     disclaimer: parsed?.disclaimer ?? "هذا ليس استشارة مهنية نهائية. راجع مختصاً.",
+    textInterpretation: parsed?.textInterpretation ?? "",
+    oldVsNewComparison: parsed?.oldVsNewComparison ?? "",
+    procedurePath: parsed?.procedurePath ?? [],
+    documentList: parsed?.documentList ?? [],
+    legalSummary: parsed?.legalSummary ?? "",
+    draftTemplate: parsed?.draftTemplate ?? "",
   };
 
   // Anti-hallucination check: any article number cited but absent from the retrieved passages downgrades the answer.

@@ -15,4 +15,10 @@ export interface AIAnswer {
   certainty: "high" | "medium" | "low" | "insufficient_sources";
   missingInfo: string[];
   disclaimer: string;
+  textInterpretation: string;
+  oldVsNewComparison: string;
+  procedurePath: string[];
+  documentList: string[];
+  legalSummary: string;
+  draftTemplate: string;
 }
