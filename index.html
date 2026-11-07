@@ -4,6 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>AADALA.MA — القانون المغربي بنصّه ومادّته</title>
+<meta name="description" content="AADALA.MA — منصة قانونية مغربية مستقلة: النصوص القانونية بنصّها ومادّتها، حاسبة ميراث وفق مدونة الأسرة، تحليل إنهاء ميثاق الزوجية، مختبر القسمة العقارية. مراجع قابلة للتحقق.">
+<meta name="author" content="محمد شرايم">
+<meta name="theme-color" content="#0F5C52" media="(prefers-color-scheme:light)">
+<meta name="theme-color" content="#08121A" media="(prefers-color-scheme:dark)">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_MA">
+<meta property="og:title" content="AADALA.MA — القانون المغربي بنصّه ومادّته">
+<meta property="og:description" content="اسأل سؤالك القانوني واحصل على جواب مبني على النص الأصلي، مع المرجع الذي يمكنك التحقق منه.">
+<meta property="og:site_name" content="AADALA.MA">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AADALA.MA — القانون المغربي بنصّه ومادّته">
+<meta name="twitter:description" content="منصة قانونية مغربية مستقلة، مراجع قابلة للتحقق.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%230F5C52'/%3E%3Cg fill='none' stroke='%23FFFDF6' stroke-width='2'%3E%3Crect x='10' y='10' width='20' height='20'/%3E%3Crect x='10' y='10' width='20' height='20' transform='rotate(45 20 20)'/%3E%3Cline x1='20' y1='14' x2='20' y2='26'/%3E%3Cline x1='15' y1='16' x2='25' y2='16'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
@@ -183,8 +196,7 @@ nav a[aria-current="page"]{color:var(--teal)}
 .pg .btn{background:var(--teal);color:var(--teal-ink);border:0;border-radius:11px;padding:.75rem 1.5rem;font:600 1rem var(--body);cursor:pointer;text-decoration:none;display:inline-block;transition:.2s}
 .pg .btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
 .pg .btn.ghost{background:transparent;color:var(--teal);border:1px solid var(--teal)}
-.pg /* methodology */
-.chain{list-style:none;margin:3rem 0 0;padding:0;position:relative;counter-reset:c}
+.pg .chain{list-style:none;margin:3rem 0 0;padding:0;position:relative;counter-reset:c}
 .pg .chain::before{content:"";position:absolute;inset-block:12px;inset-inline-start:19px;width:2px;background:linear-gradient(var(--teal),var(--brass))}
 .pg .chain li{counter-increment:c;position:relative;padding-inline-start:4rem;padding-bottom:2.2rem}
 .pg .chain li::before{content:counter(c,arabic-indic);position:absolute;inset-inline-start:0;top:0;width:40px;height:40px;background:var(--surface);border:2px solid var(--teal);transform:rotate(45deg) scale(.85);border-radius:6px;display:grid;place-content:center;font:700 1rem var(--display);color:var(--teal)}
@@ -197,8 +209,7 @@ nav a[aria-current="page"]{color:var(--teal)}
 .pg .limits{margin-top:3rem;border:1px dashed var(--brass);border-radius:14px;padding:1.4rem 1.6rem;background:color-mix(in srgb,var(--brass) 7%,transparent)}
 .pg .limits h3{font-size:1.15rem;margin-bottom:.5rem}
 .pg .limits ul{margin:0;padding-inline-start:1.2rem;color:var(--muted)}
-.pg /* article */
-.crumbs{font-size:.88rem;color:var(--muted);margin-bottom:1.4rem}
+.pg .crumbs{font-size:.88rem;color:var(--muted);margin-bottom:1.4rem}
 .pg .crumbs a{color:var(--muted)}
 .pg .art{background:var(--surface);border:1px solid var(--line);border-radius:8px 36px 8px 36px;padding:2.2rem 2rem;margin-top:1.5rem}
 .pg .art .tag{display:inline-block;font-size:.8rem;color:var(--brass);border:1px dashed var(--brass);border-radius:999px;padding:0 .8rem;margin-bottom:1rem}
@@ -215,7 +226,6 @@ nav a[aria-current="page"]{color:var(--teal)}
 .pg .pn a{border:1px solid var(--line);border-radius:10px;padding:.9rem 1.1rem;text-decoration:none;color:var(--ink);background:var(--surface);transition:.2s}
 .pg .pn a:hover{border-color:var(--teal);transform:translateY(-3px)}
 .pg .pn small{display:block;color:var(--muted)}
-.pg /* report */
 form.rep{display:grid;gap:1.1rem;margin-top:2rem;background:var(--surface);border:1px solid var(--line);border-radius:8px 30px 8px 30px;padding:1.8rem}
 .pg label{font:600 .98rem var(--body);display:grid;gap:.35rem}
 .pg label small{font-weight:400;color:var(--muted)}
@@ -232,7 +242,6 @@ form.rep{display:grid;gap:1.1rem;margin-top:2rem;background:var(--surface);borde
 .pg .art{padding:1.5rem 1.2rem}}
 @media (prefers-reduced-motion:reduce){.pg html{scroll-behavior:auto}
 .pg .view.on{animation:none}}
-
 
 .pg .sbar{display:flex;gap:1rem;align-items:center;margin:1.8rem 0 1rem;flex-wrap:wrap}
 .pg .sbar input{flex:1;min-width:240px}
@@ -298,6 +307,8 @@ form.rep{display:grid;gap:1.1rem;margin-top:2rem;background:var(--surface);borde
  body{padding-bottom:calc(66px + env(safe-area-inset-bottom,0px))}
  .chips2{display:none}
 }
+#toTop{position:fixed;bottom:calc(80px + env(safe-area-inset-bottom,0px));inset-inline-end:1.2rem;z-index:15;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--teal);cursor:pointer;box-shadow:0 12px 24px -12px rgba(12,26,43,.4);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .3s,transform .3s;display:grid;place-content:center;font-size:1.1rem}
+#toTop.on{opacity:1;transform:translateY(0);pointer-events:auto}
 </style>
 </head>
 <body>
@@ -427,7 +438,6 @@ form.rep{display:grid;gap:1.1rem;margin-top:2rem;background:var(--surface);borde
 </div>
 <div class="pgnav" id="pgnav" hidden></div>
 <div class="pg" id="pages">
-<!-- 1. METHODOLOGY -->
 <div class="view" id="v-sources"><div class="wrap">
   <span class="eye">المكتبة القانونية</span>
   <h1>المواد المضمّنة والبحث فيها</h1>
@@ -478,7 +488,6 @@ form.rep{display:grid;gap:1.1rem;margin-top:2rem;background:var(--surface);borde
   <p class="lead" style="margin-top:2rem;font-size:.95rem">الحقول المظللة بالأصفر تحتاج منك قرارًا أو معلومة تؤكدها قبل النشر.</p>
 </div></div>
 
-<!-- 2. ARTICLE -->
 <div class="view" id="v-article"><div class="wrap">
   <div class="crumbs"><a href="#sources">المكتبة</a> ‹ <span id="bcSrc"></span> ‹ <span id="bcNo"></span></div>
   <span class="eye">صفحة المادة</span>
@@ -503,7 +512,6 @@ form.rep{display:grid;gap:1.1rem;margin-top:2rem;background:var(--surface);borde
   <div class="pn"><a href="#sources" id="pPrev"><small>→ المادة السابقة</small><span></span></a><a href="#sources" id="pNext"><small>المادة التالية ←</small><span></span></a></div>
 </div></div>
 
-<!-- 3. REPORT -->
 <div class="view" id="v-report"><div class="wrap">
   <span class="eye">التصحيح</span>
   <h1>وجدتَ خطأً؟ أخبرنا.</h1>
@@ -538,13 +546,18 @@ form.rep{display:grid;gap:1.1rem;margin-top:2rem;background:var(--surface);borde
   </div>
 </footer>
 
+<button id="toTop" type="button" aria-label="العودة إلى الأعلى" title="العودة إلى الأعلى">↑</button>
+
 <script>
 (function(){
   var d=document,root=d.documentElement,rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
   root.classList.add('js');
+  try{var saved=localStorage.getItem('aadala-theme');if(saved)root.setAttribute('data-theme',saved);}catch(e){}
   d.getElementById('theme').addEventListener('click',function(){
     var dark=root.getAttribute('data-theme')==='dark'||(!root.getAttribute('data-theme')&&matchMedia('(prefers-color-scheme: dark)').matches);
-    root.setAttribute('data-theme',dark?'light':'dark');
+    var next=dark?'light':'dark';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem('aadala-theme',next);}catch(e){}
   });
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.15});
   d.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(i%3)*90+'ms';io.observe(el)});
@@ -576,18 +589,18 @@ form.rep{display:grid;gap:1.1rem;margin-top:2rem;background:var(--surface);borde
     d.getElementById('assistant').scrollIntoView({behavior:rm?'auto':'smooth'});
     setTimeout(function(){run(v)},rm?0:600);
   });
+  var tt=d.getElementById('toTop');
+  addEventListener('scroll',function(){var s=scrollY>600;tt.classList.toggle('on',s)},{passive:true});
+  tt.addEventListener('click',function(){scrollTo({top:0,behavior:rm?'auto':'smooth'})});
 })();
 </script>
 <script>
 (function(){
 var d=document,root=d.documentElement,$=function(i){return d.getElementById(i)},rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
-/* progress */
 var bar=$('bar');function prog(){var h=d.documentElement.scrollHeight-innerHeight;bar.style.transform='scaleX('+(h>0?scrollY/h:0)+')'}
 addEventListener('scroll',prog,{passive:true});prog();
-/* ticker */
 var src=['دستور المملكة المغربية','قانون الالتزامات والعقود','مدونة الحقوق العينية','ظهير التحفيظ العقاري','مجموعة القانون الجنائي','الجريدة الرسمية عدد 7437'],
     one='<span>'+src.join('</span><span>')+'</span>';$('trk').innerHTML=one+one;
-/* reactive zellige */
 var cv=$('cv'),cx=cv.getContext('2d'),hero=cv.parentNode,W=0,H=0,S=68,mx=null,my=null,vis=true,raf=0;
 function size(){var r=hero.getBoundingClientRect(),p=Math.min(devicePixelRatio||1,2);W=r.width;H=r.height;cv.width=W*p;cv.height=H*p;cx.setTransform(p,0,0,p,0,0)}
 function sq(x,y,r,a){cx.save();cx.translate(x,y);cx.rotate(a);cx.strokeRect(-r,-r,2*r,2*r);cx.restore()}
@@ -608,13 +621,11 @@ hero.addEventListener('pointermove',function(e){var r=hero.getBoundingClientRect
 hero.addEventListener('pointerleave',function(){mx=my=null});
 new IntersectionObserver(function(es){vis=es[0].isIntersecting}).observe(hero);
 if(rm)draw(0);else raf=requestAnimationFrame(loop);
-/* 3D tilt */
 if(!rm)d.querySelectorAll('.book,.tool').forEach(function(el){
   el.addEventListener('pointermove',function(e){var r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
     el.style.transition='transform .12s';el.style.transform='perspective(800px) rotateX('+(-y*8)+'deg) rotateY('+(x*10)+'deg) translateY(-6px)'});
   el.addEventListener('pointerleave',function(){el.style.transition='';el.style.transform=''});
 });
-/* tool steps */
 var steps=[['أدخل الورثة والتركة والديون','تُوزَّع الأنصبة خطوة بخطوة','راجع النتيجة مع مختص قبل أي اعتماد'],['حدّد: محفّظ أم غير محفّظ','تعرّف على الوثائق الناقصة','اطّلع على الدعاوى الممكنة'],['اختر واقعة للتمرين','كيّفها قانونيًا وحدّد الأركان','قارن إجابتك بالمسطرة'],['اختر الإجراء المطلوب','عدّل المسودة الجاهزة','صدّرها بصيغة PDF']];
 d.querySelectorAll('.tool').forEach(function(t,i){
   var b=d.createElement('button');b.type='button';b.className='more';b.setAttribute('aria-expanded','false');b.innerHTML='كيف تعمل؟ <span aria-hidden="true">+</span>';
@@ -622,7 +633,6 @@ d.querySelectorAll('.tool').forEach(function(t,i){
   t.appendChild(b);t.appendChild(ol);
   b.addEventListener('click',function(){var o=t.classList.toggle('open');b.setAttribute('aria-expanded',o);b.lastChild.textContent=o?'−':'+'});
 });
-/* command palette */
 var items=[['المساعد القانوني','#assistant','قسم'],['اسأل سؤالًا','ask','إجراء'],['المكتبة القانونية','#library','قسم'],['مِعيار — حاسبة الإرث','#miyar','أداة'],['تحليل إنهاء ميثاق الزوجية','#family','أداة'],['قابلية القسمة العقارية','#property','أداة'],['المختبر الجنائي','#tools','أداة'],['المساطر والنماذج','#tools','أداة'],['كيف نحافظ على ثقتك','#trust','قسم'],['المنهجية الكاملة','#methodology','صفحة'],['المكتبة والبحث في المواد','#sources','صفحة'],['المادة 26 — الصداق','#m-26','مادة'],['أبلغ عن خطأ','#report','صفحة'],['تبديل الوضع الداكن','theme','إجراء']];
 var dlg=d.createElement('dialog');dlg.className='pal';dlg.setAttribute('aria-label','انتقال سريع');
 dlg.innerHTML='<input type="text" placeholder="إلى أين تريد الذهاب؟" aria-label="بحث" autocomplete="off"><ul role="listbox"></ul>';
@@ -650,7 +660,6 @@ addEventListener('keydown',function(e){var t=(e.target.tagName||'');
 (function(){
 (function(){
   var d=document,root=d.documentElement,$=function(i){return d.getElementById(i)};
-  /* demo data: replace with real data */
   var A={src:'اسم النص القانوني',no:'المادة رقم',ver:'رقم النسخة',date:'تاريخ المراجعة',gaz:'عدد الجريدة الرسمية وتاريخه'};
   function ph(t){return '<span class="ph">'+t+'</span>'}
   $('bcSrc').innerHTML=ph(A.src);$('bcNo').innerHTML=ph(A.no);
@@ -665,7 +674,6 @@ addEventListener('keydown',function(e){var t=(e.target.tagName||'');
   $('copy').addEventListener('click',function(){copy($('cite').textContent.replace(/^«|»$/g,''),$('ok'))});
   window.aPageHook=function(h){if(h==='report'&&!$('rRef').value)$('rRef').value=(history.state&&history.state.fromArticle)?(window.aRef||''):''};
   $('toRep').addEventListener('click',function(){history.replaceState({fromArticle:1},'')});
-  /* report form */
   $('rep').addEventListener('submit',function(e){
     e.preventDefault();var err=$('err'),what=$('rWhat').value.trim(),ref=$('rRef').value.trim(),link=$('rLink').value.trim(),mail=$('rMail').value.trim();
     if(!ref){err.textContent='حدّد النص القانوني ورقم المادة أو الصفحة.';$('rRef').focus();return}
@@ -684,7 +692,7 @@ addEventListener('keydown',function(e){var t=(e.target.tagName||'');
 <script>
 const LAW={"m":{"t":"القانون 70.03 بمثابة مدونة الأسرة","g":"5184","d":"2004-02-03","a":{"4":"الزواج ميثاق تراض وترابط شرعي بين رجل وامرأة على وجه الدوام، غايته الإحصان والعفاف وإنشاء أسرة مستقرة، برعاية الزوجين طبقا لأحكام هذه المدونة.","19":"تكتمل أهلية الزواج بإتمام الفتى والفتاة المتعتين بقواهما العقلية ثمان عشرة سنة شمسية.","24":"الولاية حق للمرأة، تمارسه الراشدة حسب اختيارها ومصلحتها.","25":"للراشدة أن تعقد زواجها بنفسها، أو تفوض ذلك لأبيها أو لأحد أقاربها.","26":"الصداق هو ما يقدمه الزوج لزوجته إشعارا بالرغبة في عقد الزواج وإنشاء أسرة مستقرة، وتثبيت أسس المودة والعشرة بين الزوجين، وأساسه الشرعي هو قيمته المعنوية والرمزية، وليس قيمته المادية.","31":"يؤدى الصداق عند حلول الأجل المتفق عليه. للزوجة المطالبة بأداء الحال من الصداق قبل بداية المعاشرة الزوجية. إذا وقعت المعاشرة الزوجية قبل الأداء، أصبح الصداق دينا في ذمة الزوج.","40":"يمنع التعدد إذا خيف عدم العدل بين الزوجات، كما يمنع في حالة وجود شرط من الزوجة بعدم التزوج عليها.","49":"لكل واحد من الزوجين ذمة مالية مستقلة عن ذمة الآخر، غير أنه يجوز لهما في إطار تدبير الأموال التي ستكتسب أثناء قيام الزوجية، الاتفاق على استثمارها وتوزيعها.","51":"الحقوق والواجبات المتبادلة بين الزوجين تشمل المساكنة الشرعية، المعاشرة بالمعروف، تحمل الزوجة مع الزوج مسؤولية تسيير شؤون البيت، التشاور في القرارات، حسن معاملة الأبوين، وحق التوارث.","70":"لا ينبغي اللجوء إلى حل ميثاق الزوجية بالطلاق أو بالتطليق إلا استثناء، وفي حدود الأخذ بقاعدة أخف الضررين، لما في ذلك من تفكيك الأسرة والإضرار بالأطفال.","71":"ينحل عقد الزواج بالوفاة أو الفسخ أو الطلاق أو التطليق أو الخلع.","78":"الطلاق حل ميثاق الزوجية، يمارسه الزوج والزوجة، كل حسب شروطه تحت مراقبة القضاء وطبقا لأحكام هذه المدونة.","79":"يجب على من يريد الطلاق أن يطلب الإذن من المحكمة بالإشهاد به لدى عدلين منتخبين لذلك، بدائرة نفوذ المحكمة التي يوجد بها بيت الزوجية، أو موطن الزوجة، أو محل إقامتها أو التي أبرم فيها عقد الزواج حسب الترتيب.","83":"إذا تعذر الإصلاح بين الزوجين، حددت المحكمة مبلغا يودعه الزوج بكتابة الضبط بالمحكمة داخل أجل أقصاه ثلاثون يوما لأداء مستحقات الزوجة والأطفال الملزم بالإنفاق عليهم.","84":"تشمل مستحقات الزوجة: الصداق المؤخر إن وجد، ونفقة العدة، والمتعة التي يراعى في تقديرها فترة الزواج والوضعية المالية للزوج، وأسباب الطلاق، ومدى تعسف الزوج في توقيعه. تسكن الزوجة خلال العدة في بيت الزوجية، أو للضرورة في مسكن ملائم لها.","86":"إذا لم يودع الزوج المبلغ المنصوص عليه في المادة 83 أعلاه، داخل الأجل المحدد له، اعتبر متراجعا عن رغبته في الطلاق، ويتم الإشهاد على ذلك من طرف المحكمة.","94":"إذا طلب الزوجان أو أحدهما من المحكمة حل نزاع بينهما يخاف منه الشقاق، وجب عليها أن تقوم بكل المحاولات لإصلاح ذات البين.","97":"في حالة تعذر الإصلاح واستمرار الشقاق، تثبت المحكمة ذلك في محضر، وتحكم بالتطليق وبالمستحقات طبقا للمواد 83 و84 و85 أعلاه، مراعية مسؤولية كل من الزوجين عن سبب الفراق. يفصل في دعوى الشقاق في أجل لا يتجاوز ستة أشهر.","98":"للزوجة طلب التطليق بناء على أحد الأسباب الآتية: 1- إخلال الزوج بشرط من شروط عقد الزواج؛ 2- الضرر؛ 3- عدم الإنفاق؛ 4- الغيبة؛ 5- العيب؛ 6- الإيلاء والهجر.","99":"يعتبر كل إخلال بشرط في عقد الزواج مبررا لطلب التطليق. يعتبر ضررا مبررا لطلب التطليق، كل تصرف من الزوج أو سلوك مشين أو مخل بالأخلاق الحميدة يلحق بالزوجة إساءة مادية أو معنوية.","102":"للزوجة طلب التطليق بسبب إخلال الزوج بالنفقة الحالة الواجبة عليه: 1- إذا كان للزوج مال يمكن أخذ النفقة منه، قررت المحكمة طريقة تنفيذ نفقة الزوجة؛ 2- في حالة ثبوت العجز، تحدد المحكمة أجلا للزوج لا يتعدى ثلاثين يوما لينفق خلاله وإلا طلقت عليه؛ 3- تطلق المحكمة الزوجة حالا، إذا امتنع الزوج عن الإنفاق ولم يثبت العجز.","104":"إذا غاب الزوج عن زوجته مدة تزيد عن سنة، أمكن للزوجة طلب التطليق. تتأكد المحكمة من هذه الغيبة ومدتها ومكانها بكل الوسائل.","106":"إذا حكم على الزوج المسجون بأكثر من ثلاث سنوات سجنا أو حبسا، جاز للزوجة أن تطلب التطليق بعد مرور سنة من اعتقاله، وفي جميع الأحوال يمكنها أن تطلب التطليق بعد سنتين من اعتقاله.","114":"يمكن للزوجين أن يتفقا على مبدأ إنهاء العلاقة الزوجية دون شروط، أو بشروط لا تتنافى مع أحكام هذه المدونة، ولا تضر بمصالح الأطفال. عند وقوع هذا الاتفاق، يقدم الطرفان أو أحدهما طلب التطليق للمحكمة مرفقا به للإذن بتوثيقه.","115":"للزوجين أن يتراضيا على الطلاق بالخلع طبقا لأحكام المادة 114 أعلاه.","117":"للزوجة استرجاع ما خالعت به، إذا أثبتت أن خلعها كان نتيجة إكراه أو إضرار الزوج بها، وينفذ الطلاق في جميع الأحوال.","168":"تعتبر تكاليف سكنى المحضون مستقلة في تقديرها عن النفقة وأجرة الحضانة. يجب على الأب أن يهيئ لأولاده محلا لسكناهم، أو أن يؤدي المبلغ الذي تقدره المحكمة لكرائه. لا يفرغ المحضون من بيت الزوجية، إلا بعد تنفيذ الأب للحكم الخاص بسكنى المحضون.","189":"تشمل النفقة الغذاء والكسوة والعلاج، وما يعتبر من الضروريات والتعليم للأولاد. يراعى في تقدير كل ذلك، التوسط ودخل الملزم بالنفقة، وحال مستحقها، ومستوى الأسعار والأعراف والعادات السائدة في الوسط الذي تفرض فيه النفقة.","190":"تعتمد المحكمة في تقدير النفقة على تصريحات الطرفين وحججهما، مراعية أحكام المادتين 85 و189 أعلاه، ولها أن تستعين بالخبراء في ذلك. يتعين البت في القضايا المتعلقة بالنفقة في أجل أقصاه شهر واحد."}},"r":{"t":"القانون 39.08 المتعلق بمدونة الحقوق العينية","g":"5998","d":"2011-11-22","a":{"1":"تسري مقتضيات هذا القانون على الملكية العقارية والحقوق العينية ما لم تتعارض مع تشريعات خاصة بالعقار.","24":"تسري على الملكية المشاعة أحكام هذا القانون مع مراعاة الأحكام الواردة في قانون الالتزامات والعقود والنصوص الخاصة.","27":"لا يجب أحد على البقاء في الشياع، ويسوغ لكل شريك أن يطلب القسمة، وكل شرط يخالف ذلك يكون عديم الأثر. يجوز للشركاء أن يتفقوا كتابة على البقاء في الشياع لمدة معينة.","313":"القسمة إما بتية أو قسمة مهايأة. القسمة البتية أداة لفرز نصيب كل شريك في الملك وينقضي بها الشياع. قسمة المهايأة تقتصر على المنافع وهي إما زمانية وإما مكانية. تتم القسمة إما بالتراضي وإما بحكم قضائي.","314":"يشترط لإجراء القسمة أن يكون الملك مملوكا على الشياع للشركاء عند إجرائها، وأن يكون قابلا للقسمة، وأن لا تزول المنفعة المقصودة منه بالنسبة لكل جزء من أجزائه بعد القسمة.","317":"تحكم المحكمة بقسمة العقار المشاع قسمة عينية كلما كانت هذه القسمة ممكنة، وبفرز الحصص وتكوين الأنصبة على أساس أصغر حصة، وعن طريق التقويم والتعديل، ثم توزع الأنصبة المفرزة بين الشركاء بالقرعة، وتصدر حكمها بناء على تصميم ينجزه خبير في المسح الطوبوغرافي.","318":"إذا كان العقار المشاع غير قابل للقسمة العينية، أو كان من شأن قسمته مخالفة القوانين والضوابط الجاري بها العمل أو إحداث نقص كبير في قيمته، فإن المحكمة تحكم ببيعه بالمزاد العلني."}}};
 (function(){
-var d=document,$=function(i){return d.getElementById(i)},NO='القانون ';
+var d=document,$=function(i){return d.getElementById(i)};
 function norm(s){return String(s).replace(/[\u064B-\u065F\u0670\u0640]/g,'').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').toLowerCase()}
 function sorted(k){return Object.keys(LAW[k].a).sort(function(a,b){return a-b})}
 window.aShow=function(k,n){
@@ -715,10 +723,10 @@ q.addEventListener('input',search);
 })();
 </script>
 <script>
-
 (function(){
 var d=document,$=function(i){return d.getElementById(i)};
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function fmt(n){if(n==null||isNaN(n))return'—';var s=Number(n).toFixed(2).replace(/\.00$/,'').replace(/(\.\d)0$/,'$1');return s.replace(/\B(?=(\d{3})+(?!\d))/g,',')}
 class Frac{
   constructor(n,d=1n){n=BigInt(n);d=BigInt(d);if(d===0n)throw new Error('div0');if(d<0n){n=-n;d=-d;}
     const g=Frac.gcd(n<0n?-n:n,d);this.n=n/g;this.d=d/g;}
@@ -863,7 +871,7 @@ function analyzeDivorce(input){
     type='تطليق بالاتفاق';legalBasis.push('م. 114: الاتفاق على إنهاء العلاقة الزوجية');
     docs.push('اتفاق مكتوب','طلب الإذن بالتوثيق','نسخة عقد الزواج','وثائق الأطفال');
     if(hasMinorChildren)warnings.push('مع وجود أطفال، تتحقق المحكمة من عدم الإضرار بمصالحهم (م. 114).');
-  }else if(grounds.includes('delegated')||husbandDelegated){
+  }else if(husbandDelegated){
     type='طلاق بالتمليك';legalBasis.push('تمليك الزوجة حق إيقاع الطلاق (يلزم التحقق من مادته في النص الرسمي)');
     docs.push('عقد الزواج الذي يتضمن التمليك','طلب الزوجة','الإذن بالتوثيق');
     procedures.push('التحقق من شروط التمليك','محاولة الإصلاح','الإشهاد على الطلاق');
@@ -918,7 +926,6 @@ function chk(id,l,on,c){return '<label class="chk"><input type="checkbox" id="'+
 function shell(k,eye,t,lead,form,note){$('w-'+k).innerHTML='<span class="eye">'+eye+'</span><h1>'+t+'</h1><p class="lead">'+lead+'</p><div class="calc"><div class="cd">'+form+'</div><div><div id="r-'+k+'">'+al('','أدخل المعطيات ثم اضغط الزر.')+'</div>'+al('warn',note)+'</div></div>'}
 function ul(a,k,o){return a.length?'<'+(o?'ol':'ul')+'>'+a.map(function(x){return '<li>'+lk(x,k)+'</li>'}).join('')+'</'+(o?'ol':'ul')+'>':'<p>—</p>'}
 
-/* miyar */
 var HE=[['husband','الزوج',1],['wife','الزوجات',4],['father','الأب',1],['mother','الأم',1],['son','الأبناء'],['daughter','البنات'],['fullBrother','الإخوة الأشقاء'],['fullSister','الأخوات الشقيقات'],['maternalBrother','الإخوة لأم'],['maternalSister','الأخوات لأم'],['sonSon','أبناء الابن'],['sonDaughter','بنات الابن']];
 shell('miyar','أداة تجريبية','مِعيار — محرك المواريث','حساب حتمي بكسور دقيقة وفق مدونة الأسرة 70.03، مستقل عن الذكاء الاصطناعي. النتائج أولية ويجب التحقق منها مع مختص.',
  '<h3>الورثة</h3><div class="fg">'+HE.map(function(h){return fld('h-'+h[0],h[1],0,h[2]?' max="'+h[2]+'"':'')}).join('')+'</div><h3>التركة</h3><div class="fg">'+fld('est-gross','قيمة التركة (د.م)')+fld('est-debts','الديون')+fld('est-funeral','نفقات التجهيز')+fld('est-will','الوصية')+'</div><div class="stk"><button class="btn" type="button" id="btnInh">احسب الأنصبة</button></div>',
@@ -932,7 +939,6 @@ $('btnInh').addEventListener('click',function(){
    (r.netEstate>0?'<p style="margin-top:.8rem">صافي التركة للتوزيع: <b>'+fmt(r.netEstate)+' د.م</b></p>':'')+
    al('','<b>الأساس:</b> '+r.legalBasis.map(esc).join(' · '))+(r.warnings.length?al('warn',r.warnings.map(esc).join('<br>')):'')+al('warn',esc(r.disclaimer))+'</div>'});
 
-/* family */
 var GR=[['discord','الشقاق'],['harm','الضرر'],['non_maintenance','عدم الإنفاق'],['absence','الغيبة'],['mutual_consent','اتفاق الطرفين'],['khul3','خلع']];
 shell('family','أداة تجريبية','إنهاء ميثاق الزوجية — تحليل الحالة','تحديد نوع الإنهاء (طلاق، تطليق، خلع…)، الأساس القانوني، المسطرة، والحقوق المالية وفق مدونة الأسرة 70.03. أرقام المواد روابط إلى نصوصها في المكتبة.',
  '<h3>بيانات الحالة</h3><label>من يبادر؟<select id="fam-initiator"><option value="husband">الزوج (طلاق)</option><option value="wife">الزوجة (تطليق)</option><option value="both">الطرفان (اتفاق / خلع)</option></select></label><h3>الأسباب</h3><div class="fg">'+GR.map(function(g){return chk('g-'+g[0],g[1],0,'fam-ground')}).join('')+'</div><h3>معطيات مالية</h3><div class="fg">'+fld('fam-dowry','الصداق المؤخر (د.م)')+fld('fam-duration','سنوات الزواج')+fld('fam-income','دخل الزوج الشهري (د.م)')+fld('fam-children','عدد الأطفال')+'</div><div class="stk">'+chk('fam-minors','يوجد أطفال قاصرون')+chk('fam-waives','الزوجة تتنازل عن حقوقها (خلع)')+chk('fam-delegated','الزوج ملّك الزوجة حق الطلاق')+chk('fam-jailed','الزوج محكوم بأكثر من 3 سنوات')+chk('fam-absent','الزوج غائب أكثر من سنة')+chk('fam-housing','سكن الزوجة متوفر',1)+'<button class="btn" type="button" id="btnFam">تحليل الحالة</button></div>',
@@ -946,7 +952,6 @@ $('btnFam').addEventListener('click',function(){
   out.innerHTML='<div class="cd"><span class="bdg ok">'+esc(r.type)+'</span><h3>الأساس القانوني</h3>'+ul(r.legalBasis,'m')+'<h3>المسطرة</h3>'+ul(r.procedures,'m',1)+'<h3>الوثائق المطلوبة</h3>'+ul(r.requiredDocuments,'m')+al('warn',r.warnings.map(function(x){return lk(x,'m')}).join('<br>'))+'</div><div class="cd" style="margin-top:1rem"><h3>تقدير الحقوق المالية</h3>'+
    (f.oneTime?al('','<b>تقدير لمرة واحدة (بدون المتعة):</b> '+fmt(f.oneTime.min)+' — '+fmt(f.oneTime.max)+' د.م'):'')+(f.monthly?al('','<b>نفقة الأطفال الشهرية:</b> '+fmt(f.monthly.min)+' — '+fmt(f.monthly.max)+' د.م'):'')+comps+al('warn',esc(f.disclaimer))+'</div>'});
 
-/* property */
 shell('property','أداة تجريبية','مختبر العقار — قابلية القسمة','تحليل حتمي وفق المواد 313–318 من مدونة الحقوق العينية 39.08. المخرج أولي ولا يغني عن الخبرة القضائية.',
  '<h3>بيانات العقار</h3>'+fld('part-total','المساحة الإجمالية (م²)',0,' min="1"')+'<h3>الشركاء وحصصهم (كسور، مثل 1/4)</h3><div id="part-list"></div><button class="btn ghost" type="button" id="btnAdd">+ إضافة شريك</button><div class="stk">'+chk('part-building','يوجد بناء')+chk('part-easement','يوجد ارتفاق')+chk('part-minor','يوجد وارث قاصر')+chk('part-zoning','التعمير يسمح بالقسمة',1)+'<button class="btn" type="button" id="btnPart">تحليل قابلية القسمة</button></div>',
  'الحصة الشائعة ≠ المساحة الحسابية ≠ القطعة المفرزة. العتبة المستعملة (50 م²) افتراض تقريبي وليست من النص.');
@@ -960,7 +965,6 @@ $('btnPart').addEventListener('click',function(){
   out.innerHTML='<div class="cd"><span class="bdg '+v[1]+'">'+lk(v[0],'r')+'</span><div class="tbw"><table class="tb"><thead><tr><th>الشريك</th><th>الحصة</th><th>المساحة الحسابية (م²)</th></tr></thead><tbody>'+r.areas.map(function(a){return '<tr><td>'+esc(a.name)+'</td><td class="n">'+esc(a.share)+'</td><td class="n">'+fmt(a.area)+'</td></tr>'}).join('')+'</tbody></table></div><p style="margin-top:.8rem">أصغر حصة: <b>'+fmt(r.smallest)+' م²</b> — العتبة الافتراضية: '+r.minParcel+' م²</p>'+
    (r.warnings.length?al('warn',r.warnings.map(function(x){return lk(x,'r')}).join('<br>')):'')+(r.notes.length?al('',r.notes.map(esc).join('<br>')):'')+al('warn',esc(r.disclaimer))+'</div>'});
 
-/* search samples */
 var sm=$('sSamples');
 sm.innerHTML=SAMPLES.map(function(s){return '<div class="smp" style="border:1px dashed var(--brass);border-radius:10px;padding:.9rem 1.1rem;background:var(--surface)"><small style="color:var(--brass);display:block">'+esc(s.type)+' · '+esc(s.source)+' · عيّنة غير محققة</small><b>'+esc(s.title)+'</b><p style="font:400 1.1rem/1.8 var(--text);color:var(--muted)">'+esc(s.snippet)+'</p></div>'}).join('');
 function nz(s){return String(s).replace(/[\u064B-\u065F\u0670\u0640]/g,'').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').toLowerCase()}
@@ -972,7 +976,6 @@ $('sQ').addEventListener('input',function(){var v=nz(this.value.trim());[].slice
 function route(){var h=(location.hash||'#top').slice(1),m=/^([mr])-(\d+)$/.exec(h),art=!!(m&&window.aShow&&aShow(m[1],m[2])),isP=P.indexOf(h)>-1||art;
  home.style.display=isP?'none':'';
  ['methodology','sources','report','article','miyar','family','property'].forEach(function(v){d.getElementById('v-'+v).classList.toggle('on',art?v==='article':v===h)});
-
  d.querySelectorAll('nav a[data-v]').forEach(function(a){if(a.dataset.v===h)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
  if(window.aPageHook)aPageHook(h);
  if(isP)scrollTo(0,0);else{dispatchEvent(new Event('resize'));var el=(h&&h!=='top')?d.getElementById(h):null;if(el)el.scrollIntoView();else scrollTo(0,0)}
