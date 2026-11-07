@@ -1,38 +1,48 @@
 # AADALA.MA — Security Audit Report
 
-Date: 2026-11-06
+Date: 2026-11-07
 Scope: code review (read-only), no offensive testing outside project.
 
 ## Summary
-- No hardcoded secrets found.
-- Auth/sessions not yet implemented (admin open) — HIGH.
-- No rate limiting (best-effort added to /api/ai) — MEDIUM.
-- No file upload handling yet — N/A (not implemented).
-- XSS: React escapes; text rendered in <pre> (safe).
-- SQL injection: no DB queries (mock) — N/A.
+- No hardcoded secrets found (verified via grep).
+- Auth: not fully implemented. Admin protected by Basic Auth gate in proxy.ts (fail-closed, 503 if no credentials).
+- Rate limiting: best-effort in-memory on /api/ai (8 req/60s per IP).
+- File upload: not implemented (N/A).
+- XSS: React escapes; text rendered in <pre> (safe). Zod/validation not yet on API.
+- SQL injection: no DB queries (mock) — N/A. Supabase client exists but not used in UI.
 - CSRF: no cookies/sessions yet — N/A.
 - User file isolation: not implemented — MEDIUM.
-- Backups/restore: not implemented — MEDIUM.
-- Audit logs: in-memory placeholder — MEDIUM.
+- Backups/restore: not implemented/tested — MEDIUM.
+- Audit logs: in-memory placeholder (lib/admin/audit.ts) — MEDIUM.
 - Moroccan data protection (Law 09.08, CNDP): privacy policy placeholder; consent/export/deletion not implemented — HIGH.
 
 ## Risks & Remediation
-| # | Risk | Severity | Remediation |
-|---|------|----------|-------------|
-| 1 | No authentication/authorization | High | Implement auth (NextAuth/Supabase Auth) + RBAC server-side |
-| 2 | Admin panel publicly accessible | High | Protect /admin with auth middleware |
-| 3 | No rate limiting on API | Medium | Upstash/Redis rate limit |
-| 4 | No audit persistence | Medium | DB audit_logs + immutable |
-| 5 | No data export/deletion (CNDP) | High | Implement user data export & deletion |
-| 6 | No consent management | Medium | Cookie consent + privacy policy review |
-| 7 | No backup/restore | Medium | Automated backups + tested restore |
-| 8 | Logs may include sensitive data | Low | Redact PII in logs |
-| 9 | File uploads not secured | Medium | Validate type/size, private storage, signed URLs |
+| # | Risk | Severity | Status | Remediation |
+|---|------|----------|--------|-------------|
+| 1 | No authentication/authorization | High | Partial (admin gate) | Implement auth (NextAuth/Supabase Auth) + RBAC server-side |
+| 2 | Admin panel publicly accessible | High | Mitigated (503 if no creds) | Set ADMIN_USER/ADMIN_PASSWORD env vars |
+| 3 | No rate limiting on API | Medium | Mitigated (in-memory) | Upstash/Redis rate limit for production |
+| 4 | No audit persistence | Medium | Placeholder | DB audit_logs + immutable |
+| 5 | No data export/deletion (CNDP) | High | Not implemented | Implement user data export & deletion |
+| 6 | No consent management | Medium | Not implemented | Cookie consent + privacy policy review |
+| 7 | No backup/restore | Medium | Not implemented | Automated backups + tested restore |
+| 8 | Logs may include sensitive data | Low | Not addressed | Redact PII in logs |
+| 9 | File uploads not secured | Medium | N/A (not implemented) | Validate type/size, private storage, signed URLs |
+| 10 | AI prompt injection | Medium | Partial | Input sanitization on /api/ai (cap 2000 chars) |
+| 11 | Anti-hallucination | Low | Implemented | unverifiedCitations downgrades certainty |
 
 ## Compliance (Morocco)
 - Law 09.08: data subject rights (access, rectification, deletion) — to implement.
 - CNDP: declaration/authorization for sensitive processing — legal review before launch.
 - Data residency: review cross-border transfers (AI provider) — legal review.
 
+## Tests Performed (read-only)
+- grep for secrets: PASS (no hardcoded secrets)
+- grep for API keys/tokens: PASS
+- .gitignore: PASS (.env, .env.* ignored, .env.example allowed)
+- XSS: React escapes (PASS)
+- SQL injection: N/A (no DB queries)
+- CSRF: N/A (no cookies/sessions)
+
 ## Conclusion
-Platform is a foundation; security hardening required before production (auth, RBAC, rate limit, audit persistence, data rights, backups).
+Platform is a foundation; security hardening required before production (auth, RBAC, rate limit persistence, data rights, backups). Admin protected by fail-closed gate. AI has anti-hallucination checks.
