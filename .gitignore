@@ -12,6 +12,7 @@ node_modules/
 .next/
 out/
 build/
+/.open-next/
 
 # Misc
 .DS_Store
