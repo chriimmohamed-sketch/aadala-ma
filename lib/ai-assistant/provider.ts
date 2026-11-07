@@ -24,6 +24,7 @@ export async function callProvider(prompt: string): Promise<string | null> {
         messages: [{ role: "user", content: prompt }],
         temperature: 0.2,
       }),
+      signal: AbortSignal.timeout(20_000),
     });
     if (!res.ok) return null;
     const data = await res.json();
