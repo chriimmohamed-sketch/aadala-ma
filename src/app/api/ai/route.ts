@@ -5,8 +5,6 @@ import type { AIAnswer } from "@/lib/ai-assistant/types";
 
 export async function POST(req: Request) {
   // Best-effort in-memory rate limit (per instance)
-  const ip = req.headers.get("x-forwarded-for") || "unknown";
-  // (production: use Redis/Upstash)
   const body = await req.json().catch(() => ({}));
   const question = String(body?.question ?? "").trim().slice(0, 2000);
   const locale = String(body?.locale ?? "ar").slice(0, 8);
