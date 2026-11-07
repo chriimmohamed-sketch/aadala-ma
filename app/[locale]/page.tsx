@@ -1,165 +1,81 @@
 import { getMessages } from "@/lib/i18n/getMessages";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import ZelligeCanvas from "@/components/ZelligeCanvas";
 import Link from "next/link";
 
-const library = [
-  { ty: "دستور", title: "دستور المملكة المغربية", sub: "2011", color: "#0F5C52" },
-  { ty: "قانون", title: "قانون الالتزامات والعقود", sub: "صيغة محينة", color: "#8A5F1C" },
-  { ty: "مدونة", title: "مدونة الحقوق العينية", sub: "2018 و2025", color: "#2D4A7A" },
-  { ty: "ظهير", title: "ظهير التحفيظ العقاري", sub: "كما وقع تغييره وتتميمه", color: "#7A2D3C" },
-  { ty: "مجموعة", title: "مجموعة القانون الجنائي", sub: "صيغة محينة", color: "#4A4A4A" },
-  { ty: "جريدة رسمية", title: "الجريدة الرسمية عدد 7437", sub: "عدد منفرد", color: "#5A7A2D" },
-];
-
-const tools = [
-  { n: "١", title: "حاسبة الميراث", badge: "تجريبي", desc: "توزيع التركة بين الورثة خطوة بخطوة، وتُراجع النتيجة مع مختص قبل أي اعتماد.", href: "/miyar" },
-  { n: "٢", title: "النزاعات العقارية", desc: "محفّظ أم غير محفّظ؟ تعرّف على الوثائق الناقصة والدعاوى الممكنة.", href: "/property" },
-  { n: "٣", title: "المختبر الجنائي", badge: "تعليمي", desc: "تمرّن على التكييف القانوني وأركان الجريمة والإجراءات.", href: "/criminal" },
-  { n: "٤", title: "المساطر والنماذج", desc: "أدلة إجرائية ومسودات جاهزة للتعديل، تصدّرها بصيغة PDF.", href: "/procedures" },
-];
-
-const parts = [
-  { i: "١", b: "الوقائع المفترضة", span: "ما فهمه المساعد من سؤالك." },
-  { i: "٢", b: "الأساس القانوني", span: "المادة والنص الذي بُني عليه الجواب." },
-  { i: "٣", b: "التحليل", span: "تطبيق النص على حالتك بلغة واضحة." },
-  { i: "٤", b: "درجة اليقين", span: "وعندما لا تكفي المصادر، يقول ذلك صراحة." },
+const modules = [
+  { title: "الموسوعة القانونية", href: "/legal", desc: "نصوص، مواد، تعديلات" },
+  { title: "الاجتهاد القضائي", href: "/case-law", desc: "قرارات منشورة" },
+  { title: "المساعد القانوني", href: "/ai", desc: "RAG موثق المصادر" },
+  { title: "محرك الإرث", href: "/inheritance", desc: "حسابات حتمية" },
+  { title: "العقار والشياع", href: "/property", desc: "حقوق عينية" },
+  { title: "المختبر الجنائي", href: "/criminal", desc: "تحليل أركان" },
+  { title: "المساطر والوثائق", href: "/procedures", desc: "نماذج" },
+  { title: "الشريعة والفقه", href: "/sharia", desc: "نصوص موثقة" },
 ];
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const messages = await getMessages(locale);
+  const h = (messages.home ?? {}) as Record<string, string>;
+  const dev = ((messages.status as Record<string, string>)?.inDevelopment) ?? "قيد التطوير";
   return (
-    <div className="flex min-h-screen flex-col bg-bg">
+    <div className="flex min-h-screen flex-col bg-ivory">
       <Header locale={locale} messages={messages} />
-      <main id="top" className="flex-1">
+      <main className="flex-1">
         {/* Hero */}
-        <div className="hero">
-          <ZelligeCanvas />
-          <div className="wrap">
-            <div>
-              <span className="kicker">منصة قانونية مغربية مستقلة</span>
-              <h1>القانون المغربي، بنصّه <em>ومادّته.<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M2 14 C50 4, 110 18, 198 6" /></svg></em></h1>
-              <p className="lead">اسأل سؤالك القانوني واحصل على جواب مبني على النص الأصلي، مع المرجع الذي يمكنك التحقق منه قبل أن تعتمد عليه.</p>
-              <form className="ask" action={`/${locale}/ai`} method="get" role="search">
-                <input name="q" type="text" maxLength={2000} placeholder="مثال: ما شروط صحة عقد البيع؟" aria-label="سؤالك القانوني" autoComplete="off" />
-                <button className="btn" type="submit">اسأل</button>
-              </form>
-              <div className="chips" role="group" aria-label="أسئلة مقترحة">
-                <a className="chip" href={`/${locale}/ai?q=${encodeURIComponent("ما شروط صحة عقد البيع؟")}`}>ما شروط صحة عقد البيع؟</a>
-                <a className="chip" href={`/${locale}/ai?q=${encodeURIComponent("كيف يتم تحفيظ عقار؟")}`}>كيف يتم تحفيظ عقار؟</a>
-                <a className="chip" href={`/${locale}/ai?q=${encodeURIComponent("ما الفرق بين الشياع والقسمة؟")}`}>ما الفرق بين الشياع والقسمة؟</a>
+        <section className="relative overflow-hidden bg-navy text-ivory">
+          <div className="mx-auto max-w-6xl px-4 py-20 md:py-28">
+            <div className="max-w-3xl">
+              <div className="mb-4 inline-block rounded-full border border-gold/40 px-3 py-1 text-xs text-gold">
+                AADALA.MA — منصة العدالة والذكاء القانوني المغربي
               </div>
-              <p className="note">هذه نسخة تصميمية: شاهد أدناه كيف سيُبنى الجواب. سيُربط المساعد بالمصادر عند تفعيل الخادم.</p>
-            </div>
-            <svg className="seal" viewBox="0 0 320 320" aria-hidden="true">
-              <defs><path id="circ" d="M160 160 m-128 0 a128 128 0 1 1 256 0 a128 128 0 1 1 -256 0" /></defs>
-              <g className="ring"><text><textPath href="#circ" startOffset="0">AADALA.MA ✦ القانون بنصّه ومادّته ✦ مصدر قابل للتحقق ✦</textPath></text></g>
-              <circle cx="160" cy="160" r="104" fill="none" stroke="currentColor" strokeWidth="1" opacity=".4" />
-              <g className="rose" fill="none" stroke="currentColor" strokeWidth="2.2">
-                <rect x="100" y="100" width="120" height="120" />
-                <rect x="100" y="100" width="120" height="120" transform="rotate(45 160 160)" />
-                <circle cx="160" cy="160" r="34" />
-              </g>
-              <g className="gold" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
-                <line x1="160" y1="132" x2="160" y2="188" />
-                <line x1="134" y1="140" x2="186" y2="140" />
-                <path d="M134 140 l-10 24 h20z M186 140 l-10 24 h20z" fill="none" />
-              </g>
-            </svg>
-          </div>
-        </div>
-
-        <div className="tick" aria-hidden="true">
-          <div className="trk">
-            <span>دستور المملكة المغربية</span><span>قانون الالتزامات والعقود</span><span>مدونة الحقوق العينية</span><span>ظهير التحفيظ العقاري</span><span>مجموعة القانون الجنائي</span><span>الجريدة الرسمية عدد 7437</span>
-            <span>دستور المملكة المغربية</span><span>قانون الالتزامات والعقود</span><span>مدونة الحقوق العينية</span><span>ظهير التحفيظ العقاري</span><span>مجموعة القانون الجنائي</span><span>الجريدة الرسمية عدد 7437</span>
-          </div>
-        </div>
-
-        <section id="assistant">
-          <div className="wrap split">
-            <div>
-              <span className="num">٠١ · المساعد</span>
-              <h2>جواب لا تُصدّقه حتى تراجعه.</h2>
-              <p className="sub">كل إجابة تُعرض بنفس الترتيب، فتعرف ما افتُرض وما استُند إليه وما ينقص.</p>
-              <div className="parts">
-                {parts.map((p) => (
-                  <button key={p.b} className="part" type="button">
-                    <i>{p.i}</i><b>{p.b}</b><span>{p.span}</span>
-                  </button>
-                ))}
-              </div>
-              <Link href={`/${locale}/ai`} className="btn play">▶ اسأل المساعد</Link>
-            </div>
-            <article className="sample" aria-label="شكل الإجابة">
-              <span className="tag">شكل توضيحي — ليس جوابًا قانونيًا</span>
-              <p className="q">سؤالك يظهر هنا…</p>
-              <div className="blk"><h3>الوقائع المفترضة</h3><p>صياغة السؤال في نقطة قانونية محددة.</p></div>
-              <div className="blk"><h3>الأساس القانوني</h3><p><span className="ph">رقم المادة</span> من <span className="ph">اسم النص القانوني</span>، مع مقطع من النص الأصلي.</p></div>
-              <div className="blk"><h3>التحليل</h3><p>تطبيق النص على الوقائع، وبيان المعلومات الناقصة التي تغيّر الجواب لو توفرت.</p></div>
-              <div className="blk"><h3>درجة اليقين</h3><p>مرتفعة · متوسطة · منخفضة · مصادر غير كافية</p></div>
-              <div className="stamp" aria-hidden="true">مرجع<br />قابل<br />للتحقق</div>
-            </article>
-          </div>
-        </section>
-
-        <section id="library">
-          <div className="wrap">
-            <div><span className="num">٠٢ · المكتبة</span>
-            <h2>المكتبة القانونية</h2>
-            <p className="sub">مصادر منشورة، تُقرأ كاملة وتُستخدم مرجعًا للمساعد.</p></div>
-            <div className="shelf">
-              {library.map((b) => (
-                <Link key={b.title} className="book" style={{ "--c": b.color } as React.CSSProperties} href={`/${locale}/legal`}>
-                  <span className="ty">{b.ty}</span>
-                  <h3>{b.title}</h3>
-                  <small>{b.sub}</small>
-                  <b>اقرأ النص ←</b>
+              <h1 className="text-4xl font-bold leading-tight md:text-6xl">
+                {h.heroTitle ?? "AADALA.MA"}
+              </h1>
+              <p className="mt-5 text-lg text-ivory/80 md:text-xl">
+                {h.heroSubtitle ?? "تسهيل الوصول إلى المعرفة القانونية المغربية."}
+              </p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <input
+                  className="flex-1 rounded-lg border border-ivory/20 bg-navy-soft px-5 py-3 text-sm text-ivory placeholder-ivory/50 focus:border-gold focus:outline-none"
+                  placeholder={h.searchPlaceholder ?? "ابحث..."}
+                  aria-label={h.searchPlaceholder ?? "ابحث"}
+                />
+                <Link href={`/${locale}/ai`} className="aadala-btn-gold text-center">
+                  {h.aiCta ?? "اسأل المساعد"}
                 </Link>
-              ))}
+              </div>
+              <p className="mt-4 text-xs text-ivory/50">{h.disclaimer}</p>
             </div>
+          </div>
+          <div className="aadala-divider" />
+        </section>
+
+        {/* Modules */}
+        <section className="mx-auto max-w-6xl px-4 py-16">
+          <h2 className="text-2xl font-bold text-navy">الأقسام</h2>
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {modules.map((m) => (
+              <Link key={m.href} href={`/${locale}${m.href}`} className="aadala-card block p-5">
+                <div className="h-1 w-10 bg-gold" />
+                <h3 className="mt-3 font-semibold text-navy">{m.title}</h3>
+                <p className="mt-1 text-xs text-graphite-soft">{m.desc}</p>
+                <span className="mt-3 inline-block text-xs text-gold">{dev}</span>
+              </Link>
+            ))}
           </div>
         </section>
 
-        <section id="tools">
-          <div className="wrap">
-            <div><span className="num">٠٣ · الأدوات</span>
-            <h2>أدوات لحالتك الفعلية</h2>
-            <p className="sub">من الفهم إلى الإجراء: احسب، حلّل، وحضّر ملفك.</p></div>
-            <div className="tools">
-              {tools.map((t) => (
-                <Link key={t.title} href={`/${locale}${t.href}`} className="tool" data-n={t.n}>
-                  <h3>{t.title}{t.badge && <span className="badge">{t.badge}</span>}</h3>
-                  <p>{t.desc}</p>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="trust">
-          <div className="wrap">
-            <div><span className="num">٠٤ · منهجنا</span>
-            <h2>كيف نحافظ على ثقتك</h2>
-            <p className="sub">منصة قانونية تخسر قيمتها بخطأ واحد. لهذا نلتزم بثلاث قواعد.</p></div>
-            <div className="trust">
+        {/* Founder teaser */}
+        <section className="bg-navy-soft text-ivory">
+          <div className="mx-auto max-w-6xl px-4 py-12">
+            <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
               <div>
-                <svg viewBox="0 0 54 54" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true"><circle cx="27" cy="27" r="22" /><path d="M15 15l24 24" /></svg>
-                <h3>لا اختلاق</h3>
-                <p>لا مواد ولا أحكام من خارج المصادر. إن لم نجد، نقول ذلك.</p>
+                <h2 className="text-2xl font-bold">عن المؤسس</h2>
+                <p className="mt-2 text-sm text-ivory/70">MOHAMED CHRAIM — محمد شرايم</p>
               </div>
-              <div>
-                <svg viewBox="0 0 54 54" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true"><rect x="8" y="8" width="38" height="38" /><rect x="8" y="8" width="38" height="38" transform="rotate(45 27 27)" /><path d="M19 28l6 6 11-13" /></svg>
-                <h3>كل شيء قابل للتحقق</h3>
-                <p>لكل جواب مرجع، ولكل نص نسخة وتاريخ وإحالة إلى الجريدة الرسمية.</p>
-              </div>
-              <div>
-                <svg viewBox="0 0 54 54" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true"><rect x="12" y="24" width="30" height="22" rx="3" /><path d="M18 24v-7a9 9 0 0 1 18 0v7" /><circle cx="27" cy="35" r="3" /></svg>
-                <h3>خصوصيتك أولًا</h3>
-                <p>تُعالج بياناتك وفق القانون 09.08، ويمكنك طلب حذفها.</p>
-              </div>
+              <Link href={`/${locale}/founder`} className="aadala-btn-gold">اقرأ السيرة</Link>
             </div>
           </div>
         </section>

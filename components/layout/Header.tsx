@@ -1,4 +1,18 @@
 import Link from "next/link";
+import ThemeToggle from "@/components/ThemeToggle";
+
+const navItems = [
+  { href: "", key: "home" },
+  { href: "/legal", key: "legal" },
+  { href: "/search", key: "search" },
+  { href: "/ai", key: "ai" },
+  { href: "/miyar", key: "miyar" },
+  { href: "/property", key: "property" },
+  { href: "/case-law", key: "caseLaw" },
+  { href: "/procedures", key: "procedures" },
+  { href: "/criminal", key: "criminal" },
+  { href: "/founder", key: "founder" },
+];
 
 export default function Header({ locale, messages }: { locale: string; messages: Record<string, unknown> }) {
   const nav = (messages.nav ?? {}) as Record<string, string>;
@@ -16,15 +30,13 @@ export default function Header({ locale, messages }: { locale: string; messages:
           {brand}
         </Link>
         <nav aria-label="التنقل الرئيسي">
-          <Link href={`/${locale}`}>{nav.home ?? "الرئيسية"}</Link>
-          <Link href={`/${locale}/legal`}>{nav.legal ?? "المكتبة"}</Link>
-          <Link href={`/${locale}/ai`}>{nav.ai ?? "المساعد"}</Link>
-          <Link href={`/${locale}/miyar`}>{nav.miyar ?? "MIYAR"}</Link>
-          <Link href={`/${locale}/property`}>{nav.property ?? "العقار"}</Link>
-          <Link href={`/${locale}/case-law`}>{nav.caseLaw ?? "الاجتهاد"}</Link>
+          {navItems.map((n) => (
+            <Link key={n.key} href={`/${locale}${n.href}`}>
+              {nav[n.key] ?? n.key}
+            </Link>
+          ))}
         </nav>
-        <button className="kbd" type="button" aria-label="فتح البحث السريع">⌕ <span>انتقال سريع</span> <kbd>Ctrl K</kbd></button>
-        <button className="theme" id="theme" type="button" aria-label="تبديل الوضع الداكن">◐</button>
+        <ThemeToggle />
       </div>
     </header>
   );
