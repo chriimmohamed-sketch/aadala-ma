@@ -1,13 +1,16 @@
 import type { HeirInput, EstateInput, MiyarResult, ShareLine, ComputationStep, HeirRelation } from "./types";
 import { validateHeirs, validateEstate } from "./validation";
+import { distribute, SUPPORTED, type Rel } from "./family-code";
+import { num, lcm, text } from "./fraction";
 
-function get(heirs: HeirInput[], rel: string): number {
-  return heirs.find((h) => h.relation === rel)?.count ?? 0;
-}
-function has(heirs: HeirInput[], rel: string): boolean { return get(heirs, rel) > 0; }
-
-function lcm(a: number, b: number): number { return (a * b) / gcd(a, b); }
-function gcd(a: number, b: number): number { return b === 0 ? a : gcd(b, a % b); }
+export const RELATION_LABELS: Record<string, string> = {
+  husband: "الزوج", wife: "الزوجة", son: "الابن", daughter: "البنت", grandson: "ابن الابن", granddaughter: "بنت الابن",
+  father: "الأب", mother: "الأم", full_brother: "الأخ الشقيق", full_sister: "الأخت الشقيقة",
+  paternal_brother: "الأخ لأب", paternal_sister: "الأخت لأب", maternal_brother: "الأخ لأم", maternal_sister: "الأخت لأم",
+  grandfather: "الجد", grandmother: "الجدة", brother: "أخ", sister: "أخت", nephew: "ابن الأخ", uncle: "العم",
+};
+const ROLE_LABELS: Record<string, string> = { fard: "فرض", asaba: "تعصيب", radd: "فرض + رد", wasiyya: "وصية", mahjub: "محجوب" };
+const round2 = (x: number) => Math.round(x * 100) / 100;
 
 export function computeMiyar(heirs: HeirInput[], estate: EstateInput): MiyarResult {
   const steps: ComputationStep[] = [];
@@ -18,185 +21,64 @@ export function computeMiyar(heirs: HeirInput[], estate: EstateInput): MiyarResu
   const hv = validateHeirs(heirs);
   const ev = validateEstate(estate);
   errors.push(...hv.errors, ...ev.errors);
-  warnings.push(...hv.warnings, ...ev.warnings);
+  warnings.push(...hv.warnings.filter((w) => !w.includes("لم يُدخل زوج")), ...ev.warnings);
 
   const netEstate = estate.totalValue - estate.debts - estate.funeral;
-  const wasiyya = Math.min(estate.wasiyya, netEstate / 3);
+  const wasiyya = Math.min(estate.wasiyya, Math.max(0, netEstate / 3));
   const distributable = netEstate - wasiyya;
 
-  steps.push({ order: 1, title: "صافي التركة", description: `الإجمالي ${estate.totalValue} - الديون ${estate.debts} - الجنازة ${estate.funeral} = ${netEstate}` , result: String(netEstate) });
-  if (wasiyya > 0) steps.push({ order: 2, title: "الوصية", description: `وصية ${wasiyya} (≤ ثلث ${netEstate / 3})`, result: String(wasiyya) });
+  const counts: Partial<Record<Rel, number>> = {};
+  for (const h of heirs) {
+    if (!h.alive) { needsExpert = true; warnings.push(`${RELATION_LABELS[h.relation] ?? h.relation} متوفى: قد تنطبق الوصية الواجبة أو المناسخة، ولا يحسبها هذا المحرك.`); continue; }
+    if (!(SUPPORTED as readonly string[]).includes(h.relation)) {
+      errors.push(`الوريث "${RELATION_LABELS[h.relation] ?? h.relation}" غير مدعوم في هذه النسخة${h.relation === "brother" || h.relation === "sister" ? " (حدّد: شقيق أو لأب أو لأم)" : ""}. راجع مختصًا.`);
+      continue;
+    }
+    counts[h.relation as Rel] = (counts[h.relation as Rel] ?? 0) + h.count;
+  }
+  if (!errors.length && Object.keys(counts).length === 0) errors.push("لا يوجد ورثة أحياء ضمن النطاق المدعوم.");
 
+  const base = { estate, netEstate, heirs, steps, warnings, errors };
+  if (errors.length) {
+    return { ...base, shares: [], totalFraction: 0, remainder: 0, asl: 0, sawahim: 0, needsExpert: true,
+      reportMarkdown: "تعذّر الحساب:\n" + errors.map((e) => `- ${e}`).join("\n") };
+  }
+
+  steps.push({ order: 1, title: "صافي التركة", description: `${estate.totalValue} - الديون ${estate.debts} - الجنازة ${estate.funeral} = ${netEstate}`, result: String(netEstate) });
+  if (wasiyya > 0) steps.push({ order: 2, title: "الوصية", description: `${wasiyya} (لا تتجاوز الثلث)`, result: String(wasiyya) });
+
+  const d = distribute(counts, { noOtherRelatives: !!estate.noOtherRelatives, raddIncludesSpouse: !!estate.raddIncludesSpouse });
+  needsExpert = needsExpert || d.needsExpert;
+  warnings.push(...d.notes);
+
+  const shareOfNet = distributable / netEstate;
   const shares: ShareLine[] = [];
-  // wasiyya line
   if (wasiyya > 0) {
-    shares.push({ heirId: "wasiyya", relation: "father", count: 1, fraction: wasiyya / netEstate, amount: wasiyya, role: "wasiyya", note: "وصية" });
-    warnings.push("الوصية تطلب مراجعة مختص.");
+    shares.push({ heirId: "wasiyya", relation: "father", count: 1, fraction: wasiyya / netEstate, amount: round2(wasiyya), role: "wasiyya", note: "وصية" });
     needsExpert = true;
   }
-
-  const hasChildren = has(heirs, "son") || has(heirs, "daughter") || has(heirs, "grandson") || has(heirs, "granddaughter");
-  const hasSon = has(heirs, "son") || has(heirs, "grandson");
-
-  // spouse
-  let spouseFraction = 0;
-  if (has(heirs, "husband")) {
-    spouseFraction = hasChildren ? 1 / 4 : 1 / 2;
-  } else if (has(heirs, "wife")) {
-    spouseFraction = hasChildren ? 1 / 8 : 1 / 4;
+  let asl = 1;
+  for (const l of d.lines) asl = lcm(asl, l.frac.d);
+  for (const l of d.lines) {
+    const count = counts[l.rel] ?? 1;
+    const amount = round2(distributable * num(l.frac));
+    shares.push({
+      heirId: l.rel, relation: l.rel as HeirRelation, count, fraction: num(l.frac) * shareOfNet, amount, role: l.role === "radd" ? "radd" : l.role,
+      fractionText: text(l.frac), sahm: (l.frac.n * asl) / l.frac.d, perHeirAmount: round2(amount / count),
+      note: ROLE_LABELS[l.role],
+    });
+    steps.push({ order: steps.length + 1, title: RELATION_LABELS[l.rel], description: `${ROLE_LABELS[l.role]}: ${text(l.frac)} من التركة القابلة للتوزيع`, result: text(l.frac) });
   }
-  if (spouseFraction > 0) {
-    const rel = has(heirs, "husband") ? "husband" : "wife";
-    const cnt = get(heirs, rel);
-    shares.push({ heirId: rel, relation: rel as HeirRelation, count: cnt, fraction: spouseFraction, amount: distributable * spouseFraction, role: "fard", note: "فرض زوج/زوجة" });
-    steps.push({ order: 3, title: "فرض الزوج/الزوجة", description: `${spouseFraction}`, result: String(spouseFraction) });
-  }
-
-  // mother
-  let motherFraction = 0;
-  if (has(heirs, "mother")) {
-    motherFraction = hasChildren ? 1 / 6 : (has(heirs, "father") || has(heirs, "grandfather") ? 1 / 3 : 1 / 3);
-    // if 2+ siblings, mother 1/6 (simplified)
-    shares.push({ heirId: "mother", relation: "mother", count: get(heirs, "mother"), fraction: motherFraction, amount: distributable * motherFraction, role: "fard" });
-  }
-
-  // father fard if children
-  let fatherFard = 0;
-  if (has(heirs, "father") && hasChildren) {
-    fatherFard = 1 / 6;
-    shares.push({ heirId: "father", relation: "father", count: 1, fraction: fatherFard, amount: distributable * fatherFard, role: "fard" });
-  }
-
-  // daughters fard if no sons
-  let daughtersFard = 0;
-  const daughterCount = get(heirs, "daughter");
-  if (daughterCount > 0 && !hasSon) {
-    daughtersFard = daughterCount === 1 ? 1 / 2 : 2 / 3;
-    shares.push({ heirId: "daughter", relation: "daughter", count: daughterCount, fraction: daughtersFard, amount: distributable * daughtersFard, role: "fard" });
-  }
-
-  const totalFard = spouseFraction + motherFraction + fatherFard + daughtersFard;
-  let remainder = Math.max(0, 1 - totalFard);
-
-  // asaba: sons (and daughters with sons) share remainder; if no sons, father or brothers etc.
-  const sonCount = get(heirs, "son");
-  if (sonCount > 0) {
-    const units = sonCount * 2 + (has(heirs, "daughter") ? get(heirs, "daughter") : 0);
-    const perUnit = remainder / units;
-    const sonFrac = perUnit * 2 * sonCount;
-    const dauFrac = perUnit * (has(heirs, "daughter") ? get(heirs, "daughter") : 0);
-    // remove daughter fard placeholder? daughters already may have fard if no sons; here sons exist so daughters are asaba only
-    // remove any existing daughter fard share line? We added only if !hasSon, so fine.
-    shares.push({ heirId: "son", relation: "son", count: sonCount, fraction: sonFrac, amount: distributable * sonFrac, role: "asaba" });
-    if (has(heirs, "daughter")) {
-      shares.push({ heirId: "daughter", relation: "daughter", count: get(heirs, "daughter"), fraction: dauFrac, amount: distributable * dauFrac, role: "asaba" });
-    }
-    remainder = 0;
-  } else if (!hasChildren && has(heirs, "father")) {
-    // father gets remainder as asaba
-    const fatherShare = (shares.find((s) => s.heirId === "father")?.fraction ?? 0) + remainder;
-    // update
-    const idx = shares.findIndex((s) => s.heirId === "father");
-    if (idx >= 0) { shares[idx].fraction = fatherShare; shares[idx].amount = distributable * fatherShare; shares[idx].role = "asaba"; }
-    remainder = 0;
-  }
-
-  // awl (عول): if total > 1
   const totalFraction = shares.reduce((s, x) => s + x.fraction, 0);
-  if (totalFraction > 1 + 1e-9) {
-    warnings.push("حدث عول (مجموع الفروض > 1). تم تصحيح الأنصبة.");
-    needsExpert = true;
-    const factor = 1 / totalFraction;
-    for (const sh of shares) { sh.fraction *= factor; sh.amount = distributable * sh.fraction; }
-  }
 
-  // radd (رد): if remainder > 0 and no asaba
-  const rem = shares.reduce((s, x) => s + x.fraction, 0);
-  const leftover = Math.max(0, 1 - rem);
-  if (leftover > 1e-9) {
-    // radd to fard heirs except spouse
-    const raddTargets = shares.filter((s) => s.role === "fard" && s.heirId !== "husband" && s.heirId !== "wife");
-    if (raddTargets.length) {
-      const sum = raddTargets.reduce((s, x) => s + x.fraction, 0);
-      for (const sh of raddTargets) {
-        const add = (sh.fraction / sum) * leftover;
-        sh.fraction += add;
-        sh.amount = distributable * sh.fraction;
-        sh.role = "radd";
-      }
-      warnings.push("تم رد الباقي على مستحقي الرد.");
-    } else {
-      warnings.push("يوجد باقٍ (رد) لم يوزع.");
-    }
-  }
-
-  // asl (أصل المسألة): lcm of denominators of fard fractions (simplified)
-  const dens = shares.map((s) => {
-    // find denominator
-    const f = s.fraction;
-    // approximate denominator
-    let den = 1;
-    for (let d = 1; d <= 120; d++) { if (Math.abs(f * d - Math.round(f * d)) < 1e-9) { den = d; break; } }
-    return den;
-  });
-  const asl = dens.reduce((a, b) => lcm(a, b), 1);
-
-  const finalTotal = shares.reduce((s, x) => s + x.fraction, 0);
-
-  // manasakhat / multiple deaths
-  const hasDeceasedHeir = heirs.some((h) => !h.alive);
-  if (hasDeceasedHeir) {
-    warnings.push("مناسخة (تعدد وفيات) — يتطلب مراجعة مختص.");
-    needsExpert = true;
-  }
-
-  // complex relations
-  const complex = heirs.some((h) => ["brother","sister","nephew","uncle","grandfather","grandmother","grandson","granddaughter"].includes(h.relation));
-  if (complex) {
-    warnings.push("حالات حجب/تعصيب معقدة — engine مبسط، يتطلب مراجعة مختص.");
-    needsExpert = true;
-  }
-
-  // report markdown
   const reportMarkdown = [
-    "# تقرير MIYAR — المواريث",
-    "",
-    `## التركة`,
-    `- الإجمالي: ${estate.totalValue} ${estate.currency}`,
-    `- الديون: ${estate.debts}`,
-    `- الجنازة: ${estate.funeral}`,
-    `- الوصية: ${wasiyya}`,
-    `- صافي التركة: ${netEstate}`,
-    `- قابل للتوزيع: ${distributable}`,
-    "",
-    `## الورثة`,
-    ...heirs.map((h) => `- ${h.relation} × ${h.count} (${h.alive ? "حي" : "متوفى"})`),
-    "",
-    `## الأنصبة`,
-    ...shares.map((s) => `- ${s.relation} × ${s.count}: ${(s.fraction * 100).toFixed(4)}% = ${s.amount.toFixed(2)} (${s.role})`),
-    "",
-    `## أصل المسألة`,
-    `أصل المسألة: ${asl} | إجمالي الحصص: ${(finalTotal * 100).toFixed(4)}%`,
-    "",
-    `## تحذيرات`,
-    ...warnings.map((w) => `- ${w}`),
-    "",
-    "هذا تقرير تجريبي. requires expert review.",
+    "# تقرير MIYAR: المواريث (نطاق محدود)", "",
+    `- صافي التركة: ${netEstate} ${estate.currency}`, `- الوصية: ${wasiyya}`, `- القابل للتوزيع: ${distributable}`, `- أصل المسألة: ${asl}`, "",
+    "## الأنصبة",
+    ...shares.map((s) => `- ${RELATION_LABELS[s.relation] ?? s.relation}${s.heirId === "wasiyya" ? " (وصية)" : ""} × ${s.count}: ${s.fractionText ?? ""} = ${s.amount.toFixed(2)} ${estate.currency}`),
+    "", "## ملاحظات", ...warnings.map((w) => `- ${w}`), "",
+    "نتيجة استرشادية لا تغني عن عقد الفريضة لدى العدول أو حكم المحكمة.",
   ].join("\n");
 
-  return {
-    estate,
-    netEstate,
-    heirs,
-    shares,
-    totalFraction: finalTotal,
-    remainder: Math.max(0, 1 - finalTotal),
-    asl,
-    sawahim: asl,
-    steps,
-    warnings,
-    errors,
-    needsExpert,
-    reportMarkdown,
-  };
+  return { ...base, shares, totalFraction, remainder: Math.max(0, 1 - totalFraction), asl, sawahim: asl, needsExpert, reportMarkdown };
 }

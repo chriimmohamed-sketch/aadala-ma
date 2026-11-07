@@ -2,8 +2,9 @@
 import { useState } from "react";
 import { computeMiyar } from "@/lib/miyar/engine";
 import type { HeirInput, EstateInput } from "@/lib/miyar/types";
+import { RELATION_LABELS } from "@/lib/miyar/engine";
 
-const RELATIONS = ["husband","wife","son","daughter","father","mother","grandfather","grandmother","brother","sister","grandson","granddaughter","nephew","uncle"];
+const RELATIONS = ["husband","wife","son","daughter","grandson","granddaughter","father","mother","full_brother","full_sister","paternal_brother","paternal_sister","maternal_brother","maternal_sister"];
 
 export default function MiyarEngine() {
   const [heirs, setHeirs] = useState<HeirInput[]>([{ id: "1", relation: "son", gender: "male", count: 1, alive: true }]);
@@ -33,6 +34,8 @@ export default function MiyarEngine() {
           <label className="text-xs">الوصية<input type="number" className="mt-1 w-full rounded border border-border px-2 py-1" value={estate.wasiyya} onChange={(e) => setEstate({ ...estate, wasiyya: +e.target.value })} /></label>
           <label className="text-xs">العملة<input className="mt-1 w-full rounded border border-border px-2 py-1" value={estate.currency} onChange={(e) => setEstate({ ...estate, currency: e.target.value })} /></label>
         </div>
+        <label className="mt-3 flex items-start gap-2 text-xs"><input type="checkbox" checked={!!estate.noOtherRelatives} onChange={(e) => setEstate({ ...estate, noOtherRelatives: e.target.checked })} /> أؤكد عدم وجود أعمام أو أبناء إخوة أو عصبة آخرين (شرط لرد الباقي على أصحاب الفروض)</label>
+        <label className="mt-2 flex items-start gap-2 text-xs"><input type="checkbox" checked={!!estate.raddIncludesSpouse} onChange={(e) => setEstate({ ...estate, raddIncludesSpouse: e.target.checked })} /> إدخال الزوجين في الرد (محل خلاف، الافتراضي: لا)</label>
       </section>
 
       <section className="aadala-card p-5">
@@ -44,7 +47,7 @@ export default function MiyarEngine() {
           {heirs.map((h, i) => (
             <div key={h.id} className="grid grid-cols-4 gap-2 md:grid-cols-6">
               <select className="rounded border border-border px-2 py-1 text-sm" value={h.relation} onChange={(e) => updateHeir(i, { relation: e.target.value as HeirInput["relation"] })}>
-                {RELATIONS.map((r) => <option key={r} value={r}>{r}</option>)}
+                {RELATIONS.map((r) => <option key={r} value={r}>{RELATION_LABELS[r]}</option>)}
               </select>
               <select className="rounded border border-border px-2 py-1 text-sm" value={h.gender} onChange={(e) => updateHeir(i, { gender: e.target.value as "male" | "female" })}>
                 <option value="male">ذكر</option>
@@ -85,11 +88,11 @@ export default function MiyarEngine() {
             <tbody>
               {result.shares.map((s, i) => (
                 <tr key={i} className="border-b border-border/50">
-                  <td className="p-2">{s.relation}</td>
+                  <td className="p-2">{RELATION_LABELS[s.relation] ?? s.relation}</td>
                   <td className="p-2">{s.count}</td>
-                  <td className="p-2">{(s.fraction * 100).toFixed(4)}%</td>
+                  <td className="p-2">{s.fractionText ?? `${(s.fraction * 100).toFixed(2)}%`}</td>
                   <td className="p-2">{s.amount.toFixed(2)}</td>
-                  <td className="p-2 text-xs">{s.role}</td>
+                  <td className="p-2 text-xs">{s.note ?? s.role}</td>
                 </tr>
               ))}
             </tbody>

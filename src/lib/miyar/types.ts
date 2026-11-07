@@ -1,7 +1,8 @@
 export type HeirRelation =
   | "husband" | "wife" | "son" | "daughter" | "father" | "mother"
   | "grandfather" | "grandmother" | "brother" | "sister" | "nephew" | "uncle"
-  | "grandson" | "granddaughter";
+  | "grandson" | "granddaughter"
+  | "full_brother" | "full_sister" | "paternal_brother" | "paternal_sister" | "maternal_brother" | "maternal_sister";
 
 export interface HeirInput {
   id: string;
@@ -18,6 +19,10 @@ export interface EstateInput {
   funeral: number;
   wasiyya: number; // within 1/3
   currency: string;
+  /** Confirms no uncles / nephews / other agnates exist; required before any undistributed remainder is returned (radd). */
+  noOtherRelatives?: boolean;
+  /** Include spouses in radd (disputed; default false). */
+  raddIncludesSpouse?: boolean;
 }
 
 export interface FamilyNode {
@@ -45,6 +50,9 @@ export interface ShareLine {
   amount: number;
   role: ShareRole;
   note?: string;
+  fractionText?: string; // of the distributable estate, e.g. "1/4"
+  sahm?: number; // shares out of asl
+  perHeirAmount?: number;
 }
 
 export interface ComputationStep {

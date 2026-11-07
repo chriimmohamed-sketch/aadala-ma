@@ -7,14 +7,14 @@ interface Answer {
   legalBasis: string;
   analysis: string;
   possibleApplications: string;
-  references: { sourceSlug: string; sourceTitle: string; excerpt: string }[];
+  references: { sourceSlug: string; sourceTitle: string; excerpt: string; location?: string }[];
   certainty: string;
   missingInfo: string[];
   disclaimer: string;
 }
 
-export default function AIChat({ locale }: { locale: string }) {
-  const [q, setQ] = useState("");
+export default function AIChat({ locale, initialQuestion = "" }: { locale: string; initialQuestion?: string }) {
+  const [q, setQ] = useState(initialQuestion);
   const [loading, setLoading] = useState(false);
   const [ans, setAns] = useState<Answer | null>(null);
 
@@ -47,7 +47,7 @@ export default function AIChat({ locale }: { locale: string }) {
             <ul className="mt-2 space-y-2">
               {ans.references.map((r, i) => (
                 <li key={i} className="rounded border border-border bg-ivory p-2 text-xs">
-                  <div className="font-semibold text-navy">{r.sourceTitle}</div>
+                  <div className="font-semibold text-navy">{r.sourceTitle}{r.location ? ` — ${r.location}` : ""}</div>
                   <div className="text-graphite-soft">{r.excerpt.slice(0, 240)}…</div>
                 </li>
               ))}
