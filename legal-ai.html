@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المساعد القانوني — AADALA.MA</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="header"></div>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>🤖 المساعد القانوني الذكي</h2>
+        <p>طرح أسئلة قانونية، تحليل نزاعات، معرفة الحقوق والإجراءات</p>
+      </div>
+
+      <div class="alert alert-warning mb-3">
+        <strong>⚠️ إخلاء مسؤولية:</strong> المساعد القانوني يقدم معلومات توضيحية مبنية على التشريع المغربي. لا constitutes استشارة قانونية. تُوصى بمراجعة محامٍ مغربي مختص. لا تُدخل بيانات قضايا حقيقية حساسة.
+      </div>
+
+      <div class="chat-container">
+        <div class="chat-header">
+          <span style="font-size:1.5rem;">⚖️</span>
+          <div>
+            <strong>AADALA Legal AI</strong>
+            <div style="font-size:0.85rem;opacity:0.8;">مساعد قانوني مغربي — RAG على النصوص</div>
+          </div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+          <div class="chat-message assistant">
+            <strong>مرحباً! 👋</strong><br>
+            أنا المساعد القانوني لمنصة AADALA.MA. يمكنك طرح سؤال قانوني، شرح واقعة، أو طلب تحليل.<br><br>
+            <strong>أمثلة:</strong><br>
+            • ما هي حقوق المستأجر عند إنهاء عقد الكراء؟<br>
+            • كيف أقدم دعوى مدنية؟<br>
+            • ما هي إجراءات الطلاق في مدونة الأسرة؟<br><br>
+            <em>ملاحظة: الإجابات توضيحية وليست استشارة قانونية.</em>
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <textarea id="chatInput" rows="2" placeholder="اكتب سؤالك القانوني هنا..." onkeypress="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg();}"></textarea>
+          <button class="btn btn-primary" onclick="sendMsg()" id="sendBtn">إرسال</button>
+        </div>
+      </div>
+
+      <div class="mt-3 flex gap-2 flex-wrap">
+        <button class="btn btn-outline btn-sm" onclick="quickAsk('ما هي حقوق المستأجر؟')">حقوق المستأجر</button>
+        <button class="btn btn-outline btn-sm" onclick="quickAsk('كيف أقدم دعوى مدنية؟')">دعوى مدنية</button>
+        <button class="btn btn-outline btn-sm" onclick="quickAsk('ما هي إجراءات الطلاق؟')">الطلاق</button>
+        <button class="btn btn-outline btn-sm" onclick="quickAsk('ما هي حقوق العامل؟')">حقوق العامل</button>
+        <button class="btn btn-outline btn-sm" onclick="clearChat()">مسح المحادثة</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+
+  <script src="assets/js/app.js">
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/legal-content.js"></script>
+  <script>
+    document.getElementById('header').innerHTML = renderHeader('legal-ai.html');
+    document.getElementById('footer').innerHTML = renderFooter();
+    updateAuthUI();
+
+    async function sendMsg() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      addMessage(text, 'user');
+      const btn = document.getElementById('sendBtn');
+      btn.disabled = true;
+      btn.textContent = '...';
+      // Show typing
+      const typingId = addMessage('⏳ جاري التحليل...', 'assistant');
+      const sections = await LegalAI.analyze(text);
+      document.getElementById(typingId).remove();
+      let html = '';
+      sections.forEach(s => {
+        html += `<div style="margin-bottom:1rem;"><strong style="color:var(--color-primary);">${s.title}</strong><br>${s.content.replace(/\n/g,'<br>')}</div>`;
+      });
+      addMessage(html, 'assistant', true);
+      btn.disabled = false;
+      btn.textContent = 'إرسال';
+    }
+
+    function quickAsk(q) {
+      document.getElementById('chatInput').value = q;
+      sendMsg();
+    }
+
+    function addMessage(content, type, isHtml = false) {
+      const box = document.getElementById('chatMessages');
+      const div = document.createElement('div');
+      const id = 'msg_' + Date.now();
+      div.id = id;
+      div.className = `chat-message ${type}`;
+      div.innerHTML = isHtml ? content : AADALA.escape(content);
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+      return id;
+    }
+
+    function clearChat() {
+      document.getElementById('chatMessages').innerHTML = '';
+      addMessage('تم مسح المحادثة. كيف يمكنني مساعدتك؟', 'assistant');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الموسوعة القانونية — AADALA.MA</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="header"></div>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>📚 الموسوعة القانونية المغربية</h2>
+        <p>النصوص، المواد، التعديلات، حالة السريان</p>
+      </div>
+
+      <div class="alert alert-info mb-3">
+        <strong>ملاحظة:</strong> النصوص المدرجة هنا مأخوذة من المصادر الرسمية (ال burglary الرسمية). التحقق من www.sgg.gov.ma. المحتوى قيد التوسيع.
+      </div>
+
+      <div class="mb-3">
+        <input type="text" class="form-input" id="encSearch" placeholder="بحث في الموسوعة..." oninput="filterEnc()">
+      </div>
+
+      <div class="category-grid" id="encCategories"></div>
+
+      <div id="textDetail" class="mt-4 hidden"></div>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+
+  <script src="assets/js/app.js">
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/legal-content.js"></script>
+  <script>
+    document.getElementById('header').innerHTML = renderHeader('encyclopedia.html');
+    document.getElementById('footer').innerHTML = renderFooter();
+    updateAuthUI();
+
+    const grid = document.getElementById('encCategories');
+    grid.innerHTML = LegalEncyclopedia.categories.map(c =>
+      `<div class="category-item" onclick="showCategory('${c.id}')">
+        <div class="category-icon">${c.icon}</div>
+        <div><strong>${c.name}</strong><br><span class="text-muted text-sm">${c.desc}</span></div>
+      </div>`
+    ).join('');
+
+    function showCategory(id) {
+      const cat = LegalEncyclopedia.categories.find(c => c.id === id);
+      const texts = (window.LegalContent ? LegalContent.texts.filter(t => t.category === id) : []);
+      const detail = document.getElementById('textDetail');
+      detail.classList.remove('hidden');
+      let html = `<div class="card"><h3>${cat.icon} ${cat.name}</h3><p class="text-muted">${cat.desc}</p>`;
+      if (texts.length > 0) {
+        html += '<div class="mt-3">';
+        texts.forEach(t => {
+          html += `<div class="card mb-2" style="background:var(--color-bg-alt);">
+            <h4>${t.title} <span class="badge badge-primary">${t.status}</span></h4>
+            <p class="text-muted text-sm">${t.titleFr}</p>
+            <table class="data-table mt-2">
+              <tr><td><strong>النوع</strong></td><td>${t.type}</td></tr>
+              <tr><td><strong>الرقم</strong></td><td>${t.number}</td></tr>
+              <tr><td><strong>التاريخ</strong></td><td>${t.date}</td></tr>
+              <tr><td><strong>المصدر</strong></td><td>${t.source}</td></tr>
+              <tr><td><strong>الملخص</strong></td><td>${t.summary}</td></tr>
+            </table>
+            <a href="${t.url}" target="_blank" class="btn btn-outline btn-sm mt-2">المصدر (sgg.gov.ma)</a>
+          </div>`;
+        });
+        html += '</div>';
+      } else {
+        html += `<div class="alert alert-info mt-2">لا توجد نصوص في هذه الفئة حالياً. سيتم إضافتها من المصادر الرسمية.</div>`;
+      }
+      html += '</div>';
+      detail.innerHTML = html;
+      detail.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function filterEnc() {
+      const q = document.getElementById('encSearch').value.toLowerCase();
+      document.querySelectorAll('.category-item').forEach(el => {
+        const txt = el.textContent.toLowerCase();
+        el.style.display = txt.includes(q) ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
