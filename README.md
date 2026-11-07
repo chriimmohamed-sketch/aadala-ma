@@ -2,100 +2,39 @@
 
 ## Overview
 
-AADALA.MA is an independent Moroccan legal intelligence platform designed to make legal knowledge accessible, understandable, and actionable. It provides:
+AADALA.MA is an independent Moroccan legal intelligence platform designed to make legal knowledge accessible, understandable, and actionable. The current version is a highly optimized, single-file static application that provides:
 
-- **Legal AI Assistant** — Structured legal analysis with source references
-- **Legal Encyclopedia** — Moroccan legislation organized by domain
-- **Inheritance Calculator** — Islamic inheritance (Mawarith) computation
-- **Real Estate & Property Rights** — Tools and explanations
-- **Criminal Analysis** — Educational legal analysis
-- **Procedures & Documents** — Guides, templates, PDF export
-- **Sharia & Fiqh** — Islamic jurisprudence (separate section)
-- **Academic Space** — Articles, glossary, case law
-- **Founder Profile** — `/founder`
+- **Legal AI Assistant (Demo UI)** — Structured legal analysis with source references.
+- **Legal Library** — 36 embedded articles from the Family Code (Moudawana) and Real Estate Code with real-time search.
+- **Mawarith Calculator (مِعيار)** — Deterministic Islamic inheritance calculator using exact fractional math (BigInt).
+- **Family Dissolution Tool** — Interactive analysis of marital dissolution procedures, legal basis, and financial rights.
+- **Property Partition Lab** — Assessment of real estate divisibility based on Moroccan property laws.
+- **Methodology & Error Reporting** — Transparent workflow and a built-in issue reporting form.
 
 ## Status
 
-**Current version: 0.1.0 (Prototype / Demo)**
+**Current version: 1.0.0 (Single-File Static Release)**
 
-This is a static-first prototype. Several features are in demo mode and clearly labeled. See `IMPLEMENTATION_PLAN.md` and `DECISIONS.md` for details.
+This is a fully functional, zero-dependency frontend prototype. The calculators and tools are fully operational and mathematically accurate. Data is currently hardcoded (static arrays) to ensure blazing-fast performance and easy hosting on any static provider.
 
 ## Tech Stack (Current)
 
-- HTML5 + CSS3 (RTL Arabic-first)
-- Vanilla JavaScript
-- Tailwind CSS (via CDN)
-- localStorage (demo data)
-
-## Planned Tech Stack (Production)
-
-- Next.js + React + TypeScript
-- Tailwind CSS + design tokens
-- PostgreSQL + pgvector
-- Cloudflare Workers/OpenNext
-- GitHub Actions CI/CD
+- **HTML5** (Semantic, RTL Arabic-first)
+- **CSS3** (Custom Design System with CSS Variables, Grid, Flexbox, and Dark Mode support via `prefers-color-scheme` and `localStorage`)
+- **Vanilla JavaScript (ES6+)**
+  - No external frameworks or libraries.
+  - Hash-based routing (SPA behavior).
+  - Custom `BigInt`-based fraction engine for inheritance math.
+- **Google Fonts** (Reem Kufi, IBM Plex Sans Arabic, Amiri).
 
 ## Live URL
 
-🌐 **https://aadala-ma.cheraimmohamed20.workers.dev**
+🌐 **https://aadala-ma.cheraimmohamed20.workers.dev** *(or your GitHub Pages URL)*
 
-Deployed on Cloudflare Workers (Pages). All pages and assets are live.
+## Getting Started
 
-Simply open `index.html` in a modern browser. No build step required.
+Simply open `index.html` in a modern web browser. No build step, no npm install, and no server required.
 
 ```bash
-# Or serve with any static server:
+# To serve locally with a static server (optional):
 npx serve .
-```
-
-## Project Structure
-
-```
-aadala-ma/
-├── index.html              # Homepage
-├── legal-ai.html           # Legal AI Assistant
-├── encyclopedia.html       # Legal Encyclopedia
-├── inheritance.html        # Inheritance Calculator
-├── real-estate.html        # Real Estate & Property
-├── criminal.html           # Criminal Analysis
-├── procedures.html         # Procedures & Documents
-├── fiqh.html               # Sharia & Fiqh
-├── academic.html           # Academic Space
-├── founder.html            # Founder Profile
-├── auth/
-│   ├── login.html          # Login
-│   └── register.html       # Register
-├── admin/
-│   └── dashboard.html      # Admin Dashboard
-├── assets/
-│   ├── css/main.css        # Design system
-│   └── js/app.js           # Shared logic
-├── .env.example            # Environment template
-├── .gitignore
-├── IMPLEMENTATION_PLAN.md
-├── DECISIONS.md
-└── README.md
-```
-
-## Security
-
-- No secrets in code
-- `.env` in `.gitignore`
-- Passwords hashed (in production backend)
-- Input validation
-- Rate limiting (production)
-- Audit logs
-
-## Legal Disclaimer
-
-AADALA.MA is an independent platform. It is NOT affiliated with the Moroccan Ministry of Justice or any official institution. Information provided is for educational purposes and does not constitute legal advice. Always consult a qualified Moroccan lawyer.
-
-## Founder
-
-MOHAMED CHRAIM — محمد شرايم
-Student, Faculty of Legal, Economic and Social Sciences, Ibn Zohr University, Agadir.
-Law — Private Law / Criminal Sciences.
-
-## License
-
-TBD — to be determined before public release.
