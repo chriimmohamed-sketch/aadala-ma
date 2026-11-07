@@ -12,7 +12,7 @@ export default function ZelligeCanvas() {
     const cx = canvas.getContext("2d");
     if (!cx) return;
 
-    let W = 0, H = 0, S = 68;
+    let W = 0, H = 0; const S = 68;
     let mx: number | null = null, my: number | null = null;
     let vis = true;
     let raf = 0;
