@@ -24,29 +24,31 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <Header locale={locale} messages={messages} />
       <main className="flex-1">
         {/* Hero */}
-        <section className="relative overflow-hidden bg-navy text-ivory">
-          <div className="mx-auto max-w-6xl px-4 py-20 md:py-28">
+        <section className="relative overflow-hidden hero-bg text-ivory">
+          <div className="orb orb-1" />
+          <div className="orb orb-2" />
+          <div className="relative mx-auto max-w-6xl px-4 py-24 md:py-32">
             <div className="max-w-3xl">
-              <div className="mb-4 inline-block rounded-full border border-gold/40 px-3 py-1 text-xs text-gold">
-                AADALA.MA — منصة العدالة والذكاء القانوني المغربي
+              <div className="mb-4 inline-block rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs text-gold backdrop-blur">
+                ✦ AADALA.MA — منصة العدالة والذكاء القانوني المغربي
               </div>
-              <h1 className="text-4xl font-bold leading-tight md:text-6xl">
+              <h1 className="shimmer text-5xl font-bold leading-tight md:text-7xl">
                 {h.heroTitle ?? "AADALA.MA"}
               </h1>
-              <p className="mt-5 text-lg text-ivory/80 md:text-xl">
+              <p className="mt-6 text-lg text-ivory/80 md:text-xl">
                 {h.heroSubtitle ?? "تسهيل الوصول إلى المعرفة القانونية المغربية."}
               </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-10 flex flex-col gap-3 sm:flex-row">
                 <input
-                  className="flex-1 rounded-lg border border-ivory/20 bg-navy-soft px-5 py-3 text-sm text-ivory placeholder-ivory/50 focus:border-gold focus:outline-none"
+                  className="aadala-glass flex-1 rounded-xl px-5 py-3.5 text-sm text-ivory placeholder-ivory/50 focus:border-gold focus:outline-none"
                   placeholder={h.searchPlaceholder ?? "ابحث..."}
                   aria-label={h.searchPlaceholder ?? "ابحث"}
                 />
-                <Link href={`/${locale}/ai`} className="aadala-btn-gold text-center">
+                <Link href={`/${locale}/ai`} className="aadala-btn-gold text-center text-base">
                   {h.aiCta ?? "اسأل المساعد"}
                 </Link>
               </div>
-              <p className="mt-4 text-xs text-ivory/50">{h.disclaimer}</p>
+              <p className="mt-5 text-xs text-ivory/50">{h.disclaimer}</p>
             </div>
           </div>
           <div className="aadala-divider" />
@@ -55,10 +57,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         {/* Modules */}
         <section className="mx-auto max-w-6xl px-4 py-16">
           <h2 className="text-2xl font-bold text-navy">الأقسام</h2>
-          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 stagger">
             {modules.map((m) => (
-              <Link key={m.href} href={`/${locale}${m.href}`} className="aadala-card block p-5">
-                <div className="h-1 w-10 bg-gold" />
+              <Link key={m.href} href={`/${locale}${m.href}`} className="aadala-card block p-5 group">
+                <div className="h-1 w-10 bg-gold transition-all group-hover:w-20" />
                 <h3 className="mt-3 font-semibold text-navy">{m.title}</h3>
                 <p className="mt-1 text-xs text-graphite-soft">{m.desc}</p>
                 <span className="mt-3 inline-block text-xs text-gold">{dev}</span>
