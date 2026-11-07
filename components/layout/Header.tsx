@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Header({ locale, messages }: { locale: string; messages: Record<string, unknown> }) {
   const nav = (messages.nav ?? {}) as Record<string, string>;
@@ -24,7 +25,7 @@ export default function Header({ locale, messages }: { locale: string; messages:
           <Link href={`/${locale}/case-law`}>{nav.caseLaw ?? "الاجتهاد"}</Link>
         </nav>
         <button className="kbd" type="button" aria-label="فتح البحث السريع">⌕ <span>انتقال سريع</span> <kbd>Ctrl K</kbd></button>
-        <button className="theme" id="theme" type="button" aria-label="تبديل الوضع الداكن">◐</button>
+        <ThemeToggle />
       </div>
     </header>
   );

@@ -17,8 +17,11 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   await getMessages(locale);
   const dir = isRtl(locale) ? "rtl" : "ltr";
   return (
-    <html lang={locale} dir={dir}>
-      <body className="min-h-screen bg-slate-50 text-slate-900 antialiased">
+    <html lang={locale} dir={dir} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('aadala-theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',d?'dark':'light');}catch(e){}})();` }} />
+      </head>
+      <body className="min-h-screen bg-bg text-ink font-body">
         {children}
       </body>
     </html>
