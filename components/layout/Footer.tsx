@@ -4,20 +4,10 @@ export default function Footer({ locale, messages }: { locale: string; messages:
   const f = (messages.footer ?? {}) as Record<string, string>;
   const tagline = (messages.tagline as string) ?? "";
   return (
-    <footer className="bg-graphite text-ivory/80">
-      <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-4 py-8 md:flex-row md:justify-between">
-        <div>
-          <div className="text-lg font-bold text-gold">AADALA.MA</div>
-          <div className="text-xs text-ivory/60">{tagline}</div>
-        </div>
-        <div className="flex gap-6 text-xs">
-          <Link href={`/${locale}/privacy`} className="hover:text-gold transition-colors">{f.privacy ?? "Privacy"}</Link>
-          <Link href={`/${locale}/terms`} className="hover:text-gold transition-colors">{f.terms ?? "Terms"}</Link>
-          <Link href={`/${locale}/disclaimer`} className="hover:text-gold transition-colors">{f.disclaimer ?? "Disclaimer"}</Link>
-        </div>
-      </div>
-      <div className="border-t border-ivory/10 py-3 text-center text-xs text-ivory/40">
-        © AADALA.MA — 2026
+    <footer>
+      <div className="wrap">
+        <p>AADALA.MA منصة مستقلة وغير تابعة لوزارة العدل أو لأي جهة رسمية. المحتوى للتوعية القانونية ولا يُعد استشارة مهنية؛ استشر محاميًا مغربيًا في قضيتك.</p>
+        <p>أسّسها محمد شرايم، طالب بكلية العلوم القانونية والاقتصادية والاجتماعية، جامعة ابن زهر، أكادير.</p>
       </div>
     </footer>
   );
