@@ -24,6 +24,35 @@ export default async function StudentPage({ params }: { params: Promise<{ locale
   const { locale } = await params;
   return (
     <PageShell locale={locale} title="الطالب والباحث" intro="مدخل للدراسة والبحث القانوني: أدوات المنصة في مكان واحد، ومنهجية قصيرة تعين على الاستشهاد الصحيح.">
+      <section className="aadala-card mb-6 border-2 !border-gold/60 p-5">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="max-w-2xl">
+            <span className="text-xs font-semibold text-brass">موقع المؤسِّس الثاني — للطالب</span>
+            <h2 className="mt-1 text-xl font-bold text-navy">CHRAIM — دليل الطالب أكادير (جامعة ابن زهر)</h2>
+            <p className="mt-2 text-sm leading-7 text-graphite">
+              بوابة الطالب الجامعية: بوابة الطالب (الجداول، الوثائق، أرشيف الامتحانات، حاسبة المعدل)، منصة الامتحانات (فروض وامتحانات وملخصات)، دليل التكوينات (فهرس قابل للبحث في 382 تكوينًا رسميًا)، المستجدات، رفيق الطالب، ودليل مؤسسات جامعة ابن زهر (24 مؤسسة في 8 مدن).
+            </p>
+            <p className="mt-2 text-xs text-muted">
+              منصة CHRAIM مستقلة وغير رسمية — المعطيات مجمّعة من المصادر الرسمية لجامعة ابن زهر وجرى التحقق منها بتاريخ 2026-10-16. يُرجى دائمًا مراجعة المصدر الرسمي (uiz.ac.ma).
+            </p>
+          </div>
+          <a
+            href="https://chraim.pages.dev/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="aadala-btn-primary shrink-0"
+            aria-label="فتح موقع CHRAIM — دليل الطالب أكادير في نافذة جديدة"
+          >
+            افتح موقعي ↗
+          </a>
+        </div>
+        <ul className="mt-4 flex flex-wrap gap-2 text-xs">
+          {["بوابة الطالب", "منصة الامتحانات", "دليل التكوينات 382", "المستجدات", "رفيق الطالب", "دليل جامعة ابن زهر"].map((x) => (
+            <li key={x} className="rounded-full border border-border bg-surface px-3 py-1 text-graphite">{x}</li>
+          ))}
+        </ul>
+      </section>
+
       <h2 className="mb-3 text-lg font-semibold text-navy">أدوات المنصة</h2>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {tools.map((t) => (

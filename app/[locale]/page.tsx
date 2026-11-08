@@ -122,6 +122,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                   <h3>المساطر والنماذج</h3>
                   <p>أدلة إجرائية ومسودات جاهزة للتعديل، تصدّرها بصيغة PDF.</p>
                 </Link>
+                <Link href={`/${locale}/student`} className="tool" data-n="٥">
+                  <h3>فضاء طلبة القانون</h3>
+                  <p>لطلبة شعبة القانون: أدوات الدراسة والبحث، ورابط موقع المؤسِّس الثاني دليل الطالب CHRAIM.</p>
+                </Link>
               </div>
             </div>
           </section>
