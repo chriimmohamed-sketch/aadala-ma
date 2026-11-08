@@ -12,6 +12,8 @@ node_modules/
 .next/
 out/
 build/
+tsconfig.tsbuildinfo
+*.tsbuildinfo
 /.open-next/
 
 # Misc

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://aadala.ma/sitemap.xml
+Sitemap: https://chriimmohamed-sketch.github.io/aadala-ma/sitemap.xml

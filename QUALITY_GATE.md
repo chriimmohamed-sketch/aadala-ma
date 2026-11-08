@@ -4,14 +4,14 @@
 
 ## Checklist
 
-1. ✅ نجاح البناء (npm run build) — PASS (234 pages).
-2. ✅ نجاح الاختبارات الوحدوية (npm run test) — 25 tests, 3 files, PASS.
+1. ✅ نجاح البناء (npm run build) — PASS (264 pages).
+2. ✅ نجاح الاختبارات الوحدوية (npm run test) — 33 tests, 5 files, PASS.
 3. ⚠️ اختبارات التكامل (API/DB) — قيد التطوير (no DB integration yet).
 4. ⚠️ فحص واجهات API (contract tests) — قيد (only /api/ai exists).
 5. ⚠️ اختبار الواجهة على الهاتف — يدوي (not automated).
 6. ⚠️ اختبار RTL — يدوي (not automated).
 7. ⚠️ إمكانية الوصول (a11y) — قيد (not automated).
-8. ⚠️ اختبار الصلاحيات (RBAC) — قيد (auth not implemented; admin gate exists).
+8. ✅ اختبار الصلاحيات (RBAC) — Supabase Auth + RLS, server-enforced; unit tests for permissions/auth (8 tests).
 9. ✅ اختبارات MIYAR المرجعية (15 pass, incl. 4000 random families invariant).
 10. ⚠️ التحقق من الإحالات (AADALA AI) — retrieval + anti-hallucination. Requires source verification.
 11. ⚠️ اختبار النسخ الاحتياطي/الاستعادة — قيد (not tested).
@@ -20,8 +20,8 @@
 ## Commands
 - `npm run lint` — PASS (0 errors)
 - `npm run typecheck` — PASS (0 errors)
-- `npm run test` — PASS (25 tests)
-- `npm run build` — PASS (234 pages)
+- `npm run test` — PASS (33 tests)
+- `npm run build` — PASS (264 pages)
 - `npm run quality:gate` — PASS
 
 ## Rule
@@ -34,6 +34,6 @@
 - Mobile UI testing — manual.
 - RTL testing — manual.
 - Accessibility (a11y) — not automated.
-- RBAC testing — auth not implemented.
+- RBAC testing — Supabase Auth + RLS (unit tests for permissions/auth).
 - Backup/restore testing — not performed.
 - Legal citation verification — retrieval only.

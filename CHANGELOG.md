@@ -17,5 +17,16 @@
 - Quality gate + CI.
 
 ### Notes
-- Auth/RBAC not implemented (admin open) — before production.
+- Auth/RBAC not implemented (admin open) — before production. (Superseded: Supabase Auth implemented below.)
 - Cloudflare deploy via CI (Windows local build unsupported).
+
+## [0.2.0] - 2026-11-08
+### Added
+- Supabase Auth (email/password) + RLS (`profiles`, `audit_logs`, `0002_auth_rls.sql`).
+- Login/Register pages (`/ar/login`, `/ar/register`) + header AuthButton (session only, no localStorage role).
+- Server RBAC: proxy session gate + `/ar/admin` role check (`profiles.role = 'admin'`, fail-closed).
+- Tests: permissions (5) + auth (3) → 33 total; build 264 pages.
+- `@tailwindcss/postcss` (webpack utilities) + Google Fonts + theme tokens + empty-chart state (visual fixes).
+- Repair-pack hygiene: meta description, locale guard (`dynamicParams=false`, 404 for invalid locale), `/robots.txt` + `/sitemap.xml` (Workers).
+- GitHub Pages: `.nojekyll`; root `robots.txt`/`sitemap.xml` aligned to Pages URL.
+- Docs: `README.md`, `MASTER_PROJECT_MAP.md`, `DEPLOYMENT.md`, `ADMIN_GUIDE.md`, `USER_GUIDE.md`, `docs/AUTH_SUPABASE.md`.

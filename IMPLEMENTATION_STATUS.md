@@ -12,27 +12,25 @@
 - Jurisprudence search (empty, verified sources only)
 - Legal Services (procedures + draft generator)
 - Criminal Lab (educational analysis)
-- Control Center (admin skeleton)
-- Founder page (from PROJECT_SPEC)
-- Security (admin gate, rate-limit, audit placeholder)
-- Testing (25 unit tests, quality gate)
-- Database schema (8 tables, FTS)
-- Cloudflare config (OpenNext, wrangler.toml, CI workflow)
-- Documentation (11 docs)
+- Dashboard (KPIs + honest empty-state chart)
+- Auth (Supabase Auth email/password, login/register pages, session via @supabase/ssr)
+- Control Center gate (proxy session check + server `profiles.role='admin'`, fail-closed)
+- Database (Supabase: legal schema 8 tables + `profiles`/`audit_logs` + RLS + `0002_auth_rls.sql`)
+- Security (Supabase gate, rate-limit, audit placeholder + `audit_logs`)
+- Testing (33 unit tests, quality gate)
+- Deployments: Cloudflare Workers ✅ + GitHub Pages static ✅
+- Documentation (11+ docs incl. AUTH_SUPABASE.md)
 
 ## Partially Implemented ⚠️
-- Auth/RBAC (placeholder, not enforced)
 - AADALA AI (retrieval-only, no provider key)
 - MIYAR (experimental, needs expert review)
 - Jurisprudence (empty, no verified decisions)
 - Student/Researcher (placeholder)
 - Sharia/Academic/Updates (placeholders)
 - Legal Aid (placeholder)
-- Admin (skeleton, no CRUD)
+- Admin UI (gate implemented; CRUD skeleton)
 
 ## Not Implemented ❌
-- Authentication (NextAuth/Supabase Auth)
-- Real database integration (Supabase client exists but not used in UI)
 - File upload handling
 - Email/notification system
 - PDF/DOCX export
@@ -43,18 +41,16 @@
 - Legal content verification (manual)
 
 ## Blocked
-- Cloudflare deploy (needs CLOUDFLARE_API_TOKEN secret)
-- Supabase schema (needs database_write token or manual SQL)
-- Vercel (deprecated per user request)
+- Supabase schema apply (manual SQL in SQL Editor) + Cloudflare env vars (`NEXT_PUBLIC_SUPABASE_*`) for live auth
+- CLOUDFLARE_API_TOKEN in CI is a short-lived OAuth token — renew or replace with permanent API token for stable auto-deploy
 
 ## Test Results
 - lint: ✅ 0 errors
 - typecheck: ✅ 0 errors
-- test: ✅ 25/25 (3 files)
-- build: ✅ 234 pages
+- test: ✅ 33/33 (5 files)
+- build: ✅ 264 pages
 
 ## Known Issues
-- Admin panel publicly accessible (no auth)
 - AI returns retrieval-only without provider key
 - MIYAR experimental (needs expert review)
 - Jurisprudence empty (no fabricated data)

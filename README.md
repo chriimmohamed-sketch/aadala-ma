@@ -6,7 +6,7 @@ AADALA.MA is an independent Moroccan legal intelligence platform designed to mak
 
 - **Legal AI Assistant** — Structured legal analysis with source references
 - **Legal Encyclopedia** — Moroccan legislation organized by domain
-- **Inheritance Calculator** — Islamic inheritance (Mawarith) computation
+- **Inheritance Calculator (MIYAR)** — Islamic inheritance (Mawarith) computation
 - **Real Estate & Property Rights** — Tools and explanations
 - **Criminal Analysis** — Educational legal analysis
 - **Procedures & Documents** — Guides, templates, PDF export
@@ -16,32 +16,25 @@ AADALA.MA is an independent Moroccan legal intelligence platform designed to mak
 
 ## Status
 
-**Current version: 0.1.0 (Prototype / Demo)**
+**Current version: 0.1.0 (Production-ready foundation)**
 
-This is a static-first prototype. Several features are in demo mode and clearly labeled. See `IMPLEMENTATION_PLAN.md` and `DECISIONS.md` for details.
+Next.js 16 app is live on Cloudflare Workers. A static `index.html` gateway is live on GitHub Pages. Several modules remain in pilot/placeholder (`قيد التطوير`) and are labeled as such. See `IMPLEMENTATION_STATUS.md` and `docs/AUTH_SUPABASE.md` for details.
 
 ## Tech Stack (Current)
 
-- HTML5 + CSS3 (RTL Arabic-first)
-- Vanilla JavaScript
-- Tailwind CSS (via CDN)
-- localStorage (demo data)
+- Next.js 16 (App Router) + React 19 + TypeScript
+- Tailwind CSS v4 (+ design tokens, RTL Arabic-first, 10 locales)
+- Supabase Auth (email/password) + PostgreSQL/RLS (`profiles`, `audit_logs`)
+- Cloudflare Workers via OpenNext + Wrangler (full-stack)
+- GitHub Pages (static `index.html` + `*.html` pages)
+- GitHub Actions CI (lint + typecheck + test + build)
 
-## Planned Tech Stack (Production)
+## Live URLs
 
-- Next.js + React + TypeScript
-- Tailwind CSS + design tokens
-- PostgreSQL + pgvector
-- Cloudflare Workers/OpenNext
-- GitHub Actions CI/CD
+🌐 **App (full-stack): https://aadala-ma.cheraimmohamed20.workers.dev**
+🌐 **Static (Pages): https://chriimmohamed-sketch.github.io/aadala-ma/**
 
-## Live URL
-
-🌐 **https://aadala-ma.cheraimmohamed20.workers.dev**
-
-Deployed on Cloudflare Workers (Pages). All pages and assets are live.
-
-Simply open `index.html` in a modern browser. No build step required.
+Open `./index.html` in a modern browser for the static build. No build step required.
 
 ```bash
 # Or serve with any static server:
@@ -52,39 +45,54 @@ npx serve .
 
 ```
 aadala-ma/
-├── index.html              # Homepage
-├── legal-ai.html           # Legal AI Assistant
-├── encyclopedia.html       # Legal Encyclopedia
-├── inheritance.html        # Inheritance Calculator
-├── real-estate.html        # Real Estate & Property
-├── criminal.html           # Criminal Analysis
-├── procedures.html         # Procedures & Documents
-├── fiqh.html               # Sharia & Fiqh
-├── academic.html           # Academic Space
-├── founder.html            # Founder Profile
-├── auth/
-│   ├── login.html          # Login
-│   └── register.html       # Register
-├── admin/
-│   └── dashboard.html      # Admin Dashboard
+├── index.html              # Static gateway (standalone, self-contained)
+├── *.html                  # Static pages: legal-ai, encyclopedia, inheritance, real-estate, criminal, procedures, fiqh, academic, founder, case-law, gazette, contact, privacy, terms, design-system
+├── auth/                   # Deprecated static auth (redirects to Next.js /ar/login)
+├── admin/dashboard.html    # Deprecated static admin (redirects; Next.js /ar/admin is canonical)
 ├── assets/
-│   ├── css/main.css        # Design system
-│   └── js/app.js           # Shared logic
-├── .env.example            # Environment template
-├── .gitignore
-├── IMPLEMENTATION_PLAN.md
-├── DECISIONS.md
-└── README.md
+│   ├── css/main.css        # Static design system
+│   └── js/                 # Shared logic (app, i18n, legal-content)
+├── app/
+│   ├── globals.css         # Next.js design tokens
+│   ├── [locale]/           # 10 locales (ar first): home, legal, search, ai, miyar, property, case-law, procedures, criminal, sharia, academic, updates, student, founder, legal-aid, dashboard, login, register, admin
+│   └── api/ai/route.ts     # AADALA AI (RAG, rate-limited)
+├── components/             # AIChat, MiyarEngine, LegalDashboard, LegalServices, LoginForm, RegisterForm, AuthButton, ZelligeCanvas, ThemeToggle, layout/{Header,Footer}
+├── lib/
+│   ├── supabase/           # client/server/auth/middleware (anon key only)
+│   ├── i18n/               # locales (10), RTL
+│   ├── ai-assistant/       # retrieval (TF-IDF) + provider + types
+│   ├── miyar/ + inheritance/ # inheritance engines + fractions
+│   ├── real-estate/ criminal-lab/ legal-services/ jurisprudence/
+│   ├── legal-knowledge/    # legal types (DB-aligned)
+│   ├── admin/              # permissions (server RBAC) + audit
+│   └── security/           # rate-limit
+├── data/                   # legal-sources, legal-index, legal-quality, ...
+├── messages/               # 10 locale JSON (ar canonical)
+├── public/
+│   ├── robots.txt          # Workers robots (workers.dev)
+│   ├── sitemap.xml         # Workers sitemap
+│   └── legal/*.txt         # Extracted legal texts (7 sources)
+├── supabase/
+│   ├── schema.sql          # Legal schema (8 tables, FTS)
+│   └── migrations/         # 0001_init.sql, 0002_auth_rls.sql (profiles/audit_logs + RLS)
+├── worker/                 # Legacy Worker stub (not the production path)
+├── .github/workflows/      # CI + deploy-cloudflare
+├── wrangler.toml           # Cloudflare Workers (OpenNext)
+├── next.config.ts postcss.config.mjs
+├── .env.example            # Env template (no secrets)
+└── docs/
+    ├── AUTH_SUPABASE.md
+    ├── DEPLOYMENT.md ADMIN_GUIDE.md USER_GUIDE.md BACKUP_RESTORE.md
 ```
 
 ## Security
 
-- No secrets in code
-- `.env` in `.gitignore`
-- Passwords hashed (in production backend)
-- Input validation
-- Rate limiting (production)
-- Audit logs
+- No secrets in code; `.env*` gitignored (only `.env.example` committed)
+- Supabase Auth: anon key in client bundle only; **no Service Role Key in frontend**
+- Roles (`user`/`legal_editor`/`legal_reviewer`/`admin`) enforced server-side via `profiles` + RLS (never from localStorage)
+- `/ar/admin` fail-closed (503 without Supabase env; 403 for non-admin)
+- Rate limiting on `/api/ai` (8 req/60s/IP, in-memory)
+- Audit trail: `audit_logs` (append-only, admin-readable)
 
 ## Legal Disclaimer
 

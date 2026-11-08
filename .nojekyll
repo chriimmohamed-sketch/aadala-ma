@@ -1,0 +1,6 @@
+# GitHub Pages (legacy build, branch main /).
+# Disables Jekyll so underscore/dot assets are served as-is and the static site works at
+# https://chriimmohamed-sketch.github.io/aadala-ma/
+#
+# Note: apps under app/, lib/, components/, data/ are Next.js source for Cloudflare Workers.
+# Pages does not build them; it serves index.html + assets/ only.

@@ -5,7 +5,7 @@ Scope: code review (read-only), no offensive testing outside project.
 
 ## Summary
 - No hardcoded secrets found (verified via grep).
-- Auth: not fully implemented. Admin protected by Basic Auth gate in proxy.ts (fail-closed, 503 if no credentials).
+- Auth: Supabase Auth (email/password) + PostgreSQL/RLS. Admin protected by proxy Supabase session gate + server role check (fail-closed, 503 without env).
 - Rate limiting: best-effort in-memory on /api/ai (8 req/60s per IP).
 - File upload: not implemented (N/A).
 - XSS: React escapes; text rendered in <pre> (safe). Zod/validation not yet on API.
@@ -19,8 +19,8 @@ Scope: code review (read-only), no offensive testing outside project.
 ## Risks & Remediation
 | # | Risk | Severity | Status | Remediation |
 |---|------|----------|--------|-------------|
-| 1 | No authentication/authorization | High | Partial (admin gate) | Implement auth (NextAuth/Supabase Auth) + RBAC server-side |
-| 2 | Admin panel publicly accessible | High | Mitigated (503 if no creds) | Set ADMIN_USER/ADMIN_PASSWORD env vars |
+| 1 | No authentication/authorization (server session) | High | Resolved (Supabase Auth) | Supabase Auth + RBAC server-side (verify session + profiles role) |
+| 2 | Admin panel publicly accessible | High | Resolved (Supabase gate) | Supabase env vars + profiles role (`admin`) |
 | 3 | No rate limiting on API | Medium | Mitigated (in-memory) | Upstash/Redis rate limit for production |
 | 4 | No audit persistence | Medium | Placeholder | DB audit_logs + immutable |
 | 5 | No data export/deletion (CNDP) | High | Not implemented | Implement user data export & deletion |
