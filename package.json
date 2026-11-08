@@ -19,7 +19,6 @@
     "legal:ingest": "node scripts/ingest-pdfs.mjs"
   },
   "dependencies": {
-    "@ast-grep/napi-win32-x64-msvc": "^0.51.1",
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.119.0",
     "framer-motion": "^14.10.1",
