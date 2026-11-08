@@ -326,7 +326,7 @@ export default function ShowcaseGallery({ locale }: { locale: string }) {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
           <div className="flex flex-col items-center gap-4">
             <SectionTitle>بطاقات إحصاء قانونية</SectionTitle>
-            <StatsCard title="المصادر القانونية" value="7" change="+7" icon="book" />
+            <StatsCard title="المصادر القانونية" value="13" change="+6" icon="book" />
             <StatsCard title="الاستعلامات (نموذجي)" value="42" change="+6" icon="search" />
             <StatsCard title="الوثائق (نموذجي)" value="5" change="+1" icon="file" />
           </div>
