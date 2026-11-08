@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>لوحة الإدارة — AADALA.MA</title>
   <link rel="stylesheet" href="../assets/css/main.css">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind via CDN removed: utilities are in assets/css/main.css (static-safe) -->
 </head>
 <body>
   <div id="header"></div>
@@ -17,6 +17,9 @@
       </div>
       <div id="accessDenied" class="alert alert-danger hidden">
         ⚠️ الوصول مرفوض. هذه اللوحة للمخولين (admin/reviewer/editor) فقط.
+        <br>المصادقة الحقيقية على Workers:
+        <a href="https://aadala-ma.cheraimmohamed20.workers.dev/ar/login">تسجيل الدخول</a> ·
+        <a href="https://aadala-ma.cheraimmohamed20.workers.dev/ar/admin">لوحة الإدارة</a>
       </div>
       <div id="adminPanel" class="hidden">
         <div class="service-grid mb-4">

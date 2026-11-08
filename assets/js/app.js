@@ -43,14 +43,14 @@ const AADALA = {
     this.state.user = null;
   },
   login() {
-    console.warn('[AADALA] AADALA.login() is deprecated. Use Supabase Auth at /ar/login.');
-    window.location.href = '/ar/login';
-    return { ok: false, error: 'مصادقة وهمية محذوفة — استخدم /ar/login (Supabase Auth)', deprecated: true };
+    console.warn('[AADALA] AADALA.login() is deprecated. Use Supabase Auth at Workers /ar/login.');
+    window.location.href = 'https://aadala-ma.cheraimmohamed20.workers.dev/ar/login';
+    return { ok: false, error: 'مصادقة وهمية محذوفة — استخدم /ar/login على Workers (Supabase Auth)', deprecated: true };
   },
   register() {
-    console.warn('[AADALA] AADALA.register() is deprecated. Use Supabase Auth at /ar/register.');
-    window.location.href = '/ar/register';
-    return { ok: false, error: 'تسجيل وهمي محذوف — استخدم /ar/register (Supabase Auth)', deprecated: true };
+    console.warn('[AADALA] AADALA.register() is deprecated. Use Supabase Auth at Workers /ar/register.');
+    window.location.href = 'https://aadala-ma.cheraimmohamed20.workers.dev/ar/register';
+    return { ok: false, error: 'تسجيل وهمي محذوف — استخدم /ar/register على Workers (Supabase Auth)', deprecated: true };
   },
   logout() {
     localStorage.removeItem('aadala_user');
