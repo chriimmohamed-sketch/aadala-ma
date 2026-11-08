@@ -1,5 +1,6 @@
 import Link from "next/link";
 import PageShell from "@/components/layout/PageShell";
+import ReviewMode from "@/components/ReviewMode";
 import { legalSources } from "@/data/legal-sources";
 
 export default async function AcademicPage({ params }: { params: Promise<{ locale: string }> }) {
@@ -38,6 +39,8 @@ export default async function AcademicPage({ params }: { params: Promise<{ local
 تاريخ الاطلاع: ...
 ملاحظة: هل النص محيَّن أم الصيغة الأصلية؟`}</pre>
       </section>
+
+      <ReviewMode locale={locale} />
 
       <section className="aadala-card mt-6 p-5">
         <h2 className="text-lg font-semibold text-navy">الاجتهاد القضائي</h2>
