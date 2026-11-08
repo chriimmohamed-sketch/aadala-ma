@@ -25,3 +25,6 @@
 
 ## أدوات نقية فقط (`lib/ingestion/utils.ts`)
 `hashContent/extractLinks/parseRobotsDisallow/isPathAllowed` — لا شبكة ولا DB. أُدرجت من الزاحف الملصق للمفيد منها؛ رُفض `safeFetch/crawl` (جلب تلقائي لمواقع رسمية بلا إذن مُثبت + `Buffer/pdf-parse` لا تُشغَّل في Workers) — يبقى الاستيراد اليدوي هو القناة الوحيدة.
+
+## تجزئة المواد (`lib/ingestion/chunk.ts`)
+`chunkByArticles` — تجزئة نقية على المادة/الفصل. **النشر/الاعتماد/التضمين** (`approveAndPublish`, `text-embedding-3-small → legal_documents`) لم يُدرج: لا جدول `legal_documents` ولا `pgvector` ولا مزوّد تضمين معتمد، والتصدير الآلي بعد المراجعة يحتاج تصميمًا أمنيًا ورتبًا (`legal_reviewer`) أولًا.
