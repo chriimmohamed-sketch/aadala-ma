@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://aadala-ma.cheraimmohamed20.workers.dev;">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>الفقه (المواريث) — AADALA.MA</title>
@@ -22,7 +23,7 @@
       <div class="service-grid">
         <div class="card"><h3>آيات المواريث</h3><p class="text-muted">سورة النساء (الآيات 11-12، 176)</p></div>
         <div class="card"><h3>الأحاديث</h3><p class="text-muted">مع مصادر التخريج (البخاري، مسلم...)</p></div>
-        <div class="card"><h3>الفقه المالكي</h3><p class="text-muted">مذهب predominant au Maroc</p></div>
+        <div class="card"><h3>الفقه المالكي</h3><p class="text-muted">المذهب المالكي السائد في المغرب</p></div>
         <div class="card"><h3>القواعد الفقهية</h3><p class="text-muted">القاعدة 35، 40، ...</p></div>
         <div class="card"><h3>مسائل المواريث</h3><p class="text-muted">العول، الرد، الحجب، التعصيب</p></div>
         <div class="card"><h3>المصطلحات</h3><p class="text-muted">عربي — فرنسي</p></div>
@@ -30,7 +31,8 @@
     </div>
   </section>
   <div id="footer"></div>
-  <script src="assets/js/app.js">
+  <script src="assets/js/app.js"></script>
+  
   <script src="assets/js/i18n.js"></script>
   <script>
     document.getElementById('header').innerHTML = renderHeader('fiqh.html');

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://aadala-ma.cheraimmohamed20.workers.dev;">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>حساب المواريث — AADALA.MA</title>
@@ -43,7 +44,7 @@
           <div id="heirsList"></div>
           <button class="btn btn-outline btn-sm mt-2" onclick="addHeir()">+ إضافة وارث</button>
 
-          <button class="btn btn-primary btn-lg mt-3" style="width:100%;" onclick="calculate()">حساب</button>
+          <button class="btn btn-primary btn-lg mt-3" style="width:100%;" onclick="calculate()">⚠️ حساب (تجريبي)</button>
         </div>
 
         <!-- Result -->
@@ -59,7 +60,8 @@
 
   <div id="footer"></div>
 
-  <script src="assets/js/app.js">
+  <script src="assets/js/app.js"></script>
+  
   <script src="assets/js/i18n.js"></script>
   <script>
     document.getElementById('header').innerHTML = renderHeader('inheritance.html');
