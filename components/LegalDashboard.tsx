@@ -18,6 +18,7 @@ const chartData = [
   { name: "Apr", uv: 0 },
   { name: "May", uv: 0 },
 ];
+const hasData = chartData.some((d) => d.uv > 0);
 
 export default function LegalDashboard() {
   return (
@@ -50,14 +51,21 @@ export default function LegalDashboard() {
           <section className="aadala-card p-6">
             <h2 className="text-lg font-semibold text-navy mb-4">مخطط النشاط</h2>
             <div className="h-64 w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={chartData}>
-                  <XAxis dataKey="name" stroke="#4B5964" />
-                  <YAxis stroke="#4B5964" />
-                  <Tooltip contentStyle={{ backgroundColor: "#FFFDF6", border: "1px solid #D9D2BE", borderRadius: "8px", color: "#0C1A2B" }} />
-                  <Line type="monotone" dataKey="uv" stroke="#0F5C52" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 8 }} />
-                </LineChart>
-              </ResponsiveContainer>
+              {hasData ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={chartData}>
+                    <XAxis dataKey="name" stroke="#4B5964" />
+                    <YAxis stroke="#4B5964" />
+                    <Tooltip contentStyle={{ backgroundColor: "#FFFDF6", border: "1px solid #D9D2BE", borderRadius: "8px", color: "#0C1A2B" }} />
+                    <Line type="monotone" dataKey="uv" stroke="#0F5C52" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 8 }} />
+                  </LineChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="flex h-full flex-col items-center justify-center gap-2 text-center">
+                  <p className="text-sm font-semibold text-navy">لا توجد بيانات نشاط بعد</p>
+                  <p className="max-w-sm text-sm text-muted">المخطط يُحدّث تلقائيًا عند ربط التتبع (الاستعلامات والمستخدمون). الأرقام أعلاه (7 مصادر، و0 استخدام) حقيقية — ليست بيانات وهمية.</p>
+                </div>
+              )}
             </div>
           </section>
           <section className="aadala-card p-6 flex flex-col items-center justify-center gap-8">

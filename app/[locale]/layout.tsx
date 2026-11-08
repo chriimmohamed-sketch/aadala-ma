@@ -18,6 +18,14 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   const dir = isRtl(locale) ? "rtl" : "ltr";
   return (
     <html lang={locale} dir={dir}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;600;700;900&family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Amiri:wght@400;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="min-h-screen bg-slate-50 text-slate-900 antialiased">
         {children}
       </body>

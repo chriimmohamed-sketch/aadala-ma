@@ -37,8 +37,12 @@
   --color-border: var(--aadala-border);
   --color-danger: var(--aadala-danger);
   --color-success: var(--aadala-success);
-  --font-sans: "Tajawal", "Cairo", "Noto Sans Arabic", "Segoe UI", sans-serif;
-  --font-display: "Reem Kufi", "Noto Kufi Arabic", Tahoma, sans-serif;
+  --color-bg: var(--aadala-ivory);
+  --color-muted: var(--aadala-graphite-soft);
+  --color-teal: #0F5C52;
+  --font-sans: "Tajawal", "Cairo", "IBM Plex Sans Arabic", "Noto Sans Arabic", "Segoe UI", sans-serif;
+  --font-display: "Reem Kufi", "Noto Kufi Arabic", "Amiri", Tahoma, sans-serif;
+  --font-body: "Tajawal", "Cairo", "IBM Plex Sans Arabic", "Noto Sans Arabic", "Segoe UI", sans-serif;
 }
 
 html { scroll-behavior: smooth; }
