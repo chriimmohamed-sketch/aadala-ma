@@ -13,8 +13,12 @@
 | 7 | bulletin-officiel-7437 | public/legal/bulletin-officiel-7437.txt | 0 | 484074 | 8d6c3cc5139d8173… |
 | 8 | niaba-ama-maham | public/legal/niaba-ama-maham.txt | 0 | 113589 | 3c32989238d2c706… |
 | 9 | msatra-asariya-2013 | public/legal/msatra-asariya-2013.txt | 9 | 4288 | d7c2bca0b18accbc… |
+| 10 | qadi-sifat | public/legal/qadi-sifat.txt | 0 | 3293 | d2b1bc17af70187d… |
+| 11 | usa-niaba | public/legal/usa-niaba.txt | 0 | 8487 | ae89139827f94d57… |
+| 12 | tawthiq | public/legal/tawthiq.txt | 0 | 7999 | 25dece0363936752… |
+| 13 | i3dam | public/legal/i3dam.txt | 0 | 17943 | f2e85e39f337fbb5… |
 
-المجموع: 9 مصادر، 615 مادة مخزنة كنص مستخرج.
+المجموع: 13 مصادر، 615 مادة مخزنة كنص مستخرج.
 
 **ملاحظة التكرار:** رُفعت 9 ملفات PDF؛ مقابل كل ملف مصدر مدمج واحد فقط (AN 2019 + ONC + تحفيظ + BO 7437 + الدستور + الحقوق العينية ×2 صيغتين). الملفات 39_08 هي مدونة الحقوق العينية (39.08)، وليست القانون 09.08 (المعطيات الشخصية) الذي لم يُرفع.
 
