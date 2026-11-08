@@ -35,3 +35,15 @@
 
 ## cron (`/api/cron/ingest`)
 جرعة كرون مجدولة مرفوضة بالسياسة: `GET` يتحقق من `CRON_SECRET` إن وُجد ثم يرجع `501 CRON_CRAWL_DISABLED` دائمًا. لا زاحف، لا `SERVICE_ROLE_KEY`، لا `vercel.json` (النشر على Workers لا Vercel). الاستيراد يبقى يدويًا عبر `scripts/ingest-pdfs.mjs`.
+
+## خريطة الضمانات (ادعاء ملصق ↔ كود فعلي)
+| الادعاء | الحالة | الدليل |
+|---|---|---|
+| `robots.txt` يُقرأ/يُخزَّن/يُحترم قبل كل طلب | **إعداد فقط** | `CRAWL_RULES.respectRobotsTxt=true` + `utils.parseRobotsDisallow/isPathAllowed`؛ لا يوجد جلب/تخزين حي (`sources.robots_txt` عمود فقط) |
+| معدل 2.5s وأبطأ حسب Crawl-delay | **قيمة مضبوطة** | `CRAWL_RULES.minDelayMs=2500`؛ لا يوجد throttle فعلي (لا طلبات) |
+| `User-Agent` صريح + تواصل | **نعم** | `sources.ts` — يشير إلى صفحة `privacy` على نطاقنا، لا بريد مختلَق |
+| `content_hash` يمنع إعادة التخزين | **مخطط + يدوي حي** | `raw_documents UNIQUE(url,content_hash)` + `hashContent` + `ingest-pdfs` يمنع التكرار ببصمة |
+| مراجعة بشرية — لا نشر تلقائي | **نعم** | `POST /review` يبدّل الحالة فقط؛ لا كتابة في `legal_documents` |
+| تتبعية `source_url/name/reviewed_by` | **مخطط فقط** | أعمدة موجودة في `0004`؛ لا إدخال حي بعد |
+| `document_versions` تاريخ كامل | **مخطط فقط** | جدول موجود؛ لا كود يكتب فيه |
+| `status='paused'` يوقف المصدر فورًا | **مخطط فقط** | Enum يضم `paused`؛ لا كود يفحصه (لا زاحف) |
