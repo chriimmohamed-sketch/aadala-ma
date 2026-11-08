@@ -8,6 +8,29 @@ export interface UpdateEntry {
 // Keep in sync with CHANGELOG.md. Only list what actually shipped.
 export const updates: UpdateEntry[] = [
   {
+    version: "0.2.1",
+    date: "2026-11-08",
+    title: "نشر موحّد ونظام مصادقة",
+    items: [
+      "Supabase Auth (دخول/تسجيل) + RLS (`profiles`/`audit_logs`) وحماية `/admin` خادميًا (fail-closed).",
+      "توحيد تصميم النسخة الكاملة مع الثابت (Hero/الختم/الشريط/الأدوات/لوحة Ctrl+K).",
+      "بوابة النشر: فحص الأسرار وlint وtypecheck واختبارات قبل النشر، دون بناء مكرر.",
+      "إتمام الصفحات: الطالب والباحث، المساعدة القانونية، الفضاء الأكاديمي، الشريعة والفقه، المستجدات.",
+      "تحصين مسار المساعد: فصل التعليمات عن سؤال المستخدم، والتحقق من نوع كل حقل.",
+    ],
+  },
+  {
+    version: "0.2.0",
+    date: "2026-11-08",
+    title: "الإصلاحات البصرية والثابت",
+    items: [
+      "إصلاح توليد أدوات Tailwind في Webpack (`@tailwindcss/postcss`) — انتهى تشوه التخطيط.",
+      "خطوط Google (Tajawal/Cairo/Reem Kufi/Amiri) + متغيرات الألوان المفقودة + حالة فارغة للمخطط.",
+      "GitHub Pages: `.nojekyll` وrobots/sitemap على نطاق Pages + favicon/manifest. وحذف CDN.",
+      "تجهيز `/robots.txt` و`/sitemap.xml` على Workers وحارس اللغات (404).",
+    ],
+  },
+  {
     version: "0.1.1",
     date: "2026-11-08",
     title: "تحصين الأمان وإتمام الصفحات",
