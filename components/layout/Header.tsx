@@ -12,6 +12,7 @@ const navItems = [
   { href: "/case-law", key: "caseLaw" },
   { href: "/procedures", key: "procedures" },
   { href: "/criminal", key: "criminal" },
+  { href: "/showcase", key: "showcase" },
   { href: "/founder", key: "founder" },
 ];
 
