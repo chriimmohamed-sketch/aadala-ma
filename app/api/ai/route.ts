@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import { retrieveWithRefs, unverifiedCitations } from "@/lib/ai-assistant/retrieval";
+import { retrieveWithRefs, suggestNearest, unverifiedCitations } from "@/lib/ai-assistant/retrieval";
 import { callProvider } from "@/lib/ai-assistant/provider";
-import type { AIAnswer } from "@/lib/ai-assistant/types";
+import type { AICitation, AIAnswer } from "@/lib/ai-assistant/types";
+import { confidenceFor } from "@/lib/ai-assistant/types";
 import { checkRateLimit } from "@/lib/security/rate-limit";
 import { parseAiRequest } from "@/lib/security/validate";
 
@@ -42,7 +43,24 @@ export async function POST(req: Request) {
   const locale = parsedReq.locale;
 
   const chunks = retrieveWithRefs(question, 6);
-  const refs = chunks.map((c) => ({ sourceSlug: c.slug, sourceTitle: c.title, excerpt: c.excerpt, location: c.location }));
+  const refs: AICitation[] = chunks.map((c) => ({
+    sourceSlug: c.slug,
+    sourceTitle: c.title,
+    excerpt: c.excerpt,
+    location: c.location,
+    score: c.score,
+    confidence: confidenceFor(c.score),
+  }));
+  const suggestions: AICitation[] = chunks.length
+    ? []
+    : suggestNearest(question, 3).map((c) => ({
+        sourceSlug: c.slug,
+        sourceTitle: c.title,
+        excerpt: c.excerpt,
+        location: c.location,
+        score: c.score,
+        confidence: "no_text" as const,
+      }));
   const context = chunks.map((c, i) => `[${i + 1}] ${c.title}${c.location ? " — " + c.location : ""}\n${c.excerpt}`).join("\n\n");
 
   const prompt = `أجب باللغة ${LANGUAGE_NAMES[locale] ?? locale} (يمكن استعمال العربية أو الدارجة أو الفرنسية حسب لغة السؤال).
@@ -93,6 +111,7 @@ ${question}
     analysis: str(parsed?.analysis) || (chunks.length ? "تعذّر التحليل (لا AI provider). راجع المقاطع." : "لا توجد مصادر كافية."),
     possibleApplications: str(parsed?.possibleApplications),
     references: refs,
+    suggestions,
     certainty: CERTAINTY.includes(certaintyRaw as AIAnswer["certainty"]) ? (certaintyRaw as AIAnswer["certainty"]) : (chunks.length ? "low" : "insufficient_sources"),
     missingInfo: parsed ? arr(parsed.missingInfo) : ["AI provider API key", "وقائع إضافية"],
     disclaimer: str(parsed?.disclaimer) || "هذا ليس استشارة مهنية نهائية. راجع مختصاً.",
