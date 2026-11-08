@@ -32,3 +32,6 @@
 ## مراجعة الإدارة (`/api/admin/ingest/*`)
 - `GET /api/admin/ingest/queue` — صف الانتظار (يتطلب `legal_reviewer/legal_editor/admin`، جلسة RLS)
 - `POST /api/admin/ingest/review` — `{rawId,status,reason?}` تغيير حالة فقط (`approved/rejected/needs_revision`) + سجل تدقيق. **لا نشر لـ `legal_documents`** ولا زاحف ولا `SERVICE_ROLE_KEY` (كان في الملصق).
+
+## cron (`/api/cron/ingest`)
+جرعة كرون مجدولة مرفوضة بالسياسة: `GET` يتحقق من `CRON_SECRET` إن وُجد ثم يرجع `501 CRON_CRAWL_DISABLED` دائمًا. لا زاحف، لا `SERVICE_ROLE_KEY`، لا `vercel.json` (النشر على Workers لا Vercel). الاستيراد يبقى يدويًا عبر `scripts/ingest-pdfs.mjs`.
