@@ -29,6 +29,9 @@
 ## تجزئة المواد (`lib/ingestion/chunk.ts`)
 `chunkByArticles` — تجزئة نقية على المادة/الفصل. **النشر/الاعتماد/التضمين** (`approveAndPublish`, `text-embedding-3-small → legal_documents`) لم يُدرج: لا جدول `legal_documents` ولا `pgvector` ولا مزوّد تضمين معتمد، والتصدير الآلي بعد المراجعة يحتاج تصميمًا أمنيًا ورتبًا (`legal_reviewer`) أولًا.
 
+## جدول النشر (`0005`, بلا تضمين)
+`supabase/migrations/0005_legal_documents.sql` — الهدف الأدنى للنشر اليدوي بعد المراجعة (`title/content/source_type/reference/metadata`). لا عمود `embedding` ولا دالة `match_legal_documents` حتى يُعتمد `pgvector` + مزوّد تضمين + تقييم (الاسترجاع الحالي TF-IDF).
+
 ## مراجعة الإدارة (`/api/admin/ingest/*`)
 - `GET /api/admin/ingest/queue` — صف الانتظار (يتطلب `legal_reviewer/legal_editor/admin`، جلسة RLS)
 - `POST /api/admin/ingest/review` — `{rawId,status,reason?}` تغيير حالة فقط (`approved/rejected/needs_revision`) + سجل تدقيق. **لا نشر لـ `legal_documents`** ولا زاحف ولا `SERVICE_ROLE_KEY` (كان في الملصق).
