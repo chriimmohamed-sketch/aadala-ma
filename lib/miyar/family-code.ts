@@ -1,4 +1,4 @@
-import { type Fr, fr, ZERO, add, sub, mul, div, isZero, gt } from "./fraction";
+import { type Fr, fr, ZERO, add, sub, mul, div, isZero, gt, lcm } from "./fraction";
 
 // Scope of this engine (anything else is refused, never guessed):
 // spouses, children, son's children, father, mother, full/paternal/maternal siblings.
@@ -12,11 +12,27 @@ export type Role = "fard" | "asaba" | "radd";
 
 export interface Line { rel: Rel; frac: Fr; role: Role }
 export interface Options { noOtherRelatives: boolean; raddIncludesSpouse: boolean }
-export interface Distribution { lines: Line[]; remainder: Fr; notes: string[]; needsExpert: boolean; awl: boolean; radd: boolean }
+export interface Blocked { rel: Rel; reason: string }
+export interface Distribution {
+  lines: Line[];
+  remainder: Fr;
+  notes: string[];
+  needsExpert: boolean;
+  awl: boolean;
+  radd: boolean;
+  blocked: Blocked[];
+  preAwlSum: Fr;
+  aslBefore: number;
+}
 
 export function distribute(counts: Partial<Record<Rel, number>>, opts: Options): Distribution {
   const g = (r: Rel) => counts[r] ?? 0;
   const notes: string[] = [];
+  const blocked: Blocked[] = [];
+  const blockedSeen = new Set<Rel>();
+  const markBlocked = (r: Rel, reason: string) => {
+    if (!blockedSeen.has(r) && g(r) > 0) { blockedSeen.add(r); blocked.push({ rel: r, reason }); }
+  };
   let needsExpert = false;
   const son = g("son"), dau = g("daughter"), fa = g("father"), mo = g("mother"), hus = g("husband"), wif = g("wife");
   const hasSon = son > 0;
@@ -27,17 +43,26 @@ export function distribute(counts: Partial<Record<Rel, number>>, opts: Options):
   const femDescOnly = !maleDesc && (dau > 0 || gdRaw > 0);
   const sibTotal = g("full_brother") + g("full_sister") + g("paternal_brother") + g("paternal_sister") + g("maternal_brother") + g("maternal_sister");
 
-  // Blocking (hajb)
+  // Blocking (hajb) — with reasons for "اشرح لي النتيجة"
   let fb = g("full_brother"), fs = g("full_sister"), pb = g("paternal_brother"), ps = g("paternal_sister");
   let mb = g("maternal_brother"), ms = g("maternal_sister");
-  if (fa > 0 || maleDesc) fb = fs = pb = ps = 0;
-  if (fa > 0 || anyDesc) mb = ms = 0;
-  if (fb > 0) pb = ps = 0;
+  if (fa > 0 || maleDesc) {
+    const reason = fa > 0 ? "الأب يحجب الإخوة والأخوات" : "الابن/ابن الابن يحجب الإخوة والأخوات";
+    for (const r of ["full_brother", "full_sister", "paternal_brother", "paternal_sister"] as Rel[]) markBlocked(r, reason);
+    fb = fs = pb = ps = 0;
+  }
+  if (fa > 0 || anyDesc) {
+    const reason = fa > 0 ? "الأب يحجب الإخوة لأم والأخوات لأم" : "الفرع يحجب الإخوة لأم والأخوات لأم";
+    for (const r of ["maternal_brother", "maternal_sister"] as Rel[]) markBlocked(r, reason);
+    mb = ms = 0;
+  }
+  if (fb > 0) { for (const r of ["paternal_brother", "paternal_sister"] as Rel[]) markBlocked(r, "الأخ الشقيق يحجب الإخوة لأب والأخوات لأب"); pb = ps = 0; }
   const fsAsaba = femDescOnly && fs > 0 && fb === 0; // asaba ma'a ghayr, treated as full brothers (Art. 352)
-  if (fsAsaba) pb = ps = 0;
-  if (fs >= 2 && fb === 0 && !fsAsaba && pb === 0) ps = 0;
+  if (fsAsaba) { for (const r of ["paternal_brother", "paternal_sister"] as Rel[]) markBlocked(r, "الأخت الشقيقة مع البنت تصير عصبة (المادة 352) فتحجب الإخوة لأب"); pb = ps = 0; }
+  if (fs >= 2 && fb === 0 && !fsAsaba && pb === 0) { markBlocked("paternal_sister", "أختان شقيقتان تستوفيان الثلثين فتحجبان الأخوات لأب"); ps = 0; }
   let gd = gdRaw;
-  if (gs === 0 && dau >= 2) gd = 0; // two daughters exhaust 2/3 and no son's son brings her in
+  if (hasSon) { markBlocked("grandson", "الابن يحجب أبناء الابن"); markBlocked("granddaughter", "الابن يحجب بنات الابن"); }
+  if (gs === 0 && dau >= 2) { markBlocked("granddaughter", "بنتان تستوفيان الثلثين بلا ابن ابن يقرّبها"); gd = 0; } // two daughters exhaust 2/3 and no son's son brings her in
 
   const F: Partial<Record<Rel, Fr>> = {};
   const put = (r: Rel, f: Fr) => { if (!isZero(f)) F[r] = f; };
@@ -77,12 +102,15 @@ export function distribute(counts: Partial<Record<Rel, number>>, opts: Options):
 
   let sum = ZERO;
   for (const r of SUPPORTED) if (F[r]) sum = add(sum, F[r]!);
+  const preAwlSum = sum;
+  let aslBefore = 1;
+  for (const r of SUPPORTED) if (F[r]) aslBefore = lcm(aslBefore, F[r]!.d);
   const lines: Line[] = [];
   let awl = false;
   if (gt(sum, fr(1))) {
     awl = true;
     for (const r of SUPPORTED) if (F[r]) F[r] = div(F[r]!, sum);
-    notes.push("حدث العول: مجموع الفروض أكبر من التركة فخُفّضت الأنصبة بنسبة واحدة.");
+    notes.push(`حدث العول: مجموع الفروض ${preAwlSum.n}/${preAwlSum.d} أكبر من التركة فخُفّضت الأنصبة بنسبة واحدة (أصل ${aslBefore} → عول).`);
     sum = fr(1);
   }
   for (const r of SUPPORTED) if (F[r]) lines.push({ rel: r, frac: F[r]!, role: "fard" });
@@ -132,5 +160,5 @@ export function distribute(counts: Partial<Record<Rel, number>>, opts: Options):
       }
     }
   }
-  return { lines, remainder: R, notes, needsExpert, awl, radd };
+  return { lines, remainder: R, notes, needsExpert, awl, radd, blocked, preAwlSum, aslBefore };
 }

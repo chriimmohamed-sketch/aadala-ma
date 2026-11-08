@@ -2,6 +2,7 @@ import type { HeirInput, EstateInput, MiyarResult, ShareLine, ComputationStep, H
 import { validateHeirs, validateEstate } from "./validation";
 import { distribute, SUPPORTED, type Rel } from "./family-code";
 import { num, lcm, text } from "./fraction";
+import { buildExplanations } from "./explain";
 
 export const RELATION_LABELS: Record<string, string> = {
   husband: "الزوج", wife: "الزوجة", son: "الابن", daughter: "البنت", grandson: "ابن الابن", granddaughter: "بنت الابن",
@@ -40,7 +41,7 @@ export function computeMiyar(heirs: HeirInput[], estate: EstateInput): MiyarResu
 
   const base = { estate, netEstate, heirs, steps, warnings, errors };
   if (errors.length) {
-    return { ...base, shares: [], totalFraction: 0, remainder: 0, asl: 0, sawahim: 0, needsExpert: true,
+    return { ...base, shares: [], totalFraction: 0, remainder: 0, asl: 0, aslBefore: 0, sawahim: 0, explanations: [], blocked: [], needsExpert: true,
       reportMarkdown: "تعذّر الحساب:\n" + errors.map((e) => `- ${e}`).join("\n") };
   }
 
@@ -71,14 +72,32 @@ export function computeMiyar(heirs: HeirInput[], estate: EstateInput): MiyarResu
   }
   const totalFraction = shares.reduce((s, x) => s + x.fraction, 0);
 
+  const anyDesc = (counts.son ?? 0) + (counts.daughter ?? 0) + (counts.grandson ?? 0) + (counts.granddaughter ?? 0) > 0;
+  const femDescOnly = !((counts.son ?? 0) > 0 || (counts.grandson ?? 0) > 0) && ((counts.daughter ?? 0) > 0 || (counts.granddaughter ?? 0) > 0);
+  const explanations = buildExplanations({
+    lines: d.lines,
+    blocked: d.blocked,
+    preAwlSum: d.preAwlSum,
+    aslBefore: d.aslBefore,
+    aslAfter: asl,
+    awl: d.awl,
+    radd: d.radd,
+    anyDesc,
+    femDescOnly,
+  });
+  const blocked = d.blocked.map((b) => ({ relation: b.rel as HeirRelation, reason: b.reason, article: /352/.test(b.reason) ? "المادة 352" : "الميراث في مدونة الأسرة" }));
+
   const reportMarkdown = [
     "# تقرير MIYAR: المواريث (نطاق محدود)", "",
-    `- صافي التركة: ${netEstate} ${estate.currency}`, `- الوصية: ${wasiyya}`, `- القابل للتوزيع: ${distributable}`, `- أصل المسألة: ${asl}`, "",
+    `- صافي التركة: ${netEstate} ${estate.currency}`, `- الوصية: ${wasiyya}`, `- القابل للتوزيع: ${distributable}`, `- أصل المسألة: ${asl} (قبل العول: ${d.aslBefore})`, "",
+    "## شرح النتيجة",
+    ...explanations.map((e) => `- ${e.title}: ${e.reason}${e.article ? ` (${e.article})` : ""}`),
+    "",
     "## الأنصبة",
     ...shares.map((s) => `- ${RELATION_LABELS[s.relation] ?? s.relation}${s.heirId === "wasiyya" ? " (وصية)" : ""} × ${s.count}: ${s.fractionText ?? ""} = ${s.amount.toFixed(2)} ${estate.currency}`),
     "", "## ملاحظات", ...warnings.map((w) => `- ${w}`), "",
     "نتيجة استرشادية لا تغني عن عقد الفريضة لدى العدول أو حكم المحكمة.",
   ].join("\n");
 
-  return { ...base, shares, totalFraction, remainder: Math.max(0, 1 - totalFraction), asl, sawahim: asl, needsExpert, reportMarkdown };
+  return { ...base, shares, totalFraction, remainder: Math.max(0, 1 - totalFraction), asl, aslBefore: d.aslBefore, sawahim: asl, explanations, blocked, needsExpert, reportMarkdown };
 }

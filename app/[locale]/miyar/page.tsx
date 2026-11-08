@@ -14,7 +14,7 @@ export default async function MiyarPage({ params }: { params: Promise<{ locale: 
         <div className="aadala-divider mt-3" />
         <p className="mt-3 text-sm text-graphite-soft">محرك حسابي حتمي (experimental). requires expert review.</p>
         <div className="mt-6">
-          <MiyarEngine />
+          <MiyarEngine locale={locale} />
         </div>
       </main>
       <Footer locale={locale} messages={messages} />
