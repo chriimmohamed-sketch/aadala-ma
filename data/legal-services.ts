@@ -13,6 +13,7 @@ export const procedures: ProcedureInfo[] = [
     remedies: ["استئناف", "نقض", "إعادة النظر (في حالات محددة)"],
     legalAid: "المساعدة القضائية حسب الشروط (المداخيل، الأهلية).",
     sources: ["قانون المسطرة المدنية (يُتحقق من النص)"],
+    lastReviewed: "2026-11-08",
   },
   {
     id: "criminal-complaint",
@@ -25,5 +26,6 @@ export const procedures: ProcedureInfo[] = [
     remedies: ["استئناف", "نقض"],
     legalAid: "المساعدة القضائية.",
     sources: ["قانون المسطرة الجنائية (يُتحقق من النص)"],
+    lastReviewed: "2026-11-08",
   },
 ];

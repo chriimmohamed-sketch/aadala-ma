@@ -11,6 +11,7 @@ export interface ProcedureInfo {
   remedies: string[];
   legalAid: string;
   sources: string[];
+  lastReviewed?: string; // ISO date of last editorial review
 }
 
 export interface DraftInput {
