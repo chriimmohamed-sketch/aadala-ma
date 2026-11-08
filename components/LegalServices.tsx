@@ -5,6 +5,7 @@ import { generateDraft } from "@/lib/legal-services/drafts";
 import type { ProcedureDocType } from "@/lib/legal-services/types";
 import ProcedureWizard from "@/components/ProcedureWizard";
 import DeadlineCalculator from "@/components/DeadlineCalculator";
+import DocumentGenerator from "@/components/DocumentGenerator";
 
 export default function LegalServices() {
   const [selected, setSelected] = useState(procedures[0]?.id ?? "");
@@ -57,6 +58,7 @@ export default function LegalServices() {
       </section>
 
       <DeadlineCalculator />
+      <DocumentGenerator />
     </div>
   );
 }
