@@ -30,3 +30,17 @@
 - Repair-pack hygiene: meta description, locale guard (`dynamicParams=false`, 404 for invalid locale), `/robots.txt` + `/sitemap.xml` (Workers).
 - GitHub Pages: `.nojekyll`; root `robots.txt`/`sitemap.xml` aligned to Pages URL.
 - Docs: `README.md`, `MASTER_PROJECT_MAP.md`, `DEPLOYMENT.md`, `ADMIN_GUIDE.md`, `USER_GUIDE.md`, `docs/AUTH_SUPABASE.md`.
+
+## [0.2.1] - 2026-11-08
+### Merged (from aadala-ma-patch.zip, reviewed)
+- `deploy-cloudflare.yml`: secret check + lint/typecheck/test gate + single cf:build + Supabase build-time vars.
+- Rate limiting: Cloudflare `AI_LIMITER` binding with in-memory fallback + `clientIp` prod hardening; new `rate-limit.test.ts`.
+- AADALA AI hardening: system/user prompt separation, real body-size check, per-field type validation, certainty downgrade rules.
+- Completed pages: student, legal-aid, academic, sharia, updates (+ `PageShell`, `data/updates.ts`).
+- Static: favicon/manifest + OG/canonical + CDN drop + Workers-auth redirects.
+- Unification: static teal/brass design ported to Next home (hero/seal/ticker/tools/trust/palette/progress/steps/tilt/reveal).
+
+### Skipped (intentionally)
+- `proxy.ts` (patch reverts to Basic Auth) — kept Supabase `updateSession` instead.
+- `wrangler.toml [[ratelimits]]` — kept current toml (in-memory limiter); add binding after a dry run.
+- `docs/DEPLOYMENT.md` (patch is older) — kept current dual-track docs.
