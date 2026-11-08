@@ -69,3 +69,26 @@ export function unverifiedCitations(answerText: string, chunks: RetrievedChunk[]
   const cited = [...answerText.matchAll(/(?:الفصل|المادة|فصل|مادة)\s*(\d{1,4})(?!\d)/g)].map((m) => m[1]);
   return [...new Set(cited.filter((n) => !allowed.has(n)))];
 }
+
+/**
+ * Nearest topics when retrieval finds nothing (P0-2: never hallucinate text).
+ * Ranks sources by title/description overlap; returns source cards with description as excerpt
+ * and confidence "no_text" so the UI can present them as suggestions, not evidence.
+ */
+export function suggestNearest(question: string, topK = 3): RetrievedChunk[] {
+  const q = new Set(tokenize(question));
+  const scored = legalSources.map((s) => {
+    const toks = new Set(tokenize(`${s.title} ${s.type} ${s.description}`));
+    let score = 0;
+    for (const t of q) if (toks.has(t)) score += 1;
+    return { s, score };
+  });
+  scored.sort((a, b) => b.score - a.score);
+  return scored.slice(0, topK).map(({ s, score }) => ({
+    slug: s.slug,
+    title: s.title,
+    excerpt: s.description,
+    score,
+    location: s.type,
+  }));
+}
