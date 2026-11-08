@@ -263,7 +263,7 @@ function renderHeader(activePage) {
   const pages = [
     { href: 'index.html', label: 'الرئيسية' },
     { href: 'legal-ai.html', label: 'المساعد القانوني' },
-    { href: 'gazette.html', label: ' burglary الرسمية' },
+    { href: 'gazette.html', label: ' الجريدة الرسمية' },
     { href: 'encyclopedia.html', label: 'الموسوعة' },
     { href: 'case-law.html', label: 'الاجتهاد' },
     { href: 'inheritance.html', label: 'المواريث' },

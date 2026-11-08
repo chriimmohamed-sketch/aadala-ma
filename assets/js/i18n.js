@@ -21,7 +21,7 @@ const I18N = {
   translations: {
     ar: {
       home: 'الرئيسية', legalAI: 'المساعد القانوني', encyclopedia: 'الموسوعة',
-      gazette: 'ال burglary الرسمية', caseLaw: 'الاجتهاد', inheritance: 'المواريث',
+      gazette: 'الجريدة الرسمية', caseLaw: 'الاجتهاد', inheritance: 'المواريث',
       legalAid: 'المساعدة', academic: 'الأكاديمية', founder: 'المؤسس',
       login: 'تسجيل الدخول', register: 'إنشاء حساب', logout: 'خروج',
       search: 'بحث', theme: 'المظهر', dark: 'داكن', light: 'فاتح',

@@ -64,6 +64,32 @@ describe("MIYAR: classical cases (exact fractions)", () => {
   });
 });
 
+describe("MIYAR: explain (P0-1)", () => {
+  it("Mimbariyya explains awl as 24 -> 27 with library links", () => {
+    const r = computeMiyar([H("wife"), H("daughter", 2), H("father"), H("mother")], E());
+    expect(r.aslBefore).toBe(24);
+    expect(r.asl).toBe(27);
+    expect(r.blocked).toEqual([]);
+    const awl = r.explanations.find((e) => e.title === "العول");
+    expect(awl).toBeTruthy();
+    expect(awl!.reason).toContain("24");
+    expect(awl!.reason).toContain("27");
+    expect(awl!.libraryPath).toBe("/legal");
+    expect(r.explanations.every((e) => e.libraryPath === "/legal")).toBe(true);
+    expect(r.reportMarkdown).toContain("شرح النتيجة");
+  });
+  it("records hajb with reason (son blocks brother, 352 for sister asaba)", () => {
+    const r1 = computeMiyar([H("son"), H("grandson"), H("full_brother")], E());
+    expect(r1.blocked.map((b) => b.relation).sort()).toEqual(["full_brother", "grandson"].sort());
+    const r2 = computeMiyar([H("daughter"), H("full_sister"), H("paternal_brother")], E());
+    expect(r2.blocked.some((b) => b.relation === "paternal_brother" && /352/.test(b.reason))).toBe(true);
+    const r3 = computeMiyar([H("father"), H("daughter")], E());
+    expect(r3.explanations.some((e) => e.article === "المادة 353")).toBe(true);
+    const r4 = computeMiyar([H("husband"), H("daughter")], E());
+    expect(r4.explanations.some((e) => e.article === "المادة 349")).toBe(true);
+  });
+});
+
 describe("MIYAR: safety", () => {
   it("does not return the remainder unless other relatives are ruled out", () => {
     const r = computeMiyar([H("husband"), H("daughter")], E({ noOtherRelatives: false }));

@@ -42,6 +42,21 @@ export interface FamilyTree {
 
 export type ShareRole = "fard" | "asaba" | "radd" | "mahjub" | "wasiyya";
 
+export interface BlockedHeir {
+  relation: HeirRelation;
+  reason: string;
+  article?: string;
+}
+
+export interface ExplanationStep {
+  title: string;
+  reason: string;
+  article?: string;
+  /** Locale-agnostic library path (without /[locale] prefix), e.g. "/legal". */
+  libraryPath?: string;
+  libraryLabel?: string;
+}
+
 export interface ShareLine {
   heirId: string;
   relation: HeirRelation;
@@ -69,9 +84,12 @@ export interface MiyarResult {
   shares: ShareLine[];
   totalFraction: number;
   remainder: number;
-  asl: number; // أصل المسألة
+  asl: number; // أصل المسألة (after awl/asaba/radd)
+  aslBefore: number; // أصل المسألة قبل العول (LCM of fard denominators)
   sawahim: number; // سهام
   steps: ComputationStep[];
+  explanations: ExplanationStep[];
+  blocked: BlockedHeir[];
   warnings: string[];
   errors: string[];
   needsExpert: boolean;
