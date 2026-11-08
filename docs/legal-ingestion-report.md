@@ -12,8 +12,9 @@
 | 6 | code-penal | public/legal/code-penal.txt | 0 | 608932 | 9ac1d893e6863d8d… |
 | 7 | bulletin-officiel-7437 | public/legal/bulletin-officiel-7437.txt | 0 | 484074 | 8d6c3cc5139d8173… |
 | 8 | niaba-ama-maham | public/legal/niaba-ama-maham.txt | 0 | 113589 | 3c32989238d2c706… |
+| 9 | msatra-asariya-2013 | public/legal/msatra-asariya-2013.txt | 9 | 4288 | d7c2bca0b18accbc… |
 
-المجموع: 8 مصادر، 606 مادة مخزنة كنص مستخرج.
+المجموع: 9 مصادر، 615 مادة مخزنة كنص مستخرج.
 
 **ملاحظة التكرار:** رُفعت 9 ملفات PDF؛ مقابل كل ملف مصدر مدمج واحد فقط (AN 2019 + ONC + تحفيظ + BO 7437 + الدستور + الحقوق العينية ×2 صيغتين). الملفات 39_08 هي مدونة الحقوق العينية (39.08)، وليست القانون 09.08 (المعطيات الشخصية) الذي لم يُرفع.
 
