@@ -22,3 +22,6 @@
 
 ## سجل المصادر (`lib/ingestion/sources.ts`)
 `CRAWL_RULES` (تأخير 2.5s، تسلسلي، يحترم robots، `userAgent` يشير إلى صفحة على نطاقنا الفعلي) + `OFFICIAL_SOURCES` الأربعة بنفس الأسماء/العناوين، لكن **كل `verified: false`** و`selectors` عناوين نائبة لم تُتحقق من المواقع الحية. لا تستعملها للسحب الآلي دون تحقق يدوي وشروط الموقع.
+
+## أدوات نقية فقط (`lib/ingestion/utils.ts`)
+`hashContent/extractLinks/parseRobotsDisallow/isPathAllowed` — لا شبكة ولا DB. أُدرجت من الزاحف الملصق للمفيد منها؛ رُفض `safeFetch/crawl` (جلب تلقائي لمواقع رسمية بلا إذن مُثبت + `Buffer/pdf-parse` لا تُشغَّل في Workers) — يبقى الاستيراد اليدوي هو القناة الوحيدة.
