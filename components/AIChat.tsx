@@ -82,7 +82,7 @@ export default function AIChat({ locale }: { locale: string }) {
               <textarea className="mt-1 w-full rounded border border-border bg-bg p-3 text-sm" rows={10} defaultValue={ans.draftTemplate} />
             </div>
           )}
-          <div className="rounded border border-amber-300 bg-amber-50 p-3 text-xs text-amber-900">{ans.disclaimer}</div>
+          <div className="rounded border border-gold/60 bg-gold/10 p-3 text-xs text-graphite">{ans.disclaimer}</div>
         </div>
       )}
     </div>

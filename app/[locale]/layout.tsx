@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getMessages } from "@/lib/i18n/getMessages";
 import { isRtl, locales } from "@/lib/i18n/config";
+import StorageNotice from "@/components/StorageNotice";
 import "../globals.css";
 
 export const dynamicParams = false;
@@ -30,8 +31,9 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen bg-slate-50 text-slate-900 antialiased">
+      <body className="min-h-screen bg-ivory text-graphite antialiased">
         {children}
+        <StorageNotice locale={locale} />
       </body>
     </html>
   );

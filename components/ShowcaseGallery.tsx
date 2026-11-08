@@ -153,8 +153,8 @@ const HangingCard = () => (
       transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
       className="flex flex-col items-center origin-top z-10"
     >
-      <div className="w-6 h-20 bg-[#0B1D3A] text-[8px] text-white flex items-center justify-center [writing-mode:vertical-lr] rotate-180">AADALA.MA</div>
-      <div className="w-56 h-80 bg-[#0B1D3A] rounded-xl p-5 text-white shadow-2xl relative flex flex-col justify-between">
+      <div className="w-6 h-20 bg-[var(--aadala-navy)] text-[8px] text-white flex items-center justify-center [writing-mode:vertical-lr] rotate-180">AADALA.MA</div>
+      <div className="w-56 h-80 bg-[var(--aadala-navy)] rounded-xl p-5 text-white shadow-2xl relative flex flex-col justify-between">
         <div>
           <div className="flex justify-between items-start mb-6">
             <h2 className="text-xl font-bold">AADALA.</h2>
@@ -180,7 +180,7 @@ const HangingCard = () => (
 );
 
 const SharinganLoader = () => (
-  <div className="bg-[#0B1D3A] w-full max-w-sm h-64 flex items-center justify-center gap-8 rounded-xl border border-border relative overflow-hidden">
+  <div className="bg-[var(--aadala-navy)] w-full max-w-sm h-64 flex items-center justify-center gap-8 rounded-xl border border-border relative overflow-hidden">
     {[1, 2].map((eye) => (
       <div key={eye} className="relative w-24 h-12 bg-teal-50 rounded-full flex items-center justify-center overflow-hidden border-2 border-teal">
         <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center relative">
@@ -292,8 +292,8 @@ const ActivityChart = () => (
         <LineChart data={activityData}>
           <XAxis dataKey="name" stroke="#737373" fontSize={12} />
           <YAxis stroke="#737373" fontSize={12} />
-          <Tooltip contentStyle={{ backgroundColor: "#0B1D3A", border: "none", borderRadius: "8px", color: "#fff" }} />
-          <Line type="monotone" dataKey="uv" stroke="#0F5C52" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
+          <Tooltip contentStyle={{ backgroundColor: "var(--aadala-navy)", border: "none", borderRadius: "8px", color: "#fff" }} />
+          <Line type="monotone" dataKey="uv" stroke="var(--aadala-teal)" strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 6 }} />
         </LineChart>
       </ResponsiveContainer>
     </div>
@@ -302,9 +302,9 @@ const ActivityChart = () => (
 );
 
 const GlobeCard = () => (
-  <div className="bg-[#0B1D3A] p-6 rounded-2xl w-full max-w-md shadow-xl border border-white/10 text-white">
+  <div className="bg-[var(--aadala-navy)] p-6 rounded-2xl w-full max-w-md shadow-xl border border-white/10 text-white">
     <div className="flex items-center gap-3 mb-4">
-      <Globe className="text-[#C9A227]" size={28} />
+      <Globe className="text-[var(--aadala-gold)]" size={28} />
       <h3 className="font-bold text-lg">شبكة المنصة</h3>
     </div>
     <p className="text-sm text-white/70 leading-7">مصادر قانونية مغربية موثقة، واجهة عربية RTL، ورابط مرجعي لكل مادة. هذا المعرض يجمع مكونات حركية للعرض التقني فقط.</p>

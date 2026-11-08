@@ -41,7 +41,7 @@ export default function CriminalLab() {
           <div className="text-sm"><strong>الأركان:</strong><ul className="list-disc pr-5">{report.elementsCheck.map((e, i) => <li key={i}>{e.element}: {e.present}</li>)}</ul></div>
           <div className="text-sm"><strong>المراحل:</strong> {report.proceduralStage.join(" → ")}</div>
           <div className="text-sm"><strong>الحقوق:</strong> {report.rights.join("، ")}</div>
-          <div className="rounded border border-amber-300 bg-amber-50 p-3 text-xs text-amber-900">
+          <div className="rounded border border-gold/60 bg-gold/10 p-3 text-xs text-graphite">
             {report.disclaimer}
             <ul className="mt-1 list-disc pr-5">{report.warnings.map((w, i) => <li key={i}>{w}</li>)}</ul>
           </div>

@@ -3,7 +3,7 @@ import { retrieveWithRefs, unverifiedCitations } from "@/lib/ai-assistant/retrie
 import { callProvider } from "@/lib/ai-assistant/provider";
 import type { AIAnswer } from "@/lib/ai-assistant/types";
 import { checkRateLimit } from "@/lib/security/rate-limit";
-import { locales } from "@/lib/i18n/config";
+import { parseAiRequest } from "@/lib/security/validate";
 
 const MAX_BODY = 8_192;
 const LANGUAGE_NAMES: Record<string, string> = { ar: "العربية", fr: "الفرنسية", en: "الإنجليزية", es: "الإسبانية", de: "الألمانية", it: "الإيطالية" };
@@ -31,10 +31,15 @@ export async function POST(req: Request) {
   let body: Record<string, unknown> = {};
   try { const j = JSON.parse(rawBody); if (j && typeof j === "object") body = j as Record<string, unknown>; } catch { /* empty body */ }
 
-  const question = String(body.question ?? "").replace(/<\/?question>/gi, " ").trim().slice(0, 2000);
-  const reqLocale = String(body.locale ?? "ar");
-  const locale = (locales as readonly string[]).includes(reqLocale) ? reqLocale : "ar";
-  if (!question) return NextResponse.json({ error: "question required" }, { status: 400 });
+  // Shared validator: strips control chars, rejects (not truncates) over-long questions.
+  const parsedReq = parseAiRequest(body);
+  if (!parsedReq.ok) {
+    return parsedReq.error === "question too long"
+      ? NextResponse.json({ error: "question too long" }, { status: 413 })
+      : NextResponse.json({ error: parsedReq.error }, { status: 400 });
+  }
+  const question = parsedReq.question.replace(/<\/?question>/gi, " ");
+  const locale = parsedReq.locale;
 
   const chunks = retrieveWithRefs(question, 6);
   const refs = chunks.map((c) => ({ sourceSlug: c.slug, sourceTitle: c.title, excerpt: c.excerpt, location: c.location }));

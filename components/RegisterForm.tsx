@@ -75,7 +75,7 @@ export default function RegisterForm({ locale }: { locale: string }) {
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        {error && <p className="mt-3 rounded border border-red-300 bg-red-50 p-2 text-sm text-red-800">{error}</p>}
+        {error && <p className="mt-3 rounded border border-danger/60 bg-danger/10 p-2 text-sm text-danger">{error}</p>}
         <button
           type="submit"
           disabled={loading}

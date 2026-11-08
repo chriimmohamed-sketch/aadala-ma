@@ -12,7 +12,10 @@
     "quality:gate": "npm run lint && npm run typecheck && npm run test && npm run build",
     "cf:build": "opennextjs-cloudflare build",
     "cf:preview": "opennextjs-cloudflare preview",
-    "cf:deploy": "opennextjs-cloudflare deploy"
+    "cf:deploy": "opennextjs-cloudflare deploy",
+    "design:audit": "node scripts/unify-design.mjs",
+    "design:fix": "node scripts/unify-design.mjs --fix --legacy",
+    "design:check": "node scripts/unify-design.mjs --check"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

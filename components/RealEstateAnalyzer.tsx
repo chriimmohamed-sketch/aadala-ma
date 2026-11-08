@@ -60,7 +60,7 @@ export default function RealEstateAnalyzer() {
           <div className="text-sm"><strong>المصادر المحتملة:</strong><ul className="list-disc pr-5">{report.possibleSources.map((x, i) => <li key={i}>{x}</li>)}</ul></div>
           <div className="text-sm"><strong>الوثائق الناقصة:</strong><ul className="list-disc pr-5">{report.missingDocuments.map((x, i) => <li key={i}>{x}</li>)}</ul></div>
           <div className="text-sm"><strong>الخيارات الإجرائية:</strong><ul className="list-disc pr-5">{report.proceduralOptions.map((x, i) => <li key={i}>{x}</li>)}</ul></div>
-          <div className="rounded border border-amber-300 bg-amber-50 p-3 text-xs text-amber-900">
+          <div className="rounded border border-gold/60 bg-gold/10 p-3 text-xs text-graphite">
             {report.disclaimer}
             <ul className="mt-1 list-disc pr-5">{report.warnings.map((w, i) => <li key={i}>{w}</li>)}</ul>
           </div>

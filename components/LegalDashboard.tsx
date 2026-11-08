@@ -56,8 +56,8 @@ export default function LegalDashboard() {
                   <LineChart data={chartData}>
                     <XAxis dataKey="name" stroke="#4B5964" />
                     <YAxis stroke="#4B5964" />
-                    <Tooltip contentStyle={{ backgroundColor: "#FFFDF6", border: "1px solid #D9D2BE", borderRadius: "8px", color: "#0C1A2B" }} />
-                    <Line type="monotone" dataKey="uv" stroke="#0F5C52" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 8 }} />
+                    <Tooltip contentStyle={{ backgroundColor: "var(--aadala-surface)", border: "1px solid var(--aadala-border)", borderRadius: "8px", color: "var(--aadala-graphite)" }} />
+                    <Line type="monotone" dataKey="uv" stroke="var(--aadala-teal)" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 8 }} />
                   </LineChart>
                 </ResponsiveContainer>
               ) : (

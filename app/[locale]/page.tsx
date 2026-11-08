@@ -90,7 +90,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <h2>المكتبة القانونية</h2>
               <p className="sub">مصادر منشورة، تُقرأ كاملة وتُستخدم مرجعًا للمساعد.</p></div>
               <div className="shelf">
-                <Link className="book rv" style={{ "--c": "#0F5C52" } as React.CSSProperties} href={`/${locale}/legal`}><span className="ty">دستور</span><h3>دستور المملكة المغربية</h3><small>2011</small><b>اقرأ النص ←</b></Link>
+                <Link className="book rv" style={{ "--c": "var(--aadala-teal)" } as React.CSSProperties} href={`/${locale}/legal`}><span className="ty">دستور</span><h3>دستور المملكة المغربية</h3><small>2011</small><b>اقرأ النص ←</b></Link>
                 <Link className="book" style={{ "--c": "#8A5F1C" } as React.CSSProperties} href={`/${locale}/legal`}><span className="ty">قانون</span><h3>قانون الالتزامات والعقود</h3><small>صيغة محينة</small><b>اقرأ النص ←</b></Link>
                 <Link className="book" style={{ "--c": "#6B4A8A" } as React.CSSProperties} href={`/${locale}/legal`}><span className="ty">مدونة</span><h3>مدونة الأسرة</h3><small>القانون 70.03 · 29 مادة</small><b>اقرأ النص ←</b></Link>
                 <Link className="book" style={{ "--c": "#2D4A7A" } as React.CSSProperties} href={`/${locale}/legal`}><span className="ty">مدونة</span><h3>مدونة الحقوق العينية</h3><small>القانون 39.08 · 7 مواد</small><b>اقرأ النص ←</b></Link>

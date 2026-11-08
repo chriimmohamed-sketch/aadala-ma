@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AADALA.MA — العدالة بلغة يفهمها الجميع</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d1830;--surface:#14233f;--ink:#f3ead6;--muted:#9fb0c9;--brass:#d8b05a;--teal:#35c2b0;--line:#27395c;--onbrass:#0d1830;
+ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f4efe3;--surface:#fffaf0;--ink:#13213f;--muted:#4b5b78;--brass:#8a6410;--teal:#0d7f72;--line:#d9ccae;--onbrass:#fffaf0}}
+:root[data-theme="light"]{--bg:#f4efe3;--surface:#fffaf0;--ink:#13213f;--muted:#4b5b78;--brass:#8a6410;--teal:#0d7f72;--line:#d9ccae;--onbrass:#fffaf0}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.9 "IBM Plex Sans Arabic",system-ui,sans-serif}
+.hero{position:relative;min-height:88vh;display:grid;place-items:center;overflow:hidden;border-bottom:1px solid var(--line)}
+#z{position:absolute;inset:0;width:100%;height:100%}
+.hero .in{position:relative;text-align:center;padding:2rem 1.25rem;max-width:44rem;pointer-events:none}
+.hero .in>*{pointer-events:auto}
+h1{font:700 clamp(2.6rem,9vw,5.2rem)/1.25 "Aref Ruqaa",serif;margin:0 0 1rem;text-shadow:0 0 40px var(--bg),0 0 12px var(--bg)}
+.hero p{color:var(--ink);margin:0 auto 1.6rem;max-width:34rem;background:color-mix(in srgb,var(--bg) 70%,transparent);border-radius:.5rem;padding:.3rem .8rem}
+a.btn,button.btn{display:inline-block;background:var(--brass);color:var(--onbrass);border:0;border-radius:.4rem;padding:.7rem 1.6rem;font:600 1rem "IBM Plex Sans Arabic",sans-serif;text-decoration:none;cursor:pointer}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+section.blk{max-width:62rem;margin:0 auto;padding:4rem 1.25rem}
+h2{font:700 clamp(1.8rem,5vw,2.6rem)/1.4 "Aref Ruqaa",serif;margin:0 0 .4rem}
+.sub{color:var(--muted);margin:0 0 2rem;max-width:38rem}
+.calc{display:grid;grid-template-columns:1fr 1.2fr;gap:2rem;background:var(--surface);border:1px solid var(--line);border-radius:1rem;padding:1.6rem}
+@media(max-width:720px){.calc{grid-template-columns:1fr}}
+label{display:block;font-weight:500;margin:.9rem 0 .25rem}
+input,select{width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:.4rem;padding:.55rem .7rem;font:inherit}
+.bar{display:flex;height:3.2rem;border-radius:.5rem;overflow:hidden;border:1px solid var(--line);margin:1rem 0}
+.bar div{display:grid;place-items:center;font-size:.8rem;font-weight:600;color:var(--onbrass);transition:flex-grow .6s cubic-bezier(.2,.8,.2,1);min-width:0;overflow:hidden;white-space:nowrap}
+.rows{list-style:none;margin:0;padding:0}
+.rows li{display:flex;justify-content:space-between;gap:1rem;padding:.55rem 0;border-bottom:1px dashed var(--line)}
+.rows b{font-variant-numeric:tabular-nums}
+.note{font-size:.88rem;color:var(--muted);margin-top:1rem}
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:0;border:1px solid var(--line);border-radius:1rem;overflow:hidden}
+.tools div{padding:1.5rem;border-inline-end:1px solid var(--line);border-bottom:1px solid var(--line);margin:-1px -1px 0 0}
+.tools h3{margin:0 0 .3rem;font-size:1.15rem;color:var(--brass)}
+.tools p{margin:0;color:var(--muted);font-size:.95rem}
+footer{border-top:1px solid var(--line);padding:2rem 1.25rem;text-align:center;color:var(--muted);font-size:.88rem}
+</style>
+</head>
+<body>
+<header class="hero">
+  <canvas id="z" aria-hidden="true"></canvas>
+  <div class="in">
+    <h1>العدالة بلغة يفهمها الجميع</h1>
+    <p>منصة مغربية مستقلة تشرح القانون وتحسب المواريث وتساعدك على فهم مسطرتك، بمراجع واضحة وبدون وعود زائفة.</p>
+    <a class="btn" href="#miyar">جرّب حاسبة المواريث</a>
+  </div>
+</header>
+
+<section class="blk" id="miyar">
+  <h2>MIYAR: وزّع التركة وانظر النتيجة تتغيّر</h2>
+  <p class="sub">عرض تجريبي لحالة واحدة: متوفٍّ له أبناء ذكور، مع زوج/زوجة اختيارياً. يتطلب العرض ابناً واحداً على الأقل.</p>
+  <div class="calc">
+    <div>
+      <label for="estate">قيمة التركة (درهم)</label>
+      <input id="estate" type="number" min="0" step="1000" value="600000" inputmode="numeric">
+      <label for="sp">الزوج/الزوجة</label>
+      <select id="sp"><option value="w">المتوفى رجل وله زوجة</option><option value="h">المتوفاة امرأة ولها زوج</option><option value="n">لا يوجد</option></select>
+      <label for="sons">عدد الأبناء الذكور</label>
+      <input id="sons" type="number" min="0" max="12" value="2" inputmode="numeric">
+      <label for="dau">عدد البنات</label>
+      <input id="dau" type="number" min="0" max="12" value="1" inputmode="numeric">
+    </div>
+    <div aria-live="polite">
+      <div class="bar" id="bar"></div>
+      <ul class="rows" id="rows"></ul>
+      <p class="note" id="note"></p>
+    </div>
+  </div>
+</section>
+
+<section class="blk" style="padding-top:0">
+  <h2>أدوات في مكان واحد</h2>
+  <p class="sub">كل أداة تذكر مصدرها، وإذا لم تكفِ المصادر تقول ذلك بدل أن تخمّن.</p>
+  <div class="tools">
+    <div><h3>المساعد القانوني</h3><p>يجيب من نصوص مسترجعة فقط، ويخفض درجة اليقين إذا ظهرت مادة غير موجودة في المصادر.</p></div>
+    <div><h3>الموسوعة</h3><p>سبعة نصوص مغربية قابلة للبحث، منها الدستور ومدونة الحقوق العينية وقانون الالتزامات والعقود.</p></div>
+    <div><h3>المساطر والمسودات</h3><p>مراحل ووثائق وآجال، ثم مسودة قابلة للتعديل تحفظها بصيغة PDF.</p></div>
+  </div>
+</section>
+<footer>منصة مستقلة غير تابعة لأي جهة رسمية. المحتوى للتوعية ولا يغني عن استشارة محامٍ مغربي.</footer>
+
+<script>
+(function(){
+ var C=document.getElementById('z'),x=C.getContext('2d'),W,H,mx=-1e4,my=-1e4,S=84,reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+ function size(){var r=C.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);W=r.width;H=r.height;C.width=W*d;C.height=H*d;x.setTransform(d,0,0,d,0,0)}
+ function star(cx,cy,r,a,col,al){x.strokeStyle=col;x.globalAlpha=al;x.lineWidth=1.2;
+  for(var k=0;k<2;k++){x.beginPath();for(var i=0;i<4;i++){var t=a+k*Math.PI/4+i*Math.PI/2;x[i?'lineTo':'moveTo'](cx+r*Math.cos(t),cy+r*Math.sin(t))}x.closePath();x.stroke()}}
+ function draw(){x.clearRect(0,0,W,H);var b=css('--brass'),t=css('--teal');
+  for(var y=0;y<H+S;y+=S)for(var X=0;X<W+S;X+=S){
+   var cx=X+S/2,cy=y+S/2,d=Math.hypot(cx-mx,cy-my),n=Math.max(0,1-d/260);
+   star(cx,cy,S*.46,Math.PI/8+n*Math.PI/4,n>.05?t:b,.22+n*.7);
+   star(cx+S/2,cy+S/2,S*.2,n*Math.PI/4,b,.12+n*.5)}
+  x.globalAlpha=1}
+ size();draw();addEventListener('resize',function(){size();draw()});
+ if(!reduce){var q=0;C.parentNode.addEventListener('pointermove',function(e){var r=C.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top;if(!q){q=requestAnimationFrame(function(){q=0;draw()})}});
+  C.parentNode.addEventListener('pointerleave',function(){mx=my=-1e4;draw()})}
+ matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+})();
+
+(function(){
+ var $=function(i){return document.getElementById(i)},fmt=new Intl.NumberFormat('ar-MA',{maximumFractionDigits:0});
+ var colors=['var(--brass)','var(--teal)','#c97b84','#8aa0ff'];
+ function calc(){
+  var E=Math.max(0,+$('estate').value||0),sp=$('sp').value,s=Math.max(0,Math.floor(+$('sons').value||0)),d=Math.max(0,Math.floor(+$('dau').value||0));
+  var rows=$('rows'),bar=$('bar'),note=$('note');rows.innerHTML='';bar.innerHTML='';
+  if(s<1){note.textContent='هذا العرض يغطي حالة وجود ابن ذكر واحد على الأقل. الحالات الأخرى (بنات فقط، أب، أم، إخوة) تحتاج المحرك الكامل.';return}
+  var parts=[];
+  var sf=sp==='w'?1/8:sp==='h'?1/4:0;
+  if(sf)parts.push([sp==='w'?'الزوجة':'الزوج',sf*E,sp==='w'?'الثمن (١/٨) لوجود فرع وارث':'الربع (١/٤) لوجود فرع وارث']);
+  var rest=E*(1-sf),units=2*s+d;
+  parts.push([s>1?'الأبناء الذكور ('+s+')':'الابن',rest*2*s/units,'تعصيب: للذكر مثل حظ الأنثيين']);
+  if(d)parts.push([d>1?'البنات ('+d+')':'البنت',rest*d/units,'تعصيب بالغير مع الابن']);
+  parts.forEach(function(p,i){
+   var li=document.createElement('li');li.innerHTML='<span>'+p[0]+'<br><small style="color:var(--muted)">'+p[2]+'</small></span><b>'+fmt.format(p[1])+' د.م</b>';rows.appendChild(li);
+   var seg=document.createElement('div');seg.style.background=colors[i];seg.style.flexGrow=E?p[1]:1;seg.textContent=E?Math.round(p[1]/E*100)+'٪':'';seg.title=p[0];bar.appendChild(seg)});
+  note.textContent='تقدير تعليمي للحالة المبسطة فقط، وليس حكماً شرعياً أو قضائياً. بعد خصم الديون والوصية (حتى الثلث) وتصفية التركة، راجع عدلاً أو محامياً.'}
+ ['estate','sp','sons','dau'].forEach(function(i){$(i).addEventListener('input',calc)});calc();
+})();
+</script>
+</body>
+</html>

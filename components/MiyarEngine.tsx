@@ -66,13 +66,13 @@ export default function MiyarEngine() {
       {result && (
         <section className="aadala-card space-y-4 p-5">
           {result.errors.length > 0 && (
-            <div className="rounded border border-danger bg-red-50 p-3 text-sm text-danger">
+            <div className="rounded border border-danger bg-danger/10 p-3 text-sm text-danger">
               <strong>أخطاء:</strong>
               <ul className="list-disc pr-5">{result.errors.map((e, i) => <li key={i}>{e}</li>)}</ul>
             </div>
           )}
           {result.needsExpert && (
-            <div className="rounded border border-amber-400 bg-amber-50 p-3 text-sm text-amber-900">
+            <div className="rounded border border-gold bg-gold/10 p-3 text-sm text-graphite">
               ⚠️ تتطلب مراجعة مختص.
             </div>
           )}
@@ -98,7 +98,7 @@ export default function MiyarEngine() {
             </tbody>
           </table>
           {result.warnings.length > 0 && (
-            <div className="rounded border border-amber-300 bg-amber-50 p-3 text-xs text-amber-900">
+            <div className="rounded border border-gold/60 bg-gold/10 p-3 text-xs text-graphite">
               <strong>تحذيرات:</strong>
               <ul className="list-disc pr-5">{result.warnings.map((w, i) => <li key={i}>{w}</li>)}</ul>
             </div>
