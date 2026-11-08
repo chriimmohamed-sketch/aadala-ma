@@ -4,6 +4,7 @@ import { procedures } from "@/data/legal-services";
 import { generateDraft } from "@/lib/legal-services/drafts";
 import type { ProcedureDocType } from "@/lib/legal-services/types";
 import ProcedureWizard from "@/components/ProcedureWizard";
+import DeadlineCalculator from "@/components/DeadlineCalculator";
 
 export default function LegalServices() {
   const [selected, setSelected] = useState(procedures[0]?.id ?? "");
@@ -54,6 +55,8 @@ export default function LegalServices() {
         <button onClick={gen} className="aadala-btn-primary">توليد مسودة</button>
         {draft && <textarea className="mt-3 w-full rounded border border-border bg-ivory px-3 py-2 text-sm" rows={16} value={draft} onChange={(e) => setDraft(e.target.value)} />}
       </section>
+
+      <DeadlineCalculator />
     </div>
   );
 }
