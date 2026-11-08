@@ -1,9 +1,17 @@
-import { createClient } from "@supabase/supabase-js";
+"use client";
 
-const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+import { createBrowserClient } from "@supabase/ssr";
 
+/**
+ * Browser Supabase client (anon key ONLY — never service_role).
+ * Used for signInWithPassword / signUp / getSession / signOut.
+ * Role is NEVER read from storage; it is always fetched from `profiles` (RLS).
+ */
 export function getSupabaseClient() {
-  if (!url || !anon) return null;
-  return createClient(url, anon);
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !anon) {
+    throw new Error("Supabase env missing: NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY");
+  }
+  return createBrowserClient(url, anon);
 }

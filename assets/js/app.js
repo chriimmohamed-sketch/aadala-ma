@@ -35,36 +35,30 @@ const AADALA = {
     document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
   },
 
-  // Auth (localStorage-based demo, replace with real backend)
+  // Auth — DEPRECATED localStorage demo REMOVED.
+  // Production auth is Supabase Auth (Next.js /ar/login + /ar/register).
+  // Legacy static pages must redirect; identity/role are NEVER trusted from localStorage.
   loadUser() {
-    try {
-      const u = localStorage.getItem('aadala_user');
-      this.state.user = u ? JSON.parse(u) : null;
-    } catch { this.state.user = null; }
+    try { localStorage.removeItem('aadala_user'); } catch {}
+    this.state.user = null;
   },
-  login(email, password) {
-    // Demo: accept any non-empty credentials
-    if (!email || !password) return { ok: false, error: 'يرجى إدخال البريد وكلمة المرور' };
-    const user = { id: 'u_' + Date.now(), email, name: email.split('@')[0], role: 'user', createdAt: new Date().toISOString() };
-    localStorage.setItem('aadala_user', JSON.stringify(user));
-    this.state.user = user;
-    return { ok: true, user };
+  login() {
+    console.warn('[AADALA] AADALA.login() is deprecated. Use Supabase Auth at /ar/login.');
+    window.location.href = '/ar/login';
+    return { ok: false, error: 'مصادقة وهمية محذوفة — استخدم /ar/login (Supabase Auth)', deprecated: true };
   },
-  register(name, email, password) {
-    if (!name || !email || !password) return { ok: false, error: 'يرجى ملء جميع الحقول' };
-    if (password.length < 6) return { ok: false, error: 'كلمة المرور يجب أن تكون 6 أحرف على الأقل' };
-    const user = { id: 'u_' + Date.now(), email, name, role: 'user', createdAt: new Date().toISOString() };
-    localStorage.setItem('aadala_user', JSON.stringify(user));
-    this.state.user = user;
-    return { ok: true, user };
+  register() {
+    console.warn('[AADALA] AADALA.register() is deprecated. Use Supabase Auth at /ar/register.');
+    window.location.href = '/ar/register';
+    return { ok: false, error: 'تسجيل وهمي محذوف — استخدم /ar/register (Supabase Auth)', deprecated: true };
   },
   logout() {
     localStorage.removeItem('aadala_user');
     this.state.user = null;
     window.location.href = '/index.html';
   },
-  isLoggedIn() { return !!this.state.user; },
-  isAdmin() { return this.state.user && ['admin','superadmin','legal_editor','legal_reviewer'].includes(this.state.user.role); },
+  isLoggedIn() { return false; }, // Deprecated: session is verified server-side via Supabase Auth.
+  isAdmin() { return false; }, // Deprecated: role comes from profiles (RLS), never from client.
 
   // Toast notifications
   toast(message, type = 'info', duration = 3000) {

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ThemeToggle from "@/components/ThemeToggle";
+import AuthButton from "@/components/AuthButton";
 
 const navItems = [
   { href: "", key: "home" },
@@ -36,6 +37,7 @@ export default function Header({ locale, messages }: { locale: string; messages:
             </Link>
           ))}
         </nav>
+        <AuthButton locale={locale} />
         <ThemeToggle />
       </div>
     </header>

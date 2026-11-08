@@ -15,6 +15,7 @@
     "cf:deploy": "opennextjs-cloudflare deploy"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.119.0",
     "framer-motion": "^14.10.1",
     "lucide-react": "^1.70.0",
