@@ -1,9 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getDocEngine } from "@/lib/documents/engine";
 
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const category = searchParams.get("category") || undefined;
+export async function GET(req: NextRequest) {
+  const category = req.nextUrl.searchParams.get("category") || undefined;
   try {
     const data = await getDocEngine().getTemplates(category);
     return NextResponse.json({ data });
