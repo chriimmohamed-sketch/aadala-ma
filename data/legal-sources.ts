@@ -14,4 +14,5 @@ export const legalSources: LegalSource[] = [
   { slug: "tahfidh-immobilier", title: "ظهير التحفيظ العقاري (كما وقع تغييره وتتميمه)", type: "ظهير", description: "ظهير التحفيظ العقاري.", file: "/legal/tahfidh-immobilier.txt" },
   { slug: "code-penal", title: "مجموعة القانون الجنائي (صيغة محينة)", type: "مجموعة", description: "مجموعة القانون الجنائي.", file: "/legal/code-penal.txt" },
   { slug: "bulletin-officiel-7437", title: "الجريدة الرسمية عدد 7437", type: "جريدة رسمية", description: "عدد من الجريدة الرسمية.", file: "/legal/bulletin-officiel-7437.txt" },
+  { slug: "niaba-ama-maham", title: "مهام النيابة العامة (دليل إرشادي)", type: "دليل إرشادي", description: "دليل إرشادي من وزارة العدل حول مهام النيابة العامة لدى المحاكم الابتدائية والاستئناف والنقض — للمرجعية فقط، وليس نصًا قانونيًا ملزمًا.", file: "/legal/niaba-ama-maham.txt" },
 ];
