@@ -36,7 +36,7 @@ export async function POST(req: Request) {
     const status =
       msg === "FORBIDDEN" ? 403
       : msg === "TEMPLATE_NOT_FOUND" ? 404
-      : msg.startsWith("MISSING_FIELDS:") ? 400
+      : msg.startsWith("MISSING_FIELDS:") ? 422
       : msg === "SUPABASE_NOT_CONFIGURED" ? 503
       : 500;
     return NextResponse.json({ error: msg }, { status });
