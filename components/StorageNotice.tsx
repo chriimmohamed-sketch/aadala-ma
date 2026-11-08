@@ -1,17 +1,26 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore, useState } from "react";
 
 const KEY = "aadala-notice-ack";
 
+function subscribe() {
+  return () => {};
+}
+function getSnapshot() {
+  try { return localStorage.getItem(KEY) === "1" ? "acked" : "shown"; } catch { return "shown"; }
+}
+function getServerSnapshot() {
+  return "shown";
+}
+
 export default function StorageNotice({ locale }: { locale: string }) {
-  const [show, setShow] = useState(false);
-  useEffect(() => {
-    try { if (!localStorage.getItem(KEY)) setShow(true); } catch { setShow(true); }
-  }, []);
+  const snap = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const [hidden, setHidden] = useState(false);
+  const show = snap === "shown" && !hidden;
   if (!show) return null;
   function ack() {
     try { localStorage.setItem(KEY, "1"); } catch { /* ignore */ }
-    setShow(false);
+    setHidden(true);
   }
   return (
     <div role="region" aria-label="إشعار التخزين المحلي" className="print:hidden fixed inset-x-0 bottom-0 z-50 border-t border-border bg-surface p-4 text-sm shadow-lg">
