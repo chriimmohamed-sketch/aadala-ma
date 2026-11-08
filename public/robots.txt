@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /ar/admin
+Sitemap: https://aadala-ma.cheraimmohamed20.workers.dev/sitemap.xml

@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getMessages } from "@/lib/i18n/getMessages";
 import { isRtl, locales } from "@/lib/i18n/config";
 import "../globals.css";
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -14,6 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
   const { locale } = await params;
+  if (!(locales as readonly string[]).includes(locale)) notFound();
   await getMessages(locale);
   const dir = isRtl(locale) ? "rtl" : "ltr";
   return (
