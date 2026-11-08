@@ -15,7 +15,8 @@
     "cf:deploy": "opennextjs-cloudflare deploy",
     "design:audit": "node scripts/unify-design.mjs",
     "design:fix": "node scripts/unify-design.mjs --fix --legacy",
-    "design:check": "node scripts/unify-design.mjs --check"
+    "design:check": "node scripts/unify-design.mjs --check",
+    "legal:ingest": "node scripts/ingest-pdfs.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
