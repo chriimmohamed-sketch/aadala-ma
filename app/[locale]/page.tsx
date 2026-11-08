@@ -2,6 +2,7 @@ import { getMessages } from "@/lib/i18n/getMessages";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ZelligeCanvas from "@/components/ZelligeCanvas";
+import HomeInteractions from "@/components/HomeInteractions";
 import Link from "next/link";
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
@@ -9,6 +10,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const messages = await getMessages(locale);
   return (
     <div className="flex min-h-screen flex-col bg-bg">
+      <div className="bar" id="bar" />
+      <HomeInteractions locale={locale} />
       <Header locale={locale} messages={messages} />
       <div id="v-home">
         <main id="top">
@@ -57,7 +60,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
           <section id="assistant">
             <div className="wrap split">
-              <div>
+              <div className="rv">
                 <span className="num">٠١ · المساعد</span>
                 <h2>جواب لا تُصدّقه حتى تراجعه.</h2>
                 <p className="sub">كل إجابة تُعرض بنفس الترتيب، فتعرف ما افتُرض وما استُند إليه وما ينقص. اضغط على أي خطوة لترى موضعها.</p>
@@ -69,7 +72,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 </div>
                 <Link href={`/${locale}/ai`} className="btn play">▶ اسأل المساعد</Link>
               </div>
-              <article className="sample" aria-label="شكل الإجابة">
+              <article className="sample rv" aria-label="شكل الإجابة">
                 <span className="tag">شكل توضيحي — ليس جوابًا قانونيًا</span>
                 <p className="q">سؤالك يظهر هنا…</p>
                 <div className="blk"><h3>الوقائع المفترضة</h3><p>صياغة السؤال في نقطة قانونية محددة.</p></div>
@@ -83,11 +86,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
           <section id="library">
             <div className="wrap">
-              <div><span className="num">٠٢ · المكتبة</span>
+              <div className="rv"><span className="num">٠٢ · المكتبة</span>
               <h2>المكتبة القانونية</h2>
               <p className="sub">مصادر منشورة، تُقرأ كاملة وتُستخدم مرجعًا للمساعد.</p></div>
               <div className="shelf">
-                <Link className="book" style={{ "--c": "#0F5C52" } as React.CSSProperties} href={`/${locale}/legal`}><span className="ty">دستور</span><h3>دستور المملكة المغربية</h3><small>2011</small><b>اقرأ النص ←</b></Link>
+                <Link className="book rv" style={{ "--c": "#0F5C52" } as React.CSSProperties} href={`/${locale}/legal`}><span className="ty">دستور</span><h3>دستور المملكة المغربية</h3><small>2011</small><b>اقرأ النص ←</b></Link>
                 <Link className="book" style={{ "--c": "#8A5F1C" } as React.CSSProperties} href={`/${locale}/legal`}><span className="ty">قانون</span><h3>قانون الالتزامات والعقود</h3><small>صيغة محينة</small><b>اقرأ النص ←</b></Link>
                 <Link className="book" style={{ "--c": "#6B4A8A" } as React.CSSProperties} href={`/${locale}/legal`}><span className="ty">مدونة</span><h3>مدونة الأسرة</h3><small>القانون 70.03 · 29 مادة</small><b>اقرأ النص ←</b></Link>
                 <Link className="book" style={{ "--c": "#2D4A7A" } as React.CSSProperties} href={`/${locale}/legal`}><span className="ty">مدونة</span><h3>مدونة الحقوق العينية</h3><small>القانون 39.08 · 7 مواد</small><b>اقرأ النص ←</b></Link>
@@ -99,7 +102,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
           <section id="tools">
             <div className="wrap">
-              <div><span className="num">٠٣ · الأدوات</span>
+              <div className="rv"><span className="num">٠٣ · الأدوات</span>
               <h2>أدوات لحالتك الفعلية</h2>
               <p className="sub">من الفهم إلى الإجراء: احسب، حلّل، وحضّر ملفك.</p></div>
               <div className="tools">
@@ -125,7 +128,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
           <section id="trust">
             <div className="wrap">
-              <div><span className="num">٠٤ · منهجنا</span>
+              <div className="rv"><span className="num">٠٤ · منهجنا</span>
               <h2>كيف نحافظ على ثقتك</h2>
               <p className="sub">منصة قانونية تخسر قيمتها بخطأ واحد. لهذا نلتزم بثلاث قواعد.</p></div>
               <div className="trust">
