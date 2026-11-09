@@ -18,19 +18,20 @@ export default function LoginForm({ locale }: { locale: string }) {
       const supabase = getSupabaseClient();
       const { data, error: signInError } = await supabase.auth.signInWithPassword({ email, password });
       if (signInError) {
-        setError(signInError.message);
+        // Generic: never reveal whether the email exists (enumeration resistance).
+        setError("البريد الإلكتروني أو كلمة المرور غير صحيحة.");
         return;
       }
       // Session is persisted by Supabase (cookies via @supabase/ssr + token storage).
       // Role is NEVER read here; server re-verifies via profiles (RLS).
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
-        setError("لم يتم إنشاء جلسة. تحقق من البريد وكلمة المرور.");
+        setError("البريد الإلكتروني أو كلمة المرور غير صحيحة.");
         return;
       }
       window.location.href = `/${locale}/dashboard`;
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "خطأ غير متوقع");
+    } catch {
+      setError("البريد الإلكتروني أو كلمة المرور غير صحيحة.");
     } finally {
       setLoading(false);
     }

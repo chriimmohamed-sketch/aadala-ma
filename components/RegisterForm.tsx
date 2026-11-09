@@ -25,13 +25,14 @@ export default function RegisterForm({ locale }: { locale: string }) {
         },
       });
       if (signUpError) {
-        setError(signUpError.message);
+        // Enumeration-resistant: same neutral message whether the email exists or not.
+        setError("تم استلام طلبك. إن وُجد حساب بهذا البريد فستصلك رسالة تفعيل.");
         return;
       }
       // Profile row is created by DB trigger (role always 'user' — client cannot choose role).
       window.location.href = `/${locale}/dashboard`;
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "خطأ غير متوقع");
+    } catch {
+      setError("تم استلام طلبك. إن وُجد حساب بهذا البريد فستصلك رسالة تفعيل.");
     } finally {
       setLoading(false);
     }

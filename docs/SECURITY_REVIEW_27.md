@@ -6,7 +6,7 @@
 
 | # | الفحص | النتيجة | الدليل (ملف:سطر) | الإصلاح المقترح |
 |---|---|---|---|---|
-| 1 | دخول آمن + رسائل لا تكشف الإيميل | ⚠️ | `components/LoginForm.tsx:19` يمرر `signInWithPassword`؛ `RegisterForm.tsx:28` يعرض `signUpError.message` (قد يقول «مستخدم موجود»). HTTPS ✓ (`workers.dev`, Pages) | توحيد الرسالة «بيانات غير صحيحة»؛ تعطيل تعداد الإيميل في Supabase Auth إن أمكن |
+| 1 | دخول آمن + رسائل لا تكشف الإيميل | ✅ (مُصحَّح) | `LoginForm.tsx:19-28` و`RegisterForm.tsx:20-31` الآن يرجعان رسائل موجهة ثابتة (`غير صحيحة` / `تم استلام طلبك`) بدل `signInError.message/signUpError.message` | لا شيء |
 | 2 | كلمات المرور مشفّرة | ✅ | لا تخزين عندنا — Supabase Auth فقط (`SignUp/signInWithPassword`) | لا شيء |
 | 3 | جلسات HttpOnly/Secure/SameSite/انتهاء | ✅ (مفوَّض) | `lib/supabase/server.ts:6` (كوكى httpOnly عبر `@supabase/ssr`)؛ `middleware.ts:64` يحدث الجلسة/يتحقق | توثيق خيارات الكوكى صراحة إن لزم |
 | 4 | استرجاع حساب ينتهي/مرة واحدة | ⚠️ | `resetPasswordForEmail` غير موجود في الواجهة (`grep`=صفر) ولا صفحة استرجاع | بناء صفحة استرجاع عبر Supabase (روابط منتهية أصلًا) |
