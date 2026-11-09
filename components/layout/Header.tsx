@@ -40,6 +40,9 @@ export default function Header({ locale, messages }: { locale: string; messages:
           ))}
         </nav>
         <AuthButton locale={locale} />
+        <button id="kbd" type="button" className="kbd" aria-label="انتقال سريع (Ctrl K)">
+          <span>انتقال سريع</span> <kbd>Ctrl K</kbd>
+        </button>
         <ThemeToggle />
       </div>
     </header>
