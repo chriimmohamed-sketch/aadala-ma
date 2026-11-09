@@ -13,7 +13,7 @@
 | 5 | 2FA للأدمن | ✅ (مُفعَّل كوديًا) | `MfaForm (enroll/verify TOTP)` + `/{locale}/mfa` + فرض في `AdminPage` (AAL2 عبر `getAuthenticatorAssuranceLevel`) | فعّل MFA في لوحة Supabase (Auth → MFA) وسجّل عاملًا من `/[locale]/mfa` |
 | 6 | أدمن مقفل خادميًّا | ✅ | `admin/page.tsx:19-23` + `middleware.ts` بوابة `authenticated` ثم تحقق دور من `profiles (RLS)` | لا شيء |
 | 7 | IDOR (بياناتك فقط) | ✅ | أمثلة: `engine.ts:49 requireUserId`، `cases/track:10` يثق بالجلسة لا `user_id` العميل؛ RLS مالك في `0002-0012` | لا شيء |
-| 8 | قاعدة البيانات RLS | ⚠️ | `0001_init.sql` (laws/articles/…) بلا RLS؛ الباقي كله (`0002-0012`) RLS | إضافة `ENABLE RLS + policies` للجداولLegacy أو إعادة تسميتها |
+| 8 | قاعدة البيانات RLS | ✅ (مُصحَّح) | `0013_legacy_rls` يفعّل RLS على جداول `0001` (قراءة عامة + كتابة admin/editor)؛ الباقي (`0002-0012`) RLS | لا شيء |
 | 9 | مفاتيح API غير مكشوفة | ✅ | `SERVICE_ROLE` فقط في `.env.example:12` (تعليق) وdocs؛ `AI_PROVIDER_API_KEY` سرَّي خادم (`provider.ts:9`)؛ لا أسرار جامدة | لا شيء |
 | 10 | `.env` في gitignore | ✅ | `.gitignore:7-9,47-51` + `git ls-files` لا `.env` مرقَّب | لا شيء |
 | 11 | سجل Git نظيف (بلا مفتاح قديم) | ✅ | `git log --all -S SERVICE_ROLE` = نصوص/تعليقات فقط، بلا قيم | لا شيء |
