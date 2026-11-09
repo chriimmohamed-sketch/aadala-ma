@@ -9,7 +9,7 @@
 | 1 | دخول آمن + رسائل لا تكشف الإيميل | ✅ (مُصحَّح) | `LoginForm.tsx:19-28` و`RegisterForm.tsx:20-31` الآن يرجعان رسائل موجهة ثابتة (`غير صحيحة` / `تم استلام طلبك`) بدل `signInError.message/signUpError.message` | لا شيء |
 | 2 | كلمات المرور مشفّرة | ✅ | لا تخزين عندنا — Supabase Auth فقط (`SignUp/signInWithPassword`) | لا شيء |
 | 3 | جلسات HttpOnly/Secure/SameSite/انتهاء | ✅ (مفوَّض) | `lib/supabase/server.ts:6` (كوكى httpOnly عبر `@supabase/ssr`)؛ `middleware.ts:64` يحدث الجلسة/يتحقق | توثيق خيارات الكوكى صراحة إن لزم |
-| 4 | استرجاع حساب ينتهي/مرة واحدة | ⚠️ | `resetPasswordForEmail` غير موجود في الواجهة (`grep`=صفر) ولا صفحة استرجاع | بناء صفحة استرجاع عبر Supabase (روابط منتهية أصلًا) |
+| 4 | استرجاع حساب ينتهي/مرة واحدة | ✅ (مُصحَّح) | `ForgotPasswordForm (resetPasswordForEmail, redirect /auth/update-password)` + `UpdatePasswordForm (updateUser, PASSWORD_RECOVERY)` — رابط منتهٍ/مرة واحدة من Supabase؛ رسالة محايدة بلا كشف وجود. + رابط في `LoginForm` | لا شيء |
 | 5 | 2FA للأدمن | ⚠️ | `mfa/totp` غير موجود (`grep`=صفر) | تفعيل Supabase MFA للأدمن من لوحة Supabase + اختبار دورة كاملة |
 | 6 | أدمن مقفل خادميًّا | ✅ | `admin/page.tsx:19-23` + `middleware.ts` بوابة `authenticated` ثم تحقق دور من `profiles (RLS)` | لا شيء |
 | 7 | IDOR (بياناتك فقط) | ✅ | أمثلة: `engine.ts:49 requireUserId`، `cases/track:10` يثق بالجلسة لا `user_id` العميل؛ RLS مالك في `0002-0012` | لا شيء |
