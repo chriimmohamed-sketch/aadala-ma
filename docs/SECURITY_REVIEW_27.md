@@ -1,7 +1,7 @@
 # تدقيق الأمان — 27 فحصًا (2026-11-09, `main @ aadala-ma`)
 
 > منهجية: كل فحص قُرئ فعليًا في الكود/الملفات المذكورة — بلا افتراضات.
-> النتيجة: `0` أخطاء `lint`، `typecheck PASS`، `test 63/63`، `npm audit (prod) 0`.
+> النتيجة: `0` أخطاء `lint`، `typecheck PASS`، `test 68/68`، `npm audit (prod) 0`.
 > **لا تُطبَّق إصلاحات دون موافقة** — أدناه اقتراحات الإصلاح لكل ⚠️.
 
 | # | الفحص | النتيجة | الدليل (ملف:سطر) | الإصلاح المقترح |
@@ -19,20 +19,20 @@
 | 11 | سجل Git نظيف (بلا مفتاح قديم) | ✅ | `git log --all -S SERVICE_ROLE` = نصوص/تعليقات فقط، بلا قيم | لا شيء |
 | 12 | SQL Injection | ✅ | كل وصول DB عبر Supabase query builder (`.from().eq()`)، لا SQL خام في الخادم | لا شيء |
 | 13 | XSS | ✅ (مُصحَّح) | `fillTemplate` الآن يمرر `sanitizeHtml` (قائمة وسوم ضيقة، يزيل `<script>/<iframe>/<img>` و`on*` و`javascript:`) + تهريب قيم المستخدم (`fill.ts`)؛ `DocumentGenerator.tsx:166` معاينة لـ `final_html` المعقّم فقط | لا شيء (أضف DOMPurify إن أردت دفاعًا أعمق) |
-| 14 | CSRF | ⚠️ | كوكى `@supabase/ssr` بـ SameSite (افتراضي، يُربط بـ كوكى) بلا توكن CSRF مخصص | قبول — وثّق «SameSite» صراحة أو أضف توكن مضاد لـ `POST` غير الحساس |
-| 15 | تحقق مدخلات خادمي | ✅ | `validate.ts` (AI)، `padmission`: AI/sanitizers/حدود (`cases/track:caseNumber ≤80`، docs، progress `score 0..100`) | لا شيء |
+| 14 | CSRF | ✅ (موثّق/مقبول) | يعتمد `SameSite` من كوكى `@supabase/ssr` (`Lax` يمنع POST عبر المواقع) + حد حجم/نوع عند كل API؛ لا توكن مخصص (مقبول لداخلي) | لا شيء |
+| 15 | تحقق مدخلات خادمي | ✅ | `validate.ts` (AI)، معقّمات/حدود (`cases/track:caseNumber ≤80`، docs، progress `score 0..100`) | لا شيء |
 | 16 | رفع ملفات (نوع/حجم/تنفيذ) | ✅ (غير قابل) | لا نقاط رفع (`grep multipart`=صفر في `app/api`)؛ `pdf-parse` لسكربت Node يدوي فقط | عند إضافة الرفع: نوع/حجم + تخزين خاص + روابط موقعة |
-| 17 | Rate Limit | ⚠️ | موجود على `ai/docs/cases/remind/review/workspaces/progress` عبر Cloudflare binding + fallback (`rate-limit.ts`)؛ **المصادقة بلا حد تطبيقي** (يعتمد Supabase) | تفعيل حد دخول عندنا أو الاعتماد على حدود Supabase الموثّقة |
+| 17 | Rate Limit | ✅ (موثّق) | `ai/docs/cases/remind/review/workspaces/progress` عبر Cloudflare binding + fallback؛ المصادقة تعتمد حدود Supabase (لا حد عندنا — توثيق لا كود) | لا شيء |
 | 18 | HTTPS | ✅ | Workers + Pages تنشران HTTPS حصرًا | لا شيء |
 | 19 | CORS للنطاق فقط | ✅ | لا رؤوس `Access-Control-Allow-Origin` مخصصة (نفس المصدر افتراضيًا) | لا شيء |
-| 20 | رؤوس أمنية CSP/HSTS/X-Frame | ⚠️ | HTML الثابتة فيها `meta CSP` (`unsafe-inline`، ضعيفة) بـ charset مُصحَّح؛ **تطبيق Next (344 صفحة) بلا headers** في `next.config.ts`/`wrangler.toml` | إضافة `headers()` في `next.config.ts`: `CSP + HSTS + X-Frame-Options` |
+| 20 | رؤوس أمنية CSP/HSTS/X-Frame | ✅ (مُصحَّح) | `next.config.ts headers()` يفرض `CSP + HSTS + X-Frame-Options + nosniff + Referrer + Permissions` على كل `/(.*)`؛ HTML الثابتة تبقى meta CSP | لا شيء |
 | 21 | أخطاء لا تكشف السيرفر | ✅ | `UNAUTHENTICATED/FORBIDDEN/QUEUE_FAILED/TRACK_FAILED/PROGRESS_FAILED` (رموز عامة) + طبقات واجهة ودودة | لا شيء |
 | 22 | الدفع حساب خادمي | ✅ (غير قابل) | `grep stripe/payment/webhook`=صفر | لا شيء |
 | 23 | تأكيد الدفع Webhook | ✅ (غير قابل) | نفس السابق | لا شيء |
-| 24 | npm audit | ⚠️ | `audit prod: 0` ✓؛ كامل: 15 (dev/build-chain: vitest 5 + glob عبر opennext) — إصلاحها كسري | تحديث Vitest 5 / OpenNext 0.3.0 تدريجيًّا + `npm ci` |
+| 24 | npm audit | ⚠️ | `audit prod: 0` ✓؛ كامل: 15 (dev/build-chain: vitest 5 + glob عبر opennext) — إصلاحها كسري (مؤجل) | تحديث Vitest 5 / OpenNext 0.3.0 تدريجيًّا + `npm ci` |
 | 25 | سجلات بلا أسرار | ✅ | `audit_logs` (إلحاقي) + `recordAuditServer` لا يسجل أسرارًا؛ `console.error` فقط عند فشل AI بلا بيانات عقد | لا شيء |
 | 26 | نسخ احتياطي + ترجيع | ⚠️ | `AADALA.MA_PRODUCTION_BACKUP.zip` + `docs/BACKUP_RESTORE.md`؛ **الترجيع لم يُختبر نهائيًّا** | اختبار ترجيع `Supabase + Workers` قبل النشر الجاد |
-| 27 | اختبار حماية ذاتي | ⚠️ | وحدة 63/63 + بوابات `lint/typecheck/build` آنية؛ `pentest` خارجيًا غير مُجرَّب (محظور خارج المشروع) | لا اختبار هجوم خارجيًا؛ راقب `Workers logs` بعد النشر |
+| 27 | اختبار حماية ذاتي | ⚠️ | وحدة 68/68 + بوابات `lint/typecheck/build` آنية؛ `pentest` خارجيًا غير مُجرَّب (محظور خارج المشروع) | لا اختبار هجوم خارجيًا؛ راقب `Workers logs` بعد النشر |
 
 ## ملخص التنفيذ
 - **سليم (✅):** 2,3,6,7,9,10,11,12,15,16,18,19,21,22,23,25 — (16)
