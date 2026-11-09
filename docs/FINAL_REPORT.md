@@ -1,7 +1,7 @@
 # تقرير الحالة النهائي — AADALA.MA (2026-11-09)
 
-> الفرع: `main` نظيف · `HEAD 9d92551` (مسبوق بـ `6dc889d` headers + `00c48ad` XSS + `53c8bd6` MFA + `4354d9b` reset…)
-> البوابة الحالية: `lint 0e/6w · typecheck PASS · test 68/68 · build 383 pages · design:check PASS · legal:ingest 13/615 · audit prod 0`
+> الفرع: `main` نظيف · `HEAD d5de05c` (cloudflare SDK + headers + XSS + RLS-0001 + MFA + reset + دخول موحد…)
+> البوابة الحالية: `lint 0e/6w · typecheck PASS · test 68/68 (16 ملفات) · build 383 pages · design:check PASS · legal:ingest 13/615 · audit prod 0 · cloudflare SDK 7.3.0`
 
 ## 1) الأمان (27 فحصًا — بعد إصلاح 1,4,5,8,13,14,17,20)
 - **سليم (24):** 1-12,15-23,25 (بما فيها مُصحَحة: رسائل دخول موحدة، استرجاع + MFA كودًا، RLS 0001→0013، تقييم XSS، SameSite موثّق، حد مصادقة موثّق، رؤوس `CSP/HSTS/X-Frame`)
@@ -16,8 +16,8 @@
 
 ## 3) فارق الحي ↔ المستودع
 - **Pages (ثابت):** حي حتى `main` (بوابة `index.html` + `CSP/script-close`).
-- **Workers:** آخر نشر ناجح `42522826005` (المحرك قبل الواجهة/المصادقة/الرؤوس) — النشر بعدها يفشل `wrangler 9109` (توكن قصير العمر) حتى التوكن الدائم.
-- **Supabase:** ما طُبّق فعليًّا: `0001-0002` فقط (يدويًّا سابقًا)؛ `0003-0013` **مخططات فقط** بانتظار SQL Editor.
+- **Workers:** آخر نشر ناجح `42522826005` (المحرك قبل الواجهة/المصادقة/الرؤوس) — النشر بعدها يفشل `wrangler 9109` (توكن OAuth منتهٍ/مقيّد بـ IP + نقص صلاحية رفع الأصول `No access`). توكن `CHRIIM` (`a92f33…`) يكشف حسابًا ثانيًا (`CHRIIM`) لا حساب العامل `0cfbe5…` — يلزم توكن على **القديم** بلا قيد IP وبصلاحية `Workers Scripts: Edit`.
+- **Supabase:** ما طُبّق فعليًّا: `0001-0002` فقط (يدويًّا سابقًا)؛ `0003-0013` **مخططات فقط** بانتظار SQL Editor (المستخدم فعّل `0001`؛ أخبر بـ «اشتغل» ثم «تم» دون إثبات جدول بـ `pg_tables`).
 
 ## 4) الخطوة التالية (بالترتيب)
 1. الصق توكن دائم `Edit Cloudflare Workers` في `GitHub Secrets: CLOUDFLARE_API_TOKEN` → أعيد نشر `main`.
