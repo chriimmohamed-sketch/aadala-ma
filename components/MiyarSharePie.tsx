@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import type { ShareLine } from "@/lib/miyar/types";
 import { RELATION_LABELS } from "@/lib/miyar/engine";
 
-const PALETTE = ["#0F5C52", "#C9A227", "#0B1D3A", "#5A5A5A", "#2F6B4F", "#E6C96A", "#13294B", "#9B2C2C", "#5A5A5A", "#0F5C52"];
+const PALETTE = ["var(--aadala-teal)", "var(--aadala-gold)", "var(--aadala-navy)", "var(--aadala-muted)", "var(--aadala-success)", "var(--aadala-gold-soft)", "var(--aadala-navy-soft)", "var(--aadala-danger)", "var(--aadala-muted)", "var(--aadala-teal)"];
 
 export default function MiyarSharePie({ shares, remainder }: { shares: ShareLine[]; remainder: number }) {
   const slices = useMemo(() => {
@@ -13,7 +13,7 @@ export default function MiyarSharePie({ shares, remainder }: { shares: ShareLine
       value: Math.max(0, s.fraction),
       color: PALETTE[i % PALETTE.length],
     }));
-    if (remainder > 0.0001) rows.push({ label: "باقٍ غير موزَّع", value: remainder, color: "#D9D2C3" });
+    if (remainder > 0.0001) rows.push({ label: "باقٍ غير موزَّع", value: remainder, color: "var(--aadala-border)" });
     return rows.filter((r) => r.value > 0);
   }, [shares, remainder]);
 
@@ -32,12 +32,12 @@ export default function MiyarSharePie({ shares, remainder }: { shares: ShareLine
   return (
     <div className="flex flex-col items-center gap-4 md:flex-row">
       <svg width={180} height={180} viewBox="0 0 180 180" role="img" aria-label="مخطط دائري للأنصبة">
-        <circle cx={90} cy={90} r={R} fill="none" strokeWidth={22} stroke="#EFE7D6" />
+        <circle cx={90} cy={90} r={R} fill="none" strokeWidth={22} stroke="var(--aadala-ivory-deep)" />
         {arcs.map((s, i) => (
           <circle key={i} cx={90} cy={90} r={R} fill="none" stroke={s.color} strokeWidth={22} strokeDasharray={`${Math.max(0, s.dash - 1)} ${C}`} strokeDashoffset={-s.offset} transform="rotate(-90 90 90)" />
         ))}
-        <text x={90} y={88} textAnchor="middle" fontSize={13} fontWeight={700} fill="#0B1D3A">الأنصبة</text>
-        <text x={90} y={103} textAnchor="middle" fontSize={11} fill="#5A5A5A">({total.toFixed(2)})</text>
+        <text x={90} y={88} textAnchor="middle" fontSize={13} fontWeight={700} fill="var(--aadala-navy)">الأنصبة</text>
+        <text x={90} y={103} textAnchor="middle" fontSize={11} fill="var(--aadala-muted)">({total.toFixed(2)})</text>
       </svg>
       <ul className="w-full space-y-1 text-xs">
         {slices.map((s, i) => (
