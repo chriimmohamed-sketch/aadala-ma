@@ -191,3 +191,7 @@ Directory structure:
 3. **ميزة واحدة `P0`** من docx في المرة (مع مصدر/اختبار) — الباقي backlog.
 4. **بوابة ثابتة قبل أي نشر:** `npm run lint && npm run typecheck && npm run test && npm run build && npm run design:check && npm run legal:ingest`.
 5. **لا تستورد** أي zip جملةً؛ لا تحذف المصادقة/الحِزم؛ لا تنشر نماذج `AADALA.MA — *.html` بنفسها.
+
+## ملحق: `aadala-ma-v0.2.0.zip` (2026-11-08)
+- 171 ملفًا، `main` مبكر (7 نصوص قانونية فقط، مايغريشن `0001` فقط، `tsbuildinfo` متعقّب).
+- لا قيمة مضافة فوق الحالي (`201` ملف، 13 مصدرًا) — مرجع مقارنة فقط، لا يُستورد.
