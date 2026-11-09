@@ -18,7 +18,7 @@
 | 10 | `.env` في gitignore | ✅ | `.gitignore:7-9,47-51` + `git ls-files` لا `.env` مرقَّب | لا شيء |
 | 11 | سجل Git نظيف (بلا مفتاح قديم) | ✅ | `git log --all -S SERVICE_ROLE` = نصوص/تعليقات فقط، بلا قيم | لا شيء |
 | 12 | SQL Injection | ✅ | كل وصول DB عبر Supabase query builder (`.from().eq()`)، لا SQL خام في الخادم | لا شيء |
-| 13 | XSS | ⚠️ | آمن إجمالًا: `AADALA.escape` (`assets/js/app.js`، `LegalAI.escape`)؛ `fillTemplate` يهرب قيم المستخدم (`fill.ts`). الاستثناء: `DocumentGenerator.tsx:166` `dangerouslySetInnerHTML` يُخزَّن في الخادم بقيود (`fillTemplate` يهرب) — يعتمد على `template_html` الموثوق، لكن إن سُرقت قالبية فالكسر | تعقيم HTML خادمي (sanitize) أو تنسيق قائم على أعلام بدل HTML خام |
+| 13 | XSS | ✅ (مُصحَّح) | `fillTemplate` الآن يمرر `sanitizeHtml` (قائمة وسوم ضيقة، يزيل `<script>/<iframe>/<img>` و`on*` و`javascript:`) + تهريب قيم المستخدم (`fill.ts`)؛ `DocumentGenerator.tsx:166` معاينة لـ `final_html` المعقّم فقط | لا شيء (أضف DOMPurify إن أردت دفاعًا أعمق) |
 | 14 | CSRF | ⚠️ | كوكى `@supabase/ssr` بـ SameSite (افتراضي، يُربط بـ كوكى) بلا توكن CSRF مخصص | قبول — وثّق «SameSite» صراحة أو أضف توكن مضاد لـ `POST` غير الحساس |
 | 15 | تحقق مدخلات خادمي | ✅ | `validate.ts` (AI)، `padmission`: AI/sanitizers/حدود (`cases/track:caseNumber ≤80`، docs، progress `score 0..100`) | لا شيء |
 | 16 | رفع ملفات (نوع/حجم/تنفيذ) | ✅ (غير قابل) | لا نقاط رفع (`grep multipart`=صفر في `app/api`)؛ `pdf-parse` لسكربت Node يدوي فقط | عند إضافة الرفع: نوع/حجم + تخزين خاص + روابط موقعة |
