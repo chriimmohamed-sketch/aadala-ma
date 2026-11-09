@@ -5,6 +5,7 @@ export default function Footer({ locale, messages }: { locale: string; messages:
       <div className="wrap">
         <p>AADALA.MA منصة مستقلة وغير تابعة لوزارة العدل أو لأي جهة رسمية. المحتوى للتوعية القانونية ولا يُعد استشارة مهنية؛ استشر محاميًا مغربيًا في قضيتك.</p>
         <p>أسّسها محمد شرايم، طالب بكلية العلوم القانونية والاقتصادية والاجتماعية، جامعة ابن زهر، أكادير.</p>
+        <p className="mt-2"><a className="underline" href={`/${locale}/report`}>أبلغ عن خطأ في مادة</a></p>
         {tagline && <p className="text-xs text-muted">{tagline}</p>}
       </div>
     </footer>
