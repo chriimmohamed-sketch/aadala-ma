@@ -10,7 +10,7 @@
 | 2 | كلمات المرور مشفّرة | ✅ | لا تخزين عندنا — Supabase Auth فقط (`SignUp/signInWithPassword`) | لا شيء |
 | 3 | جلسات HttpOnly/Secure/SameSite/انتهاء | ✅ (مفوَّض) | `lib/supabase/server.ts:6` (كوكى httpOnly عبر `@supabase/ssr`)؛ `middleware.ts:64` يحدث الجلسة/يتحقق | توثيق خيارات الكوكى صراحة إن لزم |
 | 4 | استرجاع حساب ينتهي/مرة واحدة | ✅ (مُصحَّح) | `ForgotPasswordForm (resetPasswordForEmail, redirect /auth/update-password)` + `UpdatePasswordForm (updateUser, PASSWORD_RECOVERY)` — رابط منتهٍ/مرة واحدة من Supabase؛ رسالة محايدة بلا كشف وجود. + رابط في `LoginForm` | لا شيء |
-| 5 | 2FA للأدمن | ⚠️ | `mfa/totp` غير موجود (`grep`=صفر) | تفعيل Supabase MFA للأدمن من لوحة Supabase + اختبار دورة كاملة |
+| 5 | 2FA للأدمن | ✅ (مُفعَّل كوديًا) | `MfaForm (enroll/verify TOTP)` + `/{locale}/mfa` + فرض في `AdminPage` (AAL2 عبر `getAuthenticatorAssuranceLevel`) | فعّل MFA في لوحة Supabase (Auth → MFA) وسجّل عاملًا من `/[locale]/mfa` |
 | 6 | أدمن مقفل خادميًّا | ✅ | `admin/page.tsx:19-23` + `middleware.ts` بوابة `authenticated` ثم تحقق دور من `profiles (RLS)` | لا شيء |
 | 7 | IDOR (بياناتك فقط) | ✅ | أمثلة: `engine.ts:49 requireUserId`، `cases/track:10` يثق بالجلسة لا `user_id` العميل؛ RLS مالك في `0002-0012` | لا شيء |
 | 8 | قاعدة البيانات RLS | ⚠️ | `0001_init.sql` (laws/articles/…) بلا RLS؛ الباقي كله (`0002-0012`) RLS | إضافة `ENABLE RLS + policies` للجداولLegacy أو إعادة تسميتها |

@@ -15,6 +15,17 @@ export default async function AdminPage({ params }: { params: Promise<{ locale: 
   const { locale } = await params;
   const messages = await getMessages(locale);
 
+  // MFA gate (if enrolled in Supabase, admin must verify second factor before access).
+  const { createSupabaseServerClient } = await import("@/lib/supabase/server");
+  const sb = await createSupabaseServerClient();
+  if (sb) {
+    const { data: aal } = await sb.auth.mfa.getAuthenticatorAssuranceLevel().catch(() => ({ data: null } as never));
+    const lvl = (aal as { currentLevel?: string; nextLevel?: string } | null);
+    if (lvl && (lvl.currentLevel === "aal1" || lvl.currentLevel === undefined) && lvl.nextLevel === "aal2") {
+      redirect(`/${locale}/mfa?next=/${locale}/admin`);
+    }
+  }
+
   // Server-enforced RBAC: session + profiles (RLS). Never trusts client role.
   const user = await getSessionUser();
   if (!user) {
