@@ -72,6 +72,9 @@ export default function LoginForm({ locale }: { locale: string }) {
         >
           {loading ? "جارٍ الدخول..." : "دخول"}
         </button>
+        <p className="mt-2 text-center text-sm">
+          <Link className="text-muted underline" href={`/${locale}/forgot`}>نسيت كلمة المرور؟</Link>
+        </p>
         <p className="mt-3 text-center text-sm text-muted">
           ليس لديك حساب؟{" "}
           <Link className="font-semibold text-navy underline" href={`/${locale}/register`}>
