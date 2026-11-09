@@ -244,6 +244,9 @@ h2 { font-size: clamp(1.8rem, 3.8vw, 2.6rem); margin-bottom: .7rem; }
 .tool h3 { font-size: 1.3rem; margin-bottom: .4rem; }
 .tool p { color: var(--muted); max-width: 44ch; position: relative; }
 .badge { display: inline-block; margin-inline-start: .6rem; font: 500 .78rem var(--body); color: var(--brass); border: 1px solid var(--brass); border-radius: 999px; padding: 0 .6rem; vertical-align: middle; }
+.badge-yellow { display: inline-block; margin-inline-start: .6rem; font: 600 .78rem var(--body); color: #1A1A1A; background: #FFD23F; border: 1px solid #E6C96A; border-radius: 999px; padding: 0 .6rem; vertical-align: middle; }
+.tool-ico { width: 30px; height: 30px; color: var(--teal); margin-bottom: .5rem; }
+.empty-state { text-align: center; padding: 2rem 1rem; border: 1px dashed var(--line); border-radius: 12px; color: var(--muted); background: var(--surface); }
 
 .trust { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; position: relative; }
 .trust svg { width: 54px; height: 54px; color: var(--teal); margin-bottom: 1rem; }

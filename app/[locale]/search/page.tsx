@@ -27,6 +27,13 @@ export default async function SearchPage({ params, searchParams }: { params: Pro
         {query && (
           <section className="mt-8" aria-live="polite">
             <p className="text-sm text-graphite-soft">{results.length ? `${results.length} نتيجة` : "لا نتائج في المصادر المفهرسة."}</p>
+            {results.length === 0 ? (
+              <div className="empty-state mt-4">
+                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" className="mx-auto mb-2 h-10 w-10" aria-hidden="true"><circle cx="21" cy="21" r="12" /><path d="M31 31l10 10" /></svg>
+                <p className="font-semibold">لم نجد نتائج مطابقة</p>
+                <p className="mt-1 text-sm">جرّب كلمة أخرى، أو تصفّح <Link href={`/${locale}/legal`} className="underline">المكتبة</Link>، أو استخدم <span dir="ltr">Ctrl K</span> للانتقال السريع.</p>
+              </div>
+            ) : (
             <ul className="mt-4 space-y-3">
               {results.map((r, i) => (
                 <li key={i} className="aadala-card p-4">
@@ -38,6 +45,7 @@ export default async function SearchPage({ params, searchParams }: { params: Pro
                 </li>
               ))}
             </ul>
+            )}
           </section>
         )}
         {unreliable.length > 0 && (

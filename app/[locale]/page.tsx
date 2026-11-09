@@ -17,7 +17,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <AnswerAnimator />
       <Header locale={locale} messages={messages} />
       <div id="v-home">
-        <main id="top">
+        <main id="main">
           <div className="hero">
             <ZelligeCanvas />
             <div className="wrap">
@@ -114,30 +114,37 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <p className="sub">من الفهم إلى الإجراء: احسب، حلّل، وحضّر ملفك.</p></div>
               <div className="tools">
                 <Link href={`/${locale}/miyar`} className="tool" data-n="١">
+                  <svg className="tool-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M12 3v18M6 7l6-4 6 4M5 13l-2 4h4l-2-4zM19 13l-2 4h4l-2-4z" /></svg>
                   <h3>حاسبة الميراث<span className="badge">تجريبي</span></h3>
                   <p>توزيع التركة بين الورثة خطوة بخطوة، وتُراجع النتيجة مع مختص قبل أي اعتماد.</p>
                 </Link>
                 <Link href={`/${locale}/property`} className="tool" data-n="٢">
+                  <svg className="tool-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M4 21V9l8-6 8 6v12M9 21v-6h6v6" /></svg>
                   <h3>النزاعات العقارية</h3>
                   <p>محفّظ أم غير محفّظ؟ تعرّف على الوثائق الناقصة والدعاوى الممكنة.</p>
                 </Link>
                 <Link href={`/${locale}/criminal`} className="tool" data-n="٣">
+                  <svg className="tool-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M9 3h6M10 3v7l-6 9a2 2 0 0 0 1.7 3h12.6A2 2 0 0 0 20 19l-6-9V3" /></svg>
                   <h3>المختبر الجنائي<span className="badge">تعليمي</span></h3>
                   <p>تمرّن على التكييف القانوني وأركان الجريمة والإجراءات.</p>
                 </Link>
                 <Link href={`/${locale}/procedures`} className="tool" data-n="٤">
+                  <svg className="tool-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M6 2h9l5 6v14H6zM14 2v7h7" /></svg>
                   <h3>المساطر والنماذج</h3>
                   <p>أدلة إجرائية ومسودات جاهزة للتعديل، تصدّرها بصيغة PDF.</p>
                 </Link>
                 <Link href={`/${locale}/procedures`} className="tool" data-n="٦">
+                  <svg className="tool-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M7 4l-4 8 4 8M17 4l4 8-4 8M9 8h6M9 16h6" /></svg>
                   <h3>إنهاء عقد الزواج<span className="badge">تعليمي</span></h3>
                   <p>مسار الطلاق/الخلع بخطواته ووثائقه، دون استشارة نهائية.</p>
                 </Link>
                 <Link href={`/${locale}/property`} className="tool" data-n="٧">
+                  <svg className="tool-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M3 12h18M12 3v18M7 7l-3 5 4 0-1-5zM17 7l-3 5 4 0-1-5z" /></svg>
                   <h3>قسمة العقار<span className="badge">تجريبي</span></h3>
                   <p>تحليل الشياع والوثائق الناقصة قبل أي قسمة؛ تُراجع وثائقيًا.</p>
                 </Link>
                 <Link href={`/${locale}/student`} className="tool" data-n="٥">
+                  <svg className="tool-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M4 19V6a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM20 20v-16H6" /></svg>
                   <h3>فضاء طلبة القانون</h3>
                   <p>لطلبة شعبة القانون: أدوات الدراسة والبحث، ورابط موقع المؤسِّس الثاني دليل الطالب CHRAIM.</p>
                 </Link>

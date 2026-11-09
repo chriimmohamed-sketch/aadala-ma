@@ -34,6 +34,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         />
       </head>
       <body className="min-h-screen bg-ivory text-graphite antialiased">
+        <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-navy focus:px-4 focus:py-2 focus:text-ivory">تخطَّ إلى المحتوى الرئيسي</a>
         <GlobalLoader />
         {children}
         <MobileNav locale={locale} />
