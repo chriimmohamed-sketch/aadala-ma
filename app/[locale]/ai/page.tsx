@@ -2,6 +2,7 @@ import { getMessages } from "@/lib/i18n/getMessages";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import AIChat from "@/components/AIChat";
+import AIToolsSection from "@/components/AIToolsSection";
 
 export default async function AIPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -16,6 +17,10 @@ export default async function AIPage({ params }: { params: Promise<{ locale: str
         <div className="mt-6">
           <AIChat locale={locale} />
         </div>
+        <section className="mt-8">
+          <h2 className="mb-3 text-xl font-bold text-navy">أدوات المنصة</h2>
+          <AIToolsSection locale={locale} />
+        </section>
       </main>
       <Footer locale={locale} messages={messages} />
     </div>

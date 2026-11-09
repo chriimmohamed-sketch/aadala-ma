@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { Lightbulb } from "lucide-react";
 import { getSupabaseClient } from "@/lib/supabase/client";
 
 export default function LoginForm({ locale }: { locale: string }) {
@@ -9,6 +11,7 @@ export default function LoginForm({ locale }: { locale: string }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [lampOn, setLampOn] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -38,8 +41,21 @@ export default function LoginForm({ locale }: { locale: string }) {
   }
 
   return (
-    <div className="mx-auto w-full max-w-md">
-      <form onSubmit={handleSubmit} className="aadala-card p-6">
+    <div className="mx-auto flex w-full max-w-md flex-col items-center">
+      <motion.button
+        type="button"
+        aria-label="تشغيل المصباح"
+        className="mb-4 flex h-20 w-20 items-center justify-center rounded-full border border-border bg-surface"
+        onClick={() => setLampOn((v) => !v)}
+        animate={{ rotate: lampOn ? 180 : 0 }}
+        transition={{ type: "spring", stiffness: 200, damping: 20 }}
+      >
+        <Lightbulb size={40} className={lampOn ? "text-gold" : "text-graphite-soft"} />
+      </motion.button>
+      <AnimatePresence>
+        {lampOn && (
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 16 }} className="w-full">
+            <form onSubmit={handleSubmit} className="aadala-card p-6">
         <h1 className="text-2xl font-bold text-navy">تسجيل الدخول</h1>
         <p className="mt-1 text-sm text-muted">مصادقة عبر Supabase Auth — لا تُحفظ كلمة المرور في المتصفح.</p>
         <label className="mt-4 block">
@@ -81,7 +97,11 @@ export default function LoginForm({ locale }: { locale: string }) {
             إنشاء حساب
           </Link>
         </p>
-      </form>
+            </form>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      {!lampOn && <p className="text-xs text-graphite-soft">اضغط المصباح لعرض نموذج الدخول</p>}
     </div>
   );
 }
