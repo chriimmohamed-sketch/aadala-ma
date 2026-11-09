@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { getMessages } from "@/lib/i18n/getMessages";
 import { isRtl, locales } from "@/lib/i18n/config";
 import StorageNotice from "@/components/StorageNotice";
+import GlobalLoader from "@/components/GlobalLoader";
+import MobileNav from "@/components/MobileNav";
 import "../globals.css";
 
 export const dynamicParams = false;
@@ -32,7 +34,9 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         />
       </head>
       <body className="min-h-screen bg-ivory text-graphite antialiased">
+        <GlobalLoader />
         {children}
+        <MobileNav locale={locale} />
         <StorageNotice locale={locale} />
       </body>
     </html>
