@@ -61,3 +61,6 @@ Mode: CHECK
 - index.html: #0B1D3A → navy (canvas file)
 - index.html: #0F5C52 → teal (canvas file)
 
+## Inline color styles (move to classes) (1)
+- components/MiyarSharePie.tsx: 1 inline style(s) with colors
+
