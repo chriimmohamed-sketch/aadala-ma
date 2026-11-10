@@ -1,5 +1,5 @@
 import { getMessages } from "@/lib/i18n/getMessages";
-import Header from "@/components/layout/Header";
+import Header from "@/components/layout/HeaderSupreme";
 import Footer from "@/components/layout/Footer";
 import Link from "next/link";
 import { legalSources } from "@/data/legal-sources";

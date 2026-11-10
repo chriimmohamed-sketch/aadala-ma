@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getMessages } from "@/lib/i18n/getMessages";
-import Header from "@/components/layout/Header";
+import Header from "@/components/layout/HeaderSupreme";
 import Footer from "@/components/layout/Footer";
 import { getSessionUser, isAdminUser } from "@/lib/supabase/auth.server";
 

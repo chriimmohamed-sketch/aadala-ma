@@ -1,5 +1,5 @@
 import { getMessages } from "@/lib/i18n/getMessages";
-import Header from "@/components/layout/Header";
+import Header from "@/components/layout/HeaderSupreme";
 import Footer from "@/components/layout/Footer";
 import HangingCard from "@/components/HangingCard";
 export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
