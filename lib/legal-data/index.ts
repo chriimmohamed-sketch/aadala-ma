@@ -8,11 +8,15 @@ import type { LegalDocument } from "./types";
 import { TAHFIDH_DOCUMENT } from "./tahfidh";
 import { OBLIGATIONS_DOCUMENT } from "./obligations";
 import { PENAL_DOCUMENT } from "./penal";
+import { REAL_RIGHTS_DOCUMENT } from "./real-rights";
+import { FAMILY_DOCUMENT } from "./family";
 
 export const STRUCTURED_DOCUMENTS: Record<string, LegalDocument> = {
   "tahfidh-immobilier": TAHFIDH_DOCUMENT,
   "obligations-contrats": OBLIGATIONS_DOCUMENT,
   "code-penal": PENAL_DOCUMENT,
+  "droits-reels-2025": REAL_RIGHTS_DOCUMENT,
+  "family-code": FAMILY_DOCUMENT,
 };
 
 export function getStructuredDocument(slug: string): LegalDocument | undefined {
