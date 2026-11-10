@@ -14,6 +14,8 @@ const csp = [
   "frame-ancestors 'self'",
   "base-uri 'self'",
   "form-action 'self'",
+  "object-src 'none'",
+  "upgrade-insecure-requests",
 ].join("; ");
 
 async function headers() {
