@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { computeDeadline, parseISO, type DeadlineRule, type DeadlineResult } from "@/lib/legal-services/deadline-engine";
 import { DEADLINE_RULES } from "@/lib/legal-services/deadline-rules";
+import { holidaysFor } from "@/lib/legal-services/holidays";
 
 const STATUS_LABEL: Record<DeadlineResult["status"], string> = {
   expired: "منقضٍ",
@@ -98,7 +99,13 @@ export default function DeadlineEngineCalculator() {
       <label className="block text-xs">عطل رسمية (ISO، مفصولة بفواصل/مسافات) — الأعياد الدينية المتغيرة
         <input className="mt-1 w-full rounded border border-border bg-surface px-3 py-2 text-sm" value={holidays} onChange={(e) => setHolidays(e.target.value)} placeholder="2026-11-18, 2026-12-01" />
       </label>
-      <button type="button" onClick={run} className="aadala-btn-primary text-xs">احسب الموعد</button>
+      <div className="flex flex-wrap gap-2">
+        <button type="button" onClick={run} className="aadala-btn-primary text-xs">احسب الموعد</button>
+        <button type="button" onClick={() => {
+          const y = Number(start.slice(0, 4));
+          if (Number.isFinite(y)) setHolidays(holidaysFor([y]).join(", "));
+        }} className="aadala-btn-ghost text-xs">عطل ثابتة ({start.slice(0, 4)})</button>
+      </div>
 
       {error && <p className="rounded border border-danger/60 bg-danger/10 p-2 text-xs text-danger">{error}</p>}
 
