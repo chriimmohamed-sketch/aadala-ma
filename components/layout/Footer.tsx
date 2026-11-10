@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer({ locale, messages }: { locale: string; messages: Record<string, unknown> }) {
   const tagline = (messages.tagline as string) ?? "";
   return (
@@ -11,6 +13,7 @@ export default function Footer({ locale, messages }: { locale: string; messages:
           <a className="underline" href={`/${locale}/ai`}>المساعد</a>
           <a className="underline" href={`/${locale}/procedures`}>المساطر والنماذج</a>
           <a className="underline" href="/mushkilati.html">مشكلتي</a>
+          <Link href="/profile/" className="underline">ملفي</Link>
         </p>
         {tagline && <p className="text-xs text-muted">{tagline}</p>}
       </div>

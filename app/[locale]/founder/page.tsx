@@ -9,6 +9,9 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
       <Header locale={locale} messages={messages} />
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-10">
         <h1 className="text-3xl font-bold">MOHAMED CHRAIM — محمد شرايم</h1>
+        <div className="my-4 flex justify-center">
+          <img src="/profile/assets/founder-256.jpg" alt="محمد شرايم" className="h-32 w-32 rounded-full border-2 border-gold object-cover shadow-lg" />
+        </div>
         <p className="mt-2 text-sm text-graphite-soft">طالب بكلية العلوم القانونية والاقتصادية والاجتماعية، جامعة ابن زهر بأكادير — السنة الأولى، القانون الخاص، العلوم الجنائية.</p>
         <div className="my-6"><HangingCard userName="محمد شرايم" role="مؤسِّس AADALA.MA" /></div>
         <h2 className="mt-6 text-xl font-semibold">الخبرات</h2>
