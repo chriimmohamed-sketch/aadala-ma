@@ -10,6 +10,7 @@ import { OBLIGATIONS_DOCUMENT } from "./obligations";
 import { PENAL_DOCUMENT } from "./penal";
 import { REAL_RIGHTS_DOCUMENT } from "./real-rights";
 import { FAMILY_DOCUMENT } from "./family";
+import { COMMERCIAL_DOCUMENT } from "./commercial";
 
 export const STRUCTURED_DOCUMENTS: Record<string, LegalDocument> = {
   "tahfidh-immobilier": TAHFIDH_DOCUMENT,
@@ -17,6 +18,7 @@ export const STRUCTURED_DOCUMENTS: Record<string, LegalDocument> = {
   "code-penal": PENAL_DOCUMENT,
   "droits-reels-2025": REAL_RIGHTS_DOCUMENT,
   "family-code": FAMILY_DOCUMENT,
+  "commercial-code": COMMERCIAL_DOCUMENT,
 };
 
 export function getStructuredDocument(slug: string): LegalDocument | undefined {
