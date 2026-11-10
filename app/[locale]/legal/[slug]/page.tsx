@@ -6,7 +6,7 @@ import LegalArticleView, { LegalTreeView } from "@/components/LegalArticle";
 import SourceCard from "@/components/SourceCard";
 import { legalSources } from "@/data/legal-sources";
 import { legalDatabase } from "@/data/legal-database";
-import { TAHFIDH_DOCUMENT } from "@/lib/legal-data/tahfidh";
+import { getStructuredDocument } from "@/lib/legal-data";
 import { flattenArticles } from "@/lib/legal-data/types";
 import quality from "@/data/legal-quality.json";
 import fs from "fs";
@@ -45,8 +45,8 @@ export default async function DetailPage({ params }: { params: Promise<{ locale:
   const next = idx >= 0 && idx < legalSources.length - 1 ? legalSources[idx + 1] : null;
   const verification = q === "unreliable" ? "غير موثوق الاستخراج — يُراجع يدويًا" : q === "good" ? "قيد المراجعة — استخراج سليم مبدئيًا" : "قيد المراجعة";
 
-  // Structured data (when available) — Tahfidh for now.
-  const structured = slug === "tahfidh-immobilier" ? TAHFIDH_DOCUMENT : null;
+  // Structured data (when available) — registry lookup.
+  const structured = getStructuredDocument(slug) ?? null;
   const structuredArticles = structured ? flattenArticles(structured) : [];
 
   return (
