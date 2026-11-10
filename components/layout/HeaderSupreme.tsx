@@ -9,7 +9,6 @@ import {
   X, LibraryBig, UserRound, Workflow,
 } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
-import AuthButton from "@/components/AuthButton";
 
 type NavLink = { href: string; label: string; description: string; icon: typeof Scale; key?: string };
 type NavGroup = { title: string; eyebrow: string; links: NavLink[] };
@@ -74,7 +73,7 @@ export default function Header({ locale, messages }: { locale: string; messages:
             ))}
           </nav>
 
-          <div className="justice-header-actions"><Link className="justice-search-button" href={`/${locale}/search`} aria-label="البحث"><Search size={18}/></Link><AuthButton locale={locale}/><ThemeToggle/><button className="justice-mobile-toggle" type="button" onClick={() => setOpen(!open)} aria-label={open ? "إغلاق القائمة" : "فتح القائمة"} aria-expanded={open}>{open ? <X/> : <Menu/>}</button></div>
+          <div className="justice-header-actions"><Link className="justice-search-button" href={`/${locale}/search`} aria-label="البحث"><Search size={18}/></Link><ThemeToggle/><button className="justice-mobile-toggle" type="button" onClick={() => setOpen(!open)} aria-label={open ? "إغلاق القائمة" : "فتح القائمة"} aria-expanded={open}>{open ? <X/> : <Menu/>}</button></div>
         </div>
       </header>
 

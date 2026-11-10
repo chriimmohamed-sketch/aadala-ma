@@ -39,7 +39,6 @@ export default function Header({ locale, messages }: { locale: string; messages:
             </Link>
           ))}
         </nav>
-        <AuthButton locale={locale} />
         <Link href="/profile/" className="aadala-btn-ghost text-xs" style={{ textDecoration: "none", whiteSpace: "nowrap" }}>ملفي</Link>
         <a href="/mushkilati.html" className="aadala-btn-gold text-xs" style={{ textDecoration: "none", whiteSpace: "nowrap" }}>مشكلتي</a>
         <button id="kbd" type="button" className="kbd" aria-label="انتقال سريع (Ctrl K)">
