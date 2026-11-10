@@ -1,9 +1,12 @@
 import type { NextConfig } from "next";
 
 // Security headers for the Next.js app (Workers). Static HTML pages keep their own CSP meta.
+// In dev, React Refresh / HMR needs 'unsafe-eval'; production keeps the stricter policy.
+const isDev = process.env.NODE_ENV !== "production";
+const scriptSrc = ["'self'", "'unsafe-inline'", ...(isDev ? ["'unsafe-eval'"] : [])].join(" ");
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
+  `script-src ${scriptSrc}`,
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com data:",
   "img-src 'self' data: https:",
