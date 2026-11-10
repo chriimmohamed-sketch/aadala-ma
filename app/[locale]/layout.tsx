@@ -5,6 +5,7 @@ import { isRtl, locales } from "@/lib/i18n/config";
 import StorageNotice from "@/components/StorageNotice";
 import GlobalLoader from "@/components/GlobalLoader";
 import MobileNavSupreme from "@/components/MobileNavSupreme";
+import FloatingAI from "@/components/FloatingAI";
 import "../globals.css";
 
 export const dynamicParams = false;
@@ -38,6 +39,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <GlobalLoader />
         {children}
         <MobileNavSupreme locale={locale} />
+        <FloatingAI locale={locale} />
         <StorageNotice locale={locale} />
       </body>
     </html>
