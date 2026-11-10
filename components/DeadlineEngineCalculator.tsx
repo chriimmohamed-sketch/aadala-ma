@@ -2,28 +2,7 @@
 
 import { useState } from "react";
 import { computeDeadline, parseISO, type DeadlineRule, type DeadlineResult } from "@/lib/legal-services/deadline-engine";
-
-const RULES: DeadlineRule[] = [
-  {
-    id: "civil-appeal-15",
-    label: "استئناف مدني — 15 يومًا من التبليغ",
-    procedure: "civil",
-    days: 15,
-    startEvent: "notification",
-    source: "تحقق في قانون المسطرة المدنية (أجل الاستئناف) — لم يُراجع",
-    verified: false,
-    note: "أدخل الأجل (بالأيام) كما تحققته من النص.",
-  },
-  {
-    id: "custom",
-    label: "أجل مخصص (أدخل المدة)",
-    procedure: "civil",
-    days: 1,
-    startEvent: "notification",
-    source: "أدخل الأجل (أيام أو أشهر) من النص (الرسمي)",
-    verified: false,
-  },
-];
+import { DEADLINE_RULES } from "@/lib/legal-services/deadline-rules";
 
 const STATUS_LABEL: Record<DeadlineResult["status"], string> = {
   expired: "منقضٍ",
@@ -40,26 +19,37 @@ const STATUS_COLOR: Record<DeadlineResult["status"], string> = {
 };
 
 export default function DeadlineEngineCalculator() {
-  const [ruleId, setRuleId] = useState(RULES[0].id);
+  const [ruleId, setRuleId] = useState(DEADLINE_RULES[0].id);
   const [start, setStart] = useState("2026-11-01");
-  const [days, setDays] = useState("15");
+  const [days, setDays] = useState(String(DEADLINE_RULES[0].days ?? ""));
   const [months, setMonths] = useState("");
   const [holidays, setHolidays] = useState("");
   const [result, setResult] = useState<DeadlineResult | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  function onRuleChange(id: string) {
+    setRuleId(id);
+    const r = DEADLINE_RULES.find((x) => x.id === id);
+    if (r) {
+      setDays(r.days ? String(r.days) : "");
+      setMonths(r.months ? String(r.months) : "");
+    }
+  }
+
   function run() {
     setError(null);
     setResult(null);
+    const selected = DEADLINE_RULES.find((r) => r.id === ruleId);
     const rule: DeadlineRule = {
       id: ruleId,
-      label: RULES.find((r) => r.id === ruleId)?.label ?? ruleId,
-      procedure: "civil",
+      label: selected?.label ?? ruleId,
+      procedure: selected?.procedure ?? "civil",
       days: days ? Number(days) : undefined,
       months: months ? Number(months) : undefined,
-      startEvent: "notification",
-      source: "أدخله من النص (الرسمي)",
-      verified: false,
+      startEvent: selected?.startEvent ?? "notification",
+      source: selected?.source ?? "أدخله من النص (الرسمي)",
+      verified: selected?.verified ?? false,
+      note: selected?.note,
     };
     if (!rule.days && !rule.months) {
       setError("أدخل أجلًا (أيام أو أشهر) تحققته من النص (الرسمي).");
@@ -91,8 +81,8 @@ export default function DeadlineEngineCalculator() {
       </p>
       <div className="grid gap-3 md:grid-cols-2">
         <label className="text-xs">القاعدة
-          <select className="mt-1 w-full rounded border border-border bg-surface px-3 py-2 text-sm" value={ruleId} onChange={(e) => setRuleId(e.target.value)}>
-            {RULES.map((r) => <option key={r.id} value={r.id}>{r.label}</option>)}
+          <select className="mt-1 w-full rounded border border-border bg-surface px-3 py-2 text-sm" value={ruleId} onChange={(e) => onRuleChange(e.target.value)}>
+            {DEADLINE_RULES.map((r) => <option key={r.id} value={r.id}>{r.label} — {r.source}</option>)}
           </select>
         </label>
         <label className="text-xs">تاريخ الواقعة (YYYY-MM-DD)
