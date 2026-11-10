@@ -4,7 +4,7 @@ import { getMessages } from "@/lib/i18n/getMessages";
 import { isRtl, locales } from "@/lib/i18n/config";
 import StorageNotice from "@/components/StorageNotice";
 import GlobalLoader from "@/components/GlobalLoader";
-import MobileNav from "@/components/MobileNav";
+import MobileNavSupreme from "@/components/MobileNavSupreme";
 import "../globals.css";
 
 export const dynamicParams = false;
@@ -37,7 +37,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-navy focus:px-4 focus:py-2 focus:text-ivory">تخطَّ إلى المحتوى الرئيسي</a>
         <GlobalLoader />
         {children}
-        <MobileNav locale={locale} />
+        <MobileNavSupreme locale={locale} />
         <StorageNotice locale={locale} />
       </body>
     </html>
