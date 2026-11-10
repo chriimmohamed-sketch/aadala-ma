@@ -46,7 +46,7 @@ export interface LegalArticle {
 export interface LegalBranch {
   id: string;
   title: string;
-  articles: LegalArticle[];
+  articles?: LegalArticle[];
 }
 
 export interface LegalChapter {
