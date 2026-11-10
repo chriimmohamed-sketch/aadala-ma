@@ -4,7 +4,7 @@
  * القوانين غير المُضافة تُعرض عبر fallback (raw text) — لا حذف.
  */
 
-import type { LegalDocument } from "./types";
+import type { LegalDocument, LegalArticle } from "./types";
 import { TAHFIDH_DOCUMENT } from "./tahfidh";
 import { OBLIGATIONS_DOCUMENT } from "./obligations";
 import { PENAL_DOCUMENT } from "./penal";
@@ -14,6 +14,7 @@ import { COMMERCIAL_DOCUMENT } from "./commercial";
 import { CIVIL_PROCEDURE_DOCUMENT } from "./civil-procedure";
 import { CRIMINAL_PROCEDURE_DOCUMENT } from "./criminal-procedure";
 import { LABOR_DOCUMENT } from "./labor";
+import { flattenArticles } from "./types";
 
 export const STRUCTURED_DOCUMENTS: Record<string, LegalDocument> = {
   "tahfidh-immobilier": TAHFIDH_DOCUMENT,
@@ -37,4 +38,27 @@ export function isStructured(slug: string): boolean {
 
 export function structuredSlugs(): string[] {
   return Object.keys(STRUCTURED_DOCUMENTS);
+}
+
+/** Global search across all structured legal documents. */
+export function globalSearch(query: string): { lawTitle: string; category: string; matches: LegalArticle[] }[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return [];
+  const results: { lawTitle: string; category: string; matches: LegalArticle[] }[] = [];
+  for (const doc of Object.values(STRUCTURED_DOCUMENTS)) {
+    const matches = flattenArticles(doc).filter(
+      (a) =>
+        a.officialText.toLowerCase().includes(q) ||
+        String(a.number).includes(q) ||
+        (a.title ?? "").toLowerCase().includes(q),
+    );
+    if (matches.length > 0) {
+      results.push({
+        lawTitle: doc.metadata.title,
+        category: doc.metadata.type,
+        matches,
+      });
+    }
+  }
+  return results;
 }
