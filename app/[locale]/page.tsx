@@ -148,7 +148,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                   <h3>فضاء طلبة القانون</h3>
                   <p>لطلبة شعبة القانون: أدوات الدراسة والبحث، ورابط موقع المؤسِّس الثاني دليل الطالب CHRAIM.</p>
                 </Link>
-              </div>
+                <a href="/mushkilati.html" className="tool" data-n="٨">
+                  <svg className="tool-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M12 2l3 7h7l-6 4 2 7-6-4-6 4 2-7-6-4h7z" /></svg>
+                  <h3>مشكلتي<span className="badge">جديد</span></h3>
+                  <p>أجوبة جاهزة وخطوات وأدوات تفاعلية (محرّر وثائق، حاسبة آجال، هل أحتاج محاميا) لمشاكلك اليومية.</p>
+                </a>
+            </div>
             </div>
           </section>
 

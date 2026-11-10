@@ -40,6 +40,7 @@ export default function Header({ locale, messages }: { locale: string; messages:
           ))}
         </nav>
         <AuthButton locale={locale} />
+        <a href="/mushkilati.html" className="aadala-btn-gold text-xs" style={{ textDecoration: "none", whiteSpace: "nowrap" }}>مشكلتي</a>
         <button id="kbd" type="button" className="kbd" aria-label="انتقال سريع (Ctrl K)">
           <span>انتقال سريع</span> <kbd>Ctrl K</kbd>
         </button>

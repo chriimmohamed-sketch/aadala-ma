@@ -10,6 +10,7 @@ export default function Footer({ locale, messages }: { locale: string; messages:
           <a className="underline" href={`/${locale}/legal`}>المكتبة</a>
           <a className="underline" href={`/${locale}/ai`}>المساعد</a>
           <a className="underline" href={`/${locale}/procedures`}>المساطر والنماذج</a>
+          <a className="underline" href="/mushkilati.html">مشكلتي</a>
         </p>
         {tagline && <p className="text-xs text-muted">{tagline}</p>}
       </div>
