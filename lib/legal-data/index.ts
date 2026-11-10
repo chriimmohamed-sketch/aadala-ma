@@ -7,10 +7,12 @@
 import type { LegalDocument } from "./types";
 import { TAHFIDH_DOCUMENT } from "./tahfidh";
 import { OBLIGATIONS_DOCUMENT } from "./obligations";
+import { PENAL_DOCUMENT } from "./penal";
 
 export const STRUCTURED_DOCUMENTS: Record<string, LegalDocument> = {
   "tahfidh-immobilier": TAHFIDH_DOCUMENT,
   "obligations-contrats": OBLIGATIONS_DOCUMENT,
+  "code-penal": PENAL_DOCUMENT,
 };
 
 export function getStructuredDocument(slug: string): LegalDocument | undefined {
