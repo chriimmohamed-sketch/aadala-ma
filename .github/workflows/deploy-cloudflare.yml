@@ -35,4 +35,24 @@ jobs:
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-      - run: npx wrangler deploy
+      - name: Deploy worker
+        run: npx wrangler deploy 2>&1 | tee deploy.log
+      # Guard against deploying to the wrong Cloudflare account: wrangler can report
+      # success while the canonical site still serves the previous build.
+      - name: Verify the canonical site
+        run: |
+          set -euo pipefail
+          SITE="${{ vars.PUBLIC_SITE_URL }}"
+          SITE="${SITE:-https://aadala-ma.cheraimmohamed20.workers.dev}"
+          echo "Checking $SITE/ar"
+          for attempt in $(seq 1 12); do
+            html=$(curl -fsS "$SITE/ar?ci=$RANDOM" || true)
+            if printf '%s' "$html" | grep -q 'justice-header'; then
+              echo "::notice::Canonical site $SITE serves the new build"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "::error::Deployed, but $SITE still serves an old build. Check CLOUDFLARE_ACCOUNT_ID / CLOUDFLARE_API_TOKEN."
+          grep -E 'workers\.dev|Current Version ID' deploy.log || true
+          exit 1
