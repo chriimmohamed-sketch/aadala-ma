@@ -107,7 +107,7 @@ export default function HomeInteractions({ locale }: { locale: string }) {
     const dlg = d.createElement("dialog");
     dlg.className = "pal";
     dlg.setAttribute("aria-label", "انتقال سريع");
-    dlg.innerHTML = '<input type="text" placeholder="إلى أين تريد الذهاب؟" aria-label="بحث" autocomplete="off"><ul role="listbox"></ul>';
+    dlg.innerHTML = '<input type="text" placeholder="إلى أين تريد الذهاب؟" aria-label="بحث" autocomplete="off" style="min-height:44px"><ul role="listbox"></ul>';
     d.body.appendChild(dlg);
     const inp = dlg.querySelector("input") as HTMLInputElement;
     const ul = dlg.querySelector("ul") as HTMLUListElement;

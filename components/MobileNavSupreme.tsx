@@ -22,7 +22,7 @@ export default function MobileNav({ locale }: { locale: string }) {
       {TABS.map((tab) => {
         const Icon = tab.icon;
         const selected = active === tab.id;
-        return <Link key={tab.id} href={`/${locale}${tab.href}`} aria-label={tab.label} aria-current={selected ? "page" : undefined} className={`relative flex min-w-[57px] flex-col items-center gap-1 rounded-xl px-2.5 py-2 text-[10px] transition-colors ${selected ? "text-[#f0d98e]" : "text-white/60 hover:text-white"}`}>
+        return <Link key={tab.id} href={`/${locale}${tab.href}`} aria-label={tab.label} aria-current={selected ? "page" : undefined} className={`relative flex min-w-[57px] min-h-[48px] flex-col items-center justify-center gap-1 rounded-xl px-2.5 py-2 text-[10px] transition-colors ${selected ? "text-[#f0d98e]" : "text-white/60 hover:text-white"}`}>
           {selected && <motion.span layoutId="aadala-mobile-active" className="absolute inset-0 -z-10 rounded-xl border border-[#c9a227]/25 bg-[#c9a227]/15" transition={{ type: "spring", stiffness: 330, damping: 28 }} />}
           <Icon size={19} strokeWidth={selected ? 2.2 : 1.7}/><span>{tab.label}</span>
         </Link>;
