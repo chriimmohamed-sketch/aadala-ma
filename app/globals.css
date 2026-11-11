@@ -21,6 +21,10 @@
 }
 
 [data-theme="dark"] {
+  --aadala-navy: #4A6FA5;
+  --aadala-navy-soft: #2A3F5F;
+  --aadala-gold: #E0B25C;
+  --aadala-gold-soft: #F0D987;
   --aadala-ivory: #0B1D3A;
   --aadala-ivory-deep: #13294B;
   --aadala-graphite: #F7F3EA;
@@ -29,6 +33,9 @@
   --aadala-border: #2B4A7A;
   --aadala-bg: #0B1D3A;
   --aadala-muted: #C9C3B5;
+  --aadala-danger: #E05555;
+  --aadala-success: #4FA87A;
+  --aadala-teal: #2FA898;
 }
 
 @theme inline {
@@ -56,13 +63,16 @@
 html { scroll-behavior: smooth; overflow-x: hidden; }
 *, *::before, *::after { box-sizing: border-box; }
 body {
-  background: var(--aadala-ivory);
   color: var(--aadala-graphite);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
-  transition: background .4s ease, color .4s ease;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
   overflow-x: hidden;
   max-width: 100vw;
+}
+/* Smooth theme transitions */
+body, .flex.min-h-screen, header, main, section, article, aside, nav, footer {
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
 }
 :focus-visible { outline: 3px solid var(--aadala-gold); outline-offset: 3px; border-radius: 4px; }
 h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.35; margin: 0; }

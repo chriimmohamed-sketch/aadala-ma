@@ -25,8 +25,13 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   await getMessages(locale);
   const dir = isRtl(locale) ? "rtl" : "ltr";
   return (
-    <html lang={locale} dir={dir}>
+    <html lang={locale} dir={dir} suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('aadala-theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
+          }}
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -34,7 +39,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen bg-ivory text-graphite antialiased">
+      <body className="min-h-screen antialiased" style={{ backgroundColor: "var(--aadala-ivory)", color: "var(--aadala-graphite)" }}>
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-navy focus:px-4 focus:py-2 focus:text-ivory">تخطَّ إلى المحتوى الرئيسي</a>
         <GlobalLoader />
         {children}

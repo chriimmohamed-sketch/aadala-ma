@@ -11,7 +11,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   const messages = await getMessages(locale);
   return (
-    <div className="flex min-h-screen flex-col bg-bg">
+    <div className="flex min-h-screen flex-col" style={{ backgroundColor: "var(--aadala-bg)", color: "var(--aadala-graphite)" }}>
       <div className="bar" id="bar" />
       <HomeInteractions locale={locale} />
       <AnswerAnimator />

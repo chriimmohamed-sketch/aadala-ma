@@ -23,7 +23,7 @@ export default function ThemeToggle() {
   }
 
   return (
-    <button className="theme" type="button" aria-label="تبديل الوضع الداكن" onClick={toggle}>
+    <button className="theme" type="button" aria-label="تبديل الوضع الداكن" onClick={toggle} suppressHydrationWarning>
       {dark ? "☀" : "◐"}
     </button>
   );

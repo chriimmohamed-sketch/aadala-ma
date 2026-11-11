@@ -8,7 +8,7 @@ export default async function PageShell({
 }: { locale: string; title: string; intro: string; badge?: string; children: ReactNode }) {
   const messages = await getMessages(locale);
   return (
-    <div className="flex min-h-screen flex-col bg-ivory">
+    <div className="flex min-h-screen flex-col" style={{ backgroundColor: "var(--aadala-ivory)", color: "var(--aadala-graphite)" }}>
       <Header locale={locale} messages={messages} />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
         <h1 className="text-3xl font-bold text-navy">{title}</h1>
