@@ -10,6 +10,11 @@ concurrency:
 
 jobs:
   deploy:
+    # Safety switch: the repository secrets currently point at a different Cloudflare
+    # account, so automatic deploys are disabled until they are re-issued for the
+    # canonical account (see docs/DEPLOY_NOTES.md). Turn on with:
+    #   gh variable set DEPLOY_ENABLED --body true
+    if: vars.DEPLOY_ENABLED == 'true'
     runs-on: ubuntu-latest
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

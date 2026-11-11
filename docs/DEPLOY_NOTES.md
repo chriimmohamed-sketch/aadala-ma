@@ -18,6 +18,19 @@ Current Version ID: 7deff54e-b888-4039-a87a-3914ef0ce9a1
 
 بينما الموقع الذي يفتحه المستخدم هو `aadala-ma.cheraimmohamed20.workers.dev`.
 
+### الحالة الحالية (2026-11-11)
+
+- الموقع الحيّ `https://aadala-ma.cheraimmohamed20.workers.dev` يعمل بالنسخة الجديدة
+  (`Version ID: 9bf4ff36-fcf8-4a02-8ebe-38c3292ca87a`)، منشورًا من الجهاز عبر
+  `wrangler` (OAuth لحساب `cheraimmohamed20`).
+- النشر التلقائي من GitHub **مُعطَّل بمفتاح أمان** حتى تُستبدل الأسرار:
+  `DEPLOY_ENABLED = false` (متغيّر مستودع). لإعادة تفعيله بعد ضبط الأسرار:
+  `gh variable set DEPLOY_ENABLED --body true`
+- أُضيفت خطوة تحقق بعد النشر تفحص فعلًا `…/ar` وتبحث عن `justice-header`؛ فإن نُشر
+  البناء إلى حساب آخر يفشل التشغيل برسالة صريحة بدل نجاح كاذب.
+- النشر المحلي بأمر واحد: `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\deploy.ps1`
+  (و`-VerifyOnly` للتحقق فقط).
+
 ### الحل الدائم (أحد الخيارين)
 
 **أ) توحيد GitHub مع الحساب الصحيح** — أنشئ توكن Workers من
