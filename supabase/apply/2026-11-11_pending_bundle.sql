@@ -2,11 +2,11 @@
 -- AADALA.MA - PENDING DATABASE MIGRATIONS (single paste bundle)
 -- Project: pvoenvxinkipgpnddumt
 -- Generated: 2026-11-11 from supabase/migrations/ (originals untouched)
--- Why: audit via PostgREST showed 22 of 33 tables missing.
--- Already applied: 0001, 0002, 0005, 0013 (verified by live API).
+-- Why: live PostgREST audit found 22 of 33 tables missing.
+-- Proven applied: 0001, 0002, 0005 (their tables exist).
 -- This bundle: 0003, 0004, 0006-0012, 0014 (in order, idempotent, atomic).
--- Safe to re-run: tables use IF NOT EXISTS, policies DROP IF EXISTS,
--- seeds use WHERE NOT EXISTS, triggers DROP IF EXISTS.
+-- Safe to re-run: IF NOT EXISTS / DROP POLICY IF EXISTS / DROP TRIGGER IF EXISTS
+--                / INSERT ... WHERE NOT EXISTS.
 -- Run in: Supabase Dashboard -> SQL Editor -> New query -> paste -> Run
 -- ============================================================
 
@@ -14,11 +14,11 @@ BEGIN;
 
 -- ============ 0003_document_templates.sql ============
 -- ============================================================
--- AADALA.MA â€” 0003 Smart Document Templates (FEATURE 2)
+-- AADALA.MA — 0003 Smart Document Templates (FEATURE 2)
 -- Tables: document_templates, generated_documents
 -- Run in Supabase SQL Editor (project pvoenvxinkipgpnddumt)
 -- Requires: 0002_auth_rls.sql applied first.
--- NOTE: legal_basis is "ظ…ظ‚طھط±ط­" â€” طھط­ظ‚ظ‚ ظ…ظ† ط§ظ„ظ†طµ ط§ظ„ط±ط³ظ…ظٹ ظ‚ط¨ظ„ ط§ظ„ط§ط¹طھظ…ط§ط¯.
+-- NOTE: legal_basis is "مقترح" — تحقق من النص الرسمي قبل الاعتماد.
 --       Templates are editable drafts, NOT official documents.
 -- ============================================================
 
@@ -78,48 +78,47 @@ DROP TRIGGER IF EXISTS trg_docs_touch ON public.generated_documents;
 CREATE TRIGGER trg_docs_touch BEFORE UPDATE ON public.generated_documents
   FOR EACH ROW EXECUTE FUNCTION public.touch_doc_updated_at();
 
--- Seed (idempotent by title â€” drafts, expert review required)
+-- Seed (idempotent by title — drafts, expert review required)
 INSERT INTO public.document_templates (title, category, description, legal_basis, required_fields, template_html)
-SELECT 'ط§ظ„ظˆط¹ط¯ ط¨ط§ظ„ط¨ظٹط¹ ط§ظ„ط¹ظ‚ط§ط±ظٹ', 'real_estate',
-  'ظˆط¹ط¯ ط¨ط§ظ„ط¨ظٹط¹ ظ„ط¹ظ‚ط§ط± ظ…ط­ظپط¸ ط£ظˆ ظپظٹ ط·ظˆط± ط§ظ„طھط­ظپظٹط¸. ظٹظ†ط¸ظ… ط§ظ„ط¹ظ„ط§ظ‚ط© ظ‚ط¨ظ„ ط§ظ„ط¹ظ‚ط¯ ط§ظ„ظ†ظ‡ط§ط¦ظٹ. (ظ…ط³ظˆط¯ط© طھط¬ط±ظٹط¨ظٹط© â€” طھط­ظ‚ظ‚ ظ…ظ† ط§ظ„ظ†طµ ط§ظ„ط±ط³ظ…ظٹ.)',
-  'ط§ظ„ظ…ط§ط¯ط© 4 ظ…ظ† ط§ظ„ظ‚ط§ظ†ظˆظ† ط±ظ‚ظ… 39.08 ط§ظ„ظ…طھط¹ظ„ظ‚ ط¨ظ…ط¯ظˆظ†ط© ط§ظ„ط­ظ‚ظˆظ‚ ط§ظ„ط¹ظٹظ†ظٹط© (ظ…ظ‚طھط±ط­ â€” طھط­ظ‚ظ‚ ظ…ظ† ط§ظ„ظ†طµ ط§ظ„ط±ط³ظ…ظٹ)',
+SELECT 'الوعد بالبيع العقاري', 'real_estate',
+  'وعد بالبيع لعقار محفظ أو في طور التحفيظ. ينظم العلاقة قبل العقد النهائي. (مسودة تجريبية — تحقق من النص الرسمي.)',
+  'المادة 4 من القانون رقم 39.08 المتعلق بمدونة الحقوق العينية (مقترح — تحقق من النص الرسمي)',
   '[
-    {"name":"seller_name","label":"ط§ط³ظ… ط§ظ„ط¨ط§ط¦ط¹","type":"text","required":true},
-    {"name":"buyer_name","label":"ط§ط³ظ… ط§ظ„ظ…ط´طھط±ظٹ","type":"text","required":true},
-    {"name":"property_desc","label":"ظˆطµظپ ط§ظ„ط¹ظ‚ط§ط±","type":"textarea","required":true},
-    {"name":"price","label":"ط§ظ„ط«ظ…ظ† ط§ظ„ط¥ط¬ظ…ط§ظ„ظٹ (ط¯ط±ظ‡ظ…)","type":"number","required":true},
-    {"name":"advance","label":"ظ…ط¨ظ„ط؛ ط§ظ„طھط³ط¨ظٹظ‚ (ط¯ط±ظ‡ظ…)","type":"number","required":true},
-    {"name":"date","label":"طھط§ط±ظٹط® ط§ظ„طھظˆظ‚ظٹط¹","type":"date","required":true}
+    {"name":"seller_name","label":"اسم البائع","type":"text","required":true},
+    {"name":"buyer_name","label":"اسم المشتري","type":"text","required":true},
+    {"name":"property_desc","label":"وصف العقار","type":"textarea","required":true},
+    {"name":"price","label":"الثمن الإجمالي (درهم)","type":"number","required":true},
+    {"name":"advance","label":"مبلغ التسبيق (درهم)","type":"number","required":true},
+    {"name":"date","label":"تاريخ التوقيع","type":"date","required":true}
   ]'::jsonb,
-  '<div class="doc-content"><h1 style="text-align:center;">ظˆط¹ط¯ ط¨ط§ظ„ط¨ظٹط¹ ط§ظ„ط¹ظ‚ط§ط±ظٹ</h1><p><strong>ط§ظ„ط·ط±ظپ ط§ظ„ط£ظˆظ„ (ط§ظ„ط¨ط§ط¦ط¹):</strong> ط§ظ„ط³ظٹط¯(ط©) {{seller_name}}</p><p><strong>ط§ظ„ط·ط±ظپ ط§ظ„ط«ط§ظ†ظٹ (ط§ظ„ظ…ط´طھط±ظٹ):</strong> ط§ظ„ط³ظٹط¯(ط©) {{buyer_name}}</p><p>ط¨ظ…ظˆط¬ط¨ ظ‡ط°ط§ ط§ظ„ط¹ظ‚ط¯طŒ ظٹظ„طھط²ظ… ط§ظ„ط·ط±ظپ ط§ظ„ط£ظˆظ„ ط¨ط¨ظٹط¹ ط§ظ„ط¹ظ‚ط§ط± ط§ظ„ظ…ظˆطµظˆظپ ظƒط§ظ„طھط§ظ„ظٹ: {{property_desc}} ط¥ظ„ظ‰ ط§ظ„ط·ط±ظپ ط§ظ„ط«ط§ظ†ظٹطŒ ط¨ط«ظ…ظ† ط¥ط¬ظ…ط§ظ„ظٹ ظ‚ط¯ط±ظ‡ <strong>{{price}} ط¯ط±ظ‡ظ…</strong>طŒ ظ…ط¹ ط£ط¯ط§ط، طھط³ط¨ظٹظ‚ ظ‚ط¯ط±ظ‡ <strong>{{advance}} ط¯ط±ظ‡ظ…</strong>.</p><div style="background:#fff3cd; padding:10px; border-right:4px solid #ffc107; margin:20px 0;"><strong>ظ…ظ„ط§ط­ط¸ط© ظ‚ط§ظ†ظˆظ†ظٹط© ظ‡ط§ظ…ط©:</strong> ط·ط¨ظ‚ط§ظ‹ ظ„ظ„ظ…ط§ط¯ط© 4 ظ…ظ† ط§ظ„ظ‚ط§ظ†ظˆظ† 39.08طŒ ظٹط¬ط¨ ط£ظ† ظٹطھظ… ظ‡ط°ط§ ط§ظ„ظˆط¹ط¯ ظپظٹ ظ…ط­ط±ط± ط±ط³ظ…ظٹ ط£ظˆ ظ…ط­ط±ط± ط«ط§ط¨طھ ط§ظ„طھط§ط±ظٹط® ظٹط­ط±ط±ظ‡ ظ…ط­ط§ظ… ظ…ظ‚ط¨ظˆظ„ ظ„ظ„طھط±ط§ظپط¹ ط£ظ…ط§ظ… ظ…ط­ظƒظ…ط© ط§ظ„ظ†ظ‚ط¶طŒ طھط­طھ ط·ط§ط¦ظ„ط© ط§ظ„ط¨ط·ظ„ط§ظ†. (طھط­ظ‚ظ‚ ظ…ظ† ط§ظ„ظ†طµ ط§ظ„ط±ط³ظ…ظٹ.)</div><p>ط­ظڈط±ط± ط¨ظ€ ............... ط¨طھط§ط±ظٹط® {{date}}.</p><div style="display:flex; justify-content:space-between; margin-top:50px;"><span>طھظˆظ‚ظٹط¹ ط§ظ„ط¨ط§ط¦ط¹</span><span>طھظˆظ‚ظٹط¹ ط§ظ„ظ…ط´طھط±ظٹ</span></div></div>'
-WHERE NOT EXISTS (SELECT 1 FROM public.document_templates WHERE title = 'ط§ظ„ظˆط¹ط¯ ط¨ط§ظ„ط¨ظٹط¹ ط§ظ„ط¹ظ‚ط§ط±ظٹ');
+  '<div class="doc-content"><h1 style="text-align:center;">وعد بالبيع العقاري</h1><p><strong>الطرف الأول (البائع):</strong> السيد(ة) {{seller_name}}</p><p><strong>الطرف الثاني (المشتري):</strong> السيد(ة) {{buyer_name}}</p><p>بموجب هذا العقد، يلتزم الطرف الأول ببيع العقار الموصوف كالتالي: {{property_desc}} إلى الطرف الثاني، بثمن إجمالي قدره <strong>{{price}} درهم</strong>، مع أداء تسبيق قدره <strong>{{advance}} درهم</strong>.</p><div style="background:#fff3cd; padding:10px; border-right:4px solid #ffc107; margin:20px 0;"><strong>ملاحظة قانونية هامة:</strong> طبقاً للمادة 4 من القانون 39.08، يجب أن يتم هذا الوعد في محرر رسمي أو محرر ثابت التاريخ يحرره محام مقبول للترافع أمام محكمة النقض، تحت طائلة البطلان. (تحقق من النص الرسمي.)</div><p>حُرر بـ ............... بتاريخ {{date}}.</p><div style="display:flex; justify-content:space-between; margin-top:50px;"><span>توقيع البائع</span><span>توقيع المشتري</span></div></div>'
+WHERE NOT EXISTS (SELECT 1 FROM public.document_templates WHERE title = 'الوعد بالبيع العقاري');
 
 INSERT INTO public.document_templates (title, category, description, legal_basis, required_fields, template_html)
-SELECT 'ط¥ظ†ط°ط§ط± ط¨ط§ظ„ط¥ط®ظ„ط§ط،', 'real_estate',
-  'ط¥ظ†ط°ط§ط± ظ‚ط§ظ†ظˆظ†ظٹ ظ„ظ„ظ…ظƒطھط±ظٹ ط¨ط§ظ„ط¥ط®ظ„ط§ط، ط¨ط³ط¨ط¨ ط¹ط¯ظ… ط§ظ„ط£ط¯ط§ط، ط£ظˆ ط§ظ„ط¥ط®ظ„ط§ظ„ ط¨ط§ظ„ط§ظ„طھط²ط§ظ…ط§طھ. (ظ…ط³ظˆط¯ط© طھط¬ط±ظٹط¨ظٹط© â€” طھط­ظ‚ظ‚ ظ…ظ† ط§ظ„ظ†طµ ط§ظ„ط±ط³ظ…ظٹ.)',
-  'ظ‚ط§ظ†ظˆظ† ط§ظ„ط§ظ„طھط²ط§ظ…ط§طھ ظˆط§ظ„ط¹ظ‚ظˆط¯ (ط§ظ„ظپطµظ„ 692) (ظ…ظ‚طھط±ط­ â€” طھط­ظ‚ظ‚ ظ…ظ† ط§ظ„ظ†طµ ط§ظ„ط±ط³ظ…ظٹ)',
+SELECT 'إنذار بالإخلاء', 'real_estate',
+  'إنذار قانوني للمكتري بالإخلاء بسبب عدم الأداء أو الإخلال بالالتزامات. (مسودة تجريبية — تحقق من النص الرسمي.)',
+  'قانون الالتزامات والعقود (الفصل 692) (مقترح — تحقق من النص الرسمي)',
   '[
-    {"name":"landlord_name","label":"ط§ط³ظ… ط§ظ„ظ…ظƒط±ظٹ","type":"text","required":true},
-    {"name":"tenant_name","label":"ط§ط³ظ… ط§ظ„ظ…ظƒطھط±ظٹ","type":"text","required":true},
-    {"name":"address","label":"ط¹ظ†ظˆط§ظ† ط§ظ„ط¹ظ‚ط§ط± ط§ظ„ظ…ظƒطھط±ظ‰","type":"text","required":true},
-    {"name":"reason","label":"ط³ط¨ط¨ ط§ظ„ط¥ط®ظ„ط§ط، (ط¹ط¯ظ… ط§ظ„ط£ط¯ط§ط،طŒ ط¥ظ„ط®)","type":"textarea","required":true},
-    {"name":"deadline","label":"ط£ط¬ظ„ ط§ظ„ط¥ط®ظ„ط§ط، (ط£ظٹط§ظ…)","type":"number","required":true},
-    {"name":"date","label":"طھط§ط±ظٹط® ط§ظ„ط¥ظ†ط°ط§ط±","type":"date","required":true}
+    {"name":"landlord_name","label":"اسم المكري","type":"text","required":true},
+    {"name":"tenant_name","label":"اسم المكتري","type":"text","required":true},
+    {"name":"address","label":"عنوان العقار المكترى","type":"text","required":true},
+    {"name":"reason","label":"سبب الإخلاء (عدم الأداء، إلخ)","type":"textarea","required":true},
+    {"name":"deadline","label":"أجل الإخلاء (أيام)","type":"number","required":true},
+    {"name":"date","label":"تاريخ الإنذار","type":"date","required":true}
   ]'::jsonb,
-  '<div class="doc-content"><h1 style="text-align:center;">ط¥ظ†ط°ط§ط± ط¨ط§ظ„ط¥ط®ظ„ط§ط،</h1><p><strong>ظ…ظ†:</strong> ط§ظ„ط³ظٹط¯(ط©) {{landlord_name}} (ط§ظ„ظ…ظƒط±ظٹ)</p><p><strong>ط¥ظ„ظ‰:</strong> ط§ظ„ط³ظٹط¯(ط©) {{tenant_name}} (ط§ظ„ظ…ظƒطھط±ظٹ)</p><p>ط£ظˆط¬ظ‡ ط¥ظ„ظٹظƒظ… ظ‡ط°ط§ ط§ظ„ط¥ظ†ط°ط§ط± ط§ظ„ظ‚ط§ظ†ظˆظ†ظٹ ظ„ظ„ط¥ط®ظ„ط§ط، ظ…ظ† ط§ظ„ط¹ظ‚ط§ط± ط§ظ„ظƒط§ط¦ظ† ط¨ظ€: {{address}}طŒ ظˆط°ظ„ظƒ ظ„ظ„ط³ط¨ط¨ ط§ظ„طھط§ظ„ظٹ: {{reason}}.</p><p>ظˆط¹ظ„ظٹظ‡طŒ ظٹط±ط¬ظ‰ ظ…ظ†ظƒظ… ط¥ط®ظ„ط§ط، ط§ظ„ط¹ظ‚ط§ط± ظˆطھط³ظ„ظٹظ…ظ‡ ط®ط§ظ„ظٹط§ظ‹ ظ…ظ† ط§ظ„ط´ظˆط§ط؛ظ„ ط¯ط§ط®ظ„ ط£ط¬ظ„ <strong>{{deadline}} ظٹظˆظ…ط§ظ‹</strong> ظ…ظ† طھط§ط±ظٹط® ط§ظ„طھظˆطµظ„ ط¨ظ‡ط°ط§ ط§ظ„ط¥ظ†ط°ط§ط±طŒ ظˆط¥ظ„ط§ ط³ط£ط¶ط·ط± ط¢ط³ظپط§ظ‹ ظ„ط§طھط®ط§ط° ظƒط§ظپط© ط§ظ„ط¥ط¬ط±ط§ط،ط§طھ ط§ظ„ظ‚ط§ظ†ظˆظ†ظٹط© ط§ظ„ظ„ط§ط²ظ…ط©.</p><p>ط­ظڈط±ط± ط¨طھط§ط±ظٹط® {{date}}.</p><p style="margin-top:50px;">طھظˆظ‚ظٹط¹ ط§ظ„ظ…ظƒط±ظٹ</p></div>'
-WHERE NOT EXISTS (SELECT 1 FROM public.document_templates WHERE title = 'ط¥ظ†ط°ط§ط± ط¨ط§ظ„ط¥ط®ظ„ط§ط،');
-
+  '<div class="doc-content"><h1 style="text-align:center;">إنذار بالإخلاء</h1><p><strong>من:</strong> السيد(ة) {{landlord_name}} (المكري)</p><p><strong>إلى:</strong> السيد(ة) {{tenant_name}} (المكتري)</p><p>أوجه إليكم هذا الإنذار القانوني للإخلاء من العقار الكائن بـ: {{address}}، وذلك للسبب التالي: {{reason}}.</p><p>وعليه، يرجى منكم إخلاء العقار وتسليمه خالياً من الشواغل داخل أجل <strong>{{deadline}} يوماً</strong> من تاريخ التوصل بهذا الإنذار، وإلا سأضطر آسفاً لاتخاذ كافة الإجراءات القانونية اللازمة.</p><p>حُرر بتاريخ {{date}}.</p><p style="margin-top:50px;">توقيع المكري</p></div>'
+WHERE NOT EXISTS (SELECT 1 FROM public.document_templates WHERE title = 'إنذار بالإخلاء');
 
 -- ============ 0004_ingestion.sql ============
 -- ============================================================
--- AADALA.MA â€” 0004 Ingestion & Review Infrastructure (safe subset)
+-- AADALA.MA — 0004 Ingestion & Review Infrastructure (safe subset)
 -- Tables: sources, ingestion_jobs, raw_documents, document_versions, review_queue
 -- Run in Supabase SQL Editor (project pvoenvxinkipgpnddumt)
 -- Requires: 0001_init.sql + 0002_auth_rls.sql.
 -- NOTE: legal_documents/legal_source_type do NOT exist in this project.
 --       legal_document_id is kept as a plain BIGINT with NO FK (link to articles when mapped).
 --       Roles use the real profile roles: admin, legal_editor, legal_reviewer, user.
---       Seed selectors are PLACEHOLDERS â€” not verified against live sites.
+--       Seed selectors are PLACEHOLDERS — not verified against live sites.
 --       NO crawler code is included; manual PDF ingestion (scripts/ingest-pdfs.mjs) remains the only path.
 -- ============================================================
 
@@ -239,25 +238,24 @@ CREATE POLICY "queue_reviewer_only" ON public.review_queue FOR ALL
 
 -- Seed (idempotent; selectors UNVERIFIED placeholders)
 INSERT INTO public.sources (name, base_url, source_type, crawl_delay_ms, selectors)
-SELECT 'ط§ظ„ط¬ط±ظٹط¯ط© ط§ظ„ط±ط³ظ…ظٹط© â€” ط§ظ„ط£ظ…ط§ظ†ط© ط§ظ„ط¹ط§ظ…ط© ظ„ظ„ط­ظƒظˆظ…ط©', 'https://www.sgg.gov.ma', 'law', 3000, '{"bulletin_list":"a[href*=\"Bulletin\"]","pdf_link":"a[href$=\".pdf\"]"}'::jsonb
-WHERE NOT EXISTS (SELECT 1 FROM public.sources WHERE name = 'ط§ظ„ط¬ط±ظٹط¯ط© ط§ظ„ط±ط³ظ…ظٹط© â€” ط§ظ„ط£ظ…ط§ظ†ط© ط§ظ„ط¹ط§ظ…ط© ظ„ظ„ط­ظƒظˆظ…ط©');
+SELECT 'الجريدة الرسمية — الأمانة العامة للحكومة', 'https://www.sgg.gov.ma', 'law', 3000, '{"bulletin_list":"a[href*=\"Bulletin\"]","pdf_link":"a[href$=\".pdf\"]"}'::jsonb
+WHERE NOT EXISTS (SELECT 1 FROM public.sources WHERE name = 'الجريدة الرسمية — الأمانة العامة للحكومة');
 INSERT INTO public.sources (name, base_url, source_type, crawl_delay_ms, selectors)
-SELECT 'ط§ظ„ط¨ظˆط§ط¨ط© ط§ظ„ظ‚ط§ظ†ظˆظ†ظٹط© â€” ظˆط²ط§ط±ط© ط§ظ„ط¹ط¯ظ„', 'https://adala.justice.gov.ma', 'code', 2500, '{"article_container":"div.article-content","law_title":"h1.law-title"}'::jsonb
-WHERE NOT EXISTS (SELECT 1 FROM public.sources WHERE name = 'ط§ظ„ط¨ظˆط§ط¨ط© ط§ظ„ظ‚ط§ظ†ظˆظ†ظٹط© â€” ظˆط²ط§ط±ط© ط§ظ„ط¹ط¯ظ„');
+SELECT 'البوابة القانونية — وزارة العدل', 'https://adala.justice.gov.ma', 'code', 2500, '{"article_container":"div.article-content","law_title":"h1.law-title"}'::jsonb
+WHERE NOT EXISTS (SELECT 1 FROM public.sources WHERE name = 'البوابة القانونية — وزارة العدل');
 INSERT INTO public.sources (name, base_url, source_type, crawl_delay_ms, selectors)
-SELECT 'ط§ظ„ط§ط¬طھظ‡ط§ط¯ ط§ظ„ظ‚ط¶ط§ط¦ظٹ â€” ظ…ط­ظƒظ…ط© ط§ظ„ظ†ظ‚ط¶', 'https://juriscassation.cspj.ma', 'case_law', 3000, '{"decision_body":"div.arrأھt","case_number":"span.numero"}'::jsonb
-WHERE NOT EXISTS (SELECT 1 FROM public.sources WHERE name = 'ط§ظ„ط§ط¬طھظ‡ط§ط¯ ط§ظ„ظ‚ط¶ط§ط¦ظٹ â€” ظ…ط­ظƒظ…ط© ط§ظ„ظ†ظ‚ط¶');
+SELECT 'الاجتهاد القضائي — محكمة النقض', 'https://juriscassation.cspj.ma', 'case_law', 3000, '{"decision_body":"div.arrêt","case_number":"span.numero"}'::jsonb
+WHERE NOT EXISTS (SELECT 1 FROM public.sources WHERE name = 'الاجتهاد القضائي — محكمة النقض');
 INSERT INTO public.sources (name, base_url, source_type, crawl_delay_ms, selectors)
-SELECT 'ط§ظ„ظ‡ظٹط¦ط© ط§ظ„ظˆط·ظ†ظٹط© ظ„ط­ظ…ط§ظٹط© ط§ظ„ظ…ط¹ط·ظٹط§طھ ط§ظ„ط´ط®طµظٹط©', 'https://www.cndp.ma', 'circular', 3000, '{"main_content":"article.post"}'::jsonb
-WHERE NOT EXISTS (SELECT 1 FROM public.sources WHERE name = 'ط§ظ„ظ‡ظٹط¦ط© ط§ظ„ظˆط·ظ†ظٹط© ظ„ط­ظ…ط§ظٹط© ط§ظ„ظ…ط¹ط·ظٹط§طھ ط§ظ„ط´ط®طµظٹط©');
-
+SELECT 'الهيئة الوطنية لحماية المعطيات الشخصية', 'https://www.cndp.ma', 'circular', 3000, '{"main_content":"article.post"}'::jsonb
+WHERE NOT EXISTS (SELECT 1 FROM public.sources WHERE name = 'الهيئة الوطنية لحماية المعطيات الشخصية');
 
 -- ============ 0006_contract_audits.sql ============
 -- ============================================================
--- AADALA.MA â€” 0006 Contract Audits (schema only, no upload/AI)
+-- AADALA.MA — 0006 Contract Audits (schema only, no upload/AI)
 -- Tables: contract_audits, mandatory_clauses
 -- Run in Supabase SQL Editor (project pvoenvxinkipgpnddumt), after 0001-0005.
--- NOTE: No uploader, no extractor, no risk scoring yet â€” tables alone are inert.
+-- NOTE: No uploader, no extractor, no risk scoring yet — tables alone are inert.
 --       Storing user contracts is sensitive (Law 09.08/CNDP): owner-only RLS, no public read.
 -- ============================================================
 
@@ -294,13 +292,12 @@ DROP POLICY IF EXISTS "mandatory_public_read" ON public.mandatory_clauses;
 CREATE POLICY "mandatory_public_read" ON public.mandatory_clauses FOR SELECT USING (true);
 -- Writes: admin only via future reviewer flow (no public insert policy).
 
-
 -- ============ 0007_tracked_cases.sql ============
 -- ============================================================
--- AADALA.MA â€” 0007 Tracked Cases (schema only, no UI/API yet)
+-- AADALA.MA — 0007 Tracked Cases (schema only, no UI/API yet)
 -- Tables: tracked_cases, case_events
 -- Run in Supabase SQL Editor (project pvoenvxinkipgpnddumt), after 0001-0006.
--- Case files are sensitive personal data â€” owner-only RLS, no public read.
+-- Case files are sensitive personal data — owner-only RLS, no public read.
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS public.tracked_cases (
@@ -349,10 +346,9 @@ DROP TRIGGER IF EXISTS trg_cases_updated_at ON public.tracked_cases;
 CREATE TRIGGER trg_cases_updated_at BEFORE UPDATE ON public.tracked_cases
   FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
 
-
 -- ============ 0008_notifications.sql ============
 -- ============================================================
--- AADALA.MA â€” 0008 Notifications (schema only, no UI/API yet)
+-- AADALA.MA — 0008 Notifications (schema only, no UI/API yet)
 -- Table: notifications
 -- Run in Supabase SQL Editor (project pvoenvxinkipgpnddumt), after 0001-0007.
 -- Owner-only RLS; action_url/metadata are hints, not commands.
@@ -379,10 +375,9 @@ DROP POLICY IF EXISTS "own_notifications" ON public.notifications;
 CREATE POLICY "own_notifications" ON public.notifications FOR ALL
   USING (user_id::text = auth.uid()::text);
 
-
 -- ============ 0009_workspaces.sql ============
 -- ============================================================
--- AADALA.MA â€” 0009 Workspaces (schema only, no UI/API yet)
+-- AADALA.MA — 0009 Workspaces (schema only, no UI/API yet)
 -- Tables: workspaces, workspace_members, workspace_documents
 -- Run in Supabase SQL Editor (project pvoenvxinkipgpnddumt), after 0001-0008.
 -- Members see workspace docs only; owner-or-member reads workspace/members.
@@ -432,13 +427,12 @@ CREATE POLICY "workspace_members_only" ON public.workspace_documents FOR ALL
   USING (EXISTS (SELECT 1 FROM public.workspace_members m WHERE m.workspace_id = workspace_id AND m.user_id::text = auth.uid()::text))
   WITH CHECK (EXISTS (SELECT 1 FROM public.workspace_members m WHERE m.workspace_id = workspace_id AND m.user_id::text = auth.uid()::text));
 
-
 -- ============ 0010_gov_services.sql ============
 -- ============================================================
--- AADALA.MA â€” 0010 Gov Services directory (schema only, no verified seeds)
+-- AADALA.MA — 0010 Gov Services directory (schema only, no verified seeds)
 -- Tables: gov_services, user_service_requests
 -- Run in Supabase SQL Editor (project pvoenvxinkipgpnddumt), after 0001-0009.
--- NOTE: No seed rows â€” gov URLs are NEVER hallucinated; add only official verified URLs (https, .gov.ma).
+-- NOTE: No seed rows — gov URLs are NEVER hallucinated; add only official verified URLs (https, .gov.ma).
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS public.gov_services (
@@ -474,10 +468,9 @@ DROP POLICY IF EXISTS "req_owner_only" ON public.user_service_requests;
 CREATE POLICY "req_owner_only" ON public.user_service_requests FOR ALL
   USING (user_id::text = auth.uid()::text);
 
-
 -- ============ 0011_case_law.sql ============
 -- ============================================================
--- AADALA.MA â€” 0011 Case Law (schema only, NO pgvector/embeddings yet)
+-- AADALA.MA — 0011 Case Law (schema only, NO pgvector/embeddings yet)
 -- Table: case_law
 -- Run in Supabase SQL Editor (project pvoenvxinkipgpnddumt), after 0001-0010.
 -- NOTE: `embedding vector(1536)` + ivfflat from the pasted draft are DEFERRED:
@@ -507,13 +500,12 @@ DROP POLICY IF EXISTS "case_law_admin_manage" ON public.case_law;
 CREATE POLICY "case_law_admin_manage" ON public.case_law FOR ALL
   USING (EXISTS (SELECT 1 FROM public.profiles WHERE id::text = auth.uid()::text AND role IN ('admin','legal_editor','legal_reviewer')));
 
-
 -- ============ 0012_learning.sql ============
 -- ============================================================
--- AADALA.MA â€” 0012 Learning (schema only, no UI/API yet)
+-- AADALA.MA — 0012 Learning (schema only, no UI/API yet)
 -- Tables: learning_courses, learning_lessons, student_progress
 -- Run in Supabase SQL Editor (project pvoenvxinkipgpnddumt), after 0001-0011.
--- NOTE: No authored lessons here â€” live review today is ReviewMode (flashcards/quiz from excerpts).
+-- NOTE: No authored lessons here — live review today is ReviewMode (flashcards/quiz from excerpts).
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS public.learning_courses (
@@ -561,10 +553,9 @@ DROP POLICY IF EXISTS "progress_owner_only" ON public.student_progress;
 CREATE POLICY "progress_owner_only" ON public.student_progress FOR ALL
   USING (user_id::text = auth.uid()::text);
 
-
 -- ============ 0014_error_reports.sql ============
 -- ============================================================
--- AADALA.MA â€” 0014 Error Reports (insert-only public, admin read)
+-- AADALA.MA — 0014 Error Reports (insert-only public, admin read)
 -- Run in Supabase SQL Editor (project pvoenvxinkipgpnddumt), after 0001-0013.
 -- Anonymous may INSERT; only admin/reviewer may SELECT/UPDATE.
 -- ============================================================
@@ -589,6 +580,5 @@ CREATE POLICY "reports_public_insert" ON public.error_reports FOR INSERT
 DROP POLICY IF EXISTS "reports_staff_rw" ON public.error_reports;
 CREATE POLICY "reports_staff_rw" ON public.error_reports FOR ALL
   USING (EXISTS (SELECT 1 FROM public.profiles WHERE id::text = auth.uid()::text AND role IN ('admin','legal_reviewer','legal_editor')));
-
 
 COMMIT;

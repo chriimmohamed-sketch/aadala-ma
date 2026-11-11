@@ -1,59 +1,64 @@
 # حالة قاعدة البيانات — AADALA.MA
 
-**تاريخ الفحص:** 2026-11-11
+**آخر تحديث:** 2026-11-11 (بعد تطبيق الهجرات الناقصة)
 **المشروع:** `pvoenvxinkipgpnddumt` (eu-west-2)
 **طريقة الفحص:** استعلام PostgREST بالمفتاح العام (publishable) على `GET /rest/v1/<table>?select=*&limit=0`
 — الرمز `404 / PGRST205` يعني «الجدول غير موجود»، والرمز `200` يعني «موجود ومحمي بـ RLS».
-
-> هذا الفحص لا يكشف البيانات (limit=0 ولا قراءة صفوف)، بل وجود الجدول فقط.
+لا تُقرأ أي صفوف في هذا الفحص (`limit=0`).
 
 ## الخلاصة
 
-| المؤشر | العدد |
-|---|---|
-| جداول موجودة | 11 |
-| جداول ناقصة | 22 |
-| الإجمالي المتوقع | 33 |
-
-**النتيجة:** قاعدة البيانات متأخرة عن مجلد `supabase/migrations/`.
-الهجرات المُثبت تطبيقها (بوجود جداولها): `0001`, `0002`, `0005`. الهجرة `0013` لا تُنشئ جداول ولا يمكن إثباتها عبر PostgREST؛ تحقّق منها بـ `pg_policies`.
-الهجرات غير المطبَّقة: `0003`, `0004`, `0006`, `0007`, `0008`, `0009`, `0010`, `0011`, `0012`, `0014`.
-
-## الجداول الموجودة (11)
-
-`articles`, `audit_logs`, `entities`, `entity_article_mapping`, `issue_article_mapping`,
-`laws`, `legal_documents`, `legal_issues`, `profiles`, `reference_answers`, `sections`
-
-## الجداول الناقصة (22)
-
-| الجدول | الهجرة | الميزة المتأثرة |
+| المؤشر | قبل | بعد |
 |---|---|---|
-| `document_templates`, `generated_documents` | 0003 | مولّد الوثائق `/procedures` |
-| `sources`, `ingestion_jobs`, `raw_documents`, `document_versions`, `review_queue` | 0004 | إدخال النصوص ومراجعتها |
-| `contract_audits`, `mandatory_clauses` | 0006 | تحليل العقود |
-| `tracked_cases`, `case_events` | 0007 | تتبّع الملفات والآجال |
-| `notifications` | 0008 | الإشعارات |
-| `workspaces`, `workspace_members`, `workspace_documents` | 0009 | مساحات العمل |
-| `gov_services`, `user_service_requests` | 0010 | الخدمات الإدارية |
-| `case_law` | 0011 | الاجتهاد القضائي |
-| `learning_courses`, `learning_lessons`, `student_progress` | 0012 | فضاء الطالب |
-| `error_reports` | 0014 | «أبلغ عن خطأ» |
+| جداول موجودة من 33 | 11 | **33** |
+| جداول ناقصة | 22 | **0** |
+| جداول بأخطاء RLS (500) | 3 | **0** |
+| صفوف أولية مشوّشة (mojibake) | 6 | **0** |
 
-## كيف تُطبَّق الآن (خطوة واحدة)
+## ما طُبِّق فعليًا
 
-1. افتح: https://supabase.com/dashboard/project/pvoenvxinkipgpnddumt/sql/new
-2. انسخ كامل ملف `supabase/apply/2026-11-11_pending_bundle.sql` والصقه ثم **Run**.
-   - BUNDLE يجمع الهجرات العشر بترتيبها داخل `BEGIN … COMMIT` (ذرّي: إمّا الكل أو لا شيء).
-   - آمن لإعادة التشغيل: `IF NOT EXISTS` للجداول، `DROP POLICY IF EXISTS` للسياسات، `WHERE NOT EXISTS` للبيانات الأولية، `DROP TRIGGER IF EXISTS` للمشغّلات.
-3. شغّل `supabase/apply/verify_tables.sql` وتحقق من `missing_count = 0`.
+| الهجرة | الحالة | الأثر |
+|---|---|---|
+| `0001`, `0002`, `0005` | مطبَّقة سابقًا | الجداول الأساسية + `profiles` + `legal_documents` |
+| `0003`, `0004`, `0006`–`0012`, `0014` | **طُبِّقت 2026-11-11** | 22 جدولًا (وثائق، إدخال، عقود، ملفات، إشعارات، مساحات عمل، خدمات، اجتهاد، تعلّم، بلاغات) |
+| `0013` | مطبَّقة سابقًا | سياسات RLS القديمة |
+| `0015` | **جديدة 2026-11-11** | إصلاح `42P17 infinite recursion` في سياسات `workspace_*` |
+| `0016` | **جديدة 2026-11-11** | إصلاح النصوص العربية المشوّشة في بيانات `document_templates` و`sources` الأولية |
 
-## بديل آلي (بدون فتح المتصفح)
+## الأدلّة (استعلام تحقّق داخل SQL Editor)
 
-إعطاء رمز وصول شخصي من Supabase (`sbp_…`, Account → Access Tokens) يتيح تطبيق الهجرات عبر
-Management API (`POST /v1/projects/{ref}/database/query`) دون كلمة سر القاعدة.
+```sql
+select
+  (select count(*) from public.sources where position('§' in name) > 0) as bad_sources,          -- 0
+  (select count(*) from public.document_templates where position('§' in title) > 0) as bad_templates, -- 0
+  (select count(*) from public.sources) as sources_total,            -- 4
+  (select count(*) from public.document_templates) as templates_total, -- 2
+  (select count(*) from pg_tables where schemaname='public') as tables_total, -- 40
+  (select count(*) from pg_proc p join pg_namespace n on n.oid=p.pronamespace
+     where n.nspname='public' and p.proname like 'is_workspace%') as helper_fns; -- 2
+```
 
-## ملاحظات
+وعيّنة حيّة عبر REST: `document_templates` تُرجع الآن `الوعد بالبيع العقاري` و`إنذار بالإخلاء`
+مع `required_fields` عربية سليمة (`اسم البائع`, `اسم المشتري`, …).
 
-- لم يُحذف أي ملف أو جدول؛ هذه إضافات فقط.
-- MFA: بعد إزالة صفحة تسجيل الدخول من الموقع العام لم تبقَ حاجة تشغيلية لـ MFA في هذه النسخة؛
-  يبقى الكود محفوظًا لنسخة خاصة لاحقًا.
+## الملفات المساعدة (جديدة، لا تعدّل الهجرات الأصلية)
+
+| الملف | الوظيفة |
+|---|---|
+| `supabase/apply/2026-11-11_pending_bundle.sql` | الهجرات العشر مجمّعة داخل `BEGIN … COMMIT` |
+| `supabase/apply/build-bundle.ps1` | يعيد بناء الحزمة من `supabase/migrations/` بترميز UTF-8 صحيح |
+| `supabase/apply/set-clipboard.ps1` | ينسخ ملف SQL إلى الحافظة بترميز UTF-8 (يتجنّب تشويه ANSI) |
+| `supabase/apply/verify_tables.sql` | تحقّق من الجداول والسياسات |
+
+## درسان مستفادان
+
+1. **PowerShell 5.1 يقرأ UTF-8 بلا BOM كـ ANSI.** لذلك `Get-Content -Raw` شوّه العربية عند بناء الحزمة.
+   الحل: `[System.IO.File]::ReadAllText($path, $utf8NoBom)` — وهو ما يفعله `build-bundle.ps1` الآن.
+2. **سياسة RLS التي تستعلم من جدولها نفسه** تُنتج `42P17 infinite recursion`. الحل: دوال
+   `SECURITY DEFINER` + `search_path` مثبَّت (كما في `0015`).
+
+## ما تبقّى (يدوي، خارج نطاق قاعدة البيانات)
+
+- لم تُشغَّل اختبارات end-to-end على نموذج «أبلغ عن خطأ» بمستخدم حقيقي.
+- `MFA` غير مطلوب في النسخة العامة الحالية بعد إزالة تسجيل الدخول؛ يبقى الكود محفوظًا.
+- النسخ الاحتياطي/الاستعادة لم يُختبرا من طرف إلى طرف.
