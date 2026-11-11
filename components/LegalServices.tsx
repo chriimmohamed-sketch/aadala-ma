@@ -5,6 +5,7 @@ import { generateDraft } from "@/lib/legal-services/drafts";
 import type { ProcedureDocType } from "@/lib/legal-services/types";
 import ProcedureWizard from "@/components/ProcedureWizard";
 import DeadlineCalculator from "@/components/DeadlineCalculator";
+import DeadlineEngineCalculator from "@/components/DeadlineEngineCalculator";
 import DocumentGenerator from "@/components/DocumentGenerator";
 import DownloadButton from "@/components/DownloadButton";
 
@@ -62,6 +63,7 @@ export default function LegalServices() {
       </section>
 
       <DeadlineCalculator />
+      <DeadlineEngineCalculator />
       <DocumentGenerator />
     </div>
   );

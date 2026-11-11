@@ -1,0 +1,10 @@
+$p = 'C:\Users\Mohamed Chraim\Downloads\CHRVVIM_Campus_CREATIVE_UPGRADE_CLOUDFLARE\aadala-ma\supabase\apply\2026-11-11_pending_bundle.sql'
+$enc = New-Object System.Text.UTF8Encoding($false)
+$t = [System.IO.File]::ReadAllText($p, $enc)
+Write-Output ('chars=' + $t.Length)
+Write-Output ('sig1_taain=' + ([regex]::Matches($t, [char]0x0637 + [string][char]0x00A7)).Count)
+Write-Output ('sig2_oslash=' + ([regex]::Matches($t, [char]0x00D8)).Count)
+Write-Output ('sig3_atilde=' + ([regex]::Matches($t, [char]0x00C3)).Count)
+$i = $t.IndexOf("SELECT '")
+$seg = $t.Substring($i, 60)
+Write-Output ('seed_start=' + (($seg.ToCharArray() | ForEach-Object { [int][char]$_ }) -join ','))

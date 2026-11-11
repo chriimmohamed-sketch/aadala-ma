@@ -1,6 +1,5 @@
 import Link from "next/link";
 import ThemeToggle from "@/components/ThemeToggle";
-import AuthButton from "@/components/AuthButton";
 
 const navItems = [
   { href: "", key: "home" },
@@ -39,7 +38,11 @@ export default function Header({ locale, messages }: { locale: string; messages:
             </Link>
           ))}
         </nav>
-        <AuthButton locale={locale} />
+        <Link href="/profile/" className="aadala-btn-ghost text-xs" style={{ textDecoration: "none", whiteSpace: "nowrap" }}>ملفي</Link>
+        <a href="/mushkilati.html" className="aadala-btn-gold text-xs" style={{ textDecoration: "none", whiteSpace: "nowrap" }}>مشكلتي</a>
+        <button id="kbd" type="button" className="kbd" aria-label="انتقال سريع (Ctrl K)">
+          <span>انتقال سريع</span> <kbd>Ctrl K</kbd>
+        </button>
         <ThemeToggle />
       </div>
     </header>
