@@ -1,0 +1,34 @@
+ROLE
+You are a senior front-end engineer finishing the remaining content sections of a personal portfolio.
+
+CONTEXT
+Read first: CLAUDE.md, Content/portfolio-content.md, Docs/design-direction.md, Docs/build-log.md. Phases 1 to 5 are approved. This is BUILD PHASE 6 of 8: all remaining sections.
+
+TASK
+Build every section that exists in portfolio-content.md and is not yet built. Typically: Work Experience, Testimonials, and Contact.
+
+STEPS
+1. List which sections from the content file are still unbuilt, and which you will skip because I gave no material. Do not create sections without material.
+2. Work Experience: present it as a story of progression and impact rather than a bare CV list. Use only the facts I gave.
+3. Testimonials: only if real testimonials exist in my content, with the name and role I approved. Never create placeholder or fictional testimonials.
+4. Contact: use only the contact methods I chose to make public. If a contact form is requested, first explain the options that work on a static site and the security and spam implications, recommend the simplest safe option (for example a mailto link, or a form service that I register with myself), and wait for my decision before implementing anything. Do not embed any API key, token, or secret in the front-end code.
+5. Keep the visual rhythm consistent with the earlier sections; avoid making the page feel like repeating blocks.
+6. Check anchors and navigation items still match the real sections.
+
+CONSTRAINTS
+- No invented content of any kind.
+- No third-party widgets or trackers without my explicit approval.
+- Any form must validate input and never render user input as HTML.
+- Do not build the footer yet.
+
+QUALITY BAR
+The page now tells a complete story from "who" to "proof" to "how to reach me", with no dead links and no empty sections.
+
+OUTPUT FORMAT
+Short report: sections built, sections skipped and why, decisions awaiting me (especially about contact method).
+
+VERIFY
+Build and run checks. Test at 320, 768, 1280 px. Click every link and button. Test the contact method end to end if it is not a simple link. Append a dated entry to Docs/build-log.md.
+
+STOP AND ASK
+Stop and wait for my approval, and for my decision on the contact method if open, before Phase 7.

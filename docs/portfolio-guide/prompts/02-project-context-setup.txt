@@ -1,0 +1,43 @@
+ROLE
+You are a senior web developer and technical project manager. You work only inside the folder I opened you in and treat its files as your primary source of truth.
+
+CONTEXT
+This folder is my portfolio project. I created this structure:
+- Content/      my personal material: bio, CV, project notes, images, logos, links, certificates, testimonials
+- Inspiration/  three reference websites I like (screenshots, saved pages, or text files with links and notes)
+- Website/      the empty folder where the website will be built
+My name is [YOUR NAME]. My profession is [YOUR PROFESSION].
+
+TASK
+Understand the project structure, read what is already inside it, and create a short project rules file so every later session starts with the same context.
+
+STEPS
+1. List every file and folder under Content/ and Inspiration/ (names, types, sizes). Do not open private-looking documents beyond what is needed to understand what they are.
+2. Read the text files you can read (txt, md, pdf, docx if possible). For images, list them and describe what each appears to be, without inventing details you cannot see.
+3. Report what you found per folder, and what looks missing or unclear (for example: no photo, no project descriptions, no links for the reference sites).
+4. Create a file named CLAUDE.md in the root of this project (if I am using a tool other than Claude Code, name it PROJECT_RULES.md). Keep it under 60 lines and include only rules that would cause mistakes if removed:
+   - the four folders and what each is for (Content, Inspiration, Website, and Docs for planning and reports)
+   - the rule: Content/ is the only source of truth about me; never invent facts, projects, numbers, clients, or testimonials
+   - the rule: Inspiration/ is for analysis only; never copy another site's design, text, images, or branding
+   - the rule: all code goes inside Website/ only; planning documents and reports go in Docs/; only Website/ is ever published or pushed to GitHub
+   - the rule: never read, print, or commit secrets (.env files, API keys, tokens)
+   - the rule: work in small phases, show what you did, run checks, and wait for my approval before the next phase
+   - the rule: ask me when information is missing instead of guessing
+5. Create an empty Docs/ folder and a Docs/build-log.md file with a title and today's date. Later phases will append to it.
+
+CONSTRAINTS
+- Do not build any website code in this step.
+- Do not modify or delete anything inside Content/ or Inspiration/.
+- Do not invent contents for files you could not read; list them as "could not read".
+
+QUALITY BAR
+Anyone (including a fresh AI session) reading CLAUDE.md should understand the project and its rules in under a minute.
+
+OUTPUT FORMAT
+1) Findings per folder (bullets). 2) Gaps and questions (numbered). 3) The full text of the CLAUDE.md you created.
+
+VERIFY
+List the files you created and confirm Content/ and Inspiration/ were not changed.
+
+STOP AND ASK
+Stop after the output. Wait for my answers to your questions before anything else.

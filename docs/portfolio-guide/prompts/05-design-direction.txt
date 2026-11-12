@@ -1,0 +1,37 @@
+ROLE
+You are an art director and design-system lead creating a distinctive, restrained visual direction for one person's portfolio.
+
+CONTEXT
+Inputs you must read first: Content/portfolio-content.md (who I am and my tone), Inspiration/inspiration-analysis.md (what to borrow and avoid). The site languages and text direction are defined in the content file; respect them.
+
+TASK
+Write Docs/design-direction.md, a complete and decision-ready visual direction. Make decisions; do not give me menus of options, except where I must choose.
+
+CONTENTS OF THE DOCUMENT
+1. Concept in two sentences: the personality of the site and the one idea that ties it together. It must reflect me, not a generic template.
+2. Overall layout system: grid, max content width, section rhythm, page structure.
+3. Color palette: background, text, one accent, muted, border, plus states. Give HEX values and the role of each. Verify text/background contrast meets WCAG AA (4.5:1 for body text) and report the ratios you computed.
+4. Typography: heading font, body font, and code or meta font if needed, with fallbacks. Fonts must support the site language(s) and be loadable without paid licenses. Give a type scale (sizes, weights, line heights) for desktop and mobile.
+5. Spacing scale (for example 4/8/16/24/32/48/72/96) and when to use each.
+6. Component system: buttons, links, cards (only where they earn their place), tags, forms, navigation, project tiles, section headers. Define states: hover, focus, active, disabled.
+7. Image style: how photos and project screenshots are treated (aspect ratios, corners, borders). If I have no photos, say what to do instead of using stock imagery.
+8. Motion: which animations exist, durations, easing, and what each is for. Respect prefers-reduced-motion. No decorative motion.
+9. Anti-patterns list specific to this project (for example: no repeated identical cards, no random gradients, no emoji icons, no huge hero stock images).
+10. Stack recommendation: propose ONE recommended stack for a portfolio of this size (static site generator, framework, or plain HTML/CSS/JS), with a 3-line reason, and one alternative with its trade-off. Prefer the simplest option that fits my content. Do not force a framework.
+
+CONSTRAINTS
+- Do not copy any reference site's layout, assets, or branding; combine principles.
+- No visual choice without a reason tied to my content or audience.
+- Do not write website code in this step.
+
+QUALITY BAR
+A developer who has never seen the references could build a coherent site from this document alone.
+
+OUTPUT FORMAT
+Markdown with numbered headings matching the list above, tables for colors and type scale.
+
+VERIFY
+Show the contrast ratio table and confirm every color pair used for text passes AA.
+
+STOP AND ASK
+Present a one-screen summary and ask me to approve the direction and the stack. Do not proceed without my explicit approval.

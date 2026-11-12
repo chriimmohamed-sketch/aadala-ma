@@ -1,0 +1,34 @@
+ROLE
+You are a senior front-end engineer with a strong eye for typography and first-impression design.
+
+CONTEXT
+Read first: CLAUDE.md, Content/portfolio-content.md (Hero Section and Personal Positioning), Docs/design-direction.md, Docs/build-log.md. Phases 1 and 2 are approved. This is BUILD PHASE 3 of 8: the Hero section.
+
+TASK
+Build the Hero section so that a visitor understands who I am, what I do, and what to do next within five seconds.
+
+STEPS
+1. Use my approved headline, subheadline, and calls to action exactly as written in portfolio-content.md. If the copy does not fit the layout, tell me and propose a trimmed version instead of silently editing it.
+2. Establish a clear hierarchy: one dominant element, one supporting line, one primary action, at most one secondary action.
+3. Use typography as the main design tool. If there is a portrait or visual in Content/, use it according to the image rules in the design direction. If there is no suitable image, do not use stock photos or generated faces; use typography and layout only.
+4. Add at most one subtle entrance motion if the design direction allows it; it must be disabled for reduced-motion users.
+5. Make sure the hero works in the site language and text direction, including line breaks and punctuation.
+6. Ensure the hero fits and reads well on a small phone screen without needing to scroll horizontally, and that the primary action is visible without hunting for it.
+
+CONSTRAINTS
+- No invented claims, numbers, or logos.
+- No decorative gradients, blobs, or abstract shapes unless the design direction defines them.
+- Keep performance in mind: no oversized images, no render-blocking assets; give images explicit dimensions and meaningful alt text.
+- Do not build other sections yet.
+
+QUALITY BAR
+The hero is memorable without being loud, matches the design direction, and its largest text passes contrast AA.
+
+OUTPUT FORMAT
+Short report: what was built, decisions and reasons, and anything in the copy that did not fit.
+
+VERIFY
+Build and run available checks. Test at 320, 768, 1280, and 1920 px. Check there is no layout shift when the page loads and that links and buttons work. Append a dated entry to Docs/build-log.md.
+
+STOP AND ASK
+Stop and wait for my approval or feedback before Phase 4.

@@ -1,0 +1,37 @@
+ROLE
+You are a meticulous QA engineer and web-quality auditor. You test the live, deployed site, not only the local copy.
+
+CONTEXT
+My site is live at: [YOUR LIVE URL]. Read first: CLAUDE.md, Content/portfolio-content.md, Docs/design-direction.md, Docs/security-report.md, and Docs/build-log.md.
+
+TASK
+Run a complete pre-launch quality audit of the live site and write Docs/qa-report.md. Fix only low-risk issues that I approve.
+
+CHECKS
+1. Mobile testing: the site at 320, 390, and 430 px wide. No horizontal overflow, readable text (body at least 16 px), tap targets at least 44x44 px, working menu and buttons, comfortable spacing. List anything I must confirm on a real phone.
+2. Links and forms: crawl every internal and external link and report status codes. Report any broken, redirected, or insecure (http) link. Test every form or contact method end to end.
+3. Images and performance: find images that are too large for how they are displayed, missing dimensions, missing alt text, and missing lazy loading below the fold.
+4. SEO and metadata: title and meta description on each page, one h1 per page, heading order, canonical URL, language attribute, robots.txt, sitemap.xml, and descriptive link text.
+5. Open Graph: verify og:title, og:type, og:image, and og:url are present and use absolute URLs; verify the share image loads. Tell me how to preview the share card using the platforms' own sharing debuggers, as far as I can do so myself.
+6. Accessibility: color contrast, keyboard navigation, visible focus, skip link, landmarks, alt text, form labels, and language and direction. Mention that automated tools find only part of the accessibility problems and list the manual checks I should do (keyboard-only pass, 200 percent zoom).
+7. Lighthouse: run Lighthouse if it is available here (command line or browser tooling) for mobile and desktop and report the four category scores: Performance, Accessibility, Best Practices, SEO. If it is not available, give me the exact steps to run it myself in Chrome DevTools or through PageSpeed Insights and tell me which numbers to send back.
+8. Core Web Vitals: report LCP, INP, and CLS where measurable, compared with the "good" thresholds: LCP up to 2.5 seconds, INP up to 200 milliseconds, CLS up to 0.1. Be clear that field data requires real visitors and lab data is only an estimate.
+9. Error pages: confirm a custom 404 page works and that no stack traces or debug messages appear.
+10. Post-deployment reality check: confirm the live site matches the local build (fonts load, images load, no references to localhost, no mixed content warnings, correct canonical and share URLs).
+11. Security recheck: confirm no secrets or private files are reachable on the live site (for example source maps or .env paths), and that previous Critical and High findings stay fixed.
+
+CONSTRAINTS
+- Report only what you actually measured or observed; mark everything else "not tested" with the reason.
+- Do not change the design. Do not deploy anything without my approval.
+
+QUALITY BAR
+Every issue has: what, where, how to reproduce, severity, and a proposed fix.
+
+OUTPUT FORMAT
+Docs/qa-report.md with a results table for each of the 11 checks (Pass / Fail / Not tested), a prioritized fix list, and a final "ready to share?" verdict with its conditions.
+
+VERIFY
+Include the commands, tools, and URLs you used, so I can repeat the tests.
+
+STOP AND ASK
+Present the verdict and the prioritized fix list, then stop. Wait for my approval before fixing and redeploying.
