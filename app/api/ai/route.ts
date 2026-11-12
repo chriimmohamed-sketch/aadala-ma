@@ -124,15 +124,15 @@ ${question}
   // Every field from the model is type-checked: a non-string value must never reach the UI.
   const certaintyRaw = parsed?.certainty;
   const answer: AIAnswer = {
-    factsAssumed: str(parsed?.factsAssumed) || "لم يُحدد AI provider. عرض مقاطع مسترجعة فقط.",
-    legalIssue: str(parsed?.legalIssue) || "يتطلب AI provider للتحليل.",
-    legalBasis: str(parsed?.legalBasis) || (chunks.length ? "مقاطع مسترجعة (انظر المراجع)." : "لا توجد مصادر كافية."),
-    analysis: str(parsed?.analysis) || (chunks.length ? "تعذّر التحليل (لا AI provider). راجع المقاطع." : "لا توجد مصادر كافية."),
+    factsAssumed: str(parsed?.factsAssumed) || "تم البحث في قاعدة البيانات (RAG).",
+    legalIssue: str(parsed?.legalIssue) || "سؤال: " + question,
+    legalBasis: str(parsed?.legalBasis) || (chunks.length ? "مقاطع مسترجعة (انظر المراجع)." : "لم يتم العثور على مقالات مطابقة. جرّب كلمات مختلفة."),
+    analysis: str(parsed?.analysis) || (chunks.length ? "تعذّر التحليل (لا AI provider). راجع المقاطع أعلاه." : "جرّب إعادة صياغة السؤال أو استخدام كلمات مفتاحية (مثلاً: \"عقد بيع\", \"تحفيظ\", \"ميراث\")."),
     possibleApplications: str(parsed?.possibleApplications),
     references: refs,
     suggestions,
     certainty: CERTAINTY.includes(certaintyRaw as AIAnswer["certainty"]) ? (certaintyRaw as AIAnswer["certainty"]) : (chunks.length ? "low" : "insufficient_sources"),
-    missingInfo: parsed ? arr(parsed.missingInfo) : ["AI provider API key", "وقائع إضافية"],
+    missingInfo: parsed ? arr(parsed.missingInfo) : ["لا يوجد مفتاح AI provider — الجواب مبني على الاسترجاع (RAG) فقط. لتفعيل التحليل (AI)، أضف AI_PROVIDER_API_KEY."],
     disclaimer: str(parsed?.disclaimer) || "هذا ليس استشارة مهنية نهائية. راجع مختصاً.",
     textInterpretation: str(parsed?.textInterpretation),
     oldVsNewComparison: str(parsed?.oldVsNewComparison),
