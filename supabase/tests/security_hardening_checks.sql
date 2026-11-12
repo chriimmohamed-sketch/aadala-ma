@@ -61,7 +61,7 @@ BEGIN
   IF EXISTS (
     SELECT 1 FROM pg_policies
     WHERE schemaname = 'public' AND tablename = 'audit_logs'
-      AND cmd = 'INSERT' AND 'authenticated' = ANY(roles::text[])
+      AND cmd = 'INSERT' AND roles @> ARRAY['authenticated']::name[]
   ) THEN
     RAISE EXCEPTION 'authenticated still has an audit_logs INSERT policy';
   END IF;
