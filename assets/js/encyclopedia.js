@@ -123,7 +123,9 @@
 
   function renderResults(items, heading) {
     resultsRoot.replaceChildren();
-    const title = make("h2", "encyclopedia-results-title", heading);\n    title.id = "encResultsHeading";\n    resultsRoot.append(title);
+    const title = make("h2", "encyclopedia-results-title", heading);
+    title.id = "encResultsHeading";
+    resultsRoot.append(title);
     countNode.textContent = String(items.length);
     if (!items.length) {
       resultsRoot.append(make("div", "alert alert-info", "لا توجد نتائج مطابقة. جرّب كلمة أخرى أو ألغِ تصفية المجال."));
