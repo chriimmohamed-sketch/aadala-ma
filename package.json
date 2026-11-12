@@ -16,7 +16,8 @@
     "design:audit": "node scripts/unify-design.mjs",
     "design:fix": "node scripts/unify-design.mjs --fix --legacy",
     "design:check": "node scripts/unify-design.mjs --check",
-    "legal:ingest": "node scripts/ingest-pdfs.mjs"
+    "legal:ingest": "node scripts/ingest-pdfs.mjs",
+    "legal:sources:check": "node scripts/validate-legal-source-registry.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
