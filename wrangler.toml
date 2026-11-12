@@ -1,8 +1,5 @@
-name = "aadala-ma"
-main = ".open-next/worker.js"
-compatibility_date = "2025-01-01"
-compatibility_flags = ["nodejs_compat"]
+﻿name = "aadala-ma"
+compatibility_date = "2026-01-01"
 
 [assets]
-directory = ".open-next/assets"
-binding = "ASSETS"
+directory = "."
