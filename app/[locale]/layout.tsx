@@ -3,10 +3,11 @@ import { notFound } from "next/navigation";
 import { getMessages } from "@/lib/i18n/getMessages";
 import { isRtl, locales } from "@/lib/i18n/config";
 import StorageNotice from "@/components/StorageNotice";
-import HtmlLangDir from "@/components/HtmlLangDir";
 import GlobalLoader from "@/components/GlobalLoader";
 import MobileNavSupreme from "@/components/MobileNavSupreme";
 import FloatingAI from "@/components/FloatingAI";
+import HtmlLangDir from "@/components/HtmlLangDir";
+import SmoothScroll from "@/components/SmoothScroll";
 import "../globals.css";
 
 export const dynamicParams = false;
@@ -28,7 +29,8 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   return (
     <div lang={locale} dir={dir} className="min-h-screen antialiased" style={{ backgroundColor: "var(--aadala-ivory)", color: "var(--aadala-graphite)" }}>
       <HtmlLangDir locale={locale} rtl={dir === "rtl"} />
-      <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-navy focus:px-4 focus:py-2 focus:text-ivory">تخطَّ إلى المحتوى الرئيسي</a>
+      <SmoothScroll />
+      <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-navy focus:px-4 focus:py-2 focus:text-ivory"> Patton إلى المحتوى الرئيسي</a>
       <GlobalLoader />
       {children}
       <MobileNavSupreme locale={locale} />
