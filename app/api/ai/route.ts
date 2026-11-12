@@ -109,7 +109,7 @@ ${question}
       analysis: chunks.map((c, i) => "[" + (i + 1) + "] " + c.excerpt).join("\n\n"),
       possibleApplications: "راجع المقاطع المسترجعة أعلاه (المراجع).",
       references: refs,
-      certainty: chunks[0]?.score >= 6.5 ? "medium" : "low",
+      certainty: (chunks[0]?.score ?? 0) > 0 ? "medium" : "low",
       missingInfo: ["لا يوجد مفتاح AI provider — الجواب مبني على الاسترجاع (RAG) فقط، وليس تحليلًا مُركَّبًا. لتفعيل التحليل (AI)، أضف AI_PROVIDER_API_KEY في .env."],
       disclaimer: "هذا الجواب مبني على مقاطع مسترجعة من قاعدة البيانات (RAG)، وليس تحليلًا قانونيًا. استشر محاميًا مغربيًا في قضيتك.",
       textInterpretation: "",
