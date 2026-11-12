@@ -6,7 +6,7 @@
   "use strict";
 
   const data = window.LegalContent;
-  const catalogue = window.LegalEncyclopedia;
+  const catalogue = typeof LegalEncyclopedia !== "undefined" ? LegalEncyclopedia : null;
   const categoriesRoot = document.getElementById("encCategories");
   const resultsRoot = document.getElementById("encResults");
   const searchInput = document.getElementById("encSearch");
