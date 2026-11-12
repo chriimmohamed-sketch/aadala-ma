@@ -20,7 +20,7 @@ export default function FloatingAI({ locale }: { locale: string }) {
           type="button"
           onClick={() => setOpen(true)}
           aria-label="فتح المساعد الذكي"
-          className="fixed bottom-20 left-4 z-50 flex h-14 w-14 items-center justify-center rounded-full border-2 border-gold bg-navy text-ivory shadow-2xl transition hover:scale-105 md:bottom-6"
+          className="fixed bottom-20 left-1/2 z-50 flex h-14 w-14 -translate-x-1/2 items-center justify-center rounded-full border-2 border-gold bg-navy text-ivory shadow-2xl transition hover:scale-105 md:bottom-6"
         >
           <Sparkles size={24} />
         </button>
@@ -28,7 +28,7 @@ export default function FloatingAI({ locale }: { locale: string }) {
 
       {/* Compact chat panel */}
       {open && (
-        <div className="fixed bottom-20 left-4 z-50 w-[92vw] max-w-md md:bottom-6">
+        <div className="fixed bottom-20 left-1/2 z-50 w-[92vw] max-w-md -translate-x-1/2 md:bottom-6">
           <div className="aadala-card flex flex-col overflow-hidden shadow-2xl" style={{ maxHeight: "70vh" }}>
             <div className="flex items-center justify-between border-b border-border bg-navy px-4 py-2 text-ivory">
               <span className="font-display text-sm font-bold">AADALA AI — المساعد</span>
