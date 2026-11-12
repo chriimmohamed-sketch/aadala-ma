@@ -12,6 +12,7 @@ node_modules/
 .next/
 out/
 build/
+/.open-next/
 
 # Misc
 .DS_Store
@@ -41,3 +42,4 @@ desktop.ini
 .dev.vars*
 !.dev.vars.example
 !.env.example
+.vercel

@@ -9,12 +9,15 @@
     "lint": "eslint",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
+    "quality:gate": "npm run lint && npm run typecheck && npm run test && npm run build",
     "cf:build": "opennextjs-cloudflare build",
     "cf:preview": "opennextjs-cloudflare preview",
     "cf:deploy": "opennextjs-cloudflare deploy"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.119.0",
     "next": "16.4.5",
+    "pdf-parse": "^2.4.5",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
