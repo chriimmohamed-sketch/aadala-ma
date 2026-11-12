@@ -16,9 +16,17 @@ AADALA.MA is an independent Moroccan legal intelligence platform designed to mak
 
 ## Status
 
-**Current version: 0.1.0 (Production-ready foundation)**
+**Current version: 0.2.0 (Creative Upgrade + Security + Deploy)**
 
-Next.js 16 app is live on Cloudflare Workers. A static `index.html` gateway is live on GitHub Pages. Several modules remain in pilot/placeholder (`قيد التطوير`) and are labeled as such. See `IMPLEMENTATION_STATUS.md` and `docs/AUTH_SUPABASE.md` for details.
+Next.js 16 app is live on Cloudflare Workers (correct account). A static `index.html` gateway is live on GitHub Pages. All core modules shipped; unverified content is badged (`قيد المراجعة` / `قيد التجهيز`). See `CHANGELOG.md`, `IMPLEMENTATION_STATUS.md`, and `docs/DEPLOY_NOTES.md`.
+
+### Highlights
+- Supreme Justice Navigation + FloatingAI widget + 23+ pages
+- Dark mode (full token overrides, smooth transitions, no-FOUC)
+- Security: CSP, rate limits, error reporting, 24/27 audit
+- DB: 33/33 tables live (migrations 0003–0016)
+- A11y: Lighthouse 96% (a11y), 100% (best-practices, SEO)
+- Deploy: gated CI + one-command local deploy (`scripts/deploy.ps1`)
 
 ## Tech Stack (Current)
 

@@ -18,6 +18,46 @@
 
 ### Notes
 - Auth/RBAC not implemented (admin open) — before production. (Superseded: Supabase Auth implemented below.)
+
+## [0.2.0] - 2026-11-12 — Creative Upgrade + Security + Deploy
+
+### Added
+- **Supreme Justice Navigation**: `HeaderSupreme` + `MobileNavSupreme` + isolated `justice-*` CSS across 23+ pages (sticky, mega-menu, RTL, keyboard, ARIA).
+- **FloatingAI widget**: small dismissible button (bottom-left) → compact panel (max 70vh) with close (X).
+- **Error reporting**: `0014_error_reports.sql` + `POST /api/reports/error` (rate-limited 5/min, insert-only) + `ReportErrorForm`.
+- **Deadline engine v2**: pure UTC engine, 5 rules (all `verified:false`), religious holidays manual.
+- **Error boundaries**: `app/[locale]/error.tsx`, `app/global-error.tsx`, `app/not-found.tsx`.
+- **Structured legal data**: `lib/legal-data/` (9 laws, ~110 articles, all `verified:false`), `LegalArticleView`/`LegalTreeView`/`SourceCard`, `/legal/[slug]` structured render + raw fallback.
+- **Front codes**: lamp `LoginForm`, `HangingCard`, `DownloadButton`, `GlobalLoader`, `AIToolsSection` merged into live platform.
+- **Public pages**: `mushkilati.html` (6 worlds × 10 problems + 4 tools), `profile/` kit, `assets/navigation.js|css`.
+- **DB completion**: 33/33 tables live (0003, 0004, 0006–0012, 0014, 0015, 0016). Workspace RLS recursion fixed (`SECURITY DEFINER` helpers). Mojibake seeds repaired (CP1256 → UTF-8).
+- **Docs**: `docs/DB_STATE.md`, `docs/DEPLOY_NOTES.md`, `supabase/apply/` (bundle + helpers).
+- **Deploy safety**: CI smoke-check step (verifies canonical site serves new build); `scripts/deploy.ps1` (one-command local deploy with VC++ runtime workaround).
+- **Dark mode**: full token overrides (navy, gold, danger, success, teal, …) + smooth transitions + no-FOUC inline script.
+- **A11y**: touch targets ≥44px (theme toggle, search, nav triggers, mobile tabs, drawer links, palette input). Lighthouse: a11y 96%, best-practices 100%, SEO 100%.
+- **Layout**: `overflow-x: hidden` (no horizontal scroll), inline-style backgrounds.
+
+### Changed
+- Login removed: 7 auth pages → `redirect("/")`; `AuthButton` dropped from headers; forms/API/migrations preserved.
+- `HeaderSupreme` + `MobileNavSupreme`: `AuthButton` removed.
+- `eslint.config.mjs`: ignore `.open-next/**`.
+- `app/[locale]/layout.tsx`: root layout split (`app/layout.tsx` + `HtmlLangDir` client component) to fix Next.js 16 dev-server `not-found.tsx` issue.
+
+### Security
+- CSP: `object-src 'none'`, `upgrade-insecure-requests`. Rate limits: 30/min templates, 20/min admin queue, 5/min error reports.
+- `docs/SECURITY_REVIEW_27.md` (24/27 ✅).
+- Login removal: no public auth path remains (MFA dropped).
+
+### Deployment
+- Live (correct account): `https://aadala-ma.cheraimmohamed20.workers.dev` (Version ID `7f876f93…`).
+- CI deploys gated: `DEPLOY_ENABLED=false` (secrets point to wrong account `chriimmohamed`). Flip to `true` after issuing a Workers API token for `cheraimmohamed20`.
+- Local deploy: `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\deploy.ps1`.
+
+### Known limitations
+- 9 laws + 5 deadline rules unverified (`verified:false`); 4 laws still raw fallback.
+- Jurisprudence corpus empty by design.
+- Backup/restore untested end-to-end.
+- dev-chain: 14 vulnerabilities (dev-only; production audit clean).
 - Cloudflare deploy via CI (Windows local build unsupported).
 
 ## [0.2.0] - 2026-11-08
