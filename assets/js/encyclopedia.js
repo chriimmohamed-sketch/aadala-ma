@@ -82,7 +82,7 @@
     const titleGroup = make("div", "");
     titleGroup.append(make("h3", "", item.title || "مرجع دون عنوان"));
     if (item.titleFr) titleGroup.append(make("p", "text-muted text-sm", item.titleFr));
-    const badge = make("span", "badge badge-primary", item.status || "الحالة غير محددة");
+    const badge = make("span", "badge badge-primary", item.status ? "الحالة المسجلة: " + item.status : "الحالة غير محددة");
     header.append(titleGroup, badge);
     article.append(header);
 
@@ -123,7 +123,7 @@
 
   function renderResults(items, heading) {
     resultsRoot.replaceChildren();
-    resultsRoot.append(make("h2", "encyclopedia-results-title", heading));
+    const title = make("h2", "encyclopedia-results-title", heading);\n    title.id = "encResultsHeading";\n    resultsRoot.append(title);
     countNode.textContent = String(items.length);
     if (!items.length) {
       resultsRoot.append(make("div", "alert alert-info", "لا توجد نتائج مطابقة. جرّب كلمة أخرى أو ألغِ تصفية المجال."));
