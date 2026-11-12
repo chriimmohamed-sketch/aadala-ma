@@ -3,92 +3,135 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AADALA.MA — العدالة والذكاء القانوني المغربي</title>
-  <meta name="description" content="منصة العدالة والذكاء القانوني المغربي — فهم القانون، معرفة الحقوق، تحليل المسائل القانونية.">
+  <meta name="theme-color" content="#101D32">
+  <title>AADALA.MA — العدالة تبدأ بالمعرفة</title>
+  <meta name="description" content="منصة العدالة والذكاء القانوني المغربي — اكتشف القانون المغربي، افهم حقوقك، وابحث في التشريع والاجتهاد القضائي بمساعدة أدوات ذكية ومصادر قابلة للتحقق.">
   <link rel="stylesheet" href="assets/css/main.css">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
   <div id="header"></div>
 
-  <!-- Hero -->
-  <section class="hero">
+  <!-- Hero: Architecture of Justice -->
+  <section class="hero" style="position:relative;overflow:hidden;background:radial-gradient(ellipse at 80% 15%,rgba(22,124,128,.28),transparent 36%),radial-gradient(ellipse at 12% 90%,rgba(198,165,107,.12),transparent 32%),linear-gradient(135deg,#101D32,#172B45 65%,#0A1422);padding:5rem 0 4rem;">
     <div class="container">
-      <div class="hero-content">
-        <h1>AADALA.MA</h1>
-        <p class="subtitle">العدالة والذكاء القانوني المغربي — «القانون مفهوم، والحق معلوم.»</p>
-        <div class="hero-search">
-          <input type="text" id="heroSearch" placeholder="ابحث في النصوص القانونية المغربية..." onkeypress="if(event.key==='Enter')doSearch()">
-          <button onclick="doSearch()">بحث</button>
+      <div class="hero-content" style="max-width:860px;">
+        <p style="color:var(--color-gold);font-weight:700;letter-spacing:.08em;margin-bottom:.75rem;font-size:.95rem;">AADALA.MA · بوابة العدالة الرقمية</p>
+        <h1 style="font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.2;margin-bottom:1rem;color:#fff;">العدالة تبدأ بالمعرفة.</h1>
+        <p class="subtitle" style="font-size:1.15rem;color:#d8e0e8;max-width:720px;margin:0 auto 2rem;line-height:1.9;">
+          اكتشف القانون المغربي، افهم حقوقك، وابحث في التشريع والاجتهاد القضائي بمساعدة أدوات ذكية ومصادر قابلة للتحقق.
+        </p>
+
+        <div class="hero-search" style="max-width:680px;margin:0 auto 1rem;border:1px solid rgba(198,165,107,.25);">
+          <input type="text" id="heroSearch" placeholder="ابحث في قانون، مادة، جريدة رسمية، قرار، أو اطرح سؤالاً قانونياً..." onkeypress="if(event.key==='Enter')doSearch()">
+          <button onclick="doSearch()" style="background:var(--color-gold);color:#172033;">بحث</button>
         </div>
+        <div style="display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-bottom:1.75rem;font-size:.85rem;color:#c8d1dc;">
+          <span class="badge" style="background:rgba(255,255,255,.08);color:#e8d7b7;border:1px solid rgba(198,165,107,.25);">قانون / مادة</span>
+          <span class="badge" style="background:rgba(255,255,255,.08);color:#e8d7b7;border:1px solid rgba(198,165,107,.25);">الجريدة الرسمية</span>
+          <span class="badge" style="background:rgba(255,255,255,.08);color:#e8d7b7;border:1px solid rgba(198,165,107,.25);">اجتهاد قضائي</span>
+          <span class="badge" style="background:rgba(255,255,255,.08);color:#e8d7b7;border:1px solid rgba(198,165,107,.25);">سؤال قانوني</span>
+        </div>
+
         <div class="hero-actions">
-          <a href="legal-ai.html" class="btn btn-accent btn-lg">🤖 اسأل المساعد القانوني</a>
-          <a href="encyclopedia.html" class="btn btn-outline btn-lg" style="border-color:white;color:white;">📚 الموسوعة القانونية</a>
+          <a href="legal-ai.html" class="btn btn-accent btn-lg">اسأل المساعد القانوني</a>
+          <a href="encyclopedia.html" class="btn btn-lg" style="background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.2);">تصفح الموسوعة</a>
+          <a href="gazette.html" class="btn btn-lg" style="background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.2);">الجريدة الرسمية</a>
         </div>
+
+        <p style="margin-top:1.5rem;font-size:.85rem;color:#9fb0c3;">
+          منصة مستقلة غير حكومية · المعلومات توضيحية وليست استشارة قانونية · يتم التمييز بين المصدر الرسمي والتحليل والمحتوى المترجم
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- Stats -->
-  <section class="section" style="background:var(--color-surface);">
+  <!-- Trust / Principles -->
+  <section class="section" style="background:var(--color-surface);padding:2.5rem 0;border-bottom:1px solid var(--color-border);">
     <div class="container">
-      <div class="stats-grid">
-        <div class="stat-card"><div class="stat-value">16+</div><div class="stat-label">مجال قانوني</div></div>
-        <div class="stat-card"><div class="stat-value">100%</div><div class="stat-label">عربي RTL أصلي</div></div>
-        <div class="stat-card"><div class="stat-value">24/7</div><div class="stat-label">مساعد قانوني</div></div>
-        <div class="stat-card"><div class="stat-value">3</div><div class="stat-label">لغات (AR/FR/EN)</div></div>
+      <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;">
+        <div class="stat-card"><div class="stat-value" style="font-size:1.8rem;">16+</div><div class="stat-label">مجالاً قانونياً</div></div>
+        <div class="stat-card"><div class="stat-value" style="font-size:1.8rem;">21</div><div class="stat-label">صفحة وخدمة</div></div>
+        <div class="stat-card"><div class="stat-value" style="font-size:1.8rem;">10</div><div class="stat-label">لغات (بنية جاهزة)</div></div>
+        <div class="stat-card"><div class="stat-value" style="font-size:1.8rem;">RTL/LTR</div><div class="stat-label">واجهة ثنائية الاتجاه</div></div>
       </div>
     </div>
   </section>
 
-  <!-- Services -->
+  <!-- Quick Pathways -->
   <section class="section">
     <div class="container">
       <div class="section-title">
-        <h2>الخدمات الرئيسية</h2>
-        <p>أدوات قانونية ذكية مبنية على التشريع المغربي</p>
+        <h2>مسارات سريعة</h2>
+        <p>اختر المسار الأنسب لاحتياجك القانوني</p>
       </div>
       <div class="service-grid">
-        <a href="legal-ai.html" class="card service-card">
-          <div class="service-icon">🤖</div>
-          <h3>المساعد القانوني الذكي</h3>
-          <p>طرح أسئلة قانونية، تحليل نزاعات، معرفة الحقوق والإجراءات</p>
-        </a>
-        <a href="encyclopedia.html" class="card service-card">
-          <div class="service-icon">📚</div>
-          <h3>الموسوعة القانونية</h3>
-          <p>الدستور، قانون الالتزامات، القانون الجنائي، الأسرة، الشغل...</p>
-        </a>
-        <a href="inheritance.html" class="card service-card">
-          <div class="service-icon">⚖️</div>
-          <h3>حساب المواريث</h3>
-          <p>حساب الفروض، التعصيب، العول، الرد، وتوزيع التركة</p>
-        </a>
-        <a href="real-estate.html" class="card service-card">
-          <div class="service-icon">🏠</div>
-          <h3>الحقوق العينية</h3>
-          <p>الشياع، القسمة، التحفيظ، الرهن، الانتفاع</p>
-        </a>
-        <a href="criminal.html" class="card service-card">
-          <div class="service-icon">🔒</div>
-          <h3>التحليل الجنائي</h3>
-          <p>التكييف، الأركان، العقوبات، الدفوع (تعليمي)</p>
-        </a>
-        <a href="procedures.html" class="card service-card">
-          <div class="service-icon">📋</div>
-          <h3>المساطر والوثائق</h3>
-          <p>دلائل، نماذج، مولد وثائق، تحميل PDF</p>
-        </a>
-        <a href="fiqh.html" class="card service-card">
-          <div class="service-icon">🕌</div>
-          <h3>الفقه (المواريث)</h3>
-          <p>آيات، أحاديث، فقه مالكي، قواعد فقهية</p>
-        </a>
-        <a href="academic.html" class="card service-card">
-          <div class="service-icon">🎓</div>
-          <h3>الفضاء الأكاديمي</h3>
-          <p>مقالات، شروحات، مصطلحات، اجتهادات</p>
-        </a>
+        <a href="gazette.html" class="card service-card"><div class="service-icon">📰</div><h3>الجريدة الرسمية</h3><p>تصفح وفهرسة النصوص المنشورة مع حالة المصدر والمعالجة</p></a>
+        <a href="encyclopedia.html" class="card service-card"><div class="service-icon">📚</div><h3>الموسوعة القانونية</h3><p>الدستور، القوانين، المدونات، والتنظيمات المغربية</p></a>
+        <a href="case-law.html" class="card service-card"><div class="service-icon">⚖️</div><h3>الاجتهاد القضائي</h3><p>بحث في القرارات المنشورة (قيد البناء والتحقق)</p></a>
+        <a href="legal-ai.html" class="card service-card"><div class="service-icon">🤖</div><h3>المساعد القانوني الذكي</h3><p>تحليل مبدئي منظم مع تنبيه للمصادر والحدود</p></a>
+        <a href="legal-aid.html" class="card service-card"><div class="service-icon">🤝</div><h3>المساعدة القانونية</h3><p>إرشادات، مساطر، وثائق، وجهات مختصة</p></a>
+        <a href="inheritance.html" class="card service-card"><div class="service-icon">🧮</div><h3>مختبر المواريث</h3><p>حساب توضيحي للأنصبة — يتطلب مراجعة متخصصة</p></a>
+        <a href="real-estate.html" class="card service-card"><div class="service-icon">🏠</div><h3>الحقوق العينية والعقار</h3><p>الملكية، الشياع، التحفيظ، الرهن، الانتفاع</p></a>
+        <a href="procedures.html" class="card service-card"><div class="service-icon">📋</div><h3>المساطر والوثائق</h3><p>دلائل، نماذج، وخطوات إجرائية</p></a>
+        <a href="academic.html" class="card service-card"><div class="service-icon">🎓</div><h3>الأكاديمية والباحثون</h3><p>شروحات، مصطلحات، وموارد تعليمية</p></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Legal Radar / Updates -->
+  <section class="section" style="background:var(--color-surface);">
+    <div class="container">
+      <div class="section-title">
+        <h2>المستجدات القانونية (رادار قانوني)</h2>
+        <p>تحديثات موثقة مع المصدر والتاريخ — لا تُعرض مسودات كقوانين نافذة</p>
+      </div>
+      <div class="card">
+        <div class="alert alert-info">
+          <strong>ملاحظة شفافية:</strong> لا يوجد رادار آلي متصل حالياً بمصادر رسمية. العناصر أدناه أمثلة مرجعية ثابتة ويجب التحقق منها من الجريدة الرسمية.
+        </div>
+        <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:1rem;">
+          <div class="card" style="box-shadow:none;">
+            <span class="badge badge-primary">مرجع دستوري</span>
+            <h4 style="margin:.5rem 0;">الدستور المغربي 2011</h4>
+            <p class="text-muted" style="margin:0;">الحالة: نافذ · المصدر: الجريدة الرسمية · آخر تحقق: يدوي</p>
+          </div>
+          <div class="card" style="box-shadow:none;">
+            <span class="badge badge-accent">مدونة</span>
+            <h4 style="margin:.5rem 0;">مدونة الأسرة (2004)</h4>
+            <p class="text-muted" style="margin:0;">الحالة: نافذة مع تعديلات · المرجع: ظهير 1-04-22 · تحقق من النص المحدّث</p>
+          </div>
+          <div class="card" style="box-shadow:none;">
+            <span class="badge badge-success">قانون</span>
+            <h4 style="margin:.5rem 0;">قانون الالتزامات والعقود</h4>
+            <p class="text-muted" style="margin:0;">الحالة: نافذ مع تعديلات متعددة · يُنصح بمراجعة آخر صيغة منشورة</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Knowledge Connections -->
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>شبكات المعرفة القانونية</h2>
+        <p>ربط التشريع بالاجتهاد والإجراءات (معاينة — مبنية على بيانات متاحة فقط)</p>
+      </div>
+      <div class="card">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;align-items:center;">
+          <div>
+            <h3 style="margin-bottom:.5rem;">علاقات قانونية قابلة للتتبع</h3>
+            <p class="text-muted">عند اكتمال البيانات، ستُعرض علاقات بين القوانين، المواد، التعديلات، والقرارات المنشورة مع مصدر كل علاقة.</p>
+            <div class="alert alert-warning" style="margin-top:1rem;">لا تُعرض علاقات مختلقة. هذه معاينة هيكلية حتى تتوفر بيانات موثقة.</div>
+          </div>
+          <div style="background:linear-gradient(135deg,rgba(16,29,50,.04),rgba(22,124,128,.08));border:1px dashed var(--color-border);border-radius:var(--radius-lg);padding:1.5rem;min-height:180px;display:flex;align-items:center;justify-content:center;text-align:center;">
+            <div>
+              <div style="font-size:2rem;margin-bottom:.5rem;">◉—◉—◉</div>
+              <p class="text-muted" style="margin:0;">معاينة مخطط المعرفة<br><small>قيد الربط ببيانات موثقة</small></p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -98,29 +141,24 @@
     <div class="container">
       <div class="section-title">
         <h2>مجالات القانون المغربي</h2>
-        <p>تصفح النصوص حسب المجال</p>
+        <p>تصفح النصوص والموارد حسب المجال</p>
       </div>
       <div class="category-grid" id="categoryGrid"></div>
     </div>
   </section>
 
-  <!-- Latest Updates -->
+  <!-- Trust & Methodology -->
   <section class="section">
     <div class="container">
       <div class="section-title">
-        <h2>مستجدات قانونية</h2>
-        <p>آخر النصوص والتعديلات</p>
+        <h2>الثقة والمنهجية</h2>
+        <p>الشفافية في المصادر، حالة المراجعة، وحدود المنصة</p>
       </div>
-      <div class="card">
-        <div class="alert alert-info">
-          <strong>ملاحظة:</strong> يتم تحديث قاعدة البيانات القانونية يدوياً من قِبل المحررين القانونيين. تحقق من تاريخ آخر تحديث لكل نص.
-        </div>
-        <ul style="list-style:none; line-height:2.2;">
-          <li>📌 <strong>الدستور المغربي 2011</strong> — نافذ</li>
-          <li>📌 <strong>مدونة الأسرة (2004)</strong> — نافذ مع تعديلات</li>
-          <li>📌 <strong>مدونة الشغل (2003)</strong> — نافذ</li>
-          <li>📌 <strong>قانون الالتزامات والعقود</strong> — نافذ (مع تعديلات متعددة)</li>
-        </ul>
+      <div class="service-grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));">
+        <div class="card"><h3>المصادر</h3><p class="text-muted">تمييز بين النص الأصلي، الشرح التحريري، التحليل الآلي، والترجمة. الأولوية للجريدة الرسمية والمصادر الموثوقة.</p></div>
+        <div class="card"><h3>حالة المراجعة</h3><p class="text-muted">تُعرض حالة التحقق والتحديث عند توفرها. المحتوى غير المراجع يُوسم بوضوح.</p></div>
+        <div class="card"><h3>الاستقلالية</h3><p class="text-muted">منصة مستقلة خاصة — ليست جهة حكومية ولا تمثل وزارة العدل أو المحاكم أو هيئة المحامين.</p></div>
+        <div class="card"><h3>الخصوصية</h3><p class="text-muted">احترام مقتضيات القانون 09-08 ومتطلبات حماية المعطيات الشخصية (CNDP) قدر الإمكان، مع مراجعة مختصة عند التوسع.</p></div>
       </div>
     </div>
   </section>
@@ -131,10 +169,10 @@
       <div class="section-title">
         <h2>عن AADALA.MA</h2>
       </div>
-      <div class="card" style="max-width:800px;margin:0 auto;">
-        <p>AADALA.MA هي منصة رقمية مغربية مستقلة تهدف إلى تسهيل الوصول إلى المعرفة القانونية، وفهم الحقوق والالتزامات، وتحليل المسائل القانونية، وتقديم أدوات حسابية وخدمات رقمية مبنية على التشريع المغربي.</p>
+      <div class="card" style="max-width:860px;margin:0 auto;">
+        <p><strong>AADALA.MA</strong> منصة رقمية مغربية مستقلة تهدف إلى تسهيل الوصول إلى المعرفة القانونية، وفهم الحقوق والالتزامات، وتحليل المسائل القانونية، وتقديم أدوات حسابية وخدمات رقمية مبنية على التشريع المغربي والمصادر الموثوقة.</p>
         <div class="alert alert-warning mt-3">
-          <strong>⚠️ إخلاء مسؤولية:</strong> هذه المنصة مستقلة وغير حكومية، ولا تمثل وزارة العدل أو أي مؤسسة رسمية. المعلومات المقدمة توضيحية وليست استشارة قانونية. يُوصى بمراجعة محامٍ مغربي مختص.
+          <strong>إخلاء مسؤولية:</strong> هذه المنصة مستقلة وغير حكومية، ولا تمثل وزارة العدل أو أي مؤسسة رسمية. المعلومات المقدمة توضيحية وليست استشارة قانونية ولا تمثيلاً قضائياً. يُوصى بمراجعة محامٍ مغربي مختص قبل اتخاذ أي إجراء قانوني.
         </div>
       </div>
     </div>
@@ -142,7 +180,7 @@
 
   <div id="footer"></div>
 
-  <script src="assets/js/app.js">
+  <script src="assets/js/app.js"></script>
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/legal-content.js"></script>
   <script>
@@ -156,7 +194,7 @@
       grid.innerHTML = LegalEncyclopedia.categories.map(c =>
         `<div class="category-item" onclick="location.href='encyclopedia.html?cat=${c.id}'">
           <div class="category-icon">${c.icon}</div>
-          <div><strong>${c.name}</strong><br><span class="text-muted text-sm">${c.desc}</span></div>
+          <div><strong>${c.name}</strong><br><span class="text-muted" style="font-size:.9rem;">${c.desc}</span></div>
         </div>`
       ).join('');
     }

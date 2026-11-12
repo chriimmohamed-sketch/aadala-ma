@@ -4,46 +4,62 @@
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700;900&display=swap');
 
 :root {
-  /* Moroccan Legal Palette */
-  --color-primary: #1a3a5c;        /* Deep navy - authority */
-  --color-primary-light: #2d5a8e;
-  --color-primary-dark: #0f2440;
-  --color-accent: #c9a227;         /* Gold - justice */
-  --color-accent-light: #e0c05a;
-  --color-accent-dark: #a08218;
-  --color-secondary: #1f6f5f;       /* Green - law/growth */
-  --color-secondary-light: #2a9d8f;
-  --color-bg: #f8f6f1;             /* Warm off-white */
-  --color-bg-alt: #ffffff;
-  --color-surface: #ffffff;
-  --color-text: #1a1a2e;
-  --color-text-muted: #5a5a7a;
-  --color-border: #e2ddd3;
-  --color-danger: #c0392b;
-  --color-success: #27ae60;
-  --color-warning: #f39c12;
+  /* AADALA.MA — "Architecture of Justice" Design Tokens */
+  /* Core palette */
+  --color-navy: #101D32;           /* Deep Justice Navy */
+  --color-navy-mid: #172B45;       /* Midnight Blue */
+  --color-navy-light: #243B5A;     /* Royal Ink */
+  --color-gold: #C6A56B;           /* Justice Gold */
+  --color-gold-muted: #A88952;     /* Muted Brass */
+  --color-ivory: #F4F1E9;          /* Warm Ivory */
+  --color-paper: #FCFBF8;          /* Paper White */
+  --color-teal: #167C80;           /* Digital Teal */
+  --color-sand: #D9CBB4;           /* Soft Sand */
+  --color-graphite: #252B33;       /* Graphite */
+  --color-border-neutral: #E3E1DB; /* Neutral Border */
 
-  /* Dark mode */
-  --color-dark-bg: #0f172a;
-  --color-dark-surface: #1e293b;
-  --color-dark-text: #e2e8f0;
-  --color-dark-muted: #94a3b8;
-  --color-dark-border: #334155;
+  /* Semantic tokens (light mode) */
+  --color-primary: var(--color-navy);
+  --color-primary-light: var(--color-navy-light);
+  --color-primary-dark: #0A1422;
+  --color-accent: var(--color-gold);
+  --color-accent-light: #D4B88A;
+  --color-accent-dark: var(--color-gold-muted);
+  --color-secondary: var(--color-teal);
+  --color-secondary-light: #1FA0A5;
+  --color-bg: var(--color-ivory);
+  --color-bg-alt: var(--color-paper);
+  --color-surface: var(--color-paper);
+  --color-text: var(--color-graphite);
+  --color-text-muted: #687385;
+  --color-border: var(--color-border-neutral);
+  --color-danger: #B91C1C;
+  --color-success: #15803D;
+  --color-warning: #B45309;
+  --color-info: var(--color-teal);
+
+  /* Dark mode overrides */
+  --color-dark-bg: #0B1424;
+  --color-dark-surface: #111E31;
+  --color-dark-text: #F4F1E9;
+  --color-dark-muted: #AAB5C4;
+  --color-dark-border: rgba(255,255,255,0.13);
 
   /* Typography */
   --font-body: 'Tajawal', 'Cairo', sans-serif;
   --font-heading: 'Amiri', 'Tajawal', serif;
   --font-ui: 'Cairo', 'Tajawal', sans-serif;
+  --font-mono: 'Consolas', 'Monaco', monospace;
 
   /* Spacing & Radius */
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 16px;
   --radius-xl: 24px;
-  --shadow-sm: 0 1px 3px rgba(26,58,92,0.08);
-  --shadow-md: 0 4px 12px rgba(26,58,92,0.12);
-  --shadow-lg: 0 8px 24px rgba(26,58,92,0.16);
-  --shadow-xl: 0 16px 48px rgba(26,58,92,0.20);
+  --shadow-sm: 0 1px 3px rgba(16,29,50,0.08);
+  --shadow-md: 0 4px 12px rgba(16,29,50,0.12);
+  --shadow-lg: 0 8px 24px rgba(16,29,50,0.16);
+  --shadow-xl: 0 16px 48px rgba(16,29,50,0.20);
 
   /* Transitions */
   --transition-fast: 150ms ease;
