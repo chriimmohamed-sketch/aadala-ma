@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>الموسوعة القانونية — AADALA.MA</title>
+  <title>الموسوعة القانونية المغربية — AADALA.MA</title>
   <link rel="stylesheet" href="assets/css/main.css">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -13,16 +13,22 @@
   <section class="section">
     <div class="container">
       <div class="section-title">
-        <h2>📚 الموسوعة القانونية المغربية</h2>
-        <p>النصوص، المواد، التعديلات، حالة السريان</p>
+        <h2>الموسوعة القانونية المغربية</h2>
+        <p>تصنيف النصوص التشريعية والتنظيمية مع بيانات المصدر والحالة — قاعدة قيد التوسيع والتحقق</p>
       </div>
 
-      <div class="alert alert-info mb-3">
-        <strong>ملاحظة:</strong> النصوص المدرجة هنا مأخوذة من المصادر الرسمية (الجريدة الرسمية). التحقق من www.sgg.gov.ma. المحتوى قيد التوسيع.
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-bottom:1rem;">
+        <div class="alert alert-info" style="margin:0;">
+          <strong>منهجية العرض:</strong> تُعرض بيانات مرجعية (رقم، تاريخ، حالة معلنة، مصدر). النص الكامل والنسخ التاريخية والتعديلات تتطلب إدخالاً موثقاً من المصادر الرسمية.
+        </div>
+        <div class="card" style="box-shadow:none;">
+          <h4 style="margin-bottom:.5rem;">حالة المحتوى</h4>
+          <p class="text-muted" style="margin:0;font-size:.95rem;">المدخلات الحالية: <strong>16 مرجعاً</strong> (metadata). التحقق التفصيلي وحالة النفاذ الفعلية يجب مراجعتها عبر الجريدة الرسمية.</p>
+        </div>
       </div>
 
       <div class="mb-3">
-        <input type="text" class="form-input" id="encSearch" placeholder="بحث في الموسوعة..." oninput="filterEnc()">
+        <input type="text" class="form-input" id="encSearch" placeholder="بحث في المجالات والنصوص..." oninput="filterEnc()">
       </div>
 
       <div class="category-grid" id="encCategories"></div>
@@ -33,7 +39,7 @@
 
   <div id="footer"></div>
 
-  <script src="assets/js/app.js">
+  <script src="assets/js/app.js"></script>
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/legal-content.js"></script>
   <script>
@@ -45,35 +51,45 @@
     grid.innerHTML = LegalEncyclopedia.categories.map(c =>
       `<div class="category-item" onclick="showCategory('${c.id}')">
         <div class="category-icon">${c.icon}</div>
-        <div><strong>${c.name}</strong><br><span class="text-muted text-sm">${c.desc}</span></div>
+        <div><strong>${c.name}</strong><br><span class="text-muted" style="font-size:.9rem;">${c.desc}</span></div>
       </div>`
     ).join('');
 
+    // If query param present, try to filter
+    const params = new URLSearchParams(location.search);
+    const q = params.get('q');
+    const cat = params.get('cat');
+    if (q) { document.getElementById('encSearch').value = q; filterEnc(); }
+    if (cat) { setTimeout(() => showCategory(cat), 0); }
+
     function showCategory(id) {
-      const cat = LegalEncyclopedia.categories.find(c => c.id === id);
+      const c = LegalEncyclopedia.categories.find(x => x.id === id);
       const texts = (window.LegalContent ? LegalContent.texts.filter(t => t.category === id) : []);
       const detail = document.getElementById('textDetail');
       detail.classList.remove('hidden');
-      let html = `<div class="card"><h3>${cat.icon} ${cat.name}</h3><p class="text-muted">${cat.desc}</p>`;
+      let html = `<div class="card"><h3>${c.icon} ${c.name}</h3><p class="text-muted">${c.desc}</p>`;
       if (texts.length > 0) {
         html += '<div class="mt-3">';
         texts.forEach(t => {
-          html += `<div class="card mb-2" style="background:var(--color-bg-alt);">
-            <h4>${t.title} <span class="badge badge-primary">${t.status}</span></h4>
-            <p class="text-muted text-sm">${t.titleFr}</p>
-            <table class="data-table mt-2">
-              <tr><td><strong>النوع</strong></td><td>${t.type}</td></tr>
-              <tr><td><strong>الرقم</strong></td><td>${t.number}</td></tr>
-              <tr><td><strong>التاريخ</strong></td><td>${t.date}</td></tr>
-              <tr><td><strong>المصدر</strong></td><td>${t.source}</td></tr>
-              <tr><td><strong>الملخص</strong></td><td>${t.summary}</td></tr>
+          html += `<div class="card mb-2" style="background:var(--color-bg-alt);box-shadow:none;">
+            <h4 style="margin-bottom:.25rem;">${t.title} <span class="badge badge-primary">${t.status}</span></h4>
+            <p class="text-muted" style="font-size:.9rem;margin-bottom:.5rem;">${t.titleFr || ''}</p>
+            <table class="data-table">
+              <tr><td><strong>النوع</strong></td><td>${t.type || '-'}</td></tr>
+              <tr><td><strong>الرقم</strong></td><td>${t.number || '-'}</td></tr>
+              <tr><td><strong>التاريخ</strong></td><td>${t.date || '-'}</td></tr>
+              <tr><td><strong>المصدر</strong></td><td>${t.source || '-'}</td></tr>
+              <tr><td><strong>ملخص</strong></td><td>${t.summary || '-'}</td></tr>
             </table>
-            <a href="${t.url}" target="_blank" class="btn btn-outline btn-sm mt-2">المصدر (sgg.gov.ma)</a>
+            <div style="margin-top:.75rem;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;">
+              <a href="${t.url}" target="_blank" rel="noopener" class="btn btn-outline btn-sm">فتح المصدر</a>
+              <span class="text-muted" style="font-size:.85rem;">آخر تحقق في هذه النسخة: غير مؤرشف تلقائياً</span>
+            </div>
           </div>`;
         });
         html += '</div>';
       } else {
-        html += `<div class="alert alert-info mt-2">لا توجد نصوص في هذه الفئة حالياً. سيتم إضافتها من المصادر الرسمية.</div>`;
+        html += `<div class="alert alert-info mt-2">لا توجد نصوص مفهرسة في هذه الفئة حالياً ضمن هذه النسخة. يمكن إضافتها لاحقاً من مصادر رسمية موثقة.</div>`;
       }
       html += '</div>';
       detail.innerHTML = html;
@@ -83,8 +99,7 @@
     function filterEnc() {
       const q = document.getElementById('encSearch').value.toLowerCase();
       document.querySelectorAll('.category-item').forEach(el => {
-        const txt = el.textContent.toLowerCase();
-        el.style.display = txt.includes(q) ? '' : 'none';
+        el.style.display = el.textContent.toLowerCase().includes(q) ? '' : 'none';
       });
     }
   </script>

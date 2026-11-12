@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>المساعد القانوني — AADALA.MA</title>
+  <title>المساعد القانوني الذكي — AADALA.MA</title>
   <link rel="stylesheet" href="assets/css/main.css">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -13,52 +13,68 @@
   <section class="section">
     <div class="container">
       <div class="section-title">
-        <h2>🤖 المساعد القانوني الذكي</h2>
-        <p>طرح أسئلة قانونية، تحليل نزاعات، معرفة الحقوق والإجراءات</p>
+        <h2>المساعد القانوني الذكي</h2>
+        <p>مساحة بحث وتحليل أولي — مبنية على هيكل إجابة منظم مع شفافية في المصادر والحدود</p>
       </div>
 
-      <div class="alert alert-warning mb-3">
-        <strong>⚠️ إخلاء مسؤولية:</strong> المساعد القانوني يقدم معلومات توضيحية مبنية على التشريع المغربي. لا constitutes استشارة قانونية. تُوصى بمراجعة محامٍ مغربي مختص. لا تُدخل بيانات قضايا حقيقية حساسة.
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:1rem;">
+        <div class="alert alert-warning" style="margin:0;">
+          <strong>تنبيه مهم:</strong> هذه نسخة تجريبية (Demo). الإجابات الحالية <strong>قالبية/غير موصولة بمحرك RAG</strong> ولا تُعد استشارة قانونية ولا تمثيلاً. لا تُدخل بيانات حساسة لقضايا حقيقية.
+        </div>
+        <div class="card" style="box-shadow:none;">
+          <h4 style="margin-bottom:.5rem;">حالة الموثوقية</h4>
+          <ul style="list-style:none;line-height:1.9;margin:0;font-size:.95rem;">
+            <li>• النصوص/المصادر المسترجعة آلياً: <span class="badge badge-danger">غير مفعّل</span></li>
+            <li>• الاستشهادات القابلة للتحقق: <span class="badge badge-danger">غير مفعّل</span></li>
+            <li>• التحقق البشري: <span class="badge badge-accent">مطلوب عند النشر</span></li>
+            <li>• اللغة: <span class="badge badge-primary">حسب تفضيل المستخدم (واجهة)</span></li>
+          </ul>
+        </div>
       </div>
 
       <div class="chat-container">
         <div class="chat-header">
           <span style="font-size:1.5rem;">⚖️</span>
           <div>
-            <strong>AADALA Legal AI</strong>
-            <div style="font-size:0.85rem;opacity:0.8;">مساعد قانوني مغربي — RAG على النصوص</div>
+            <strong>AADALA Legal AI — Workspace (Prototype)</strong>
+            <div style="font-size:0.85rem;opacity:0.85;">إجابات منظمة: وقائع، مسألة، نصوص، تحليل، إجراءات، مخاطر، مصادر</div>
           </div>
         </div>
         <div class="chat-messages" id="chatMessages">
           <div class="chat-message assistant">
-            <strong>مرحباً! 👋</strong><br>
-            أنا المساعد القانوني لمنصة AADALA.MA. يمكنك طرح سؤال قانوني، شرح واقعة، أو طلب تحليل.<br><br>
+            <strong>مرحباً</strong><br>
+            أنا مساحة التحليل القانوني الأولي في AADALA.MA. اطرح سؤالاً أو صف واقعة، وسأعرض لك تحليلاً منظماً مع تنبيه للحدود والمصادر المقترحة للتحقق.<br><br>
             <strong>أمثلة:</strong><br>
             • ما هي حقوق المستأجر عند إنهاء عقد الكراء؟<br>
-            • كيف أقدم دعوى مدنية؟<br>
-            • ما هي إجراءات الطلاق في مدونة الأسرة؟<br><br>
-            <em>ملاحظة: الإجابات توضيحية وليست استشارة قانونية.</em>
+            • ما المساطر الأساسية لرفع دعوى مدنية؟<br>
+            • ما النقاط التي يجب التحقق منها في نزاع شغل؟<br><br>
+            <em>ملاحظة: لا أختلق مواد أو أحكاماً. عند غياب مصدر موثوق سأصرّح بذلك وأقترح التحقق من الجريدة الرسمية/الجهات المختصة.</em>
           </div>
         </div>
         <div class="chat-input-area">
-          <textarea id="chatInput" rows="2" placeholder="اكتب سؤالك القانوني هنا..." onkeypress="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg();}"></textarea>
-          <button class="btn btn-primary" onclick="sendMsg()" id="sendBtn">إرسال</button>
+          <textarea id="chatInput" rows="2" placeholder="صف الوقائع أو اكتب سؤالك القانوني..." onkeypress="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg();}"></textarea>
+          <button class="btn btn-primary" onclick="sendMsg()" id="sendBtn">تحليل</button>
         </div>
       </div>
 
       <div class="mt-3 flex gap-2 flex-wrap">
-        <button class="btn btn-outline btn-sm" onclick="quickAsk('ما هي حقوق المستأجر؟')">حقوق المستأجر</button>
-        <button class="btn btn-outline btn-sm" onclick="quickAsk('كيف أقدم دعوى مدنية؟')">دعوى مدنية</button>
-        <button class="btn btn-outline btn-sm" onclick="quickAsk('ما هي إجراءات الطلاق؟')">الطلاق</button>
-        <button class="btn btn-outline btn-sm" onclick="quickAsk('ما هي حقوق العامل؟')">حقوق العامل</button>
-        <button class="btn btn-outline btn-sm" onclick="clearChat()">مسح المحادثة</button>
+        <button class="btn btn-outline btn-sm" onclick="quickAsk('ما هي حقوق المستأجر عند إنهاء عقد الكراء في المغرب؟')">حقوق المستأجر</button>
+        <button class="btn btn-outline btn-sm" onclick="quickAsk('ما هي الخطوات العامة لرفع دعوى مدنية؟')">دعوى مدنية</button>
+        <button class="btn btn-outline btn-sm" onclick="quickAsk('ما النقاط الأساسية في نزاع الطلاق وفق مدونة الأسرة؟')">مدونة الأسرة</button>
+        <button class="btn btn-outline btn-sm" onclick="quickAsk('ما هي أبرز حقوق والتزامات العامل والمشغل؟')">نزاع شغل</button>
+        <button class="btn btn-ghost btn-sm" onclick="clearChat()">مسح المحادثة</button>
+      </div>
+
+      <div class="card mt-3" style="box-shadow:none;">
+        <h4 style="margin-bottom:.5rem;">منهجية الإجابة (مستهدفة)</h4>
+        <p class="text-muted" style="margin:0;font-size:.95rem;">ملخص الوقائع → المسألة القانونية → النصوص ذات الصلة → التحليل → الحقوق/الالتزامات → الإجراءات والخيارات → المخاطر والآجال → المصادر والمراجع وتاريخ التحقق. <strong>حالياً:</strong> يتم توليد الهيكل بقالب تجريبي دون ربط فعلي بقاعدة مصادر.</p>
       </div>
     </div>
   </section>
 
   <div id="footer"></div>
 
-  <script src="assets/js/app.js">
+  <script src="assets/js/app.js"></script>
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/legal-content.js"></script>
   <script>
@@ -75,17 +91,17 @@
       const btn = document.getElementById('sendBtn');
       btn.disabled = true;
       btn.textContent = '...';
-      // Show typing
-      const typingId = addMessage('⏳ جاري التحليل...', 'assistant');
+      const typingId = addMessage('جارٍ إعداد تحليل منظم (وضع تجريبي)...', 'assistant');
       const sections = await LegalAI.analyze(text);
-      document.getElementById(typingId).remove();
-      let html = '';
+      const typingEl = document.getElementById(typingId);
+      if (typingEl) typingEl.remove();
+      let html = '<div class="alert alert-info" style="margin-bottom:1rem;font-size:.9rem;"><strong>تنبيه:</strong> نتيجة تجريبية غير موصولة بمصادر مسترجعة آلياً. تحقق دائماً من النصوص الرسمية.</div>';
       sections.forEach(s => {
-        html += `<div style="margin-bottom:1rem;"><strong style="color:var(--color-primary);">${s.title}</strong><br>${s.content.replace(/\n/g,'<br>')}</div>`;
+        html += `<div style="margin-bottom:1rem;"><strong style="color:var(--color-primary);">${s.title}</strong><div style="margin-top:.25rem;">${String(s.content).replace(/\n/g,'<br>')}</div></div>`;
       });
       addMessage(html, 'assistant', true);
       btn.disabled = false;
-      btn.textContent = 'إرسال';
+      btn.textContent = 'تحليل';
     }
 
     function quickAsk(q) {
@@ -96,7 +112,7 @@
     function addMessage(content, type, isHtml = false) {
       const box = document.getElementById('chatMessages');
       const div = document.createElement('div');
-      const id = 'msg_' + Date.now();
+      const id = 'msg_' + Date.now() + '_' + Math.random().toString(36).slice(2,6);
       div.id = id;
       div.className = `chat-message ${type}`;
       div.innerHTML = isHtml ? content : AADALA.escape(content);
@@ -107,7 +123,7 @@
 
     function clearChat() {
       document.getElementById('chatMessages').innerHTML = '';
-      addMessage('تم مسح المحادثة. كيف يمكنني مساعدتك؟', 'assistant');
+      addMessage('تم مسح المحادثة. صف الوقائع أو اطرح سؤالك.', 'assistant');
     }
   </script>
 </body>

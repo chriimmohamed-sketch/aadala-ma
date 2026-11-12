@@ -12,48 +12,73 @@
   <section class="section">
     <div class="container">
       <div class="section-title">
-        <h2>📰 أرشيف الجريدة الرسمية</h2>
-        <p>الجريدة الرسمية — النصوص، الظهائر، المراسيم، القرارات</p>
+        <h2>أرشيف الجريدة الرسمية</h2>
+        <p>فهرسة وبحث في النصوص المنشورة — مع تتبع المصدر، حالة المعالجة، وجودة الاستخراج</p>
       </div>
+
       <div class="alert alert-info mb-3">
-        <strong>ملاحظة:</strong> الأرشيف قيد البناء. سيتم جمع وفهرسة الأعداد من المصادر الرسمية (www.sgg.gov.ma). لا ندّعِ اكتمال الأرشيف دون دليل.
+        <strong>حالة الأرشيف:</strong> قيد البناء. لا توجد أعداد مفهرسة حالياً في هذه النسخة التجريبية، ولا ندّعي اكتمال التغطية. أي إدخال مستقبلي يجب أن يُرفق برابط/مرجع المصدر الرسمي (www.sgg.gov.ma) وحالة التحقق.
       </div>
-      <div class="card">
-        <h3 class="mb-2">بحث في الأرشيف</h3>
-        <div class="flex gap-2 mb-3">
-          <input type="text" class="form-input" id="gazetteSearch" placeholder="بحث (سنة، عدد، موضوع، رقم ظهير...)">
+
+      <div class="card mb-3">
+        <h3 class="mb-2">بحث وتصفية</h3>
+        <div class="flex gap-2 mb-3 flex-wrap">
+          <input type="text" class="form-input" id="gazetteSearch" placeholder="سنة، عدد، تاريخ، موضوع، رقم ظهير/مرسوم..." style="min-width:260px;flex:1;">
+          <select class="form-select" style="width:auto;min-width:160px;" id="gazetteLang">
+            <option value="">كل اللغات</option>
+            <option value="ar">عربية</option>
+            <option value="fr">فرنسية</option>
+            <option value="bi">ثنائية</option>
+          </select>
+          <select class="form-select" style="width:auto;min-width:160px;" id="gazetteStatus">
+            <option value="">كل الحالات</option>
+            <option value="discovered">مكتشف</option>
+            <option value="processed">معالج</option>
+            <option value="reviewed">مراجع</option>
+          </select>
           <button class="btn btn-primary" onclick="searchGazette()">بحث</button>
         </div>
         <div class="stats-grid mb-3">
           <div class="stat-card"><div class="stat-value" id="gTotal">0</div><div class="stat-label">أعداد مكتشفة</div></div>
-          <div class="stat-card"><div class="stat-value" id="gProcessed">0</div><div class="stat-label">أعداد معالجة</div></div>
-          <div class="stat-card"><div class="stat-value" id="gOCR">0</div><div class="stat-label">OCR مراجع</div></div>
-          <div class="stat-card"><div class="stat-value" id="gPending">0</div><div class="stat-label">قيد المعالجة</div></div>
+          <div class="stat-card"><div class="stat-value" id="gProcessed">0</div><div class="stat-label">معالجة</div></div>
+          <div class="stat-card"><div class="stat-value" id="gOCR">0</div><div class="stat-label">نص OCR مراجع</div></div>
+          <div class="stat-card"><div class="stat-value" id="gPending">0</div><div class="stat-label">قيد التحقق</div></div>
         </div>
-        <table class="data-table">
-          <thead><tr><th>السنة</th><th>العدد</th><th>التاريخ</th><th>اللغة</th><th>الحالة</th><th>المصدر</th></tr></thead>
-          <tbody id="gazetteBody">
-            <tr><td colspan="6" class="text-muted text-center">لا توجد أعداد مفهرسة حالياً. سيتم إضافتها من المصادر الرسمية.</td></tr>
-          </tbody>
-        </table>
+        <div style="overflow:auto;">
+          <table class="data-table">
+            <thead><tr><th>السنة</th><th>العدد</th><th>التاريخ</th><th>اللغة</th><th>الحالة</th><th>المصدر/الملف</th></tr></thead>
+            <tbody id="gazetteBody">
+              <tr><td colspan="6" class="text-muted text-center" style="padding:2rem;">لا توجد أعداد مفهرسة حالياً. عند الإضافة سيظهر: PDF أصلي، نص مستخرج، جودة OCR، وتاريخ آخر تحقق.</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="card mt-3">
-        <h3>هيكل الأرشيف (كل عدد)</h3>
-        <ul style="list-style:none; line-height:2;">
-          <li>• رقم العدد والتاريخ</li>
-          <li>• نوع النشرة (عربية/فرنسية/ثنائية)</li>
-          <li>• PDF الأصلي</li>
-          <li>• النص المستخرج (OCR) — خام / مصحح / مراجع</li>
-          <li>• الوثائق الواردة (ظهائر، قوانين، مراسيم، قرارات)</li>
-          <li>• رابط المصدر (sgg.gov.ma)</li>
-          <li>• حالة التحقق والمعالجة</li>
-          <li>• درجة جودة OCR</li>
-        </ul>
+
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;">
+        <div class="card">
+          <h3>بيانات كل عدد (مخطط)</h3>
+          <ul style="list-style:none; line-height:2; margin:0;">
+            <li>• رقم العدد، التاريخ، نوع النشرة واللغة</li>
+            <li>• PDF الأصلي + بصمة/مرجع الملف</li>
+            <li>• نص OCR (خام / مصحح / مراجع) + درجة الجودة</li>
+            <li>• الوثائق: ظهائر، قوانين، مراسيم، قرارات</li>
+            <li>• المصدر الرسمي، حالة التحقق، وتاريخ آخر تدقيق</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>مبادئ النزاهة</h3>
+          <ul style="list-style:none; line-height:2; margin:0;">
+            <li>• الملف الأصلي يظل مرجعاً؛ OCR ليس نصاً نهائياً.</li>
+            <li>• عدم ادعاء اكتمال التغطية دون دليل تدقيق.</li>
+            <li>• احترام شروط المصدر وإتاحة الوصول وإعادة الاستخدام.</li>
+            <li>• تمييز "منشور" عن "نافذ" عند توفر المعطيات.</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
   <div id="footer"></div>
-  <script src="assets/js/app.js">
+  <script src="assets/js/app.js"></script>
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/legal-content.js"></script>
   <script>
@@ -62,8 +87,8 @@
     updateAuthUI();
     function searchGazette() {
       const q = document.getElementById('gazetteSearch').value.trim();
-      AADALA.toast('بحث في الأرشيف (قيد البناء): ' + q, 'info');
-      Admin.log('gazette_search', { query: q });
+      AADALA.toast('البحث في الأرشيف قيد البناء حالياً' + (q ? ': ' + q : ''), 'info');
+      if (typeof Admin !== 'undefined' && Admin.log) Admin.log('gazette_search', { query: q });
     }
   </script>
 </body>

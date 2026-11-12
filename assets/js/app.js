@@ -266,37 +266,38 @@ function updateAuthUI() {
 
 // Shared header HTML generator
 function renderHeader(activePage) {
+  const t = (k, fb) => (window.I18N && I18N.t ? (I18N.t(k) !== k ? I18N.t(k) : fb) : fb);
   const pages = [
-    { href: 'index.html', label: 'الرئيسية' },
-    { href: 'legal-ai.html', label: 'المساعد القانوني' },
-    { href: 'gazette.html', label: ' الجريدة الرسمية' },
-    { href: 'encyclopedia.html', label: 'الموسوعة' },
-    { href: 'case-law.html', label: 'الاجتهاد' },
-    { href: 'inheritance.html', label: 'المواريث' },
-    { href: 'legal-aid.html', label: 'المساعدة' },
-    { href: 'academic.html', label: 'الأكاديمية' },
+    { href: 'index.html', label: t('home','الرئيسية') },
+    { href: 'legal-ai.html', label: t('legalAI','المساعد القانوني') },
+    { href: 'gazette.html', label: t('gazette','الجريدة الرسمية') },
+    { href: 'encyclopedia.html', label: t('encyclopedia','الموسوعة') },
+    { href: 'case-law.html', label: t('caseLaw','الاجتهاد') },
+    { href: 'inheritance.html', label: t('inheritance','المواريث') },
+    { href: 'legal-aid.html', label: t('legalAid','المساعدة') },
+    { href: 'academic.html', label: t('academic','الأكاديمية') },
   ];
   const links = pages.map(p => `<li><a href="${p.href}" class="${p.href === activePage ? 'active' : ''}">${p.label}</a></li>`).join('');
   return `
   <header class="site-header">
     <div class="container">
       <nav class="navbar">
-        <a href="index.html" class="logo">
-          <div class="logo-icon">⚖</div>
+        <a href="index.html" class="logo" aria-label="AADALA.MA">
+          <div class="logo-icon" style="font-family:Georgia,serif;">A</div>
           <span>AADALA.MA</span>
         </a>
         <ul class="nav-links" id="navLinks">${links}</ul>
         <div class="nav-actions">
           <div id="langSelectorArea"></div>
-          <button onclick="AADALA.toggleTheme()" class="btn btn-ghost btn-sm" title="تبديل المظهر">🌙</button>
+          <button onclick="AADALA.toggleTheme()" class="btn btn-ghost btn-sm" title="تبديل المظهر" aria-label="تبديل المظهر">◐</button>
           <div id="authArea">
-            <a href="auth/login.html" class="btn btn-outline btn-sm" id="loginBtn">تسجيل الدخول</a>
+            <a href="auth/login.html" class="btn btn-outline btn-sm" id="loginBtn">${t('login','تسجيل الدخول')}</a>
             <div id="userMenu" class="hidden flex items-center gap-2">
               <span id="userName" class="text-sm font-semibold"></span>
-              <button onclick="AADALA.logout()" class="btn btn-ghost btn-sm">خروج</button>
+              <button onclick="AADALA.logout()" class="btn btn-ghost btn-sm">${t('logout','خروج')}</button>
             </div>
           </div>
-          <button class="btn btn-ghost btn-sm md:hidden" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+          <button class="btn btn-ghost btn-sm" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="القائمة">☰</button>
         </div>
       </nav>
     </div>
@@ -311,40 +312,41 @@ function renderFooter() {
       <div class="footer-grid">
         <div>
           <h4>AADALA.MA</h4>
-          <p>منصة العدالة والذكاء القانوني المغربي. منصة مستقلة غير حكومية.</p>
-          <p class="text-sm opacity-70">«القانون مفهوم، والحق معلوم.»</p>
+          <p>منصة العدالة والذكاء القانوني المغربي — منصة مستقلة غير حكومية.</p>
+          <p style="font-size:.9rem;opacity:.85;">«القانون مفهوم، والحق معلوم.»</p>
         </div>
         <div>
           <h4>الخدمات</h4>
           <ul style="list-style:none; line-height:2;">
             <li><a href="legal-ai.html">المساعد القانوني</a></li>
             <li><a href="encyclopedia.html">الموسوعة القانونية</a></li>
+            <li><a href="gazette.html">الجريدة الرسمية</a></li>
+            <li><a href="case-law.html">الاجتهاد القضائي</a></li>
             <li><a href="inheritance.html">المواريث</a></li>
-            <li><a href="procedures.html">المساطر والوثائق</a></li>
           </ul>
         </div>
         <div>
-          <h4>المصادر</h4>
+          <h4>المصادر والمنهجية</h4>
           <ul style="list-style:none; line-height:2;">
-            <li><a href="https://www.sgg.gov.ma" target="_blank">الجريدة الرسمية</a></li>
-            <li><a href="https://www.justice.gov.ma" target="_blank">وزارة العدل</a></li>
-            <li><a href="https://www.courdecassation.ma" target="_blank">محكمة النقض</a></li>
-            <li><a href="https://www.cndp.ma" target="_blank">CNDP</a></li>
+            <li><a href="https://www.sgg.gov.ma" target="_blank" rel="noopener">الجريدة الرسمية (sgg.gov.ma)</a></li>
+            <li><a href="https://www.justice.gov.ma" target="_blank" rel="noopener">وزارة العدل</a></li>
+            <li><a href="https://www.courdecassation.ma" target="_blank" rel="noopener">محكمة النقض</a></li>
+            <li><a href="design-system.html">نظام التصميم</a></li>
           </ul>
         </div>
         <div>
-          <h4>قانوني</h4>
+          <h4>قانوني وثقة</h4>
           <ul style="list-style:none; line-height:2;">
-            <li><a href="terms.html">شروط الاستخدام</a></li>
             <li><a href="privacy.html">سياسة الخصوصية</a></li>
-            <li><a href="#">إخلاء المسؤولية</a></li>
+            <li><a href="terms.html">شروط الاستخدام</a></li>
             <li><a href="contact.html">اتصل بنا</a></li>
+            <li><a href="founder.html">المؤسس</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2026 AADALA.MA — منصة مستقلة. المعلومات توضيحية وليست استشارة قانونية.</p>
-        <p class="text-sm mt-1">⚠️ لا تمثل وزارة العدل أو أي مؤسسة رسمية.</p>
+        <p>© 2026 AADALA.MA — منصة مستقلة. المعلومات توضيحية وليست استشارة قانونية ولا تمثيلاً قضائياً.</p>
+        <p style="font-size:.85rem;margin-top:.25rem;opacity:.8;">يُميَّز بين النص الأصلي والشرح والتحليل الآلي والترجمة. تحقق من المصادر الرسمية قبل الاعتماد.</p>
       </div>
     </div>
   </footer>`;

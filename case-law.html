@@ -12,54 +12,63 @@
   <section class="section">
     <div class="container">
       <div class="section-title">
-        <h2>⚖️ الاجتهاد القضائي</h2>
-        <p>قرارات محكمة النقض ومحاكم الاستئناف والابتدائية — منشورة ومتاحة قانونياً</p>
+        <h2>الاجتهاد القضائي</h2>
+        <p>بحث واستعراض للقرارات المنشورة والمتاحة قانونياً — مع التمييز بين القرار، الملخص، والمبدأ المستخلص</p>
       </div>
+
       <div class="alert alert-info mb-3">
-        <strong>ملاحظة:</strong> قاعدة الاجتهاد قيد البناء. سيتم إضافة القرارات المنشورة من المصادر الرسمية (www.courdecassation.ma). لا نختلق قرارات أو أرقاماً أو مبادئ.
+        <strong>حالة القاعدة:</strong> قيد البناء. لا توجد قرارات مفهرسة حالياً في هذه النسخة. أي إضافة يجب أن تستند إلى مصدر رسمي/منشور (مثل محكمة النقض) مع بيانات التحقق، وعدم اختلاق أرقام أو مبادئ.
       </div>
-      <div class="card">
-        <h3 class="mb-2">بحث في الاجتهاد</h3>
+
+      <div class="card mb-3">
+        <h3 class="mb-2">بحث وتصفية</h3>
         <div class="flex gap-2 mb-3 flex-wrap">
-          <input type="text" class="form-input" id="caseSearch" placeholder="بحث (محكمة، رقم، موضوع، مادة...)">
-          <select class="form-select" id="courtFilter" style="width:auto;">
-            <option value="">جميع المحاكم</option>
+          <input type="text" class="form-input" id="caseSearch" placeholder="محكمة، غرفة، رقم قرار/ملف، موضوع، مادة، كلمة مفتاحية..." style="min-width:260px;flex:1;">
+          <select class="form-select" id="courtFilter" style="width:auto;min-width:180px;">
+            <option value="">جميع الجهات</option>
             <option value="cassation">محكمة النقض</option>
-            <option value="appel">محكمة الاستئناف</option>
-            <option value="premiere">المحكمة الابتدائية</option>
-            <option value="admin">المحكمة الإدارية</option>
-            <option value="commerce">المحكمة التجارية</option>
+            <option value="appel">محاكم الاستئناف</option>
+            <option value="premiere">المحاكم الابتدائية</option>
+            <option value="admin">القضاء الإداري</option>
+            <option value="commerce">القضاء التجاري</option>
           </select>
           <button class="btn btn-primary" onclick="searchCases()">بحث</button>
         </div>
-        <table class="data-table">
-          <thead><tr><th>المحكمة</th><th>الغرفة</th><th>رقم القرار</th><th>التاريخ</th><th>الموضوع</th><th>المبدأ</th></tr></thead>
-          <tbody id="casesBody">
-            <tr><td colspan="6" class="text-muted text-center">لا توجد قرارات مفهرسة حالياً. سيتم إضافتها من المصادر الرسمية.</td></tr>
-          </tbody>
-        </table>
+        <div style="overflow:auto;">
+          <table class="data-table">
+            <thead><tr><th>الجهة/المحكمة</th><th>الغرفة</th><th>رقم القرار/الملف</th><th>التاريخ</th><th>الموضوع</th><th>الحالة</th></tr></thead>
+            <tbody id="casesBody">
+              <tr><td colspan="6" class="text-muted text-center" style="padding:2rem;">لا توجد قرارات مفهرسة حالياً. عند الإضافة سيظهر المصدر، نوع الوثيقة، وحالة المراجعة.</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="card mt-3">
-        <h3>هيكل قرار (كل قرار)</h3>
-        <ul style="list-style:none; line-height:2;">
-          <li>• المحكمة والغرفة</li>
-          <li>• رقم القرار / الملف</li>
-          <li>• التاريخ</li>
-          <li>• الموضوع والكلمات المفتاحية</li>
-          <li>• الوقائع المنشورة</li>
-          <li>• التعليل والمنطوق</li>
-          <li>• المبدأ القضائي المستخلص (بعد المراجعة)</li>
-          <li>• النصوص المطبقة</li>
-          <li>• المصدر وحالة التحقق</li>
-        </ul>
-        <div class="alert alert-warning mt-2">
-          ⚠️ لا نكشف بيانات محمية. لا نصف اتجاهاً مستقراً بناء على قرار منفرد. المبدأ المستخلص يتطلب مراجعة.
+
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;">
+        <div class="card">
+          <h3>حقول القرار (مخطط)</h3>
+          <ul style="list-style:none; line-height:2; margin:0;">
+            <li>• المحكمة، الغرفة، الرقم/الملف، التاريخ</li>
+            <li>• الموضوع، الكلمات المفتاحية، النصوص المطبقة</li>
+            <li>• الوقائع/التعليل/المنطوق (حسب المتاح والمنشور)</li>
+            <li>• مبدأ مستخلص (إن وُجد) مع علامة مراجعة</li>
+            <li>• المصدر، نوع النشر، وحالة التحقق</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>ضوابط النشر</h3>
+          <ul style="list-style:none; line-height:2; margin:0;">
+            <li>• عدم نشر بيانات محمية أو مخالفة للضوابط القانونية.</li>
+            <li>• عدم تعميم اتجاه قضائي من قرار منفرد دون سياق.</li>
+            <li>• التمييز بين نص القرار والمنشور التحريري/الملخص.</li>
+            <li>• إظهار تاريخ آخر تحقق من المصدر.</li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
   <div id="footer"></div>
-  <script src="assets/js/app.js">
+  <script src="assets/js/app.js"></script>
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/legal-content.js"></script>
   <script>
@@ -68,8 +77,8 @@
     updateAuthUI();
     function searchCases() {
       const q = document.getElementById('caseSearch').value.trim();
-      AADALA.toast('بحث في الاجتهاد (قيد البناء): ' + q, 'info');
-      Admin.log('case_law_search', { query: q });
+      AADALA.toast('البحث في الاجتهاد قيد البناء حالياً' + (q ? ': ' + q : ''), 'info');
+      if (typeof Admin !== 'undefined' && Admin.log) Admin.log('case_law_search', { query: q });
     }
   </script>
 </body>
