@@ -2,6 +2,9 @@ import { getMessages } from "@/lib/i18n/getMessages";
 import Header from "@/components/layout/HeaderSupreme";
 import Footer from "@/components/layout/Footer";
 import ZelligeCanvas from "@/components/ZelligeCanvas";
+import BlurText from "@/components/BlurText";
+import LightRays from "@/components/LightRays";
+import StarBorder from "@/components/StarBorder";
 import HomeInteractions from "@/components/HomeInteractions";
 import AnswerAnimator from "@/components/AnswerAnimator";
 import { legalDatabase } from "@/data/legal-database";
@@ -20,14 +23,15 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <main id="main">
           <div className="hero">
             <ZelligeCanvas />
+            <LightRays color="#C9A227" count={6} />
             <div className="wrap">
               <div>
                 <span className="kicker">منصة قانونية مغربية مستقلة</span>
-                <h1>القانون المغربي، بنصّه <em>ومادّته.<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M2 14 C50 4, 110 18, 198 6" /></svg></em></h1>
+                <h1><BlurText text="القانون المغربي، بنصّه" delay={0.2} /> <em>ومادّته.<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M2 14 C50 4, 110 18, 198 6" /></svg></em></h1>
                 <p className="lead">اسأل سؤالك القانوني واحصل على جواب مبني على النص الأصلي، مع المرجع الذي يمكنك التحقق منه قبل أن تعتمد عليه.</p>
                 <form className="ask" action={`/${locale}/ai`} method="get" role="search">
                   <input name="q" type="text" maxLength={2000} placeholder="مثال: ما شروط صحة عقد البيع؟" aria-label="سؤالك القانوني" autoComplete="off" />
-                  <button className="btn" type="submit">اسأل</button>
+                  <StarBorder color="#C9A227"><button className="btn" type="submit">اسأل</button></StarBorder>
                 </form>
                 <div className="chips" role="group" aria-label="أسئلة مقترحة">
                   <Link className="chip" href={`/${locale}/ai?q=${encodeURIComponent("ما شروط صحة عقد البيع؟")}`}>ما شروط صحة عقد البيع؟</Link>

@@ -76,6 +76,7 @@ body, .flex.min-h-screen, header, main, section, article, aside, nav, footer {
   transition: background-color .2s ease, color .2s ease, border-color .2s ease;
 }
 :focus-visible { outline: 3px solid var(--aadala-gold); outline-offset: 3px; border-radius: 4px; }
+@keyframes star-border { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 .theme { min-width: 44px; min-height: 44px; display: inline-grid; place-items: center; background: transparent; border: 1px solid var(--aadala-border); border-radius: 8px; cursor: pointer; font-size: 1.1rem; color: var(--aadala-gold); transition: background .2s, color .2s; }
 .theme:hover { background: var(--aadala-ivory-deep); }
 .justice-drawer-content a, .justice-drawer-home { min-height: 44px; }
