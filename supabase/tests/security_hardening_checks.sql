@@ -16,7 +16,8 @@ DECLARE
   ];
   required_policies text[] := ARRAY[
     'profiles_insert_self','profiles_update_own_nonrole','profiles_update_admin_any',
-    'audit_select_admin','workspaces_select_member','workspaces_insert_owner',
+    'profiles_delete_admin','audit_select_admin',
+    'workspaces_select_member','workspaces_insert_owner',
     'workspaces_update_owner','workspaces_delete_owner',
     'workspace_members_select','workspace_members_owner_insert',
     'workspace_members_owner_update','workspace_members_owner_delete',
@@ -52,19 +53,32 @@ BEGIN
   IF NOT has_function_privilege('authenticated', 'public.is_admin(uuid)', 'EXECUTE') THEN
     RAISE EXCEPTION 'authenticated cannot execute public.is_admin(uuid)';
   END IF;
-  IF has_function_privilege('anon', 'private.is_workspace_member(uuid)', 'EXECUTE') THEN
-    RAISE EXCEPTION 'anon can execute private.is_workspace_member(uuid)';
-  END IF;
-  IF NOT has_function_privilege('authenticated', 'private.is_workspace_member(uuid)', 'EXECUTE') THEN
-    RAISE EXCEPTION 'authenticated cannot execute private.is_workspace_member(uuid)';
-  END IF;
+
+  FOREACH policy_name IN ARRAY ARRAY[
+    'private.is_workspace_owner(uuid)',
+    'private.is_workspace_member(uuid)',
+    'private.can_write_workspace(uuid)'
+  ] LOOP
+    IF has_function_privilege('anon', policy_name, 'EXECUTE') THEN
+      RAISE EXCEPTION 'anon can execute %', policy_name;
+    END IF;
+    IF NOT has_function_privilege('authenticated', policy_name, 'EXECUTE') THEN
+      RAISE EXCEPTION 'authenticated cannot execute %', policy_name;
+    END IF;
+  END LOOP;
+
+  -- PUBLIC-targeted policies also apply to authenticated users, so test them too.
   IF EXISTS (
     SELECT 1 FROM pg_policies
     WHERE schemaname = 'public' AND tablename = 'audit_logs'
-      AND cmd = 'INSERT' AND roles @> ARRAY['authenticated']::name[]
+      AND cmd = 'INSERT'
+      AND (
+        roles @> ARRAY['authenticated']::name[]
+        OR roles @> ARRAY['public']::name[]
+      )
   ) THEN
-    RAISE EXCEPTION 'authenticated still has an audit_logs INSERT policy';
+    RAISE EXCEPTION 'audit_logs still has an INSERT policy applicable to authenticated users';
   END IF;
 END;
 $$;
-SELECT 'PASS: RLS catalog, policies, helper grants, and audit insert restrictions.' AS result;
+SELECT 'PASS: RLS catalog, required policies, helper grants, and audit insert restrictions.' AS result;
