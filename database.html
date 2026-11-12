@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://aadala-ma.cheraimmohamed20.workers.dev;">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101D32">
+  <meta name="description" content="قاعدة بيانات المراجع التشريعية المغربية المسجلة في مشروع AADALA.MA مع البحث والتصفية وبيان حالة اكتمال البيانات.">
+  <title>قاعدة البيانات القانونية — AADALA.MA</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/legacy-bridge.css">
+  <style>
+    .db-toolbar{display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,240px);gap:.75rem;margin:1.5rem 0}
+    .db-stats{display:flex;gap:1rem;flex-wrap:wrap;margin:1rem 0;color:var(--color-text-muted)}
+    .db-table-wrap{overflow-x:auto}
+    .db-table{min-width:760px;width:100%}
+    .db-table td,.db-table th{vertical-align:top}
+    .db-title{font-weight:700}
+    .db-warning{font-size:.86rem}
+    @media(max-width:620px){.db-toolbar{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+  <main id="main" class="section">
+    <div class="container">
+      <header class="section-title">
+        <p class="eyebrow">AADALA.MA · فهرس الوثائق</p>
+        <h1>قاعدة البيانات القانونية</h1>
+        <p>فهرس قابل للبحث في المراجع التشريعية المسجلة حالياً داخل المشروع.</p>
+      </header>
+      <div class="alert alert-warning" role="note">
+        <strong>تنبيه قانوني:</strong> هذه قاعدة فهرسة وصفية وليست مستودعاً للنصوص الرسمية الكاملة. لا تثبت بيانات الحالة وحدها نفاذ النص أو تحيينه. بعض السجلات قد تحتوي على حقول ناقصة، ويجب التحقق من الجريدة الرسمية والمصدر الرسمي قبل الاستعمال.
+      </div>
+      <div class="db-toolbar" role="search">
+        <label class="sr-only" for="dbSearch">البحث في قاعدة البيانات</label>
+        <input id="dbSearch" class="form-input" type="search" maxlength="160" placeholder="ابحث باسم القانون أو رقمه أو موضوعه..." autocomplete="off">
+        <label class="sr-only" for="dbCategory">تصفية حسب المجال</label>
+        <select id="dbCategory" class="form-select"><option value="">جميع المجالات</option></select>
+      </div>
+      <div class="db-stats">
+        <span>السجلات المعروضة: <strong id="dbCount" aria-live="polite">0</strong></span>
+        <span>إجمالي السجلات: <strong id="dbTotal">0</strong></span>
+        <span>تحتاج إلى مراجعة حقولها: <strong id="dbIncomplete">0</strong></span>
+      </div>
+      <div class="db-table-wrap card">
+        <table class="data-table db-table">
+          <thead><tr><th>المرجع</th><th>النوع</th><th>الرقم</th><th>التاريخ المسجل</th><th>الحالة المسجلة</th><th>المصدر</th><th>التنبيه</th></tr></thead>
+          <tbody id="dbResults"><tr><td colspan="7">جارٍ تحميل البيانات…</td></tr></tbody>
+        </table>
+      </div>
+      <p id="dbStatus" class="text-muted text-sm" role="status" aria-live="polite"></p>
+      <div class="flex gap-2 mt-3">
+        <a class="btn btn-outline" href="encyclopedia.html">العودة إلى الموسوعة القانونية</a>
+        <a class="btn btn-ghost" href="https://www.sgg.gov.ma" target="_blank" rel="noopener noreferrer">بوابة الأمانة العامة للحكومة</a>
+      </div>
+    </div>
+  </main>
+  <div id="footer"></div>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/legal-content.js"></script>
+  <script>
+    document.getElementById('header').innerHTML = renderHeader('database.html');
+    document.getElementById('footer').innerHTML = renderFooter();
+    updateAuthUI();
+  </script>
+  <script src="assets/js/legal-database.js" defer></script>
+</body>
+</html>
