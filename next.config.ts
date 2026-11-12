@@ -34,10 +34,39 @@ async function headers() {
   ];
 }
 
+
+async function redirects() {
+  const base = "/ar";
+  const map: [string, string][] = [
+    ["/legal-ai.html", `${base}/ai`],
+    ["/gazette.html", `${base}/legal/bulletin-officiel-7437`],
+    ["/case-law.html", `${base}/case-law`],
+    ["/inheritance.html", `${base}/legal`],
+    ["/real-estate.html", `${base}/property`],
+    ["/criminal.html", `${base}/criminal`],
+    ["/procedures.html", `${base}/procedures`],
+    ["/fiqh.html", `${base}/sharia`],
+    ["/legal-aid.html", `${base}/legal-aid`],
+    ["/academic.html", `${base}/academic`],
+    ["/database.html", `${base}/legal`],
+    ["/founder.html", `${base}/founder`],
+    ["/design-system.html", `${base}/showcase`],
+    ["/privacy.html", `${base}/privacy`],
+    ["/terms.html", base],
+    ["/contact.html", base],
+  ];
+  return map.map(([source, destination]) => ({
+    source,
+    destination,
+    permanent: false,
+  }));
+}
+
 const nextConfig: NextConfig = {
   cacheComponents: false,
   partialPrefetching: false,
   headers,
+  redirects,
   turbopack: {
     rules: {
       "*.css": {
