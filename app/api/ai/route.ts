@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { retrieveWithRefs, suggestNearest, unverifiedCitations } from "@/lib/ai-assistant/retrieval";
+import { retrieveWithRefs, retrievalQuality, suggestNearest, unverifiedCitations } from "@/lib/ai-assistant/retrieval";
+import { matchProcedure } from "@/lib/ai-assistant/procedures";
 import { callProvider } from "@/lib/ai-assistant/provider";
 import type { AICitation, AIAnswer } from "@/lib/ai-assistant/types";
 import { confidenceFor } from "@/lib/ai-assistant/types";
@@ -94,6 +95,10 @@ ${question}
 
   const raw = await callProvider(prompt, SYSTEM_PROMPT);
 
+  // Relevance of the retrieval itself (not of the model): drives certainty + honesty.
+  const quality = retrievalQuality(question, chunks);
+  const RAG_ONLY = "لا يوجد مفتاح AI provider — الجواب مبني على الاسترجاع (RAG) فقط، وليس تحليلًا مُركَّبًا. لتفعيل التحليل (AI)، أضف AI_PROVIDER_API_KEY في .env.";
+
   let parsed: Record<string, unknown> | null = null;
   if (raw) {
     try {
@@ -109,8 +114,13 @@ ${question}
       analysis: chunks.map((c, i) => "[" + (i + 1) + "] " + c.excerpt).join("\n\n"),
       possibleApplications: "راجع المقاطع المسترجعة أعلاه (المراجع).",
       references: refs,
-      certainty: (chunks[0]?.score ?? 0) > 0 ? "medium" : "low",
-      missingInfo: ["لا يوجد مفتاح AI provider — الجواب مبني على الاسترجاع (RAG) فقط، وليس تحليلًا مُركَّبًا. لتفعيل التحليل (AI)، أضف AI_PROVIDER_API_KEY في .env."],
+      certainty: quality === "low" ? "low" : "medium",
+      missingInfo: [
+        RAG_ONLY,
+        ...(quality === "low"
+          ? ["الصلة بين السؤال والنصوص المسترجعة محدودة — أعد الصياغة بمصطلح قانوني أدق (مثلاً: عقد بيع، تحفيظ، نفقة، شيك)."]
+          : []),
+      ],
       disclaimer: "هذا الجواب مبني على مقاطع مسترجعة من قاعدة البيانات (RAG)، وليس تحليلًا قانونيًا. استشر محاميًا مغربيًا في قضيتك.",
       textInterpretation: "",
       oldVsNewComparison: "",
@@ -119,6 +129,54 @@ ${question}
       legalSummary: chunks.map((c) => c.title).join("، "),
       draftTemplate: "",
     };
+  } else {
+    // No passage matched. Either a procedural question we can answer from curated
+    // procedure data, or an honest statement of the limits — never a dead end.
+    const proc = matchProcedure(question);
+    if (proc) {
+      parsed = {
+        factsAssumed: "سؤال إجرائي — لم تُفترض وقائع إضافية.",
+        legalIssue: "سؤال: " + question,
+        legalBasis: `${proc.sources.join("، ")} — الجهة المختصة: ${proc.authority}`,
+        analysis: `المسار الإجرائي: ${proc.stages.map((s, i) => `${i + 1}. ${s}`).join(" ← ")}.`,
+        possibleApplications: `الآجال: ${proc.deadlines}. الرسوم: ${proc.fees}. طرق الطعن: ${proc.remedies.join("، ")}. المساعدة القانونية: ${proc.legalAid}`,
+        references: [],
+        certainty: "low",
+        missingInfo: [
+          "بيانات المسطرة داخلية وقيد التحقق — راجع النص الرسمي (قانون المسطرة) قبل الاعتماد.",
+        ],
+        disclaimer: "هذا ليس استشارة مهنية نهائية. راجع مختصاً.",
+        textInterpretation: "",
+        oldVsNewComparison: "",
+        procedurePath: proc.stages,
+        documentList: proc.documents,
+        legalSummary: `${proc.title} — ${proc.authority}`,
+        draftTemplate: "",
+      };
+    } else {
+      parsed = {
+        factsAssumed: "لم تُفترض أي وقائع إضافية.",
+        legalIssue: "سؤال: " + question,
+        legalBasis: "لا يوجد نص قانوني مسترجع لهذا السؤال ضمن النصوص المفهرسة حاليًا.",
+        analysis:
+          "لا أستطيع تقديم جواب قانوني موثّق دون نصّ مستند إليه، ولن أخترع مادة أو حكمًا. " +
+          "أضف تفاصيل تحدّد المجال (أسرة، عقار، شغل، جنائي، تجاري) والوقائع والتاريخ، أو اختر أقرب موضوع من الاقتراحات أدناه.",
+        possibleApplications: "أعد طرح السؤال بمصطلح قانوني (مثلاً: «شروط صحة عقد البيع»، «التحفيظ العقاري»، «النفقة»، «شيك بدون رصيد»).",
+        references: [],
+        certainty: "insufficient_sources",
+        missingInfo: [
+          "ينقص: المجال القانوني، الوقائع الأساسية، والتاريخ — بدونها لا يمكن بناء أساس قانوني.",
+          "المكتبة المفهرسة لا تغطي كل الفروع بعد؛ ما لا يوجد نصّه يبقى «قيد التجهيز» ولا يُخمَّن.",
+        ],
+        disclaimer: "هذا ليس استشارة مهنية نهائية. راجع مختصاً.",
+        textInterpretation: "",
+        oldVsNewComparison: "",
+        procedurePath: [],
+        documentList: [],
+        legalSummary: "",
+        draftTemplate: "",
+      };
+    }
   }
 
   // Every field from the model is type-checked: a non-string value must never reach the UI.
@@ -143,10 +201,16 @@ ${question}
   };
 
   // No retrieved sources means the model has nothing to rely on: never present that as a confident answer.
-  if (parsed && !chunks.length) answer.certainty = "insufficient_sources";
+  if (raw && parsed && !chunks.length) answer.certainty = "insufficient_sources";
 
-  // Anti-hallucination check: any article number cited but absent from the retrieved passages downgrades the answer.
-  if (parsed) {
+  // The retrieval caps certainty: a weak match is never presented as a strong one.
+  if (raw) {
+    if (quality === "insufficient_sources") answer.certainty = "insufficient_sources";
+    else if (quality === "low" && answer.certainty !== "insufficient_sources") answer.certainty = "low";
+  }
+
+  // Anti-hallucination check on generated text only: a RAG-only answer quotes the sources verbatim.
+  if (raw && parsed) {
     const bad = unverifiedCitations(
       `${answer.legalBasis} ${answer.analysis} ${answer.possibleApplications} ${answer.textInterpretation} ${answer.legalSummary} ${answer.draftTemplate}`,
       chunks,

@@ -19,6 +19,37 @@
 ### Notes
 - Auth/RBAC not implemented (admin open) — before production. (Superseded: Supabase Auth implemented below.)
 
+## [0.3.0] - 2026-11-12 — GENESIS: Evidence-Based Assistant
+
+### Added
+- **Unified retrieval**: `lib/ai-assistant/retrieval.ts` now merges `data/legal-index.json` with the 9 structured laws (127 articles) at load time. Family, commercial, labour and both procedure codes are reachable by `/api/ai` for the first time.
+- **Relevance gating**: IDF-weighted coverage (`MIN_COVERAGE = 0.4`) + subject anchor (rarest question term must match, or coverage ≥ 0.55). A single generic word can no longer retrieve an unrelated law.
+- **Arabic morphology**: clitic stripping (`بالاستئناف` → `استئناف`, `وشروطها` → `شروطها`), suffix reduction, and a small documented retrieval-synonym map (`طلاق↔تطليق`, `مدة↔أجل`).
+- **Procedural answers**: `lib/ai-assistant/procedures.ts` (`matchProcedure`) returns real steps + documents from `data/legal-services.ts` when no article matches (certainty `low`, labelled unreviewed).
+- **Honest limits answer**: no more dead-end; `insufficient_sources` states what is missing and suggests reformulation.
+- **Scripts**: `scripts/clean-legal-index.mjs` (report by default, `--fix` rewrites) and `scripts/fix-arabic-contamination.mjs` (documented word map, Arabic-context only).
+- **Docs**: `GENESIS/00–05`, `ENGINE/*`, `DOCUMENTS/*`, `LEGAL/*`, `SECURITY/SECURITY_AUDIT.md`, `TESTING/*`, `RELEASE/RELEASE_READINESS.md`.
+
+### Changed
+- `data/legal-sources.ts`: 13 → 18 sources (5 structured codes appended, `file: ""`).
+- `app/[locale]/legal/[slug]/page.tsx`: skips `fs.readFileSync` for structured documents (no crash on empty `file`).
+- `app/api/ai/route.ts`: certainty derives from `retrievalQuality`; RAG-only answers capped at `medium`; citation check runs on LLM output only.
+- `components/AIChat.tsx`: empty-references message is procedure-aware.
+- `lib/legal-data/*.ts`: 249 English artifacts repaired inside Arabic text (`from→من`, `between→بين`, `in→في`, `during→خلال`, …). All articles remain `verified:false`.
+
+### Fixed
+- `app/[locale]/layout.tsx`: skip link text (`Patton` → `تخطي إلى المحتوى الرئيسي`).
+- `data/legal-index.json`: 733 → 732 chunks, control characters removed, 493,900 → 435,547 bytes.
+- False `إحالات غير مؤكدة` warning for appeal-deadline questions.
+
+### Verified
+- `npm run typecheck` clean · `npm test` 20 files / 97 tests · `npm run build` OK (180 legal pages).
+- Local API acceptance: divorce → `family-code` 94/97; complaint → 4-step procedure; appeal → `civil-procedure` 130/134 (`ثلاثون يومًا`); labour → `labor-code` 13.
+
+### Not done
+- No deploy (awaiting explicit approval). No migrations, no DB/env changes.
+- OCR/PDF pipeline still not implemented. 7 raw texts remain unindexed (extraction quality). Human legal review still required for `verified:true`.
+
 ## [0.2.0] - 2026-11-12 — Creative Upgrade + Security + Deploy
 
 ### Added

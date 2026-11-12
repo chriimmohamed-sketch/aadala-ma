@@ -107,7 +107,9 @@ export default function AIChat({ locale }: { locale: string }) {
               </ul>
             ) : (
               <div className="mt-2 rounded border border-gold/60 bg-gold/10 p-3 text-xs text-graphite">
-                لا يوجد نص مسترجع لهذا السؤال. لم يخترع المساعد أي مادة. هذه أقرب المواضيع في المكتبة للاطلاع، ليست أدلة:
+                {ans.procedurePath?.length
+                  ? "المسار الإجرائي أعلاه مبني على بيانات داخلية قيد التحقق، وليس على نصّ مادة مسترجعة. راجع قانون المسطرة قبل الاعتماد."
+                  : "لا يوجد نص مسترجع لهذا السؤال. لم يخترع المساعد أي مادة. هذه أقرب المواضيع في المكتبة للاطلاع، ليست أدلة:"}
                 {ans.suggestions?.length > 0 && (
                   <ul className="mt-2 space-y-2">
                     {ans.suggestions.map((s, i) => (

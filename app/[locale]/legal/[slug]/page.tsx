@@ -6,7 +6,7 @@ import LegalArticleView, { LegalTreeView } from "@/components/LegalArticle";
 import SourceCard from "@/components/SourceCard";
 import { legalSources } from "@/data/legal-sources";
 import { legalDatabase } from "@/data/legal-database";
-import { getStructuredDocument } from "@/lib/legal-data";
+import { getStructuredDocument, isStructured } from "@/lib/legal-data";
 import { flattenArticles } from "@/lib/legal-data/types";
 import quality from "@/data/legal-quality.json";
 import fs from "fs";
@@ -35,9 +35,12 @@ export default async function DetailPage({ params }: { params: Promise<{ locale:
       </div>
     );
   }
-  const filePath = path.join(process.cwd(), "public", src.file.replace(/^\//, ""));
   let text = "";
-  try { text = fs.readFileSync(filePath, "utf8"); } catch { text = "تعذر قراءة الملف."; }
+  // Structured documents have no extracted .txt file: the structured view below is the source.
+  if (!isStructured(slug) && src.file) {
+    const filePath = path.join(process.cwd(), "public", src.file.replace(/^\//, ""));
+    try { text = fs.readFileSync(filePath, "utf8"); } catch { text = "تعذر قراءة الملف."; }
+  }
   const q = (quality as Record<string, { quality: string }>)[slug]?.quality;
   const rec = legalDatabase.find((r) => r.slug === slug);
   const idx = legalSources.findIndex((s) => s.slug === slug);
