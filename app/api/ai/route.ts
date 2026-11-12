@@ -100,6 +100,25 @@ ${question}
       const m = raw.match(/\{[\s\S]*\}/);
       if (m) { const j = JSON.parse(m[0]); if (j && typeof j === "object" && !Array.isArray(j)) parsed = j as Record<string, unknown>; }
     } catch { parsed = null; }
+  } else if (chunks.length > 0) {
+    // Retrieval-only fallback: when no AI provider is configured, answer from retrieved chunks.
+    parsed = {
+      factsAssumed: "تم البحث في قاعدة البيانات (RAG). " + chunks.length + " مقطع مسترجع.",
+      legalIssue: "سؤال: " + question,
+      legalBasis: chunks.map((c, i) => "[" + (i + 1) + "] " + c.title + (c.location ? " — " + c.location : "")).join("\n"),
+      analysis: chunks.map((c, i) => "[" + (i + 1) + "] " + c.excerpt).join("\n\n"),
+      possibleApplications: "راجع المقاطع المسترجعة أعلاه (المراجع).",
+      references: refs,
+      certainty: chunks[0]?.score >= 6.5 ? "medium" : "low",
+      missingInfo: ["لا يوجد مفتاح AI provider — الجواب مبني على الاسترجاع (RAG) فقط، وليس تحليلًا مُركَّبًا. لتفعيل التحليل (AI)، أضف AI_PROVIDER_API_KEY في .env."],
+      disclaimer: "هذا الجواب مبني على مقاطع مسترجعة من قاعدة البيانات (RAG)، وليس تحليلًا قانونيًا. استشر محاميًا مغربيًا في قضيتك.",
+      textInterpretation: "",
+      oldVsNewComparison: "",
+      procedurePath: [],
+      documentList: [],
+      legalSummary: chunks.map((c) => c.title).join("، "),
+      draftTemplate: "",
+    };
   }
 
   // Every field from the model is type-checked: a non-string value must never reach the UI.
