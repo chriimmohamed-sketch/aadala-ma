@@ -32,7 +32,7 @@
             <option value="admin">المحكمة الإدارية</option>
             <option value="commerce">المحكمة التجارية</option>
           </select>
-          <button class="btn btn-primary" onclick="searchCases()">بحث</button>
+          <button class="btn btn-primary" type="button" id="caseSearchButton">بحث</button>
         </div>
         <table class="data-table">
           <thead><tr><th>المحكمة</th><th>الغرفة</th><th>رقم القرار</th><th>التاريخ</th><th>الموضوع</th><th>المبدأ</th></tr></thead>
@@ -41,7 +41,7 @@
           </tbody>
         </table>
       </div>
-      <div class="card mt-3">
+      <p id="caseStatus" class="text-muted text-sm" role="status" aria-live="polite"></p><p><a class="btn btn-outline" href="https://www.courdecassation.ma/" target="_blank" rel="noopener noreferrer">زيارة الموقع الرسمي لمحكمة النقض</a></p>\n      <div class="card mt-3">
         <h3>هيكل قرار (كل قرار)</h3>
         <ul style="list-style:none; line-height:2;">
           <li>• المحكمة والغرفة</li>
