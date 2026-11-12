@@ -108,6 +108,10 @@ GRANT EXECUTE ON FUNCTION private.can_write_workspace(uuid) TO authenticated;
 
 -- Workspaces: members read; only owner creates/updates/deletes.
 DROP POLICY IF EXISTS ws_owner_or_member ON public.workspaces;
+DROP POLICY IF EXISTS workspaces_select_member ON public.workspaces;
+DROP POLICY IF EXISTS workspaces_insert_owner ON public.workspaces;
+DROP POLICY IF EXISTS workspaces_update_owner ON public.workspaces;
+DROP POLICY IF EXISTS workspaces_delete_owner ON public.workspaces;
 CREATE POLICY workspaces_select_member ON public.workspaces
   FOR SELECT TO authenticated USING (private.is_workspace_member(id));
 CREATE POLICY workspaces_insert_owner ON public.workspaces
@@ -122,6 +126,10 @@ CREATE POLICY workspaces_delete_owner ON public.workspaces
 -- Membership roster is visible to members; only owner manages membership.
 DROP POLICY IF EXISTS ws_members_read ON public.workspace_members;
 DROP POLICY IF EXISTS ws_members_owner_write ON public.workspace_members;
+DROP POLICY IF EXISTS workspace_members_select ON public.workspace_members;
+DROP POLICY IF EXISTS workspace_members_owner_insert ON public.workspace_members;
+DROP POLICY IF EXISTS workspace_members_owner_update ON public.workspace_members;
+DROP POLICY IF EXISTS workspace_members_owner_delete ON public.workspace_members;
 CREATE POLICY workspace_members_select ON public.workspace_members
   FOR SELECT TO authenticated USING (private.is_workspace_member(workspace_id));
 CREATE POLICY workspace_members_owner_insert ON public.workspace_members
@@ -136,6 +144,7 @@ CREATE POLICY workspace_members_owner_update ON public.workspace_members
   USING (private.is_workspace_owner(workspace_id))
   WITH CHECK (
     private.is_workspace_owner(workspace_id)
+    AND user_id IS NOT NULL
     AND role IN ('admin', 'member', 'viewer')
   );
 CREATE POLICY workspace_members_owner_delete ON public.workspace_members
@@ -144,6 +153,10 @@ CREATE POLICY workspace_members_owner_delete ON public.workspace_members
 
 -- Viewers are read-only; writers are owner/admin/member.
 DROP POLICY IF EXISTS workspace_members_only ON public.workspace_documents;
+DROP POLICY IF EXISTS workspace_documents_select ON public.workspace_documents;
+DROP POLICY IF EXISTS workspace_documents_insert ON public.workspace_documents;
+DROP POLICY IF EXISTS workspace_documents_update ON public.workspace_documents;
+DROP POLICY IF EXISTS workspace_documents_delete ON public.workspace_documents;
 CREATE POLICY workspace_documents_select ON public.workspace_documents
   FOR SELECT TO authenticated USING (private.is_workspace_member(workspace_id));
 CREATE POLICY workspace_documents_insert ON public.workspace_documents
