@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="assets/css/legacy-bridge.css">
   <!-- Tailwind via CDN removed: utilities are in assets/css/main.css (static-safe) -->
 </head>
-<body>
+<body data-legal-reference-page="procedures">
   <div id="header"></div>
   <section class="section">
     <div class="container">
@@ -48,10 +48,12 @@
   <script src="assets/js/app.js"></script>
   
   <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/legal-content.js"></script>
   <script>
     document.getElementById('header').innerHTML = renderHeader('procedures.html');
     document.getElementById('footer').innerHTML = renderFooter();
     updateAuthUI();
   </script>
+  <script src="assets/js/legal-references.js" defer></script>
 </body>
 </html>

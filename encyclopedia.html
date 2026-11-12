@@ -4,92 +4,94 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://aadala-ma.cheraimmohamed20.workers.dev;">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>الموسوعة القانونية — AADALA.MA</title>
+  <meta name="theme-color" content="#101D32">
+  <meta name="description" content="الموسوعة القانونية المغربية من AADALA.MA: تصفح المراجع حسب المجال وابحث في بيانات النصوص التشريعية.">
+  <title>الموسوعة القانونية المغربية — AADALA.MA</title>
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/legacy-bridge.css">
-  <!-- Tailwind via CDN removed: utilities are in assets/css/main.css (static-safe) -->
+  <style>
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .encyclopedia-intro{max-width:920px;margin:0 auto 1.5rem;text-align:center}
+    .encyclopedia-search{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.65rem;max-width:850px;margin:1.5rem auto}
+    .encyclopedia-search .form-input{min-height:54px}
+    .encyclopedia-search .btn{min-height:54px;white-space:nowrap}
+    .encyclopedia-meta{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:1rem 0;color:var(--color-text-muted);font-size:.92rem}
+    .encyclopedia-category{width:100%;text-align:right;color:var(--color-text);font:inherit}
+    .encyclopedia-category[aria-pressed="true"]{border-color:var(--color-accent);background:rgba(201,162,39,.10);box-shadow:0 0 0 2px rgba(201,162,39,.14)}
+    .encyclopedia-category-copy{display:grid;gap:.12rem;min-width:0}
+    .encyclopedia-category-count{color:var(--color-accent-dark);font-weight:700}
+    .encyclopedia-results{margin-top:2.5rem;scroll-margin-top:100px}
+    .encyclopedia-results-title{font-size:1.65rem;margin-bottom:1rem}
+    .encyclopedia-results-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:1rem}
+    .encyclopedia-document{min-width:0;display:flex;flex-direction:column;gap:.9rem}
+    .encyclopedia-document-head{display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem}
+    .encyclopedia-document-head h3{font-size:1.25rem;margin:0 0 .2rem}
+    .encyclopedia-metadata{font-size:.9rem}
+    .encyclopedia-metadata th{width:34%;white-space:nowrap}
+    .encyclopedia-summary{color:var(--color-text-muted);margin:0}
+    .encyclopedia-document-footer{display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;margin-top:auto;padding-top:.5rem;border-top:1px solid var(--color-border)}
+    .encyclopedia-warning{margin:0;font-size:.88rem}
+    .encyclopedia-note{max-width:920px;margin:1.5rem auto 0;font-size:.9rem}
+    @media(max-width:600px){.encyclopedia-search{grid-template-columns:1fr}.encyclopedia-document-head{flex-direction:column}.encyclopedia-document-footer{align-items:flex-start}.encyclopedia-metadata th{width:38%;white-space:normal}}
+    @media(prefers-reduced-motion:reduce){.encyclopedia-category,.encyclopedia-results{scroll-behavior:auto;transition:none}}
+  </style>
 </head>
 <body>
   <div id="header"></div>
 
-  <section class="section">
+  <main id="main" class="section">
     <div class="container">
-      <div class="section-title">
-        <h2>📚 الموسوعة القانونية المغربية</h2>
-        <p>النصوص، المواد، التعديلات، حالة السريان</p>
+      <header class="section-title">
+        <p class="eyebrow" style="color:var(--color-accent-dark);font-weight:700;">AADALA.MA · مركز المعرفة التشريعية</p>
+        <h1>الموسوعة القانونية المغربية</h1>
+        <p>تصفح المراجع حسب المجال، أو ابحث برقم النص أو اسمه أو موضوعه.</p>
+      </header>
+
+      <section class="encyclopedia-intro" aria-label="منهجية الموسوعة">
+        <div class="alert alert-info" role="note">
+          <strong>تنبيه منهجي:</strong>
+          تعرض هذه الصفحة بيانات وصفية أولية للمراجع المسجلة في قاعدة المشروع. لا تمثل البطاقات نسخاً كاملة من النصوص، ولا يكفي وصف الحالة فيها لإثبات النفاذ أو التحيين. يجب الرجوع إلى الجريدة الرسمية والنصوص التعديلية قبل الاستناد القانوني.
+        </div>
+      </section>
+
+      <form class="encyclopedia-search" role="search" onsubmit="return false;">
+        <label class="sr-only" for="encSearch">ابحث في المراجع القانونية</label>
+        <input type="search" class="form-input" id="encSearch" name="q" maxlength="160"
+          placeholder="ابحث: مدونة الأسرة، القانون الجنائي، رقم النص، المجال..." autocomplete="off"
+          aria-describedby="encHelp">
+        <button type="button" class="btn btn-outline" id="encClear">مسح البحث والتصفية</button>
+      </form>
+      <p id="encHelp" class="text-muted text-sm text-center">يبحث النظام في أسماء المراجع وأرقامها وتواريخها وملخصاتها، مع مراعاة بعض اختلافات كتابة الحروف العربية.</p>
+
+      <div class="encyclopedia-meta">
+        <span>المجالات القانونية</span>
+        <span>عدد النتائج: <strong id="encCount" aria-live="polite">0</strong></span>
       </div>
+      <div class="category-grid" id="encCategories" aria-label="مجالات الموسوعة"></div>
 
-      <div class="alert alert-info mb-3">
-        <strong>ملاحظة:</strong> النصوص المدرجة هنا مأخوذة من المصادر الرسمية (الجريدة الرسمية). التحقق من www.sgg.gov.ma. المحتوى قيد التوسيع.
+      <section class="encyclopedia-results" id="encResults" aria-labelledby="encResultsHeading" aria-live="polite">
+        <h2 id="encResultsHeading" class="encyclopedia-results-title">المراجع المسجلة</h2>
+      </section>
+      <p id="encStatus" class="text-muted text-sm" role="status" aria-live="polite"></p>
+
+      <div class="alert alert-warning encyclopedia-note">
+        <strong>حدود قاعدة البيانات:</strong>
+        قد تتضمن بعض السجلات حقولاً ناقصة أو بيانات تحتاج إلى تدقيق. لا تستخدم هذه الصفحة وحدها لتحديد الصيغة المحينة أو تاريخ دخول نص حيز التنفيذ أو نطاق تعديله.
+        <a href="database.html" class="btn btn-ghost btn-sm">استعراض قاعدة الوثائق PDF</a>
       </div>
-
-      <div class="mb-3">
-        <input type="text" class="form-input" id="encSearch" placeholder="بحث في الموسوعة..." oninput="filterEnc()">
-      </div>
-
-      <div class="category-grid" id="encCategories"></div>
-
-      <div id="textDetail" class="mt-4 hidden"></div>
     </div>
-  </section>
+  </main>
 
   <div id="footer"></div>
 
   <script src="assets/js/app.js"></script>
-  
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/legal-content.js"></script>
   <script>
     document.getElementById('header').innerHTML = renderHeader('encyclopedia.html');
     document.getElementById('footer').innerHTML = renderFooter();
     updateAuthUI();
-
-    const grid = document.getElementById('encCategories');
-    grid.innerHTML = LegalEncyclopedia.categories.map(c =>
-      `<div class="category-item" onclick="showCategory('${c.id}')">
-        <div class="category-icon">${c.icon}</div>
-        <div><strong>${c.name}</strong><br><span class="text-muted text-sm">${c.desc}</span></div>
-      </div>`
-    ).join('');
-
-    function showCategory(id) {
-      const cat = LegalEncyclopedia.categories.find(c => c.id === id);
-      const texts = (window.LegalContent ? LegalContent.texts.filter(t => t.category === id) : []);
-      const detail = document.getElementById('textDetail');
-      detail.classList.remove('hidden');
-      let html = `<div class="card"><h3>${cat.icon} ${cat.name}</h3><p class="text-muted">${cat.desc}</p>`;
-      if (texts.length > 0) {
-        html += '<div class="mt-3">';
-        texts.forEach(t => {
-          html += `<div class="card mb-2" style="background:var(--color-bg-alt);">
-            <h4>${t.title} <span class="badge badge-primary">${t.status}</span></h4>
-            <p class="text-muted text-sm">${t.titleFr}</p>
-            <table class="data-table mt-2">
-              <tr><td><strong>النوع</strong></td><td>${t.type}</td></tr>
-              <tr><td><strong>الرقم</strong></td><td>${t.number}</td></tr>
-              <tr><td><strong>التاريخ</strong></td><td>${t.date}</td></tr>
-              <tr><td><strong>المصدر</strong></td><td>${t.source}</td></tr>
-              <tr><td><strong>الملخص</strong></td><td>${t.summary}</td></tr>
-            </table>
-            <a href="${t.url}" target="_blank" class="btn btn-outline btn-sm mt-2">المصدر (sgg.gov.ma)</a>
-          </div>`;
-        });
-        html += '</div>';
-      } else {
-        html += `<div class="alert alert-info mt-2">لا توجد نصوص في هذه الفئة حالياً. سيتم إضافتها من المصادر الرسمية.</div>`;
-      }
-      html += '</div>';
-      detail.innerHTML = html;
-      detail.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function filterEnc() {
-      const q = document.getElementById('encSearch').value.toLowerCase();
-      document.querySelectorAll('.category-item').forEach(el => {
-        const txt = el.textContent.toLowerCase();
-        el.style.display = txt.includes(q) ? '' : 'none';
-      });
-    }
   </script>
+  <script src="assets/js/encyclopedia.js" defer></script>
 </body>
 </html>
