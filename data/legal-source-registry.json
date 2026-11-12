@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "registryUpdatedAt": "2026-11-12",
+  "policy": {
+    "primaryEvidenceRequiredForLegalStatus": true,
+    "neverAutoPublish": true,
+    "neverOverwriteHistoricalVersions": true,
+    "unverifiedContentMustBeExcludedFromLegalAdvice": true
+  },
+  "sources": [
+    {
+      "id": "sgg-official-gazette",
+      "name": "الأمانة العامة للحكومة — الجريدة الرسمية",
+      "authority": "primary",
+      "scope": ["official_gazette", "published_legislation", "regulatory_texts"],
+      "languages": ["ar", "fr"],
+      "url": "https://www.sgg.gov.ma/arabe/Accueil.aspx",
+      "discoveryUrl": "https://www.sgg.gov.ma/",
+      "permittedUse": ["discover_publications", "retrieve_official_pdf", "verify_publication_metadata"],
+      "legalEffect": "publication_evidence",
+      "automation": "manual_review_required",
+      "notes": "المرجع الأول لإثبات النشر في الجريدة الرسمية. لا يُستنتج تاريخ الدخول حيز التنفيذ من تاريخ النشر وحده."
+    },
+    {
+      "id": "justice-adala-portal",
+      "name": "وزارة العدل — البوابة القانونية عدالة",
+      "authority": "primary_government_portal",
+      "scope": ["legislation_catalog", "legal_documents", "ministry_publications"],
+      "languages": ["ar", "fr"],
+      "url": "https://adala.justice.gov.ma/AR",
+      "permittedUse": ["discover_legal_texts", "retrieve_document_copy", "cross_check_metadata"],
+      "legalEffect": "government_reference_copy",
+      "automation": "manual_review_required",
+      "notes": "تُقارن النسخ المنشورة هنا بالجريدة الرسمية عند إثبات الصيغة الرسمية أو تاريخ النفاذ."
+    },
+    {
+      "id": "justice-judgments-portal",
+      "name": "وزارة العدل — بوابة الأحكام",
+      "authority": "primary_government_portal",
+      "scope": ["published_judgments", "judicial_search"],
+      "languages": ["ar", "fr"],
+      "url": "https://portailjugements.justice.gov.ma/Home/",
+      "permittedUse": ["discover_published_judgments", "retrieve_public_metadata"],
+      "legalEffect": "published_judicial_material",
+      "automation": "manual_review_required",
+      "notes": "يجب تسجيل المحكمة ورقم القرار وتاريخه ونوعه ورابطه. لا تعمم قاعدة القرار خارج وقائعه ومنطوقه."
+    },
+    {
+      "id": "court-of-cassation-services",
+      "name": "محكمة النقض — بوابة الخدمات القضائية",
+      "authority": "primary_government_portal",
+      "scope": ["case_tracking", "hearing_schedules", "court_services"],
+      "languages": ["ar", "fr"],
+      "url": "https://www.greffe.courdecassation.ma/",
+      "permittedUse": ["link_to_official_case_services"],
+      "legalEffect": "operational_court_service",
+      "automation": "link_only",
+      "notes": "بوابة خدمات وتتبع، ولا تُعامل وحدها كمستودع منشور للاجتهادات."
+    },
+    {
+      "id": "parliament-representatives",
+      "name": "مجلس النواب — الوثائق والعمل التشريعي",
+      "authority": "primary_institutional",
+      "scope": ["legislative_bills", "parliamentary_documents", "official_gazette_index"],
+      "languages": ["ar", "fr"],
+      "url": "https://www.chambredesrepresentants.ma/",
+      "permittedUse": ["track_bill_progress", "retrieve_parliamentary_documents"],
+      "legalEffect": "legislative_process_evidence",
+      "automation": "manual_review_required",
+      "notes": "مشروع القانون أو التصويت البرلماني لا يعامل كنص نافذ قبل استكمال المسار والنشر وتحقق تاريخ النفاذ."
+    },
+    {
+      "id": "moroccan-jurisprudence-portal",
+      "name": "بوابة الاجتهاد القضائي المغربية",
+      "authority": "secondary_non_government",
+      "scope": ["judicial_decision_discovery"],
+      "languages": ["ar", "fr"],
+      "url": "https://www.jurisprudence.ma/",
+      "permittedUse": ["discovery_only", "cross_reference"],
+      "legalEffect": "secondary_discovery",
+      "automation": "manual_review_required",
+      "notes": "مصدر مساعد للاكتشاف وليس بديلاً عن التحقق من القرار ومصدره الأصلي."
+    },
+    {
+      "id": "judicial-agency-legal-watch",
+      "name": "الوكالة القضائية للمملكة — منصة مواكبة",
+      "authority": "primary_institutional",
+      "scope": ["legal_watch", "administrative_jurisprudence", "public_law_updates"],
+      "languages": ["ar", "fr"],
+      "url": "https://www.finances.gov.ma/ar/مواكبة/Pages/yaqadha.aspx",
+      "permittedUse": ["discover_legal_updates", "retrieve_published_analysis"],
+      "legalEffect": "institutional_analysis_and_discovery",
+      "automation": "manual_review_required",
+      "notes": "المواد المنشورة مفيدة للرصد والتحليل، لكنها لا تحل محل النص التشريعي أو القرار الأصلي."
+    }
+  ]
+}
