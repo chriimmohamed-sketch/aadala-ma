@@ -9,14 +9,15 @@
     "lint": "eslint",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "quality:gate": "npm run lint && npm run typecheck && npm run test && npm run build",
+    "quality:gate": "npm run lint && npm run typecheck && npm run test && npm run legal:sources:check && npm run build",
     "cf:build": "opennextjs-cloudflare build",
     "cf:preview": "opennextjs-cloudflare preview",
     "cf:deploy": "opennextjs-cloudflare deploy",
     "design:audit": "node scripts/unify-design.mjs",
     "design:fix": "node scripts/unify-design.mjs --fix --legacy",
     "design:check": "node scripts/unify-design.mjs --check",
-    "legal:ingest": "node scripts/ingest-pdfs.mjs"
+    "legal:ingest": "node scripts/ingest-pdfs.mjs",
+    "legal:sources:check": "node scripts/validate-legal-source-registry.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
