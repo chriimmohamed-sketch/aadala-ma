@@ -1,4 +1,49 @@
-# Changelog — AADALA.MA
+﻿# 0.3.1 â€” 2026-11-12
+
+## Added
+- **Jurisprudence layer (AJTE):** 18 Moroccan commercial-court decisions (2003â€“2012,
+  Fez and Oujda) ingested as a *separate*, explicitly unverified layer:
+  `data/jurisprudence.json` (18 decisions, 53 chunks, ~9.4k words), plus
+  `lib/legal-data/jurisprudence.ts`, `components/JurisprudenceView.tsx`, and a
+  dedicated page at `/legal/jurisprudence-commerciale`.
+- `scripts/ingest-jurisprudence.py` â€” reproducible PDF ingestion pipeline:
+  NFKC normalisation, a character-bigram plausibility gate trained on the
+  statutory corpus (`data/legal-index.json`), excision of unreadable fragments
+  marked `[â€¦]`, a 45% keep-ratio / 120-word floor, and Jaccard deduplication.
+  Defaults to report mode; writes only with `--fix`-equivalent invocation.
+- `lib/ai-assistant/jurisprudence.test.ts` â€” 8 hard gates (corpus integrity,
+  no mixed-script fragments, strict gate thresholds, document contract, retrieval
+  kind/location, certainty cap, article-lookup non-pollution, statute gates intact).
+- `RetrievedChunk`/`AICitation` gained `kind` and `verified` fields; the UI now
+  badges references as "ظ‚ظٹط¯ ط§ظ„ظ…ط±ط§ط¬ط¹ط©" and jurisprudence as
+  "ط§ط¬طھظ‡ط§ط¯ ظ‚ط¶ط§ط¦ظٹ â€” ط؛ظٹط± ظ…ظڈط±ط§ط¬ط¹".
+
+## Retrieval
+- `retrieve()` now blends: statute chunks lead, jurisprudence only fills spare
+  slots â€” a court decision can never displace an article.
+- `retrievalQuality()` is corpus-stable: coverage is now unweighted term recall
+  rather than IDF-weighted, so adding texts no longer inflates a weak match.
+  RAG-only answers remain capped at `medium`; jurisprudence-only top chunks cap
+  at `low`.
+- Jurisprudence chunks carry `verified:false` and a disclosure note is appended
+  to `missingInfo` whenever an answer leans on court decisions.
+
+## Changed
+- `data/legal-sources.ts`: +1 source (`jurisprudence-commerciale`).
+- `app/[locale]/legal/[slug]/page.tsx`: renders the jurisprudence view for the
+  new slug (additive; statutes unaffected).
+- `app/api/ai/route.ts`: forwards `verified`/`kind` and appends the
+  jurisprudence disclosure note.
+
+## Unchanged / honesty
+- No article text, route, table, or env var was modified or deleted.
+- Statute corpus, migrations (still start at 0017), and `verified:true` count (0)
+  are untouched. All 9 laws / 127 articles remain `verified:false`.
+- The 2 scanned PDFs (no text layer) were *not* ingested; OCR is still blocked
+  pending an engine decision.
+- No deploy, no push.
+
+# Changelog ظ¤ AADALA.MA
 
 ## [0.1.0] - 2026-11-07
 ### Added
@@ -17,70 +62,70 @@
 - Quality gate + CI.
 
 ### Notes
-- Auth/RBAC not implemented (admin open) — before production. (Superseded: Supabase Auth implemented below.)
+- Auth/RBAC not implemented (admin open) ظ¤ before production. (Superseded: Supabase Auth implemented below.)
 
-## [0.3.0] - 2026-11-12 — GENESIS: Evidence-Based Assistant
+## [0.3.0] - 2026-11-12 ظ¤ GENESIS: Evidence-Based Assistant
 
 ### Added
 - **Unified retrieval**: `lib/ai-assistant/retrieval.ts` now merges `data/legal-index.json` with the 9 structured laws (127 articles) at load time. Family, commercial, labour and both procedure codes are reachable by `/api/ai` for the first time.
-- **Relevance gating**: IDF-weighted coverage (`MIN_COVERAGE = 0.4`) + subject anchor (rarest question term must match, or coverage ≥ 0.55). A single generic word can no longer retrieve an unrelated law.
-- **Arabic morphology**: clitic stripping (`بالاستئناف` → `استئناف`, `وشروطها` → `شروطها`), suffix reduction, and a small documented retrieval-synonym map (`طلاق↔تطليق`, `مدة↔أجل`).
+- **Relevance gating**: IDF-weighted coverage (`MIN_COVERAGE = 0.4`) + subject anchor (rarest question term must match, or coverage ظëح 0.55). A single generic word can no longer retrieve an unrelated law.
+- **Arabic morphology**: clitic stripping (`╪ذ╪د┘╪د╪│╪ز╪خ┘╪د┘` ظْ `╪د╪│╪ز╪خ┘╪د┘`, `┘ê╪┤╪▒┘ê╪╖┘ç╪د` ظْ `╪┤╪▒┘ê╪╖┘ç╪د`), suffix reduction, and a small documented retrieval-synonym map (`╪╖┘╪د┘éظ¤╪ز╪╖┘┘è┘é`, `┘à╪»╪رظ¤╪ث╪ش┘`).
 - **Procedural answers**: `lib/ai-assistant/procedures.ts` (`matchProcedure`) returns real steps + documents from `data/legal-services.ts` when no article matches (certainty `low`, labelled unreviewed).
 - **Honest limits answer**: no more dead-end; `insufficient_sources` states what is missing and suggests reformulation.
 - **Scripts**: `scripts/clean-legal-index.mjs` (report by default, `--fix` rewrites) and `scripts/fix-arabic-contamination.mjs` (documented word map, Arabic-context only).
-- **Docs**: `GENESIS/00–05`, `ENGINE/*`, `DOCUMENTS/*`, `LEGAL/*`, `SECURITY/SECURITY_AUDIT.md`, `TESTING/*`, `RELEASE/RELEASE_READINESS.md`.
+- **Docs**: `GENESIS/00ظô05`, `ENGINE/*`, `DOCUMENTS/*`, `LEGAL/*`, `SECURITY/SECURITY_AUDIT.md`, `TESTING/*`, `RELEASE/RELEASE_READINESS.md`.
 
 ### Changed
-- `data/legal-sources.ts`: 13 → 18 sources (5 structured codes appended, `file: ""`).
+- `data/legal-sources.ts`: 13 ظْ 18 sources (5 structured codes appended, `file: ""`).
 - `app/[locale]/legal/[slug]/page.tsx`: skips `fs.readFileSync` for structured documents (no crash on empty `file`).
 - `app/api/ai/route.ts`: certainty derives from `retrievalQuality`; RAG-only answers capped at `medium`; citation check runs on LLM output only.
 - `components/AIChat.tsx`: empty-references message is procedure-aware.
-- `lib/legal-data/*.ts`: 249 English artifacts repaired inside Arabic text (`from→من`, `between→بين`, `in→في`, `during→خلال`, …). All articles remain `verified:false`.
+- `lib/legal-data/*.ts`: 249 English artifacts repaired inside Arabic text (`fromظْ┘à┘`, `betweenظْ╪ذ┘è┘`, `inظْ┘┘è`, `duringظْ╪«┘╪د┘`, ظخ). All articles remain `verified:false`.
 
 ### Fixed
-- `app/[locale]/layout.tsx`: skip link text (`Patton` → `تخطي إلى المحتوى الرئيسي`).
-- `data/legal-index.json`: 733 → 732 chunks, control characters removed, 493,900 → 435,547 bytes.
-- False `إحالات غير مؤكدة` warning for appeal-deadline questions.
+- `app/[locale]/layout.tsx`: skip link text (`Patton` ظْ `╪ز╪«╪╖┘è ╪ح┘┘ë ╪د┘┘à╪ص╪ز┘ê┘ë ╪د┘╪▒╪خ┘è╪│┘è`).
+- `data/legal-index.json`: 733 ظْ 732 chunks, control characters removed, 493,900 ظْ 435,547 bytes.
+- False `╪ح╪ص╪د┘╪د╪ز ╪║┘è╪▒ ┘à╪ج┘â╪»╪ر` warning for appeal-deadline questions.
 
 ### Verified
-- `npm run typecheck` clean · `npm test` 20 files / 97 tests · `npm run build` OK (180 legal pages).
-- Local API acceptance: divorce → `family-code` 94/97; complaint → 4-step procedure; appeal → `civil-procedure` 130/134 (`ثلاثون يومًا`); labour → `labor-code` 13.
+- `npm run typecheck` clean ┬╖ `npm test` 20 files / 97 tests ┬╖ `npm run build` OK (180 legal pages).
+- Local API acceptance: divorce ظْ `family-code` 94/97; complaint ظْ 4-step procedure; appeal ظْ `civil-procedure` 130/134 (`╪س┘╪د╪س┘ê┘ ┘è┘ê┘à┘ï╪د`); labour ظْ `labor-code` 13.
 
 ### Not done
 - No deploy (awaiting explicit approval). No migrations, no DB/env changes.
 - OCR/PDF pipeline still not implemented. 7 raw texts remain unindexed (extraction quality). Human legal review still required for `verified:true`.
 
-## [0.2.0] - 2026-11-12 — Creative Upgrade + Security + Deploy
+## [0.2.0] - 2026-11-12 ظ¤ Creative Upgrade + Security + Deploy
 
 ### Added
 - **Supreme Justice Navigation**: `HeaderSupreme` + `MobileNavSupreme` + isolated `justice-*` CSS across 23+ pages (sticky, mega-menu, RTL, keyboard, ARIA).
-- **FloatingAI widget**: small dismissible button (bottom-left) → compact panel (max 70vh) with close (X).
+- **FloatingAI widget**: small dismissible button (bottom-left) ظْ compact panel (max 70vh) with close (X).
 - **Error reporting**: `0014_error_reports.sql` + `POST /api/reports/error` (rate-limited 5/min, insert-only) + `ReportErrorForm`.
 - **Deadline engine v2**: pure UTC engine, 5 rules (all `verified:false`), religious holidays manual.
 - **Error boundaries**: `app/[locale]/error.tsx`, `app/global-error.tsx`, `app/not-found.tsx`.
 - **Structured legal data**: `lib/legal-data/` (9 laws, ~110 articles, all `verified:false`), `LegalArticleView`/`LegalTreeView`/`SourceCard`, `/legal/[slug]` structured render + raw fallback.
 - **Front codes**: lamp `LoginForm`, `HangingCard`, `DownloadButton`, `GlobalLoader`, `AIToolsSection` merged into live platform.
-- **Public pages**: `mushkilati.html` (6 worlds × 10 problems + 4 tools), `profile/` kit, `assets/navigation.js|css`.
-- **DB completion**: 33/33 tables live (0003, 0004, 0006–0012, 0014, 0015, 0016). Workspace RLS recursion fixed (`SECURITY DEFINER` helpers). Mojibake seeds repaired (CP1256 → UTF-8).
+- **Public pages**: `mushkilati.html` (6 worlds ├ù 10 problems + 4 tools), `profile/` kit, `assets/navigation.js|css`.
+- **DB completion**: 33/33 tables live (0003, 0004, 0006ظô0012, 0014, 0015, 0016). Workspace RLS recursion fixed (`SECURITY DEFINER` helpers). Mojibake seeds repaired (CP1256 ظْ UTF-8).
 - **Docs**: `docs/DB_STATE.md`, `docs/DEPLOY_NOTES.md`, `supabase/apply/` (bundle + helpers).
 - **Deploy safety**: CI smoke-check step (verifies canonical site serves new build); `scripts/deploy.ps1` (one-command local deploy with VC++ runtime workaround).
-- **Dark mode**: full token overrides (navy, gold, danger, success, teal, …) + smooth transitions + no-FOUC inline script.
-- **A11y**: touch targets ≥44px (theme toggle, search, nav triggers, mobile tabs, drawer links, palette input). Lighthouse: a11y 96%, best-practices 100%, SEO 100%.
+- **Dark mode**: full token overrides (navy, gold, danger, success, teal, ظخ) + smooth transitions + no-FOUC inline script.
+- **A11y**: touch targets ظëح44px (theme toggle, search, nav triggers, mobile tabs, drawer links, palette input). Lighthouse: a11y 96%, best-practices 100%, SEO 100%.
 - **Layout**: `overflow-x: hidden` (no horizontal scroll), inline-style backgrounds.
 
 ### Changed
-- Login removed: 7 auth pages → `redirect("/")`; `AuthButton` dropped from headers; forms/API/migrations preserved.
+- Login removed: 7 auth pages ظْ `redirect("/")`; `AuthButton` dropped from headers; forms/API/migrations preserved.
 - `HeaderSupreme` + `MobileNavSupreme`: `AuthButton` removed.
 - `eslint.config.mjs`: ignore `.open-next/**`.
 - `app/[locale]/layout.tsx`: root layout split (`app/layout.tsx` + `HtmlLangDir` client component) to fix Next.js 16 dev-server `not-found.tsx` issue.
 
 ### Security
 - CSP: `object-src 'none'`, `upgrade-insecure-requests`. Rate limits: 30/min templates, 20/min admin queue, 5/min error reports.
-- `docs/SECURITY_REVIEW_27.md` (24/27 ✅).
+- `docs/SECURITY_REVIEW_27.md` (24/27 ظ£à).
 - Login removal: no public auth path remains (MFA dropped).
 
 ### Deployment
-- Live (correct account): `https://aadala-ma.cheraimmohamed20.workers.dev` (Version ID `7f876f93…`).
+- Live (correct account): `https://aadala-ma.cheraimmohamed20.workers.dev` (Version ID `7f876f93ظخ`).
 - CI deploys gated: `DEPLOY_ENABLED=false` (secrets point to wrong account `chriimmohamed`). Flip to `true` after issuing a Workers API token for `cheraimmohamed20`.
 - Local deploy: `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\deploy.ps1`.
 
@@ -96,7 +141,7 @@
 - Supabase Auth (email/password) + RLS (`profiles`, `audit_logs`, `0002_auth_rls.sql`).
 - Login/Register pages (`/ar/login`, `/ar/register`) + header AuthButton (session only, no localStorage role).
 - Server RBAC: proxy session gate + `/ar/admin` role check (`profiles.role = 'admin'`, fail-closed).
-- Tests: permissions (5) + auth (3) → 33 total; build 264 pages.
+- Tests: permissions (5) + auth (3) ظْ 33 total; build 264 pages.
 - `@tailwindcss/postcss` (webpack utilities) + Google Fonts + theme tokens + empty-chart state (visual fixes).
 - Repair-pack hygiene: meta description, locale guard (`dynamicParams=false`, 404 for invalid locale), `/robots.txt` + `/sitemap.xml` (Workers).
 - GitHub Pages: `.nojekyll`; root `robots.txt`/`sitemap.xml` aligned to Pages URL.
@@ -112,6 +157,7 @@
 - Unification: static teal/brass design ported to Next home (hero/seal/ticker/tools/trust/palette/progress/steps/tilt/reveal).
 
 ### Skipped (intentionally)
-- `proxy.ts` (patch reverts to Basic Auth) — kept Supabase `updateSession` instead.
-- `wrangler.toml [[ratelimits]]` — kept current toml (in-memory limiter); add binding after a dry run.
-- `docs/DEPLOYMENT.md` (patch is older) — kept current dual-track docs.
+- `proxy.ts` (patch reverts to Basic Auth) ظ¤ kept Supabase `updateSession` instead.
+- `wrangler.toml [[ratelimits]]` ظ¤ kept current toml (in-memory limiter); add binding after a dry run.
+- `docs/DEPLOYMENT.md` (patch is older) ظ¤ kept current dual-track docs.
+

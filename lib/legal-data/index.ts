@@ -14,6 +14,7 @@ import { COMMERCIAL_DOCUMENT } from "./commercial";
 import { CIVIL_PROCEDURE_DOCUMENT } from "./civil-procedure";
 import { CRIMINAL_PROCEDURE_DOCUMENT } from "./criminal-procedure";
 import { LABOR_DOCUMENT } from "./labor";
+import { JURISPRUDENCE_DOCUMENT, JURISPRUDENCE_SLUG } from "./jurisprudence";
 import { flattenArticles } from "./types";
 
 export const STRUCTURED_DOCUMENTS: Record<string, LegalDocument> = {
@@ -26,6 +27,8 @@ export const STRUCTURED_DOCUMENTS: Record<string, LegalDocument> = {
   "civil-procedure": CIVIL_PROCEDURE_DOCUMENT,
   "criminal-procedure": CRIMINAL_PROCEDURE_DOCUMENT,
   "labor-code": LABOR_DOCUMENT,
+  // الاجتهاد القضائي طبقة مستقلة: تُعرض عبر مكوّنها الخاص، ولا تُخلط بالمواد.
+  [JURISPRUDENCE_SLUG]: JURISPRUDENCE_DOCUMENT,
 };
 
 export function getStructuredDocument(slug: string): LegalDocument | undefined {

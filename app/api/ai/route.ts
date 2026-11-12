@@ -51,7 +51,11 @@ export async function POST(req: Request) {
     location: c.location,
     score: c.score,
     confidence: confidenceFor(c.score),
+    verified: c.verified,
+    kind: c.kind,
   }));
+  const JURISPRUDENCE_NOTE =
+    "بعض المصادر من الاجتهاد القضائي (قرارات محاكم تجارية) — مرجع استئناسي غير مُراجع وغير ملزم، وليست نصوصًا قانونية.";
   const suggestions: AICitation[] = chunks.length
     ? []
     : suggestNearest(question, 3).map((c) => ({
@@ -219,6 +223,10 @@ ${question}
       answer.certainty = answer.certainty === "insufficient_sources" ? "insufficient_sources" : "low";
       answer.missingInfo = [...answer.missingInfo, `إحالات غير مؤكدة بالمصادر المسترجعة (الأرقام: ${bad.join("، ")}). تحقق منها قبل الاعتماد.`];
     }
+  }
+  // Jurisprudence disclosure: an answer leaning on court decisions must say so.
+  if (chunks.some((c) => c.kind === "jurisprudence") && !answer.missingInfo.includes(JURISPRUDENCE_NOTE)) {
+    answer.missingInfo = [...answer.missingInfo, JURISPRUDENCE_NOTE];
   }
   return NextResponse.json(answer);
 }

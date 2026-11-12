@@ -9,6 +9,8 @@ import { legalDatabase } from "@/data/legal-database";
 import { getStructuredDocument, isStructured } from "@/lib/legal-data";
 import { flattenArticles } from "@/lib/legal-data/types";
 import quality from "@/data/legal-quality.json";
+import JurisprudenceView from "@/components/JurisprudenceView";
+import { JURISPRUDENCE_DECISIONS, JURISPRUDENCE_SLUG } from "@/lib/legal-data/jurisprudence";
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
@@ -67,7 +69,11 @@ export default async function DetailPage({ params }: { params: Promise<{ locale:
         </dl>
         <CitationActions locale={locale} title={src.title} lawNumber={rec?.lawNumber ?? src.type} slug={slug} promulgated={rec?.promulgated ?? null} published={rec?.published ?? null} />
 
-        {structured && (
+        {structured && structured.metadata.slug === JURISPRUDENCE_SLUG && (
+          <JurisprudenceView decisions={JURISPRUDENCE_DECISIONS} />
+        )}
+
+        {structured && structured.metadata.slug !== JURISPRUDENCE_SLUG && (
           <section className="mt-6 grid gap-4 lg:grid-cols-[1fr_280px]">
             <div>
               <h2 className="mb-3 text-xl font-bold text-navy">النص (منظَّم — {structuredArticles.length} مادة)</h2>

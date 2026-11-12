@@ -2,6 +2,7 @@ import index from "@/data/legal-index.json";
 import { legalSources } from "@/data/legal-sources";
 import { STRUCTURED_DOCUMENTS } from "@/lib/legal-data";
 import { flattenArticles } from "@/lib/legal-data/types";
+import { JURISPRUDENCE_DECISIONS, JURISPRUDENCE_SLUG, JURISPRUDENCE_TITLE } from "@/lib/legal-data/jurisprudence";
 
 export interface RetrievedChunk {
   slug: string;
@@ -11,6 +12,8 @@ export interface RetrievedChunk {
   location?: string;
   /** false = source text is not human-reviewed yet (shown as "قيد المراجعة"). */
   verified?: boolean;
+  /** "statute" (نص قانوني) or "jurisprudence" (اجتهاد قضائي — غير ملزم). */
+  kind?: "statute" | "jurisprudence";
 }
 
 const titles = new Map(legalSources.map((s) => [s.slug, s.title]));
@@ -109,6 +112,7 @@ type Entry = {
   location?: string;
   n?: number;
   verified?: boolean;
+  kind?: "statute" | "jurisprudence";
   tokens: Set<string>;
 };
 
@@ -163,6 +167,7 @@ function load() {
       location: c.l,
       n: c.n,
       tokens: tokenSet(excerpt),
+      kind: "statute",
     });
   }
 
@@ -171,6 +176,7 @@ function load() {
   //    Additive: the JSON index is left untouched.
   for (const doc of Object.values(STRUCTURED_DOCUMENTS)) {
     const meta = doc.metadata;
+    if (meta.slug === JURISPRUDENCE_SLUG) continue; // handled below with its own labels
     for (const art of flattenArticles(doc)) {
       const excerpt = clean([art.title, art.officialText].filter(Boolean).join(". "));
       if (excerpt.length < 20) continue;
@@ -181,6 +187,29 @@ function load() {
         location: `المادة ${art.number}`,
         n: Number(art.number) || undefined,
         verified: meta.verified,
+        kind: "statute",
+        tokens: tokenSet(excerpt),
+      });
+    }
+  }
+
+  // 3) Jurisprudence (data/jurisprudence.json) — separate layer, never presented
+  //    as binding statute. Every chunk stays verified:false and is retrieved by
+  //    its own resolved text, so damaged passages were already removed upstream.
+  for (const decision of JURISPRUDENCE_DECISIONS) {
+    const meta = [decision.court, decision.date, decision.caseNo && `ملف ${decision.caseNo}`, decision.topic]
+      .filter(Boolean)
+      .join(" — ");
+    for (const chunk of decision.chunks) {
+      const excerpt = clean(chunk);
+      if (excerpt.length < 40) continue;
+      push({
+        slug: JURISPRUDENCE_SLUG,
+        title: JURISPRUDENCE_TITLE,
+        excerpt,
+        location: `القرار ${decision.id} — ${meta}`,
+        verified: false,
+        kind: "jurisprudence",
         tokens: tokenSet(excerpt),
       });
     }
@@ -198,6 +227,7 @@ const toChunk = (e: Entry, score: number): RetrievedChunk => ({
   score,
   location: e.location,
   verified: e.verified,
+  kind: e.kind,
 });
 
 /** Exact article lookups: "الفصل 230" / "المادة 12" (the article word is interchangeable). */
@@ -268,6 +298,23 @@ const MIN_COVERAGE_COMMON = 0.6;
  * MIN_COVERAGE of the question AND matches a distinctive (rare) term —
  * so a single generic word can no longer pull in an unrelated law.
  */
+/**
+ * الاجتهاد القضائي مكمل لا بديل: إذا وجد نص قانوني مطابق، يتقدّمه في القائمة،
+ * ولا يُدرج من قرارات المحاكم إلا ما بقي من المواضع. هكذا لا يطغى حكم
+ * محكمةٍ على المادة التشريعية في جواب المستخدم.
+ */
+function blend(ranked: RetrievedChunk[], topK: number): RetrievedChunk[] {
+  const statutes = ranked.filter((c) => c.kind !== "jurisprudence");
+  const juris = ranked.filter((c) => c.kind === "jurisprudence");
+  if (!statutes.length || !juris.length) return ranked.slice(0, topK);
+  const out = statutes.slice(0, Math.max(1, topK - 1));
+  for (const c of juris) {
+    if (out.length >= topK) break;
+    out.push(c);
+  }
+  return out;
+}
+
 export function retrieve(question: string, topK = 5): RetrievedChunk[] {
   load();
   const { weights, total, variantsOf, distinctive, topToken } = analyseQuery(question);
@@ -295,10 +342,10 @@ export function retrieve(question: string, topK = 5): RetrievedChunk[] {
     if (!topHit && coverage < 0.55) continue;
     scored.push({ chunk: toChunk(e, matched), coverage });
   }
-  return scored
+  const ranked = scored
     .sort((a, b) => b.chunk.score - a.chunk.score || b.coverage - a.coverage)
-    .slice(0, topK)
     .map((x) => x.chunk);
+  return blend(ranked, topK);
 }
 
 export function retrieveWithRefs(question: string, topK = 6): RetrievedChunk[] {
@@ -318,12 +365,30 @@ export function retrievalQuality(
   chunks: RetrievedChunk[],
 ): "high" | "medium" | "low" | "insufficient_sources" {
   if (!chunks.length) return "insufficient_sources";
-  const { total } = analyseQuery(question);
-  if (total <= 0) return "low";
+  const { variantsOf } = analyseQuery(question);
+  const questionTokens = tokenize(question);
+  if (!questionTokens.length) return "low";
   const top = chunks[0];
   // Verbatim article hit, not a guess.
   if (top.score >= 1000) return "medium";
-  const coverage = Math.min(1, top.score / total);
+  // الاجتهاد القضائي: نص تالف جزئيًا وغير مُراجع — لا يرتفع اليقين عن "منخفض"
+  // مهما بدا التطابق قويًا.
+  if (top.kind === "jurisprudence") return "low";
+  // Unweighted recall of the question's terms, deliberately not IDF-weighted:
+  // adding texts to the corpus shifts IDF and would otherwise inflate the
+  // relevance score of an unchanged, weak match.
+  const topTokens = tokenSet(top.excerpt);
+  let matched = 0;
+  for (const t of questionTokens) {
+    const variants = variantsOf.get(t) ?? new Set([t]);
+    for (const v of variants) {
+      if (topTokens.has(v)) {
+        matched++;
+        break;
+      }
+    }
+  }
+  const coverage = matched / questionTokens.length;
   if (coverage >= 0.75 && chunks.length >= 2) return "high";
   if (coverage >= 0.55) return "medium";
   return "low";
