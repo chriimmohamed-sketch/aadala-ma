@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getMessages } from "@/lib/i18n/getMessages";
 import { isRtl, locales } from "@/lib/i18n/config";
 import StorageNotice from "@/components/StorageNotice";
+import HtmlLangDir from "@/components/HtmlLangDir";
 import GlobalLoader from "@/components/GlobalLoader";
 import MobileNavSupreme from "@/components/MobileNavSupreme";
 import FloatingAI from "@/components/FloatingAI";
@@ -25,28 +26,14 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   await getMessages(locale);
   const dir = isRtl(locale) ? "rtl" : "ltr";
   return (
-    <html lang={locale} dir={dir} suppressHydrationWarning>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('aadala-theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
-          }}
-        />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;600;700;900&family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Amiri:wght@400;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="min-h-screen antialiased" style={{ backgroundColor: "var(--aadala-ivory)", color: "var(--aadala-graphite)" }}>
-        <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-navy focus:px-4 focus:py-2 focus:text-ivory">تخطَّ إلى المحتوى الرئيسي</a>
-        <GlobalLoader />
-        {children}
-        <MobileNavSupreme locale={locale} />
-        <FloatingAI locale={locale} />
-        <StorageNotice locale={locale} />
-      </body>
-    </html>
+    <div lang={locale} dir={dir} className="min-h-screen antialiased" style={{ backgroundColor: "var(--aadala-ivory)", color: "var(--aadala-graphite)" }}>
+      <HtmlLangDir locale={locale} rtl={dir === "rtl"} />
+      <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-navy focus:px-4 focus:py-2 focus:text-ivory">تخطَّ إلى المحتوى الرئيسي</a>
+      <GlobalLoader />
+      {children}
+      <MobileNavSupreme locale={locale} />
+      <FloatingAI locale={locale} />
+      <StorageNotice locale={locale} />
+    </div>
   );
 }
