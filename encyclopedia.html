@@ -42,6 +42,7 @@
   <script src="assets/js/app.js"></script>
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/legal-content.js"></script>
+  <script src="assets/js/sources-db.js"></script>
   <script>
     document.getElementById('header').innerHTML = renderHeader('encyclopedia.html');
     document.getElementById('footer').innerHTML = renderFooter();
@@ -65,6 +66,7 @@
     function showCategory(id) {
       const c = LegalEncyclopedia.categories.find(x => x.id === id);
       const texts = (window.LegalContent ? LegalContent.texts.filter(t => t.category === id) : []);
+      const docs = (window.SourcesDB && SourcesDB.documents ? SourcesDB.documents.filter(d => d.category === id) : []);
       const detail = document.getElementById('textDetail');
       detail.classList.remove('hidden');
       let html = `<div class="card"><h3>${c.icon} ${c.name}</h3><p class="text-muted">${c.desc}</p>`;
@@ -89,8 +91,27 @@
         });
         html += '</div>';
       } else {
-        html += `<div class="alert alert-info mt-2">لا توجد نصوص مفهرسة في هذه الفئة حالياً ضمن هذه النسخة. يمكن إضافتها لاحقاً من مصادر رسمية موثقة.</div>`;
+        html += `<div class="alert alert-info mt-2">لا توجد نصوص مرجعية مفهرسة في هذه الفئة حالياً ضمن هذه النسخة.</div>`;
       }
+      if (docs.length > 0) {
+        html += `<div class="mt-3"><h4>وثائق PDF مرفوعة (قاعدة المصادر)</h4><p class="text-muted" style="font-size:.9rem;">ملفات مرفوعة للرجوع والمعالجة — تحقق مطلوب مقابل المصدر الرسمي.</p>`;
+        docs.forEach(d => {
+          html += `<div class="card mb-2" style="background:var(--color-bg-alt);box-shadow:none;">
+            <h4 style="margin-bottom:.25rem;">${d.title} <span class="badge badge-accent">${d.status || 'مرفوع'}</span></h4>
+            <table class="data-table" style="font-size:.9rem;">
+              <tr><td><strong>النوع</strong></td><td>${d.type || '-'}</td></tr>
+              <tr><td><strong>الرقم</strong></td><td>${d.number || '-'}</td></tr>
+              <tr><td><strong>التاريخ</strong></td><td>${d.date || '-'}</td></tr>
+              <tr><td><strong>الصفحات</strong></td><td>${d.pages != null ? d.pages : '-'}</td></tr>
+              <tr><td><strong>المصدر</strong></td><td>${d.source || '-'}</td></tr>
+            </table>
+            <p style="font-size:.9rem;margin:.5rem 0;"><strong>ملاحظة:</strong> ${d.note || '-'}</p>
+            <a href="${d.file}" target="_blank" rel="noopener" class="btn btn-outline btn-sm">فتح PDF</a>
+          </div>`;
+        });
+        html += `</div>`;
+      }
+      html += `<div class="mt-2"><a href="database.html" class="btn btn-ghost btn-sm">عرض كل قاعدة المصادر</a></div>`;
       html += '</div>';
       detail.innerHTML = html;
       detail.scrollIntoView({ behavior: 'smooth' });
