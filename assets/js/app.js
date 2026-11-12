@@ -276,6 +276,7 @@ function renderHeader(activePage) {
     { href: 'inheritance.html', label: t('inheritance','المواريث') },
     { href: 'legal-aid.html', label: t('legalAid','المساعدة') },
     { href: 'academic.html', label: t('academic','الأكاديمية') },
+    { href: 'database.html', label: 'قاعدة المصادر' },
   ];
   const links = pages.map(p => `<li><a href="${p.href}" class="${p.href === activePage ? 'active' : ''}">${p.label}</a></li>`).join('');
   return `
@@ -323,6 +324,7 @@ function renderFooter() {
             <li><a href="gazette.html">الجريدة الرسمية</a></li>
             <li><a href="case-law.html">الاجتهاد القضائي</a></li>
             <li><a href="inheritance.html">المواريث</a></li>
+            <li><a href="database.html">قاعدة المصادر (PDF)</a></li>
           </ul>
         </div>
         <div>
