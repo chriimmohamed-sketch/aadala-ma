@@ -39,7 +39,8 @@
           </tbody>
         </table>
       </div>
-      <p id="gazetteStatus" class="text-muted text-sm" role="status" aria-live="polite"></p>\n      <div class="card mt-3">
+      <p id="gazetteStatus" class="text-muted text-sm" role="status" aria-live="polite"></p>
+      <div class="card mt-3">
         <h3>هيكل الأرشيف (كل عدد)</h3>
         <ul style="list-style:none; line-height:2;">
           <li>• رقم العدد والتاريخ</li>
@@ -63,11 +64,7 @@
     document.getElementById('header').innerHTML = renderHeader('gazette.html');
     document.getElementById('footer').innerHTML = renderFooter();
     updateAuthUI();
-    function searchGazette() {
-      const q = document.getElementById('gazetteSearch').value.trim();
-      AADALA.toast('بحث في الأرشيف (قيد البناء): ' + q, 'info');
-      Admin.log('gazette_search', { query: q });
-    }
   </script>
+  <script src="assets/js/gazette.js" defer></script>
 </body>
 </html>
