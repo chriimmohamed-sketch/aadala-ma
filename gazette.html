@@ -21,10 +21,10 @@
         <strong>ملاحظة:</strong> الأرشيف قيد البناء. سيتم جمع وفهرسة الأعداد من المصادر الرسمية (www.sgg.gov.ma). لا ندّعِ اكتمال الأرشيف دون دليل.
       </div>
       <div class="card">
-        <h3 class="mb-2">بحث في الأرشيف</h3>
+        <h3 class="mb-2">البحث في المراجع التشريعية المرتبطة</h3><p class="text-muted text-sm">البيانات التالية مأخوذة من فهرس الموسوعة، وليست أعداداً من الجريدة الرسمية.</p>
         <div class="flex gap-2 mb-3">
           <input type="text" class="form-input" id="gazetteSearch" placeholder="بحث (سنة، عدد، موضوع، رقم ظهير...)">
-          <button class="btn btn-primary" onclick="searchGazette()">بحث</button>
+          <button class="btn btn-primary" type="button" id="gazetteSearchButton">بحث</button>
         </div>
         <div class="stats-grid mb-3">
           <div class="stat-card"><div class="stat-value" id="gTotal">0</div><div class="stat-label">أعداد مكتشفة</div></div>
@@ -33,13 +33,13 @@
           <div class="stat-card"><div class="stat-value" id="gPending">0</div><div class="stat-label">قيد المعالجة</div></div>
         </div>
         <table class="data-table">
-          <thead><tr><th>السنة</th><th>العدد</th><th>التاريخ</th><th>اللغة</th><th>الحالة</th><th>المصدر</th></tr></thead>
+          <thead><tr><th>التاريخ المسجل</th><th>رقم النص</th><th>اسم المرجع</th><th>نوع النص</th><th>طبيعة السجل</th><th>المصدر</th></tr></thead>
           <tbody id="gazetteBody">
             <tr><td colspan="6" class="text-muted text-center">لا توجد أعداد مفهرسة حالياً. سيتم إضافتها من المصادر الرسمية.</td></tr>
           </tbody>
         </table>
       </div>
-      <div class="card mt-3">
+      <p id="gazetteStatus" class="text-muted text-sm" role="status" aria-live="polite"></p>\n      <div class="card mt-3">
         <h3>هيكل الأرشيف (كل عدد)</h3>
         <ul style="list-style:none; line-height:2;">
           <li>• رقم العدد والتاريخ</li>
