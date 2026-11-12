@@ -41,7 +41,8 @@
           </tbody>
         </table>
       </div>
-      <p id="caseStatus" class="text-muted text-sm" role="status" aria-live="polite"></p><p><a class="btn btn-outline" href="https://www.courdecassation.ma/" target="_blank" rel="noopener noreferrer">زيارة الموقع الرسمي لمحكمة النقض</a></p>\n      <div class="card mt-3">
+      <p id="caseStatus" class="text-muted text-sm" role="status" aria-live="polite"></p><p><a class="btn btn-outline" href="https://www.courdecassation.ma/" target="_blank" rel="noopener noreferrer">زيارة الموقع الرسمي لمحكمة النقض</a></p>
+      <div class="card mt-3">
         <h3>هيكل قرار (كل قرار)</h3>
         <ul style="list-style:none; line-height:2;">
           <li>• المحكمة والغرفة</li>
@@ -69,11 +70,7 @@
     document.getElementById('header').innerHTML = renderHeader('case-law.html');
     document.getElementById('footer').innerHTML = renderFooter();
     updateAuthUI();
-    function searchCases() {
-      const q = document.getElementById('caseSearch').value.trim();
-      AADALA.toast('بحث في الاجتهاد (قيد البناء): ' + q, 'info');
-      Admin.log('case_law_search', { query: q });
-    }
   </script>
+  <script src="assets/js/case-law.js" defer></script>
 </body>
 </html>
