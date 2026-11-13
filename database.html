@@ -187,11 +187,17 @@
         return;
       }
       if (st.status === 'live') {
-        el.className = 'alert alert-success mb-3';
-        el.innerHTML = `<strong>متصل بقاعدة البيانات:</strong> تم تحميل ${st.docs.length} سجلاً مرجعياً من Supabase (قراءة عامة عبر RLS). آخر مزامنة: ${new Date(st.syncedAt).toLocaleString('ar-MA')}.`;
+        if (st.docs.length === 0) {
+          el.className = 'alert alert-info mb-3';
+          el.innerHTML = '<strong>متصل بقاعدة البيانات</strong> — لا توجد سجلات عامة بعد. يُعرض الفهرس المحلي المرفق. لتعبئة القاعدة طبّق <code>supabase/apply_all.sql</code> (انظر <code>supabase/README.md</code>).';
+        } else {
+          el.className = 'alert alert-success mb-3';
+          el.innerHTML = `<strong>متصل بقاعدة البيانات:</strong> تم تحميل ${st.docs.length} سجلاً مرجعياً من Supabase (قراءة عامة عبر RLS). آخر مزامنة: ${new Date(st.syncedAt).toLocaleString('ar-MA')}.` +
+            (st.degraded ? ' <span class="text-muted">(مخطط قديم: بعض أعمدة البيانات الوصفية غير موجودة بعد.)</span>' : '');
+        }
       } else if (st.status === 'fallback') {
         el.className = 'alert alert-warning mb-3';
-        el.innerHTML = `<strong>تعذّر الاتصال بقاعدة البيانات:</strong> يُعرض الفهرس المحلي المرفق حالياً. السبب: <span dir="ltr" style="font-family:monospace;font-size:.85rem;">${esc(st.error||'')}</span>`;
+        el.innerHTML = `<strong>تعذّر الاتصال بقاعدة البيانات:</strong> يُعرض الفهرس المحلي المرفق حالياً. السبب: <span dir="ltr" style="font-family:monospace;font-size:.8rem;">${esc((st.error||'').slice(0,180))}</span>`;
       } else {
         el.className = 'alert alert-info mb-3';
         el.innerHTML = '<strong>حالة الاتصال:</strong> جارٍ تحميل الفهرس المرجعي...';

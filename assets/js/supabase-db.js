@@ -25,6 +25,15 @@
     'legal_document_versions(version_label,is_original,source_file,notes)',
   ].join(',');
 
+  // Older schema (before the 2026-11-13 migration) lacks the extra metadata
+  // columns. Retry with this subset so the page still reads live rows instead
+  // of falling back to local data for a missing-column error.
+  const FIELDS_BASE = [
+    'slug', 'official_title', 'doc_type', 'number', 'issue_date',
+    'publication_source', 'status', 'source_url', 'last_verified_at',
+    'legal_document_versions(version_label,is_original,source_file,notes)',
+  ].join(',');
+
   const TYPE_LABEL = {
     constitution: 'دستور',
     loi: 'قانون',
@@ -42,6 +51,7 @@
     docs: [],
     syncedAt: null,
     source: 'local',
+    degraded: false,
   };
 
   function statusLabel(doc) {
@@ -125,10 +135,24 @@
     state.status = 'loading';
     dispatch('loading');
     try {
-      const rows = await rest(
-        '/legal_documents?select=' + encodeURIComponent(FIELDS) +
-        '&status=in.(published,reference)&order=official_title.asc'
-      );
+      let rows;
+      try {
+        rows = await rest(
+          '/legal_documents?select=' + encodeURIComponent(FIELDS) +
+          '&status=in.(published,reference)&order=official_title.asc'
+        );
+        state.degraded = false;
+      } catch (err) {
+        // Column missing because the migration has not been applied yet:
+        // fall back to the columns that exist in the original schema.
+        if (String(err && err.message).indexOf('42703') === -1 &&
+            String(err && err.message).indexOf('does not exist') === -1) throw err;
+        rows = await rest(
+          '/legal_documents?select=' + encodeURIComponent(FIELDS_BASE) +
+          '&status=in.(published,reference)&order=official_title.asc'
+        );
+        state.degraded = true;
+      }
       const mapped = (Array.isArray(rows) ? rows : []).map(mapDoc);
       state.docs = mapped;
       state.status = 'live';
