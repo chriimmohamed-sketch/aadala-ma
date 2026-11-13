@@ -17,5 +17,33 @@ node_modules
 /data/ocr
 **/__pycache__
 /data/*.py
+/data/*.ps1
 /data/extraction-report.json
 /data/page-scores.json
+# Next.js / source-only directories (public site serves static HTML from repo root)
+/.next
+/app
+/components
+/lib
+/worker
+/messages
+/.github
+/docs
+/supabase
+# root-level tool configs and build metadata
+/package.json
+/package-lock.json
+/tsconfig.json
+/tsconfig.tsbuildinfo
+/next.config.ts
+/next-env.d.ts
+/open-next.config.ts
+/eslint.config.mjs
+/vitest.config.ts
+/middleware.ts
+/.eslintignore
+/.gitignore
+/.assetsignore
+/wrangler.toml
+# project docs and audit reports (not site content)
+/*.md
