@@ -112,7 +112,8 @@
         return;
       }
       el.className = 'alert alert-info mb-3';
-      el.innerHTML = `<strong>حالة الأرشيف:</strong> يوجد حالياً <strong>${docs.length}</strong> عدداً مفهراً${dbCount ? ` (${dbCount} من قاعدة البيانات)` : ''} — <strong>بيانات وصفية فقط</strong>. لا يوجد بعدُ نص OCR مراجع لكل عدد، ولا ندّعي اكتمال التغطية.` +
+      const countText = docs.length === 1 ? 'عدد مفهر واحد' : `${docs.length} أعداد مفهرة`;
+      el.innerHTML = `<strong>حالة الأرشيف:</strong> يوجد حالياً <strong>${countText}</strong>${dbCount ? ` (${dbCount} من قاعدة البيانات)` : ''} — <strong>بيانات وصفية فقط</strong>. لا يوجد بعدُ نص OCR مراجع لكل عدد، ولا ندّعي اكتمال التغطية.` +
         (live ? '' : ' <span class="text-muted">(وضع محلي: قاعدة البيانات غير متاحة حالياً.)</span>');
     }
 

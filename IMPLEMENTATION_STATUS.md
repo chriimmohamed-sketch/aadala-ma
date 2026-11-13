@@ -18,7 +18,7 @@
 | Navigation/Header/Footer | ✅/🟡 | Shared render, theme toggle, lang selector, auth UI (demo); needs grouped mega-menu/mobile refinement |
 | Legal AI | 🟡 | Mock/template responses with structured sections; no RAG, no real retrieval/citations |
 | Encyclopedia | 🟡 | 16 reference entries + categories; browse/search params basic; no full-text corpus/versioning |
-| Gazette (الجريدة الرسمية) | 🟡 | Scaffold UI (search/status/OCR placeholders); no ingestion, no PDF/OCR pipeline |
+| Gazette (الجريدة الرسمية) | 🟡/✅ | Renders indexed issues from the database (currently 1: BO 7437, metadata only); no OCR/full archive yet |
 | Case Law (الاجتهاد القضائي) | 🟡 | Scaffold UI and filters; no verified decisions dataset |
 | Inheritance | 🟡 | Demo calculator (simplified); requires deterministic fara'id logic + expert validation |
 | Real Estate / Criminal / Procedures / Fiqh / Academic | 🟡 | Informational scaffolds and entry points |
