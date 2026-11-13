@@ -1,5 +1,9 @@
 {
   "brand": "AADALA.MA",
   "tagline": "Le droit compris, le droit connu.",
-  "status": { "inDevelopment": "En développement", "demo": "Données de démonstration" }
+  "status": {
+    "inDevelopment": "En développement",
+    "demo": "Données de démonstration"
+  },
+  "more": "Plus"
 }

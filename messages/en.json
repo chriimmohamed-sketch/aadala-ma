@@ -1,1 +1,9 @@
-{ "brand": "AADALA.MA", "tagline": "Law understood, rights known.", "status": { "inDevelopment": "In development", "demo": "Demo data" } }
+{
+  "brand": "AADALA.MA",
+  "tagline": "Law understood, rights known.",
+  "status": {
+    "inDevelopment": "In development",
+    "demo": "Demo data"
+  },
+  "more": "More"
+}

@@ -1,1 +1,9 @@
-{ "brand": "AADALA.MA", "tagline": "Recht begrepen, recht bekend.", "status": { "inDevelopment": "In ontwikkeling", "demo": "Demogegevens" } }
+{
+  "brand": "AADALA.MA",
+  "tagline": "Recht begrepen, recht bekend.",
+  "status": {
+    "inDevelopment": "In ontwikkeling",
+    "demo": "Demogegevens"
+  },
+  "more": "Meer"
+}

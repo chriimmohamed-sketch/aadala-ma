@@ -1,64 +1,81 @@
 @import "tailwindcss";
 
 /* ==========================================================================
-   AADALA.MA — Design Constitution Tokens (Phase 2 — single source of truth)
-   Light:  ivory surfaces + ink text + crimson affirmation + gold details.
-   Dark:   ink-900 background, crimson-900 surfaces, gold-300 details.
+   AADALA.MA — Premium Moroccan Legal Intelligence (Design Constitution, 2026-11)
+   Palette: كحلي عميق #263247 · عاجي #F7F5F0 · أبيض #FFFFFF ·
+            ذهبي مطفأ #B99A5B · أخضر مزرق #2D7778 · رمادي #5F6875 · أحمر #B94A48
+   Derived shades are documented inline; components consume the semantic aliases only.
    ========================================================================== */
 
 :root {
-  --crimson-900: #4A0A14;
-  --crimson-700: #6E0B1B;
-  --crimson-500: #9B1B30;
-  --gold-300: #E3C77A;
-  --gold-500: #C9A24B;
-  --gold-700: #9A7A2E;
-  --ivory-50: #FBF7EF;
-  --ivory-100: #F3ECDD;
-  --ink-900: #14110E;
-  --ink-700: #2B2421;
+  --navy-900: #141E2E;
+  --navy-700: #1F2A3D;
+  --navy-500: #263247;
+  --navy-400: #33415C;
+  --gold-300: #D4BC8E;
+  --gold-500: #B99A5B;
+  --gold-700: #8F7442;
+  --ivory-50: #F7F5F0;
+  --ivory-100: #EDEAE1;
+  --ink-900: #263247;
+  --ink-700: #33415C;
+  --teal-500: #2D7778;
+  --teal-400: #3E9292;
+  --graphite-500: #5F6875;
+  --paper: #FFFFFF;
+  --danger: #B94A48;
 
-  /* Derived aliases — same source, consumed across components. */
-  --aadala-navy: var(--ink-900);
-  --aadala-navy-soft: var(--ink-700);
+  /* Semantic aliases — same source, consumed across components. */
+  --aadala-navy: var(--navy-500);
+  --aadala-navy-soft: var(--navy-400);
   --aadala-gold: var(--gold-500);
   --aadala-gold-soft: var(--gold-300);
   --aadala-ivory: var(--ivory-50);
   --aadala-ivory-deep: var(--ivory-100);
   --aadala-graphite: var(--ink-700);
-  --aadala-graphite-soft: #6B6257;
-  --aadala-surface: var(--ivory-50);
-  --aadala-border: #D9CBB4;
-  --aadala-danger: var(--crimson-500);
-  --aadala-success: #2F6B4F;
-  --aadala-glass: rgba(201, 162, 39, 0.08);
+  --aadala-graphite-soft: var(--graphite-500);
+  --aadala-surface: var(--paper);
+  --aadala-border: #DCD8CB;
+  --aadala-danger: var(--danger);
+  --aadala-success: var(--teal-500);
+  --aadala-teal: var(--teal-500);
+  --aadala-teal-soft: var(--teal-400);
+  --aadala-glass: rgba(185, 154, 91, 0.10);
 }
 
 [data-theme="dark"] {
-  --crimson-900: #4A0A14;
-  --crimson-700: #6E0B1B;
-  --crimson-500: #9B1B30;
-  --gold-300: #E3C77A;
-  --gold-500: #C9A24B;
-  --gold-700: #9A7A2E;
-  --ivory-50: #14110E;
-  --ivory-100: #4A0A14;
-  --ink-900: #FBF7EF;
-  --ink-700: #F3ECDD;
+  --navy-900: #0B1220;
+  --navy-700: #141E2E;
+  --navy-500: #1A2333;
+  --navy-400: #263247;
+  --gold-300: #D4BC8E;
+  --gold-500: #B99A5B;
+  --gold-700: #8F7442;
+  --ivory-50: #10182A;
+  --ivory-100: #1A2333;
+  --ink-900: #F7F5F0;
+  --ink-700: #C7CEDA;
+  --teal-500: #3E9292;
+  --teal-400: #5AABAB;
+  --graphite-500: #A9B4C4;
+  --paper: #1A2333;
+  --danger: #D26663;
 
   --aadala-navy: var(--ink-900);
-  --aadala-navy-soft: var(--ink-700);
+  --aadala-navy-soft: var(--ivory-100);
   --aadala-gold: var(--gold-300);
   --aadala-gold-soft: var(--gold-500);
-  --aadala-ivory: var(--ink-900);
-  --aadala-ivory-deep: var(--crimson-900);
-  --aadala-graphite: var(--ivory-100);
-  --aadala-graphite-soft: #C9C3B5;
-  --aadala-surface: var(--crimson-900);
-  --aadala-border: rgba(227, 199, 122, 0.25);
-  --aadala-danger: var(--crimson-500);
-  --aadala-success: #2F6B4F;
-  --aadala-glass: rgba(227, 199, 122, 0.08);
+  --aadala-ivory: var(--ivory-50);
+  --aadala-ivory-deep: var(--ivory-100);
+  --aadala-graphite: var(--ink-900);
+  --aadala-graphite-soft: var(--graphite-500);
+  --aadala-surface: var(--paper);
+  --aadala-border: rgba(185, 154, 91, 0.30);
+  --aadala-danger: var(--danger);
+  --aadala-success: var(--teal-500);
+  --aadala-teal: var(--teal-500);
+  --aadala-teal-soft: var(--teal-400);
+  --aadala-glass: rgba(185, 154, 91, 0.10);
 }
 
 @theme inline {
@@ -74,10 +91,13 @@
   --color-border: var(--aadala-border);
   --color-danger: var(--aadala-danger);
   --color-success: var(--aadala-success);
-  /* Design constitution tokens (Phase 2) */
-  --color-crimson-500: var(--crimson-500);
-  --color-crimson-700: var(--crimson-700);
-  --color-crimson-900: var(--crimson-900);
+  --color-teal: var(--aadala-teal);
+  --color-teal-soft: var(--aadala-teal-soft);
+  --color-paper: var(--paper);
+  /* Design constitution scale (2026-11) */
+  --color-navy-500: var(--navy-500);
+  --color-navy-700: var(--navy-700);
+  --color-navy-900: var(--navy-900);
   --color-gold-300: var(--gold-300);
   --color-gold-500: var(--gold-500);
   --color-gold-700: var(--gold-700);
@@ -98,11 +118,20 @@ body {
   transition: background .4s ease, color .4s ease;
 }
 
+/* Brand shell: header/footer stay AADALA navy in both themes (identity). */
+.aadala-shell {
+  background: #263247;
+  color: #F7F5F0;
+}
+[data-theme="dark"] .aadala-shell {
+  background: #141E2E;
+}
+
 /* Animated gradient background for hero */
 .hero-bg {
-  background: linear-gradient(135deg, #4A0A14 0%, #6E0B1B 50%, #4A0A14 100%);
+  background: linear-gradient(135deg, #141E2E 0%, #263247 55%, #1F2A3D 100%);
   background-size: 200% 200%;
-  animation: gradientShift 8s ease infinite;
+  animation: gradientShift 10s ease infinite;
 }
 @keyframes gradientShift {
   0% { background-position: 0% 50%; }
@@ -115,7 +144,7 @@ body {
   position: absolute;
   border-radius: 50%;
   filter: blur(40px);
-  opacity: 0.4;
+  opacity: 0.35;
   animation: float 6s ease-in-out infinite;
 }
 .orb-1 { width: 200px; height: 200px; background: var(--aadala-gold); top: 10%; right: 10%; animation-delay: 0s; }
@@ -130,7 +159,7 @@ body {
   background: var(--aadala-glass);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(201,162,39,0.2);
+  border: 1px solid rgba(185, 154, 91, 0.25);
   border-radius: 1rem;
 }
 
@@ -139,19 +168,19 @@ body {
   background: var(--aadala-surface);
   border: 1px solid var(--aadala-border);
   border-radius: 0.75rem;
-  box-shadow: 0 1px 2px rgba(11,29,58,0.04);
+  box-shadow: 0 1px 2px rgba(20, 30, 46, 0.06);
   transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
 }
 .aadala-card:hover {
-  box-shadow: 0 12px 30px rgba(11,29,58,0.12);
+  box-shadow: 0 12px 30px rgba(20, 30, 46, 0.14);
   transform: translateY(-4px);
   border-color: var(--aadala-gold);
 }
 
 /* Buttons */
 .aadala-btn-primary {
-  background: var(--aadala-navy);
-  color: var(--aadala-ivory);
+  background: #263247;
+  color: #F7F5F0;
   padding: 0.7rem 1.4rem;
   border-radius: 0.6rem;
   font-weight: 600;
@@ -159,12 +188,25 @@ body {
   cursor: pointer;
   transition: background .2s ease, transform .1s ease;
 }
-.aadala-btn-primary:hover { background: var(--aadala-navy-soft); }
+.aadala-btn-primary:hover { background: #33415C; }
 .aadala-btn-primary:active { transform: scale(0.98); }
+
+.aadala-btn-teal {
+  background: #2D7778;
+  color: #FFFFFF;
+  padding: 0.7rem 1.4rem;
+  border-radius: 0.6rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background .2s ease, transform .1s ease;
+}
+.aadala-btn-teal:hover { background: #3E9292; }
+.aadala-btn-teal:active { transform: scale(0.98); }
 
 .aadala-btn-gold {
   background: var(--aadala-gold);
-  color: var(--aadala-navy);
+  color: #263247;
   padding: 0.7rem 1.4rem;
   border-radius: 0.6rem;
   font-weight: 600;
@@ -172,8 +214,23 @@ body {
   cursor: pointer;
   transition: background .2s ease, transform .1s ease, box-shadow .2s ease;
 }
-.aadala-btn-gold:hover { background: var(--aadala-gold-soft); box-shadow: 0 4px 12px rgba(201,162,39,0.4); }
+.aadala-btn-gold:hover { background: var(--aadala-gold-soft); box-shadow: 0 4px 12px rgba(185, 154, 91, 0.4); }
 .aadala-btn-gold:active { transform: scale(0.98); }
+
+/* Logo badge: clips the square JPEG to the circular logo mark */
+.aadala-logo-badge {
+  display: inline-block;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: #FFFFFF;
+  flex-shrink: 0;
+}
+.aadala-logo-badge img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
 /* Divider */
 .aadala-divider {

@@ -1,1 +1,9 @@
-{ "brand": "AADALA.MA", "tagline": "Hukuk anlaşıldı, hak bilindi.", "status": { "inDevelopment": "Geliştiriliyor", "demo": "Demo verileri" } }
+{
+  "brand": "AADALA.MA",
+  "tagline": "Hukuk anlaşıldı, hak bilindi.",
+  "status": {
+    "inDevelopment": "Geliştiriliyor",
+    "demo": "Demo verileri"
+  },
+  "more": "Daha fazlası"
+}
