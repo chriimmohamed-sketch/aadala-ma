@@ -66,3 +66,18 @@ Method: code inspection + `npm audit` + grep. Fixes NOT applied (awaiting approv
 
 ---
 **Awaiting your approval to apply fixes #1-#4.**
+
+
+## Applied fixes (2026-11-13)
+
+1. **Session proxy already wired** — root `proxy.ts` (Next.js 16 convention) invokes `lib/supabase/middleware.ts` (`updateSession`): session refresh + admin gate + locale redirect. (A redundant `middleware.ts` was created and then removed to avoid the Next.js 16 conflict.) ✅
+2. **XSS vectors removed** — `components/HomeInteractions.tsx`: all `innerHTML` replaced with `textContent`/`createElement` (3 sites). ✅
+3. **Audit logging helper** — `lib/security/audit-log.ts` + migration `supabase/migrations/0017_audit_log.sql` (additive, RLS-protected). ✅ (helper available; call sites can be added incrementally)
+4. **CSRF** — relies on SameSite=Lax (Supabase default) + POST + session; documented as acceptable. ✅
+5. **MFA** — `MfaForm.tsx` (TOTP) available; mandatory enforcement for admin deferred (admin page currently redirects home = fail-closed). ⚠️ UI enrollment page still needed.
+6. **CORS** — same-origin default, no change needed. ✅
+
+## Status update
+- ✅ سليم: 21 / 27 (was 19)
+- ⚠️ فيه مشكلة: 3 / 27 (MFA enforcement, audit trail call-sites, self-test)
+- N/A: 3 / 27
