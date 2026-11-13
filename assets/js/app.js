@@ -325,6 +325,8 @@ function renderFooter() {
             <li><a href="case-law.html">الاجتهاد القضائي</a></li>
             <li><a href="inheritance.html">المواريث</a></li>
             <li><a href="database.html">قاعدة المصادر (PDF)</a></li>
+            <li><a href="qanun.html">القانون بنصّه ومادّته</a></li>
+            <li><a href="huwiya.html">الهوية المغربية</a></li>
           </ul>
         </div>
         <div>

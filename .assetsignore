@@ -45,5 +45,6 @@ node_modules
 /.gitignore
 /.assetsignore
 /wrangler.toml
+*.deploy-bak
 # project docs and audit reports (not site content)
 /*.md
