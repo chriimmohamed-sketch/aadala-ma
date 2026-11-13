@@ -53,11 +53,15 @@ export default function HomeInteractions({ locale }: { locale: string }) {
       b.type = "button";
       b.className = "more";
       b.setAttribute("aria-expanded", "false");
-      b.innerHTML = 'كيف تعمل؟ <span aria-hidden="true">+</span>';
+      b.textContent = 'كيف تعمل؟ +';
       const ol = d.createElement("ol");
       ol.className = "steps";
       const steps = STEPS[i % STEPS.length];
-      ol.innerHTML = "<li>" + steps.join("</li><li>") + "</li>";
+      for (const step of steps) {
+        const li = d.createElement("li");
+        li.textContent = step;
+        ol.appendChild(li);
+      }
       t.appendChild(b);
       t.appendChild(ol);
       b.addEventListener("click", () => {
@@ -107,16 +111,40 @@ export default function HomeInteractions({ locale }: { locale: string }) {
     const dlg = d.createElement("dialog");
     dlg.className = "pal";
     dlg.setAttribute("aria-label", "انتقال سريع");
-    dlg.innerHTML = '<input type="text" placeholder="إلى أين تريد الذهاب؟" aria-label="بحث" autocomplete="off" style="min-height:44px"><ul role="listbox"></ul>';
+    const inpEl = d.createElement("input");
+    inpEl.type = "text";
+    inpEl.placeholder = "إلى أين تريد الذهاب؟";
+    inpEl.setAttribute("aria-label", "بحث");
+    inpEl.setAttribute("autocomplete", "off");
+    inpEl.style.minHeight = "44px";
+    const ulEl = d.createElement("ul");
+    ulEl.setAttribute("role", "listbox");
+    dlg.appendChild(inpEl);
+    dlg.appendChild(ulEl);
     d.body.appendChild(dlg);
-    const inp = dlg.querySelector("input") as HTMLInputElement;
-    const ul = dlg.querySelector("ul") as HTMLUListElement;
+    const inp = inpEl;
+    const ul = ulEl;
     let cur = 0;
     let list = items;
     const paint = () => {
-      ul.innerHTML = list.map((it, i) =>
-        '<li role="option" aria-selected="' + (i === cur) + '" data-i="' + i + '">' + it[0] + "<small>" + it[2] + "</small></li>"
-      ).join("") || "<li>لا نتيجة</li>";
+      ul.textContent = "";
+      if (list.length === 0) {
+        const li = d.createElement("li");
+        li.textContent = "لا نتيجة";
+        ul.appendChild(li);
+        return;
+      }
+      list.forEach((it, i) => {
+        const li = d.createElement("li");
+        li.setAttribute("role", "option");
+        li.setAttribute("aria-selected", String(i === cur));
+        li.setAttribute("data-i", String(i));
+        li.textContent = it[0];
+        const small = d.createElement("small");
+        small.textContent = it[2];
+        li.appendChild(small);
+        ul.appendChild(li);
+      });
     };
     const go = (it: [string, string, string] | undefined) => {
       if (!it) return;
