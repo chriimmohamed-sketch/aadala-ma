@@ -75,7 +75,7 @@
         <a href="real-estate.html" class="card service-card"><div class="service-icon">🏠</div><h3>الحقوق العينية والعقار</h3><p>الملكية، الشياع، التحفيظ، الرهن، الانتفاع</p></a>
         <a href="procedures.html" class="card service-card"><div class="service-icon">📋</div><h3>المساطر والوثائق</h3><p>دلائل، نماذج، وخطوات إجرائية</p></a>
         <a href="academic.html" class="card service-card"><div class="service-icon">🎓</div><h3>الأكاديمية والباحثون</h3><p>شروحات، مصطلحات، وموارد تعليمية</p></a>
-        <a href="database.html" class="card service-card"><div class="service-icon">🗂️</div><h3>قاعدة المصادر (PDF)</h3><p>وثائق قانونية مرفوعة مع بيانات وصفية ومقتطفات أولية</p></a>
+        <a href="database.html" class="card service-card"><div class="service-icon">🗂️</div><h3>قاعدة المصادر (PDF)</h3><p>وثائق قانونية مرفوعة مع بيانات وصفية ومقتطفات أولية</p><p class="text-muted" id="homeDbStat" style="font-size:.82rem;margin-top:.35rem;">جارٍ تحميل الإحصاءات...</p></a>
       </div>
     </div>
   </section>
@@ -184,10 +184,25 @@
   <script src="assets/js/app.js"></script>
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/legal-content.js"></script>
+  <script src="assets/js/sources-db.js"></script>
+  <script src="assets/js/supabase-db.js"></script>
   <script>
     document.getElementById('header').innerHTML = renderHeader('index.html');
     document.getElementById('footer').innerHTML = renderFooter();
     updateAuthUI();
+
+    function updateHomeDbStat(){
+      const el = document.getElementById('homeDbStat');
+      if (!el) return;
+      const docs = (window.SourcesDB && SourcesDB.documents) || [];
+      const st = window.SupabaseDB ? SupabaseDB.state : null;
+      const files = docs.reduce((n,d)=> n + ((d.versions && d.versions.length) ? d.versions.length : (d.file?1:0)), 0);
+      el.textContent = `${docs.length} وثيقة · ${files} ملف PDF` +
+        (st && st.status === 'live' ? ' — متصل بقاعدة البيانات' : ' — فهرس محلي');
+    }
+    updateHomeDbStat();
+    window.addEventListener('aadala:sources-updated', updateHomeDbStat);
+    if (window.SupabaseDB) SupabaseDB.load();
 
     // Render categories
     const grid = document.getElementById('categoryGrid');

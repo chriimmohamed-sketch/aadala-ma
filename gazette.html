@@ -13,34 +13,34 @@
     <div class="container">
       <div class="section-title">
         <h2>أرشيف الجريدة الرسمية</h2>
-        <p>فهرسة وبحث في النصوص المنشورة — مع تتبع المصدر، حالة المعالجة، وجودة الاستخراج</p>
+        <p>فهرسة وبحث في الأعداد المتاحة — مع تتبع المصدر، حالة المعالجة، وجودة الاستخراج</p>
       </div>
 
-      <div class="alert alert-info mb-3">
-        <strong>حالة الأرشيف:</strong> قيد البناء. لا توجد أعداد مفهرسة حالياً في هذه النسخة التجريبية، ولا ندّعي اكتمال التغطية. أي إدخال مستقبلي يجب أن يُرفق برابط/مرجع المصدر الرسمي (www.sgg.gov.ma) وحالة التحقق.
+      <div id="gazetteState" class="alert alert-info mb-3">
+        <strong>حالة الأرشيف:</strong> جارٍ تحميل السجلات...
       </div>
 
       <div class="card mb-3">
         <h3 class="mb-2">بحث وتصفية</h3>
         <div class="flex gap-2 mb-3 flex-wrap">
-          <input type="text" class="form-input" id="gazetteSearch" placeholder="سنة، عدد، تاريخ، موضوع، رقم ظهير/مرسوم..." style="min-width:260px;flex:1;">
-          <select class="form-select" style="width:auto;min-width:160px;" id="gazetteLang">
+          <input type="text" class="form-input" id="gazetteSearch" placeholder="سنة، عدد، تاريخ، موضوع، رقم ظهير/مرسوم..." style="min-width:260px;flex:1;" oninput="renderGazette()">
+          <select class="form-select" style="width:auto;min-width:160px;" id="gazetteLang" onchange="renderGazette()">
             <option value="">كل اللغات</option>
             <option value="ar">عربية</option>
             <option value="fr">فرنسية</option>
             <option value="bi">ثنائية</option>
           </select>
-          <select class="form-select" style="width:auto;min-width:160px;" id="gazetteStatus">
+          <select class="form-select" style="width:auto;min-width:160px;" id="gazetteStatus" onchange="renderGazette()">
             <option value="">كل الحالات</option>
-            <option value="discovered">مكتشف</option>
-            <option value="processed">معالج</option>
-            <option value="reviewed">مراجع</option>
+            <option value="reference">مرجع عام — تحقق مطلوب</option>
+            <option value="published">منشور — مدقق</option>
+            <option value="archived">مؤرشف</option>
           </select>
-          <button class="btn btn-primary" onclick="searchGazette()">بحث</button>
+          <button class="btn btn-primary" onclick="renderGazette()">بحث</button>
         </div>
         <div class="stats-grid mb-3">
-          <div class="stat-card"><div class="stat-value" id="gTotal">0</div><div class="stat-label">أعداد مكتشفة</div></div>
-          <div class="stat-card"><div class="stat-value" id="gProcessed">0</div><div class="stat-label">معالجة</div></div>
+          <div class="stat-card"><div class="stat-value" id="gTotal">0</div><div class="stat-label">أعداد مفهرسة</div></div>
+          <div class="stat-card"><div class="stat-value" id="gProcessed">0</div><div class="stat-label">نص مستخرج</div></div>
           <div class="stat-card"><div class="stat-value" id="gOCR">0</div><div class="stat-label">نص OCR مراجع</div></div>
           <div class="stat-card"><div class="stat-value" id="gPending">0</div><div class="stat-label">قيد التحقق</div></div>
         </div>
@@ -48,7 +48,7 @@
           <table class="data-table">
             <thead><tr><th>السنة</th><th>العدد</th><th>التاريخ</th><th>اللغة</th><th>الحالة</th><th>المصدر/الملف</th></tr></thead>
             <tbody id="gazetteBody">
-              <tr><td colspan="6" class="text-muted text-center" style="padding:2rem;">لا توجد أعداد مفهرسة حالياً. عند الإضافة سيظهر: PDF أصلي، نص مستخرج، جودة OCR، وتاريخ آخر تحقق.</td></tr>
+              <tr><td colspan="6" class="text-muted text-center" style="padding:2rem;">جارٍ التحميل...</td></tr>
             </tbody>
           </table>
         </div>
@@ -81,15 +81,81 @@
   <script src="assets/js/app.js"></script>
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/legal-content.js"></script>
+  <script src="assets/js/sources-db.js"></script>
+  <script src="assets/js/supabase-db.js"></script>
   <script>
     document.getElementById('header').innerHTML = renderHeader('gazette.html');
     document.getElementById('footer').innerHTML = renderFooter();
     updateAuthUI();
-    function searchGazette() {
-      const q = document.getElementById('gazetteSearch').value.trim();
-      AADALA.toast('البحث في الأرشيف قيد البناء حالياً' + (q ? ': ' + q : ''), 'info');
-      if (typeof Admin !== 'undefined' && Admin.log) Admin.log('gazette_search', { query: q });
+
+    function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g, m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m])); }
+
+    function gazetteDocs(){
+      const all = (window.SourcesDB && SourcesDB.documents) ? SourcesDB.documents : [];
+      return all.filter(d => d.category === 'gazette' || d.doc_type === 'bulletin_officiel' || d.type === 'الجريدة الرسمية' || d.type === 'bulletin_officiel');
     }
+
+    function statusKey(d){
+      if (d.db_status) return d.db_status;
+      if (d.last_verified) return 'published';
+      return 'reference';
+    }
+
+    function renderState(docs){
+      const el = document.getElementById('gazetteState');
+      const st = window.SupabaseDB ? SupabaseDB.state : null;
+      const live = st && st.status === 'live';
+      const dbCount = docs.filter(d => d.origin === 'supabase').length;
+      if (!docs.length) {
+        el.className = 'alert alert-info mb-3';
+        el.innerHTML = '<strong>حالة الأرشيف:</strong> لا توجد أعداد مفهرسة حالياً. لا ندّعي اكتمال التغطية؛ أي إدخال يجب أن يُرفق بالمصدر الرسمي (www.sgg.gov.ma) وحالة التحقق.';
+        return;
+      }
+      el.className = 'alert alert-info mb-3';
+      el.innerHTML = `<strong>حالة الأرشيف:</strong> يوجد حالياً <strong>${docs.length}</strong> عدداً مفهراً${dbCount ? ` (${dbCount} من قاعدة البيانات)` : ''} — <strong>بيانات وصفية فقط</strong>. لا يوجد بعدُ نص OCR مراجع لكل عدد، ولا ندّعي اكتمال التغطية.` +
+        (live ? '' : ' <span class="text-muted">(وضع محلي: قاعدة البيانات غير متاحة حالياً.)</span>');
+    }
+
+    function renderGazette(){
+      const q = (document.getElementById('gazetteSearch').value || '').toLowerCase().trim();
+      const lang = document.getElementById('gazetteLang').value;
+      const status = document.getElementById('gazetteStatus').value;
+      const docs = gazetteDocs();
+      const filtered = docs.filter(d => {
+        if (lang && (d.language || 'ar') !== lang) return false;
+        if (status && statusKey(d) !== status) return false;
+        if (q && ![d.title,d.number,d.date,d.note,d.source,d.file,d.status].join(' ').toLowerCase().includes(q)) return false;
+        return true;
+      });
+
+      renderState(docs);
+
+      document.getElementById('gTotal').textContent = filtered.length;
+      document.getElementById('gProcessed').textContent = filtered.filter(d => d.snippet).length;
+      document.getElementById('gOCR').textContent = filtered.filter(d => d.last_verified).length;
+      document.getElementById('gPending').textContent = filtered.filter(d => statusKey(d) === 'reference').length;
+
+      const body = document.getElementById('gazetteBody');
+      if (!filtered.length) {
+        body.innerHTML = '<tr><td colspan="6" class="text-muted text-center" style="padding:2rem;">لا توجد نتائج مطابقة.</td></tr>';
+        return;
+      }
+      body.innerHTML = filtered.map(d => {
+        const year = d.date ? String(d.date).slice(0,4) : '—';
+        return `<tr>
+          <td>${esc(year)}</td>
+          <td><strong>${esc(d.number || '—')}</strong><br><span class="text-muted" style="font-size:.85rem;">${esc(d.title || '')}</span></td>
+          <td>${esc(d.date || '—')}</td>
+          <td>${esc((d.language || 'ar') === 'ar' ? 'عربية' : (d.language || '—'))}</td>
+          <td><span class="badge badge-accent">${esc(d.status || 'مرجع عام')}</span></td>
+          <td>${d.file ? `<a class="btn btn-outline btn-sm" href="${esc(d.file)}" target="_blank" rel="noopener">فتح الملف</a>` : '<span class="text-muted">—</span>'}<br><span class="text-muted" style="font-size:.8rem;">${esc(d.source || '')}</span></td>
+        </tr>`;
+      }).join('');
+    }
+
+    window.addEventListener('aadala:sources-updated', renderGazette);
+    renderGazette();
+    if (window.SupabaseDB) SupabaseDB.load();
   </script>
 </body>
 </html>

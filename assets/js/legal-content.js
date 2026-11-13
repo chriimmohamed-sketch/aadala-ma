@@ -5,10 +5,10 @@
 const LegalContent = {
   texts: [
     // === Constitution ===
-    { id: 'constitution-2011', title: 'الدستور المغربي', titleFr: 'Constitution du Maroc', type: 'dahir', number: '1-11-91', date: '2011-07-29', status: 'نافذ', source: 'الجريدة الرسمية عدد 5964', url: 'https://www.sgg.gov.ma', summary: 'الدستور المغربي 2011 — ملكية دستورية، دولة القانون، حقوق وحريات.', category: 'constitution' },
+    { id: 'constitution-2011', title: 'الدستور المغربي', titleFr: 'Constitution du Maroc', type: 'constitution', number: '1-11-91', date: '2011-07-29', status: 'نافذ', source: 'الجريدة الرسمية عدد 5964', url: 'https://www.sgg.gov.ma', summary: 'الدستور المغربي 2011 — ملكية دستورية، دولة القانون، حقوق وحريات.', category: 'constitution' },
 
     // === Civil ===
-    { id: 'doc-1913', title: 'قانون الالتزامات والعقود', titleFr: 'Dahir des Obligations et des Contrats', type: 'dahir', number: '1-13-??', date: '1913-08-12', status: 'نافذ (مع تعديلات متعددة)', source: 'الجريدة الرسمية (الحماية)', url: 'https://www.sgg.gov.ma', summary: 'قانون الالتزامات والعقود — مسؤولية مدنية، عقود، إثبات.', category: 'civil' },
+    { id: 'doc-1913', title: 'قانون الالتزامات والعقود', titleFr: 'Dahir des Obligations et des Contrats', type: 'dahir', number: null, date: '1913-08-12', status: 'نافذ (مع تعديلات متعددة)', source: 'الجريدة الرسمية (الحماية)', url: 'https://www.sgg.gov.ma', summary: 'قانون الالتزامات والعقود — مسؤولية مدنية، عقود، إثبات. الرقم الرسمي للظهير لم يُدرج هنا لتفادي خطأ غير محقق.', category: 'civil' },
     { id: 'code-droits-reels-2011', title: 'قانون الحقوق العينية', titleFr: 'Code des Droits Reels', type: 'dahir', number: '1-11-178', date: '2011-11-22', status: 'نافذ', source: 'الجريدة الرسمية', url: 'https://www.sgg.gov.ma', summary: 'قانون الحقوق العينية — ملكية، usufruit، servitude، hypothèque.', category: 'droits_reels' },
 
     // === Penal ===
@@ -32,7 +32,7 @@ const LegalContent = {
     { id: 'loi-collectivites-2015', title: 'القانون التنظيمي للجماعات الترابية', titleFr: 'Loi Organique des Collectivites Territoriales', type: 'loi organique', number: '113-14', date: '2015-08-07', status: 'نافذ (مع تعديلات)', source: 'الجريدة الرسمية', url: 'https://www.sgg.gov.ma', summary: 'الجماعات الترابية — communes, provinces, regions.', category: 'administratif' },
 
     // === Fiscal ===
-    { id: 'cgi', title: 'القانون العام للضرائب (CGI)', titleFr: 'Code General des Impots', type: 'loi de finances', number: 'annuel', date: '2026-01-01', status: 'نافذ (نسخة 2026)', source: 'الجريدة الرسمية', url: 'https://www.sgg.gov.ma', summary: 'القانون العام للضرائب — IR, IS, TVA, droits d\'enregistrement.', category: 'fiscal' },
+    { id: 'cgi', title: 'القانون العام للضرائب (CGI)', titleFr: 'Code General des Impots', type: 'loi de finances', number: 'annuel', date: null, status: 'نافذ (نسخة سنوية — تحقق من سنة النفاذ)', source: 'الجريدة الرسمية', url: 'https://www.sgg.gov.ma', summary: 'القانون العام للضرائب — IR, IS, TVA, droits d\'enregistrement.', category: 'fiscal' },
 
     // === IP ===
     { id: 'loi-propriete-industrielle-2000', title: 'القانون الخاص بالملكية الصناعية', titleFr: 'Loi sur la Propriete Industrielle', type: 'dahir', number: '1-00-19', date: '2000-02-15', status: 'نافذ (مع تعديلات)', source: 'الجريدة الرسمية', url: 'https://www.sgg.gov.ma', summary: 'الملكية الصناعية — علامات، براءات، dessins.', category: 'propriete_intel' },
@@ -44,7 +44,7 @@ const LegalContent = {
     { id: 'loi-bancaire-2014', title: 'القانون البنكي (مدونة الائتمان)', titleFr: 'Loi Bancaire', type: 'dahir', number: '1-14-193', date: '2014-11-07', status: 'نافذ (مع تعديلات)', source: 'الجريدة الرسمية', url: 'https://www.sgg.gov.ma', summary: 'القانون البنكي — etablissements de credit, Bank Al-Maghrib.', category: 'banque' },
 
     // === Insurance ===
-    { id: 'code-assurances', title: 'مدونة التأمينات', titleFr: 'Code des Assurances', type: 'dahir', number: '1-17-??', date: '2017-??-??', status: 'نافذ', source: 'الجريدة الرسمية', url: 'https://www.sgg.gov.ma', summary: 'مدونة التأمينات — assurances, reinsurance, supervision.', category: 'assurance' }
+    { id: 'code-assurances', title: 'مدونة التأمينات', titleFr: 'Code des Assurances', type: 'dahir', number: null, date: null, status: 'نافذ (تحقق من آخر تعديل)', source: 'الجريدة الرسمية', url: 'https://www.sgg.gov.ma', summary: 'مدونة التأمينات — assurances, reinsurance, supervision.', category: 'assurance' }
   ],
   disclaimer: 'AADALA.MA منصة مستقلة. المعلومات توضيحية وليست استشارة قانونية. تحقق من الجريدة الرسمية (www.sgg.gov.ma).'
 };

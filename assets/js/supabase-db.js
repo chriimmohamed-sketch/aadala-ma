@@ -20,7 +20,7 @@
 
   const FIELDS = [
     'slug', 'official_title', 'doc_type', 'number', 'issue_date',
-    'publication_source', 'status', 'category', 'page_count', 'summary',
+    'publication_source', 'status', 'category', 'language', 'page_count', 'summary',
     'usage_rights', 'source_url', 'last_verified_at',
     'legal_document_versions(version_label,is_original,source_file,notes)',
   ].join(',');
@@ -73,6 +73,7 @@
       number: row.number || null,
       date: row.issue_date || null,
       category: row.category || 'autre',
+      language: row.language || 'ar',
       source: row.publication_source || 'Supabase — مصدر قيد التحقق',
       file: primary.source_file || '',
       pages: row.page_count == null ? null : row.page_count,
