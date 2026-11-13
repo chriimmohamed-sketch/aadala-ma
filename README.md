@@ -16,9 +16,16 @@ AADALA.MA is an independent Moroccan legal intelligence platform designed to mak
 
 ## Status
 
-**Current version: 0.1.0 (Prototype / Demo)**
+**Current version: 0.2.0 (Prototype / Demo)**
 
 This is a static-first prototype. Several features are in demo mode and clearly labeled. See `IMPLEMENTATION_PLAN.md` and `DECISIONS.md` for details.
+
+Uploaded legal PDFs now power real, article-level pages:
+
+- `database.html` — sources catalogue with live Supabase sync, per-document extracted article counts.
+- `document.html?doc=<slug>` — machine-extracted Moroccan legal articles (search, deep links, page/confidence badges, **unverified** label).
+
+The repository also contains the full Next.js App Router application source (from the `AADALA.MA_FULLSTACK` snapshot) for development and a future app experience under `app/[locale]/**`. The deployed site remains the static build until the app is built and deployed.
 
 ## Tech Stack (Current)
 
@@ -62,6 +69,12 @@ aadala-ma/
 ├── fiqh.html               # Sharia & Fiqh
 ├── academic.html           # Academic Space
 ├── founder.html            # Founder Profile
+├── database.html           # Sources catalogue (live Supabase sync)
+├── document.html           # Browser for machine-extracted articles
+├── data/
+│   ├── legal-sources/      # Uploaded PDFs + extracted JSON
+│   └── build_articles.py   # Extraction pipeline (pypdf / Windows OCR)
+├── app/                    # Next.js App Router source (locale routes)
 ├── auth/
 │   ├── login.html          # Login
 │   └── register.html       # Register

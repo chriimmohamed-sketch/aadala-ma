@@ -27,6 +27,7 @@
         <div class="stat-card"><div class="stat-value" id="dbRemote">0</div><div class="stat-label">من قاعدة البيانات</div></div>
         <div class="stat-card"><div class="stat-value" id="dbFiles">0</div><div class="stat-label">ملفات PDF مرتبطة</div></div>
         <div class="stat-card"><div class="stat-value" id="dbVerified">0</div><div class="stat-label">مدقق بشرياً</div></div>
+        <div class="stat-card"><div class="stat-value" id="dbArticles">0</div><div class="stat-label">مواد مستخرجة آلياً</div></div>
       </div>
 
       <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:1rem;">
@@ -87,6 +88,7 @@
   <script src="assets/js/legal-content.js"></script>
   <script src="assets/js/sources-db.js"></script>
   <script src="assets/js/supabase-db.js"></script>
+  <script src="assets/js/articles-db.js"></script>
   <script>
     document.getElementById('header').innerHTML = renderHeader('database.html');
     document.getElementById('footer').innerHTML = renderFooter();
@@ -104,6 +106,10 @@
 
     function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g, m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m])); }
     function catLabel(c){ return CATEGORY_LABEL[c] || c || '-'; }
+    function articlesFor(id){
+      const list = (window.ArticlesDB && ArticlesDB.documents) || [];
+      return list.find(x => x.document_id === id) || null;
+    }
 
     function fillCategories(docs){
       const sel = document.getElementById('dbCategory');
@@ -129,6 +135,7 @@
       document.getElementById('dbFiles').textContent = docs.reduce((n, d) =>
         n + ((Array.isArray(d.versions) && d.versions.length) ? d.versions.length : (d.file ? 1 : 0)), 0);
       document.getElementById('dbVerified').textContent = docs.filter(d => d.last_verified).length;
+      document.getElementById('dbArticles').textContent = docs.reduce((n, d) => n + ((articlesFor(d.id) || {}).article_count || 0), 0);
 
       const body = document.getElementById('dbBody');
       if(!filtered.length){
@@ -140,6 +147,7 @@
               <strong>${esc(d.title)}</strong>
               <br><span class="text-muted" style="font-size:.85rem;">${esc(d.id)}</span>
               ${d.origin === 'supabase' ? '<span class="badge badge-primary" style="margin-inline-start:.4rem;">قاعدة البيانات</span>' : '<span class="badge badge-secondary" style="margin-inline-start:.4rem;">فهرس محلي</span>'}
+              ${articlesFor(d.id) ? `<a class="badge badge-accent" style="margin-inline-start:.4rem;text-decoration:none;" href="document.html?doc=${encodeURIComponent(d.id)}">${esc(articlesFor(d.id).article_count)} مادة</a>` : ''}
             </td>
             <td>${esc(d.type||'-')}</td>
             <td>${esc(d.number||'-')}</td>
@@ -173,6 +181,7 @@
           ${versions}
           <div style="margin-top:.6rem;display:flex;gap:.5rem;flex-wrap:wrap;">
             ${d.file ? `<a class="btn btn-outline btn-sm" href="${esc(d.file)}" target="_blank" rel="noopener">فتح الملف الأساسي</a>` : ''}
+            ${articlesFor(d.id) ? `<a class="btn btn-primary btn-sm" href="document.html?doc=${encodeURIComponent(d.id)}">تصفح ${esc(articlesFor(d.id).article_count)} مادة</a>` : ''}
             ${d.source_url ? `<a class="btn btn-ghost btn-sm" href="${esc(d.source_url)}" target="_blank" rel="noopener">المصدر الرسمي</a>` : ''}
           </div>
         </div>`;

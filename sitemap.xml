@@ -9,5 +9,13 @@
   <url><loc>https://aadala.ma/procedures.html</loc><priority>0.7</priority></url>
   <url><loc>https://aadala.ma/fiqh.html</loc><priority>0.7</priority></url>
   <url><loc>https://aadala.ma/academic.html</loc><priority>0.7</priority></url>
+  <url><loc>https://aadala.ma/database.html</loc><priority>0.8</priority></url>
+  <url><loc>https://aadala.ma/document.html</loc><priority>0.8</priority></url>
+  <url><loc>https://aadala.ma/gazette.html</loc><priority>0.7</priority></url>
+  <url><loc>https://aadala.ma/case-law.html</loc><priority>0.7</priority></url>
+  <url><loc>https://aadala.ma/legal-aid.html</loc><priority>0.7</priority></url>
   <url><loc>https://aadala.ma/founder.html</loc><priority>0.6</priority></url>
+  <url><loc>https://aadala.ma/privacy.html</loc><priority>0.4</priority></url>
+  <url><loc>https://aadala.ma/terms.html</loc><priority>0.4</priority></url>
+  <url><loc>https://aadala.ma/contact.html</loc><priority>0.4</priority></url>
 </urlset>

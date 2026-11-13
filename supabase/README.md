@@ -33,6 +33,43 @@
 - نصوص المواد (`legal_articles`) **لا تُعرض للعامة إلا** إذا كانت الوثيقة الأم `published`.
 - كل الوثائق المرفوعة حالياً `reference` و`last_verified_at = NULL` — وهو تمثيل صادق لوضعها.
 
+## 3.5 المواد المستخرجة آلياً (استخراج 2026-11-13)
+
+تم استخراج المواد آلياً من الملفات المرفوعة وتجهيز ملفات SQL جاهزة للتطبيق:
+
+- المهاجرة: `supabase/migrations/20261113000300_legal_articles_extracted.sql`
+- البذور: `supabase/seed/articles_<slug>.sql` (6 ملفات)
+- **ملف التطبيق بضغطة واحدة: `supabase/apply_articles.sql`**
+
+### كيف تطبّقها (مطلوب مرة واحدة)
+
+1. افتح: `https://supabase.com/dashboard/project/pvoenvxinkipgpnddumt/sql/new`
+2. انسخ **كامل** محتوى `supabase/apply_articles.sql` والصقه.
+3. اضغط **Run** وانتظر انتهاء التنفيذ (قد يستغرق أقل من دقيقة).
+4. تحقق بالاستعلامات أدناه.
+
+> آمن لإعادة التشغيل: المهاجرة تحذف السياسة وتضيف الأعمدة بـ `if not exists`، والبذور تحذف المواد ذات `status = 'extracted'` قبل إعادة إدراجها. لا تلمس أي مادة `verified`.
+
+ما تضيفه المهاجرة: أعمدة `status/extraction_method/confidence/page_from/page_to/section/language/updated_at`، فهرسان، وسياسة قراءة عامة للمواد ذات `extracted` أو `verified` التابعة لوثائق `reference` أو `published`.
+
+عدد المواد الجاهزة للإدراج: **2970** (loi-onc-ar 1310، 39.08 330، code-droits-reels 333، code-penal-maroc 722، constitution 174، dahir-immatriculation-fonciere 101).
+
+تحقق بعد التطبيق:
+
+```sql
+select d.slug, a.status, count(*)
+from public.legal_articles a
+join public.legal_documents d on d.id = a.document_id
+group by 1,2 order by 1,2;
+
+select slug, count(*) as n
+from public.legal_articles a
+join public.legal_documents d on d.id = a.document_id
+group by slug order by slug;
+```
+
+> النصوص المستخرجة آلةً وغير مدققة؛ لا تتحول إلى `verified` إلا بمراجعة بشرية ضد الجريدة الرسمية. العرض العام على الموقع يتماشى مع ذلك دائماً.
+
 ## 4. الواجهة
 
 | الملف | الدور |
@@ -72,9 +109,9 @@ apikey: sb_publishable_...
 
 يجب أن يرجع 6 سجلات بعد التطبيق.
 
-## 6. الخطوات التالية (غير منفذة)
+## 6. الخطوات التالية
 
-- استخراج نص المواد وتقسيمها (`legal_articles`) بعد تدقيق بشري.
-- نشر الوثائق المدققة بحالة `published` فقط.
+- تطبيق `supabase/apply_articles.sql` من لوحة Supabase (جاهز — يحتاج صلاحيات écriture من حسابك).
+- تدقيق بشري للمواد المستخرجة (تحويل `extracted` → `verified`) ونشر الوثائق المدققة بحالة `published` فقط.
 - نقل المصادقة إلى Supabase Auth وربط الأدوار بجدول `profiles`.
 - تفعيل pgvector/RAG للبحث الدلالي.

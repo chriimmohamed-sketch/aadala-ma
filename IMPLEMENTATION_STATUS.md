@@ -47,6 +47,9 @@
 - Fixed `index.html` script loading order/markup.
 - Redesigned homepage hero and added mandate-aligned sections (trust notes, radar transparency, knowledge placeholder, pathways).
 - Added `DESIGN_AUDIT.md` and `IMPLEMENTATION_STATUS.md`.
+- Article-level extraction pipeline (`data/arabic_pdf.py`, `data/build_articles.py`, `data/build_articles_sql.py`): pypdf text layer when readable, Windows Arabic OCR (`ar-SA`) otherwise.
+- New page `document.html` — machine-extracted article browser (search, deep links `#article-<key>`, prev/next, page/confidence/“غير مدقق” badges).
+- `database.html` shows per-document extracted article counts and links to the browser.
 
 ## Honest limitations
 - No real RAG/LLM integration, no verified full legal corpus, no OCR/digitization pipeline, no real case-law database.
@@ -71,9 +74,22 @@
 | Encyclopedia integration | ✅ | Category view merges Supabase documents + local fallback, shows origin badge |
 | RLS policies (legal core) | ✅ | Applied 2026-11-13: public read for `reference`/`published`, admin-only writes via `is_admin()` |
 | Seed 6 reference documents / 9 PDF files | ✅ | Applied 2026-11-13; all rows `reference` with `last_verified_at = NULL` |
-| Article-level text (`legal_articles`) | ⛔ | Deliberately not seeded; requires verified extraction + human review |
+| Article extraction (static) | ✅ | 2970 machine-extracted articles across 6 PDFs served as lazy JSON; page `document.html` |
+| Articles SQL (`legal_articles`) | 🟡 | Migration `20261113000300_legal_articles_extracted.sql` + seeds generated (`supabase/apply_articles.sql`); **user must apply them in the SQL editor** (tool access is read-only) |
 | Auth / RBAC | ⛔ | Still localStorage demo; `is_admin()` policies prepared for future Supabase Auth |
 | RAG / pgvector | ⛔ | Not implemented |
+
+### Extracted articles (2026-11-13)
+| Document | Method | Pages | Articles |
+|---|---|---:|---:|
+| loi-onc-ar (قانون الالتزامات والعقود) | pdf-text-layer | 298 | 1310 |
+| 39-08-code-droits-reels (مدونة الحقوق العينية) | pdf-text-layer | 63 | 330 |
+| code-droits-reels (صيغة 2018) | pdf-text-layer | 61 | 333 |
+| code-penal-maroc (مجموعة القانون الجنائي) | windows-ocr-ar | 219 | 722 |
+| constitution-marocaine-2011-ar (دستور 2011) | windows-ocr-ar | 82 | 174 |
+| dahir-immatriculation-fonciere (ظهير التحفيظ العقاري) | windows-ocr-ar | 45 | 101 |
+
+Extraction rules: duplicate numbers are kept with unique keys (dahir vs. penal-code restart; “مكرر/bis” suffix); footnote glue is stripped; cross-references at line start («أعلاه/من القانون…») are skipped. All extracted text is **unverified** and labelled as such in the UI.
 
 ### Verified after applying (2026-11-13)
 - `legal_documents` = 6، `legal_document_versions` = 9، `legal_sources` = 6، `legal_articles` = 0.

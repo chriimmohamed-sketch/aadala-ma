@@ -43,3 +43,9 @@ desktop.ini
 !.dev.vars.example
 !.env.example
 .vercel
+
+# Extraction pipeline artifacts
+data/__pycache__/
+data/ocr/
+*.pyc
+

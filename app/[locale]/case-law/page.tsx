@@ -12,6 +12,7 @@ export default async function CaseLawPage({ params, searchParams }: { params: Pr
     court: sp.court,
     chamber: sp.chamber,
     decisionNumber: sp.decisionNumber,
+    fileNumber: sp.fileNumber,
     legalDomain: sp.domain,
     keyword: sp.keyword,
   });
@@ -28,6 +29,7 @@ export default async function CaseLawPage({ params, searchParams }: { params: Pr
           <input name="court" placeholder="المحكمة" className="rounded border border-border px-3 py-2 text-sm" defaultValue={sp.court} />
           <input name="chamber" placeholder="الغرفة" className="rounded border border-border px-3 py-2 text-sm" defaultValue={sp.chamber} />
           <input name="decisionNumber" placeholder="رقم القرار" className="rounded border border-border px-3 py-2 text-sm" defaultValue={sp.decisionNumber} />
+          <input name="fileNumber" placeholder="رقم الملف" className="rounded border border-border px-3 py-2 text-sm" defaultValue={sp.fileNumber} />
           <input name="keyword" placeholder="كلمة مفتاحية" className="rounded border border-border px-3 py-2 text-sm" defaultValue={sp.keyword} />
           <button className="aadala-btn-primary md:col-span-4">بحث</button>
         </form>

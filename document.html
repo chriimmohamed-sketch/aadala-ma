@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>متصفح مواد القانون — AADALA.MA</title>
+  <meta name="description" content="تصفح مواد القوانين المغربية المستخرجة آلياً من الملفات المرفوعة (نص أو OCR)، مع رقم المادة والصفحة ومستوى الثقة وتنبيه صريح بضرورة التحقق من الجريدة الرسمية.">
+  <meta name="robots" content="index,follow">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .doc-hero { background: linear-gradient(135deg, var(--color-primary), #1b2f4f); color: #fff; border-radius: var(--radius-lg, 16px); padding: 1.6rem; }
+    .doc-hero h1 { color: #fff; margin: 0 0 .35rem; font-size: 1.5rem; }
+    .doc-hero p { color: rgba(255,255,255,.82); margin: 0; font-size: .95rem; }
+    .doc-layout { display: grid; grid-template-columns: 320px 1fr; gap: 1rem; align-items: start; }
+    @media (max-width: 900px) { .doc-layout { grid-template-columns: 1fr; } }
+    .article-list { max-height: 70vh; overflow: auto; border: 1px solid var(--color-border); border-radius: var(--radius-md, 10px); }
+    .article-list button { display: block; width: 100%; text-align: right; padding: .55rem .8rem; border: 0; border-bottom: 1px solid var(--color-border); background: transparent; cursor: pointer; font: inherit; color: inherit; }
+    .article-list button:hover { background: var(--color-bg-alt); }
+    .article-list button.active { background: rgba(22,124,128,.12); border-inline-start: 3px solid var(--color-accent, #167C80); font-weight: 700; }
+    .article-body { line-height: 2.05; font-size: 1.06rem; white-space: pre-wrap; }
+    .article-body p { margin: 0 0 .85rem; }
+    .meta-row { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: .75rem; }
+    .provenance { border-inline-start: 4px solid var(--color-accent, #167C80); background: var(--color-bg-alt); padding: .8rem 1rem; border-radius: var(--radius-sm, 6px); font-size: .9rem; }
+    .toc-empty { padding: 1rem; color: var(--color-text-muted); font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+
+  <section class="section">
+    <div class="container">
+      <div id="docHero" class="doc-hero mb-3">
+        <h1>متصفح مواد القانون</h1>
+        <p>اختر وثيقة لعرض موادها المستخرجة آلياً.</p>
+      </div>
+
+      <div id="docNotice"></div>
+
+      <div id="docIndex"></div>
+
+      <div id="docViewer" class="hidden">
+        <div class="doc-layout">
+          <aside class="card" style="box-shadow:none;">
+            <div class="flex items-center justify-between mb-2" style="gap:.5rem;">
+              <strong>فهرس المواد</strong>
+              <span class="badge badge-secondary" id="articleCount">0</span>
+            </div>
+            <input type="search" class="form-input mb-2" id="articleSearch" placeholder="ابحث في نص المواد أو الرقم…">
+            <div class="article-list" id="articleList" role="list"></div>
+          </aside>
+
+          <main class="card" style="box-shadow:none; min-height: 420px;">
+            <div id="articlePane" class="toc-empty">حدّد مادة من الفهرس لعرض نصها.</div>
+          </main>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/sources-db.js"></script>
+  <script src="assets/js/supabase-db.js"></script>
+  <script src="assets/js/articles-db.js"></script>
+  <script>
+    document.getElementById('header').innerHTML = renderHeader('database.html');
+    document.getElementById('footer').innerHTML = renderFooter();
+    updateAuthUI();
+
+    const METHOD_LABEL = {
+      'pdf-text-layer': 'طبقة نصية من PDF (pypdf)',
+      'windows-ocr-ar': 'OCR عربي (Windows)'
+    };
+    const params = new URLSearchParams(location.search);
+    const docId = params.get('doc');
+    const cache = {};
+
+    function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g, m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m])); }
+    function metaOf(id){
+      const docs = (window.SourcesDB && SourcesDB.documents) || [];
+      return docs.find(d => d.id === id) || null;
+    }
+    function manifestOf(id){
+      const list = (window.ArticlesDB && ArticlesDB.documents) || [];
+      return list.find(d => d.document_id === id) || null;
+    }
+
+    function heroFor(id){
+      const d = metaOf(id), m = manifestOf(id);
+      const title = d ? d.title : id;
+      const method = m ? (METHOD_LABEL[m.extraction_method] || m.extraction_method) : '—';
+      document.getElementById('docHero').innerHTML = `
+        <h1>${esc(title)}</h1>
+        <p>${d && d.number ? 'الرقم المرجعي: ' + esc(d.number) + ' · ' : ''}${m ? esc(m.article_count) + ' مادة مستخرجة · ' + esc(m.page_count) + ' صفحة · ' : ''}${esc(method)}</p>`;
+      document.title = title + ' — مواد القانون | AADALA.MA';
+    }
+
+    function noticeFor(id, m){
+      const el = document.getElementById('docNotice');
+      if (!m) {
+        el.innerHTML = `<div class="alert alert-warning mb-3"><strong>لا توجد مواد مستخرجة لهذه الوثيقة بعد.</strong>
+          تعذّر استخراج نص موثوق من ملف PDF (ترميز خط أو نص غير قابل للقراءة آلياً). استخدم الملف الأصلي أو انتظر معالجة OCR.
+          <a class="btn btn-outline btn-sm" style="margin-inline-start:.5rem;" href="database.html">العودة إلى قاعدة المصادر</a></div>`;
+        return;
+      }
+      const low = m.avg_confidence < 0.6;
+      el.innerHTML = `<div class="alert ${low ? 'alert-warning' : 'alert-info'} mb-3">
+        <strong>تنبيه المصدر:</strong> النصوص أدناه <strong>مستخرجة آلياً</strong> (${esc(METHOD_LABEL[m.extraction_method] || m.extraction_method)}) من ملف PDF مرفوع، ولم تُدقَّق بشرياً مقابل الجريدة الرسمية.
+        قد تحتوي أخطاء في الحروف أو الأرقام أو ترتيب الكلمات. <strong>لا يُحتج بها قانونياً</strong> قبل المطابقة مع النص المنشور.
+        ${low ? '<br><span class="text-muted">جودة الاستخراج المتوسطة منخفضة لهذه الوثيقة — يُنصح بمراجعة الملف الأصلي.</span>' : ''}
+      </div>`;
+    }
+
+    function renderIndex(){
+      const list = (window.ArticlesDB && ArticlesDB.documents) || [];
+      const el = document.getElementById('docIndex');
+      if (!list.length) {
+        el.innerHTML = '<div class="alert alert-info">فهرس المواد غير متاح. شغّل <code>data/build_articles.py</code> لتوليده.</div>';
+        return;
+      }
+      el.innerHTML = `<div class="card mb-3">
+        <h3 style="margin-top:0;">الوثائق المتوفرة بالمواد</h3>
+        <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.75rem;">
+          ${list.map(m => {
+            const d = metaOf(m.document_id) || {};
+            return `<a class="card" style="box-shadow:none;text-decoration:none;color:inherit;" href="document.html?doc=${encodeURIComponent(m.document_id)}">
+              <strong>${esc(d.title || m.document_id)}</strong>
+              <div class="text-muted" style="font-size:.85rem;margin-top:.25rem;">
+                ${esc(m.article_count)} مادة · ${esc(m.page_count)} صفحة · ${esc(METHOD_LABEL[m.extraction_method] || m.extraction_method)}
+              </div>
+              <div class="badge badge-accent" style="margin-top:.5rem;">فتح المواد</div>
+            </a>`;
+          }).join('')}
+        </div>
+      </div>`;
+    }
+
+    function articleTitle(a){
+      return `${a.label || 'المادة'} ${a.article_number}`;
+    }
+
+    function openArticle(key, push){
+      const data = cache[docId];
+      if (!data) return;
+      const a = data.articles.find(x => String(x.key ?? x.article_number) === String(key));
+      if (!a) return;
+      const pane = document.getElementById('articlePane');
+      const idx = data.articles.indexOf(a);
+      const prev = data.articles[idx - 1], next = data.articles[idx + 1];
+      const pdf = (metaOf(docId) || {}).file;
+      pane.className = '';
+      pane.innerHTML = `
+        <div class="meta-row">
+          <span class="badge badge-primary">${esc(articleTitle(a))}</span>
+          ${a.section ? `<span class="badge badge-secondary">${esc(a.section)}</span>` : ''}
+          <span class="badge badge-secondary">الصفحة ${esc(a.page_from)}${a.page_to !== a.page_from ? '–' + esc(a.page_to) : ''}</span>
+          <span class="badge badge-accent">ثقة الاستخراج: ${Math.round((a.confidence||0)*100)}%</span>
+          <span class="badge" style="background:#fdecea;color:#8a1c1c;">غير مدقق</span>
+        </div>
+        <h2 style="margin:.2rem 0 .8rem;font-size:1.25rem;">${esc(articleTitle(a))}</h2>
+        <div class="article-body">${esc(a.text)}</div>
+        <div class="provenance" style="margin-top:1rem;">
+          استُخرج هذا النص آلياً من «${esc(data.source_file)}» (${esc(METHOD_LABEL[data.extraction_method] || data.extraction_method)}) في ${esc(data.generated)}.
+          المرجع الملزم هو النص المنشور بالجريدة الرسمية.
+        </div>
+        <div class="flex items-center justify-between" style="margin-top:1rem;gap:.5rem;flex-wrap:wrap;">
+          <div class="flex gap-2" style="gap:.5rem;">
+            ${prev ? `<button class="btn btn-outline btn-sm" onclick="openArticle('${esc(prev.key ?? prev.article_number)}')">→ السابق: ${esc(articleTitle(prev))}</button>` : ''}
+            ${next ? `<button class="btn btn-outline btn-sm" onclick="openArticle('${esc(next.key ?? next.article_number)}')">التالي: ${esc(articleTitle(next))} ←</button>` : ''}
+          </div>
+          <div class="flex gap-2" style="gap:.5rem;">
+            <button class="btn btn-ghost btn-sm" onclick="copyLink('${esc(a.key ?? a.article_number)}')">نسخ الرابط</button>
+            ${pdf ? `<a class="btn btn-ghost btn-sm" href="${esc(pdf)}" target="_blank" rel="noopener">PDF الأصلي</a>` : ''}
+          </div>
+        </div>`;
+      document.querySelectorAll('#articleList button').forEach(b => b.classList.toggle('active', b.dataset.key === String(key)));
+      if (push !== false) history.replaceState(null, '', `document.html?doc=${encodeURIComponent(docId)}#article-${encodeURIComponent(a.key ?? a.article_number)}`);
+      pane.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function copyLink(key){
+      const url = location.origin + location.pathname + `?doc=${encodeURIComponent(docId)}#article-${encodeURIComponent(key)}`;
+      navigator.clipboard ? navigator.clipboard.writeText(url) : null;
+    }
+
+    function renderList(filter){
+      const data = cache[docId];
+      if (!data) return;
+      const q = (filter || '').trim();
+      const items = data.articles.filter(a => !q ||
+        String(a.article_number).includes(q) ||
+        (a.text || '').includes(q) ||
+        (a.section || '').includes(q));
+      document.getElementById('articleList').innerHTML = items.length ? items.map(a => `
+        <button data-key="${esc(a.key ?? a.article_number)}" onclick="openArticle('${esc(a.key ?? a.article_number)}')">
+          <strong>${esc(articleTitle(a))}</strong>
+          <span class="text-muted" style="font-size:.75rem;display:block;">ص ${esc(a.page_from)}${a.section ? ' · ' + esc(a.section).slice(0, 34) : ''}</span>
+        </button>`).join('') : '<div class="toc-empty">لا نتائج مطابقة.</div>';
+      document.getElementById('articleCount').textContent = items.length + ' / ' + data.articles.length;
+    }
+
+    async function loadDoc(id){
+      heroFor(id);
+      const m = manifestOf(id);
+      noticeFor(id, m);
+      renderIndex();
+      if (!m) return;
+      document.getElementById('docViewer').classList.remove('hidden');
+      document.getElementById('articlePane').innerHTML = '<div class="toc-empty">جارٍ تحميل المواد…</div>';
+      try {
+        const res = await fetch(m.file, { cache: 'no-cache' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        cache[id] = await res.json();
+      } catch (err) {
+        document.getElementById('articlePane').innerHTML = `<div class="alert alert-warning" style="margin:0;">تعذّر تحميل ملف المواد (${esc(err.message)}). افتح الموقع عبر خادم HTTP وليس <code>file://</code>.</div>`;
+        return;
+      }
+      renderList('');
+      const hash = (location.hash || '').match(/article-(.+)$/);
+      openArticle(hash ? decodeURIComponent(hash[1]) : cache[id].articles[0]?.key, false);
+      document.getElementById('articleSearch').addEventListener('input', e => renderList(e.target.value));
+    }
+
+    if (docId) {
+      loadDoc(docId);
+    } else {
+      renderIndex();
+      noticeFor(null, null);
+      document.getElementById('docNotice').innerHTML = '';
+    }
+  </script>
+</body>
+</html>

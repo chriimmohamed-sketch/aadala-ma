@@ -11,3 +11,11 @@ node_modules
 .git
 .DS_Store
 .npmrc
+# build/extraction artifacts (not needed on the public site)
+# NOTE: data/legal-sources/*.pdf and data/legal-sources/articles/*.json stay public
+# because database.html and document.html link to them.
+/data/ocr
+**/__pycache__
+/data/*.py
+/data/extraction-report.json
+/data/page-scores.json
