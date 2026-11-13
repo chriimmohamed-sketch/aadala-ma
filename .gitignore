@@ -8,10 +8,10 @@ node_modules/
 .env.local
 .env.*.local
 
-# Next.js
-.next/
-out/
-build/
+# Next.js build output
+/.next/
+/out/
+/build/
 /.open-next/
 
 # Misc

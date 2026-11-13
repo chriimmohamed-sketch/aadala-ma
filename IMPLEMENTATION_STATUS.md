@@ -155,3 +155,20 @@ Extraction rules: duplicate numbers are kept with unique keys (dahir vs. penal-c
 | غير مكتمل صراحة | الهجرات `0002…0013` **لم تُطبق** (قاعدة read-only) · MFA/RLS مُبرمجة بلا تفعيل (تتطلب مالك + SQL Editor + لوحة Supabase) · لم يُنشر أي شيء جديد: الموقع الحي ما زال الـstatic site فقط · حساب Cloudflare ليس فيه Worker لـ`aadala-ma` بعد النشر الأخير ما زال هو نفسه (assets-only) · npm: 9 تحذيرات moderate (أدوات بناء فقط) |
 | CI | `deploy-cloudflare.yml` مُحدّث (فحص أسرار + `NEXT_PUBLIC_SUPABASE_URL/ANON_KEY` + `wrangler deploy`) — يتطلب `CLOUDFLARE_API_TOKEN` و`CLOUDFLARE_ACCOUNT_ID` في GitHub Secrets |
 - ملاحظة: `/open-next.config.ts.deploy-bak` تسرب إلى النشر الأول (كان موجوداً ملفياً أثناء النشر)؛ أُضيف `*.deploy-bak` إلى `.assetsignore` والنشر التالي يُسقطه تلقائياً من الـmanifest.
+
+## 2026-11-13 — ليلاً: OpenNext جاهز للنشر عبر Cloudflare (فرع `fix/opennext-deploy`)
+
+**المهمة:** نشر تطبيق Next.js الكامل على Cloudflare Workers عبر OpenNext بدل النسخة الساكنة، على فرع مستقل، دون دمج ودون نشر إنتاجي.
+
+| الخطوة | النتيجة |
+|---|---|
+| 1. نسخة احتياطية | `wrangler.static.jsonc.bak` (إعداد الـstatic worker السابق) + `.assetsignore.bak` — لا `wrangler.jsonc` حالي موجود؛ ملف الإعداد كان `wrangler.toml` |
+| 2. `open-next.config.ts` | موجود أصلاً بالنص المطلوب حرفياً — ملف `*.deploy-bak` لم يعد له وجود |
+| 3. `wrangler.jsonc` | صار: `main: .open-next/worker.js` + `nodejs_compat` + assets من `.open-next/assets` بربط `ASSETS`. لا توجد bindings قديمة مثل rate-limit (يُسقط للبديل الداخلي) |
+| 4. `.assetsignore` | يحتوي `/_worker.js` و `/_routes.json` ✔ |
+| 5. `next.config.ts` | لا يوجد `output: "standalone"`؛ `npm start` سليم. أُضيف استثناء Supabase في CSP `connect-src` (كان يكسر مصادقة المتصفح) |
+| 6. الحزم | `wrangler` → **4.162.0** (`@opennextjs/cloudflare` يبقى **1.20.17**، هو الأحدث) |
+| 7. التحقق | `tsc` نظيف · ESLint **0 أخطاء** (6 تحذيرات موروثة) · **81/81** · **`cf:build نجح على Windows`**: `.open-next/worker.js` (2216 بايت) + `.open-next/assets/` (89 ملفاً، 4.7MB)؛ 387 مساراً ثابت/SSG + 11 API ديناميكية |
+| 8. الدفع | `git push -u origin fix/opennext-deploy` |
+| 9. الإنتاج | **لم يُنفّذ أي `wrangler deploy`** ولم يُدمج في `master` — بانتظار مراجعتك لـpreview |
+| الـWorker الحي | ما زال النسخة الساكنة على `aadala-ma.cheraimmohamed20.workers.dev` |

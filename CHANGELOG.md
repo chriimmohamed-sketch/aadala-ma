@@ -1,5 +1,23 @@
 # Changelog — AADALA.MA
 
+## [0.3.1] - 2026-11-13 — OpenNext deploy preparation (branch `fix/opennext-deploy`)
+
+### Added / Changed
+- `wrangler.jsonc` (replaces `wrangler.toml`, backed up as `wrangler.static.jsonc.bak`): `main = .open-next/worker.js`, `assets` from `.open-next/assets` with `ASSETS` binding, `compatibility_date 2026-11-01`, `nodejs_compat`. No legacy bindings existed (`rate-limit` falls back to the in-memory limiter).
+- `open-next.config.ts` confirmed present with `defineCloudflareConfig({})` (the earlier `*.deploy-bak` workaround file no longer exists).
+- `.assetsignore.bak` — backup of the static-assets ignore list (needed for the static Worker fallback).
+- `.gitignore`: `/.open-next/` excluded from git.
+- `next.config.ts`: CSP `connect-src` now permits `https://*.supabase.co` + `wss://*.supabase.co` (browser Supabase Auth calls were previously blocked — login/register/MFA would have been dead in production). No `output: "standalone"` exists; `npm start` (`next start`) does not depend on standalone output.
+- Dependencies: `wrangler` 4.158.0 → **4.162.0** (`@opennextjs/cloudflare` stays 1.20.17 — already latest).
+
+### Verification (Windows, this machine)
+- `tsc --noEmit` clean · ESLint **0 errors** (6 inherited warnings) · **81/81 vitest** · `npm run cf:build` **succeeded on Windows**: `.open-next/worker.js` (2,216 bytes) + `.open-next/assets/` (89 files, 4.7 MB) produced; 387 static/SSG pages + 11 dynamic API routes bundled.
+- Static site stays the live production artifact on Workers until preview review (this branch is NOT merged to `master` and NO `wrangler deploy` was executed).
+
+### Open (needs Cloudflare Linux/CI to verify)
+- `wrangler deploy` of the OpenNext worker (this branch) — blocked intentionally until preview is reviewed.
+- After preview passes, merge to `master`, then set GitHub secrets `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` for the CI deploy workflow.
+
 ## [0.3.0] - 2026-11-13 — الدمج الكامل (Merge of the full-stack AADALA.MA lineage)
 
 ### Merged (from `AADALA.MA-SIGNATURE-enhanced.zip`, 2026-11-10 build — with v0.2.0 convention files)

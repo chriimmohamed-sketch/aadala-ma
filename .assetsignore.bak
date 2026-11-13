@@ -1,0 +1,50 @@
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
+/_worker.js
+/_routes.json
+/functions
+node_modules
+.git
+.DS_Store
+.npmrc
+# build/extraction artifacts (not needed on the public site)
+# NOTE: data/legal-sources/*.pdf and data/legal-sources/articles/*.json stay public
+# because database.html and document.html link to them.
+/data/ocr
+**/__pycache__
+/data/*.py
+/data/*.ps1
+/data/extraction-report.json
+/data/page-scores.json
+# Next.js / source-only directories (public site serves static HTML from repo root)
+/.next
+/app
+/components
+/lib
+/worker
+/messages
+/.github
+/docs
+/supabase
+# root-level tool configs and build metadata
+/package.json
+/package-lock.json
+/tsconfig.json
+/tsconfig.tsbuildinfo
+/next.config.ts
+/next-env.d.ts
+/open-next.config.ts
+/eslint.config.mjs
+/vitest.config.ts
+/middleware.ts
+/.eslintignore
+/.gitignore
+/.assetsignore
+/wrangler.toml
+*.deploy-bak
+# project docs and audit reports (not site content)
+/*.md
