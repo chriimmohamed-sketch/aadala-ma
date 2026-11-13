@@ -22,6 +22,6 @@ export function analyzeCriminal(input: CriminalAnalysisInput): CriminalAnalysisR
     proceduralStage: ["بحث تمهيدي", "تحقيق (إن اقتضى)", "محاكمة", "طعن"],
     rights: ["حق الصمت", "حق الدفاع", "مساعدة قضائية", "الحضور"],
     warnings,
-    disclaimer: "تحليل أكاديمي/تعليمي. لا constitutes إرشاداً لارتكاب جرائم أو الإفلات. requires expert review.",
+    disclaimer: "تحليل أكاديمي/تعليمي. لا تُعدّ إرشاداً لارتكاب جرائم أو الإفلات. requires expert review.",
   };
 }

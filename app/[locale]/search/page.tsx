@@ -41,7 +41,7 @@ export default async function SearchPage({ params, searchParams }: { params: Pro
           </section>
         )}
         {unreliable.length > 0 && (
-          <p className="mt-10 rounded border border-amber-300 bg-amber-50 p-3 text-xs text-amber-900">
+          <p className="mt-10 rounded border border-gold/60 bg-gold/10 p-3 text-xs text-graphite">
             لا تشمل النتائج مصادر لم يمكن استخراج نصها بشكل موثوق: {unreliable.map((s) => s.title).join("، ")}. ارجع إلى الجريدة الرسمية لهذه النصوص.
           </p>
         )}

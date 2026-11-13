@@ -39,9 +39,9 @@ export default async function DetailPage({ params }: { params: Promise<{ locale:
         <h1 className="text-3xl font-bold text-navy">{src.title}</h1>
         <p className="mt-1 text-sm text-graphite-soft">{src.type} — {src.description}</p>
         <div className="aadala-divider mt-3" />
-        <p className="mt-2 text-xs text-amber-700">نص مستخرج من PDF. تحقق من الجريدة الرسمية قبل الاعتماد.</p>
+        <p className="mt-2 text-xs text-graphite">نص مستخرج من PDF. تحقق من الجريدة الرسمية قبل الاعتماد.</p>
         {q && q !== "good" && (
-          <p className="mt-2 rounded border border-amber-300 bg-amber-50 p-3 text-xs text-amber-900">
+          <p className="mt-2 rounded border border-gold/60 bg-gold/10 p-3 text-xs text-graphite">
             {q === "unreliable" ? "تحذير: استخراج النص من هذا الملف تالف إلى حد كبير، ولا يُعتمد عليه. ارجع إلى الجريدة الرسمية." : "تنبيه: أجزاء من هذا النص قد تكون تالفة الاستخراج."}
           </p>
         )}

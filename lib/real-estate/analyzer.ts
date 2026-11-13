@@ -32,7 +32,7 @@ export function analyzePropertyConflict(input: PropertyConflict): PropertyReport
   }
   if (input.documents.length === 0) missingDocuments.push("جميع الوثائق (عقود، رسوم، تقييدات)");
 
-  warnings.push("تحليل أولي — لا constitutes حكماً قطعياً. requires expert review.");
+  warnings.push("تحليل أولي — لا يُعدّ حكماً قطعياً. requires expert review.");
 
   return {
     parties: input.parties,

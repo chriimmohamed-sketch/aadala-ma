@@ -1,15 +1,18 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { computeMiyar } from "@/lib/miyar/engine";
 import type { HeirInput, EstateInput } from "@/lib/miyar/types";
 import { RELATION_LABELS } from "@/lib/miyar/engine";
+import MiyarSharePie from "@/components/MiyarSharePie";
 
 const RELATIONS = ["husband","wife","son","daughter","grandson","granddaughter","father","mother","full_brother","full_sister","paternal_brother","paternal_sister","maternal_brother","maternal_sister"];
 
-export default function MiyarEngine() {
+export default function MiyarEngine({ locale = "ar" }: { locale?: string }) {
   const [heirs, setHeirs] = useState<HeirInput[]>([{ id: "1", relation: "son", gender: "male", count: 1, alive: true }]);
   const [estate, setEstate] = useState<EstateInput>({ totalValue: 100000, debts: 0, funeral: 0, wasiyya: 0, currency: "MAD" });
   const [result, setResult] = useState<ReturnType<typeof computeMiyar> | null>(null);
+  const [copied, setCopied] = useState(false);
 
   function addHeir() {
     setHeirs([...heirs, { id: String(Date.now()), relation: "daughter", gender: "female", count: 1, alive: true }]);
@@ -64,25 +67,26 @@ export default function MiyarEngine() {
       <button onClick={run} className="aadala-btn-primary">احسب</button>
 
       {result && (
-        <section className="aadala-card space-y-4 p-5">
+        <section className="aadala-card space-y-4 p-5 print:shadow-none">
           {result.errors.length > 0 && (
-            <div className="rounded border border-danger bg-red-50 p-3 text-sm text-danger">
+            <div className="rounded border border-danger bg-danger/10 p-3 text-sm text-danger">
               <strong>أخطاء:</strong>
               <ul className="list-disc pr-5">{result.errors.map((e, i) => <li key={i}>{e}</li>)}</ul>
             </div>
           )}
           {result.needsExpert && (
-            <div className="rounded border border-amber-400 bg-amber-50 p-3 text-sm text-amber-900">
+            <div className="rounded border border-gold bg-gold/10 p-3 text-sm text-graphite">
               ⚠️ تتطلب مراجعة مختص.
             </div>
           )}
           <div className="grid grid-cols-2 gap-3 text-sm md:grid-cols-4">
             <div><span className="text-graphite-soft">صافي التركة:</span> {result.netEstate}</div>
-            <div><span className="text-graphite-soft">أصل المسألة:</span> {result.asl}</div>
+            <div><span className="text-graphite-soft">أصل المسألة:</span> {result.asl}{result.aslBefore !== result.asl ? ` (قبل العول: ${result.aslBefore})` : ""}</div>
             <div><span className="text-graphite-soft">إجمالي الحصص:</span> {(result.totalFraction * 100).toFixed(4)}%</div>
             <div><span className="text-graphite-soft">الباقي:</span> {(result.remainder * 100).toFixed(4)}%</div>
           </div>
           <h3 className="font-semibold text-navy">الأنصبة</h3>
+          <MiyarSharePie shares={result.shares} remainder={result.remainder} />
           <table className="w-full text-sm">
             <thead><tr className="border-b border-border text-graphite-soft"><th className="p-2 text-right">الوريث</th><th className="p-2 text-right">العدد</th><th className="p-2 text-right">النسبة</th><th className="p-2 text-right">المبلغ</th><th className="p-2 text-right">الدور</th></tr></thead>
             <tbody>
@@ -97,8 +101,56 @@ export default function MiyarEngine() {
               ))}
             </tbody>
           </table>
+
+          <div className="rounded border border-teal/30 bg-teal/5 p-4">
+            <h3 className="font-semibold text-navy">اشرح لي النتيجة</h3>
+            {result.blocked.length > 0 && (
+              <div className="mt-2">
+                <p className="text-xs font-semibold text-graphite-soft">المحجوبون:</p>
+                <ul className="mt-1 list-disc space-y-1 pr-5 text-sm text-graphite">
+                  {result.blocked.map((b, i) => <li key={i}>{RELATION_LABELS[b.relation] ?? b.relation} — {b.reason}</li>)}
+                </ul>
+              </div>
+            )}
+            <ol className="mt-3 space-y-3">
+              {result.explanations.map((e, i) => (
+                <li key={i} className="border-r-2 border-teal/40 pr-3">
+                  <p className="text-sm font-semibold text-navy">{i + 1}. {e.title}{e.article ? <span className="text-xs font-normal text-graphite-soft"> — {e.article}</span> : null}</p>
+                  <p className="mt-1 text-sm text-graphite">{e.reason}</p>
+                  {e.libraryPath ? (
+                    <Link href={`/${locale}${e.libraryPath}`} className="mt-1 inline-block text-xs font-semibold text-teal underline">
+                      {e.libraryLabel ?? "المكتبة القانونية"} →
+                    </Link>
+                  ) : null}
+                </li>
+              ))}
+            </ol>
+            <p className="mt-3 text-xs text-graphite-soft">الشروح استرشادية من المحرك؛ تحقق من نص مدونة الأسرة الرسمي قبل أي اعتماد.</p>
+          </div>
+
+          <div className="flex flex-wrap gap-2 print:hidden">
+            <button
+              type="button"
+              className="aadala-btn-primary text-xs"
+              onClick={async () => {
+                try {
+                  await navigator.clipboard.writeText(result.reportMarkdown);
+                  setCopied(true);
+                  setTimeout(() => setCopied(false), 2000);
+                } catch {
+                  setCopied(false);
+                }
+              }}
+            >
+              {copied ? "تم النسخ ✓" : "نسخ كتقرير"}
+            </button>
+            <button type="button" className="aadala-btn-gold text-xs" onClick={() => window.print()}>
+              طباعة / حفظ PDF
+            </button>
+          </div>
+
           {result.warnings.length > 0 && (
-            <div className="rounded border border-amber-300 bg-amber-50 p-3 text-xs text-amber-900">
+            <div className="rounded border border-gold/60 bg-gold/10 p-3 text-xs text-graphite">
               <strong>تحذيرات:</strong>
               <ul className="list-disc pr-5">{result.warnings.map((w, i) => <li key={i}>{w}</li>)}</ul>
             </div>

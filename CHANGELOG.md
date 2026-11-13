@@ -1,5 +1,30 @@
 # Changelog — AADALA.MA
 
+## [0.3.0] - 2026-11-13 — الدمج الكامل (Merge of the full-stack AADALA.MA lineage)
+
+### Merged (from `AADALA.MA-SIGNATURE-enhanced.zip`, 2026-11-10 build — with v0.2.0 convention files)
+- **Auth stack**: `/{locale}/login|register|mfa|forgot|update-password`, `LoginForm`/`RegisterForm`/`MfaForm`/`ForgotPasswordForm`/`UpdatePasswordForm`/`AuthButton`, `GlobalLoader`, `StorageNotice`, `MobileNav`, `@supabase/ssr` server session refresh.
+- **API**: `/api/ai` (full hardened route: anti-injection system prompt, `parseAiRequest` validation, `checkRateLimit` with Cloudflare Rate Limiting binding + in-memory fallback, `suggestNearest` fallback, optional **pgvector** path via `AI_VECTOR_SEARCH=1`), `/api/admin/ingest/{queue,review}`, `/api/cases/track`, `/api/cron/ingest`, `/api/documents/{generate,templates}`, `/api/notifications/remind`, `/api/student/progress`, `/api/workspaces`.
+- **Libraries**: `lib/ingestion/*` (+tests), `lib/documents/*` (+tests), `lib/gov/gov-gateway.ts` (+test), `lib/study/flashcards.ts`, `lib/contracts/auditor.ts`, `lib/legal-services/{deadlines,wizard}.ts`, `lib/miyar/explain.ts`, `lib/security/validate.ts` (+tests), `lib/admin/permissions.ts` (real RBAC + test), real `lib/supabase/*` (server/middleware/auth.server), `lib/legal-knowledge` types, `data/legal-database.ts`, `data/updates.ts`, `data/glossary.ts`, **real corpus** `data/legal-index.json` (733 chunks, 629 carrying article/chapter numbers).
+- **Supabase**: `migrations/0002…0013` (auth RLS, document templates, ingestion, legal documents, contract audits, tracked cases, notifications, workspaces, gov services, case law, learning, legacy RLS) + `seed-legal.sql`. **Not applied — DB is read-only.**
+- **Routing**: `proxy.ts` (Next 16 convention) = locale redirect + Supabase session refresh + admin gate (fail-closed 503 when Supabase env is missing); replaces the placeholder `middleware.ts`.
+- **Framework conventions**: `app/manifest.ts`, `app/robots.ts`, `app/sitemap.ts`, `app/[locale]/error.tsx`, `not-found.tsx`.
+- **Hand-merged**: `package.json` (added @supabase/ssr, cloudflare@7, framer-motion, lucide-react, react-icons, recharts; kept vitest@5 + @types/node@24 security bumps), `.env.example` (Supabase Auth + vector-search vars).
+- `.github/workflows/deploy-cloudflare.yml` (secrets check + NEXT_PUBLIC vars).
+
+### Kept deliberately (owner-approved 2026-11-13)
+- The **deployed static site** (root *.html, `assets/`, `admin/`, `auth/`, `data/legal-sources/`, `public/legal/`).
+- The **Design Constitution** (`docs/DESIGN_CONSTITUTION.md`) and its implementation (`app/globals.css`, brand Header/Footer, `app/icon.jpg`).
+- Deploy safety (`.assetsignore`, `wrangler.toml`, Next.js `next.config.ts` Windows workarounds, `tsconfig.json`, `vitest.config.ts`).
+
+### Verified
+- `tsc --noEmit` clean · ESLint **0 errors** (6 warnings carried over) · **81/81 vitest** · `next build`: **387/387 pages** · docs/GOLDEN_SET.md recalibrated to v2 (real corpus; exact-lookup + source honesty assertions).
+
+### Notes
+- The Next.js app is **not deployed** — static site stays the live artifact on Workers until CI (GitHub Actions) deploys it with `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` secrets; OpenNext×Windows still cannot build.
+- Supabase stays **read-only** — auth/RLS are code-complete, not activated (needs owner: dashboard write access + `0001→0013` in SQL editor + MFA enrollment).
+- UI bundle grew: auth flows require `NEXT_PUBLIC_SUPABASE_*` to function; pages render without them but auth actions will fail until configured.
+
 ## [0.2.1] - 2026-11-13
 ### Added
 - Golden Set benchmark: `lib/ai-assistant/golden-set.test.ts` (25 assertions, fully offline) + `docs/GOLDEN_SET.md` — 30 questions in two tiers (GS-01..22: expected top-1 source; GS-23..30: anti-hallucination probes incl. `unverifiedCitations` on «المادة 230»).

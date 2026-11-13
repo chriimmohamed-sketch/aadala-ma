@@ -112,3 +112,9 @@ Law — Private Law / Criminal Sciences.
 ## License
 
 TBD — to be determined before public release.
+
+## Status (2026-11-13)
+
+- **Live today (static, Cloudflare Workers):** `https://aadala-ma.cheraimmohamed20.workers.dev` — homepage, legal library, legal-AI assistant (TF-IDF, educational), MIYAR (experimental), legal encyclopedia (2970 extracted articles, machine-unverified), «العلم» (33 curated cards), «qanun.html» / «huwiya.html» (official artwork pages). Workers serves ONLY the static site; the Next.js app is not the deploy target yet.
+- **Next.js app:** builds (387 pages) with auth/MFA/RLS code-complete — not deployed and not active until Supabase is configured (see `DEVELOPMENT_ROADMAP.md` Phase 3) and CI deploy secrets are set.
+- **Legal content status:** every article extracted by OCR/pypdf is labelled `extracted` (unverified). Nothing is `verified` without qualified human review. Educational use only; not legal advice.

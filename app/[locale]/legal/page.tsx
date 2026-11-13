@@ -3,6 +3,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { legalSources } from "@/data/legal-sources";
 import { legalCategories } from "@/data/legal-categories";
+import { legalDatabase } from "@/data/legal-database";
 import Link from "next/link";
 
 export default async function LegalPage({ params }: { params: Promise<{ locale: string }> }) {
@@ -23,7 +24,7 @@ export default async function LegalPage({ params }: { params: Promise<{ locale: 
           ))}
         </div>
 
-        <h2 className="mt-10 text-xl font-bold text-navy">المصادر المدمجة (7)</h2>
+        <h2 className="mt-10 text-xl font-bold text-navy">المصادر المدمجة ({legalSources.length})</h2>
         <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
           {legalSources.map((s) => (
             <Link key={s.slug} href={`/${locale}/legal/${s.slug}`} className="aadala-card block p-5">
@@ -33,6 +34,27 @@ export default async function LegalPage({ params }: { params: Promise<{ locale: 
             </Link>
           ))}
         </div>
+
+        <h2 className="mt-10 text-xl font-bold text-navy">قاعدة البيانات القانونية ({legalDatabase.length} مصادر)</h2>
+        <div className="mt-4 space-y-3">
+          {legalDatabase.map((r) => (
+            <details key={r.slug} className="aadala-card p-4">
+              <summary className="cursor-pointer font-semibold text-navy">{r.lawNumber} — {r.title}</summary>
+              <dl className="mt-3 grid grid-cols-1 gap-2 text-sm sm:grid-cols-2">
+                <div><dt className="font-semibold text-brass">الصيغة</dt><dd className="text-graphite">{r.version}</dd></div>
+                <div><dt className="font-semibold text-brass">الإصدار</dt><dd className="text-graphite">{r.promulgated ?? "—"}</dd></div>
+                <div><dt className="font-semibold text-brass">النشر</dt><dd className="text-graphite">{r.published ?? "—"}</dd></div>
+                <div><dt className="font-semibold text-brass">التعديلات</dt><dd className="text-graphite">{r.amendments}</dd></div>
+                <div><dt className="font-semibold text-brass">الإلغاء</dt><dd className="text-graphite">{r.abrogation}</dd></div>
+                <div><dt className="font-semibold text-brass">المواد المخزنة</dt><dd className="text-graphite">{r.articlesCount > 0 ? r.articlesCount : "تُحصَرم regex فقط (الاستخراج مختلط الصياغة)"}</dd></div>
+                <div><dt className="font-semibold text-brass">مصدر الاستيراد</dt><dd className="text-graphite">{r.sourceNote}</dd></div>
+                <div><dt className="font-semibold text-brass">SHA-256</dt><dd className="text-graphite" dir="ltr">{r.sha256.slice(0, 16)}… ({r.bytes} بايت)</dd></div>
+              </dl>
+              <Link href={`/${locale}/legal/${r.slug}`} className="mt-3 inline-block text-sm font-semibold text-navy underline">عرض النص</Link>
+            </details>
+          ))}
+        </div>
+        <p className="mt-3 text-xs text-muted">أعد التشغيل بـ <code>npm run legal:ingest</code> لتحديث الأعداد والبصمات والتقرير في docs/legal-ingestion-report.md.</p>
 
         <section className="mt-10 rounded border border-border bg-surface p-4">
           <h2 className="font-semibold text-navy">نظام الاستيراد/المراجعة/التحديث</h2>

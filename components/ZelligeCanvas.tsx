@@ -3,11 +3,11 @@ import { useEffect, useRef } from "react";
 
 export default function ZelligeCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const hero = heroRef.current;
+    // Parent is .hero (see app/[locale]/page.tsx). Canvas must size to it.
+    const hero = canvas?.parentElement as HTMLElement | null;
     if (!canvas || !hero) return;
     const cx = canvas.getContext("2d");
     if (!cx) return;

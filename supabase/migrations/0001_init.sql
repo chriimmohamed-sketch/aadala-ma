@@ -1,105 +1,95 @@
--- AADALA.MA initial schema (to be applied in Supabase SQL editor)
-create table if not exists legal_sources (
-  id uuid primary key default gen_random_uuid(),
-  slug text unique not null,
-  title text not null,
-  type text,
-  description text,
-  file_path text,
-  created_at timestamptz default now()
+-- ==========================================================
+-- إنشاء قاعدة بيانات للموقع القانوني المغربي
+-- Database: Moroccan_Law_DB
+-- ==========================================================
+
+-- 1. جدول القوانين والمدونات
+CREATE TABLE IF NOT EXISTS laws (
+    law_id SERIAL PRIMARY KEY,
+    law_name VARCHAR(255) NOT NULL,
+    document_type VARCHAR(100),
+    year_issued INT,
+    issuing_authority VARCHAR(150),
+    source_url TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-create table if not exists ai_conversations (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid,
-  locale text,
-  created_at timestamptz default now()
+-- 2. جدول الأقسام والأبواب والفصول
+CREATE TABLE IF NOT EXISTS sections (
+    section_id SERIAL PRIMARY KEY,
+    law_id INT NOT NULL,
+    parent_id INT NULL,
+    section_title VARCHAR(255) NOT NULL,
+    level INT,
+    order_index INT,
+    FOREIGN KEY (law_id) REFERENCES laws(law_id) ON DELETE CASCADE,
+    FOREIGN KEY (parent_id) REFERENCES sections(section_id) ON DELETE CASCADE
 );
 
--- Legal knowledge encyclopedia
-create table if not exists legal_documents (
-  id uuid primary key default gen_random_uuid(),
-  slug text unique not null,
-  official_title text not null,
-  doc_type text not null,
-  number text,
-  issue_date date,
-  publication_date date,
-  publication_source text,
-  effective_date date,
-  status text not null default 'draft',
-  current_version_id uuid,
-  source_url text,
-  usage_rights text,
-  last_verified_at timestamptz,
-  verified_by text,
-  created_at timestamptz default now(),
-  updated_at timestamptz default now()
+-- 3. جدول المواد والفصول القانونية (النصوص الحرفية)
+CREATE TABLE IF NOT EXISTS articles (
+    article_id SERIAL PRIMARY KEY,
+    section_id INT NOT NULL,
+    article_number VARCHAR(50) NOT NULL,
+    full_text TEXT NOT NULL,
+    summary TEXT,
+    keywords JSONB,
+    penalties_effects TEXT,
+    FOREIGN KEY (section_id) REFERENCES sections(section_id) ON DELETE CASCADE
 );
 
-create table if not exists legal_document_versions (
-  id uuid primary key default gen_random_uuid(),
-  document_id uuid references legal_documents(id) on delete cascade,
-  version_label text not null,
-  is_original boolean default false,
-  published_at date,
-  notes text,
-  source_file text,
-  created_at timestamptz default now()
+-- 4. جدول الإشكاليات والأسئلة القانونية
+CREATE TABLE IF NOT EXISTS legal_issues (
+    issue_id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    main_category VARCHAR(100),
+    sub_category VARCHAR(100),
+    search_keywords TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-create table if not exists legal_articles (
-  id uuid primary key default gen_random_uuid(),
-  document_id uuid references legal_documents(id) on delete cascade,
-  version_id uuid references legal_document_versions(id) on delete cascade,
-  article_number text not null,
-  title text,
-  content text not null,
-  order_index int not null default 0,
-  created_at timestamptz default now()
+-- 5. جدول الربط بين الإشكاليات والمواد القانونية
+CREATE TABLE IF NOT EXISTS issue_article_mapping (
+    issue_id INT NOT NULL,
+    article_id INT NOT NULL,
+    relation_type VARCHAR(100),
+    PRIMARY KEY (issue_id, article_id),
+    FOREIGN KEY (issue_id) REFERENCES legal_issues(issue_id) ON DELETE CASCADE,
+    FOREIGN KEY (article_id) REFERENCES articles(article_id) ON DELETE CASCADE
 );
 
-create table if not exists legal_amendments (
-  id uuid primary key default gen_random_uuid(),
-  document_id uuid references legal_documents(id) on delete cascade,
-  amending_doc_id uuid references legal_documents(id),
-  summary text not null,
-  effective_date date,
-  created_at timestamptz default now()
+-- 6. جدول الكيانات القانونية
+CREATE TABLE IF NOT EXISTS entities (
+    entity_id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    type VARCHAR(100),
+    definition TEXT
 );
 
-create table if not exists legal_abrogations (
-  id uuid primary key default gen_random_uuid(),
-  document_id uuid references legal_documents(id) on delete cascade,
-  abrogating_doc_id uuid references legal_documents(id),
-  scope text not null default 'full',
-  effective_date date,
-  notes text,
-  created_at timestamptz default now()
+-- 7. جدول الربط بين الكيانات والمواد القانونية
+CREATE TABLE IF NOT EXISTS entity_article_mapping (
+    entity_id INT NOT NULL,
+    article_id INT NOT NULL,
+    role VARCHAR(100),
+    PRIMARY KEY (entity_id, article_id),
+    FOREIGN KEY (entity_id) REFERENCES entities(entity_id) ON DELETE CASCADE,
+    FOREIGN KEY (article_id) REFERENCES articles(article_id) ON DELETE CASCADE
 );
 
-create table if not exists legal_sources (
-  id uuid primary key default gen_random_uuid(),
-  document_id uuid references legal_documents(id) on delete set null,
-  source_type text not null,
-  source_ref text not null,
-  retrieved_at timestamptz default now(),
-  retrieved_by text,
-  checksum text,
-  license text,
-  notes text
+-- 8. جدول الإجابات المرجعية
+CREATE TABLE IF NOT EXISTS reference_answers (
+    answer_id SERIAL PRIMARY KEY,
+    issue_id INT NOT NULL,
+    answer_text TEXT NOT NULL,
+    cited_articles JSONB,
+    source VARCHAR(150),
+    FOREIGN KEY (issue_id) REFERENCES legal_issues(issue_id) ON DELETE CASCADE
 );
 
-create table if not exists publication_reviews (
-  id uuid primary key default gen_random_uuid(),
-  entity_type text not null,
-  entity_id uuid not null,
-  reviewer_id text not null,
-  action text not null,
-  comment text,
-  created_at timestamptz default now()
-);
-
-create index if not exists idx_legal_docs_slug on legal_documents(slug);
-create index if not exists idx_legal_articles_doc on legal_articles(document_id);
-create index if not exists idx_legal_versions_doc on legal_document_versions(document_id);
+-- ==========================================================
+-- فهارس (Indexes)
+-- ==========================================================
+CREATE INDEX IF NOT EXISTS idx_articles_full_text ON articles USING gin(to_tsvector('arabic', full_text));
+CREATE INDEX IF NOT EXISTS idx_issues_title ON legal_issues(title);
+CREATE INDEX IF NOT EXISTS idx_laws_name ON laws(law_name);

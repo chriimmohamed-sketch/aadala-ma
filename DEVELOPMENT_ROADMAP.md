@@ -24,8 +24,12 @@
 ## Phase 2 — Platform UI (DONE)
 - All pages/routes created, design system (teal/brass), RTL, Mobile-first.
 
-## Phase 3 — Identity & Admin (PENDING)
-- Auth (NextAuth/Supabase Auth), RBAC, admin CRUD, audit persistence.
+## Phase 3 — Identity & Admin (CODE DONE 2026-11-13, NOT ACTIVATED)
+- Auth flows, MFA screens, SSR session refresh (`proxy.ts`), real RBAC in code.
+- Activation (owner, ordered): 1) restore Supabase write access 2) SQL Editor: apply `0001→0013` + `seed-legal.sql` 3) `.env.local`: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` 4) Supabase dashboard: enroll admin users in TOTP MFA 5) GitHub Secrets: `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` for CI deploy.
+
+## Phase 4 — Legal Knowledge (PARTIAL → better corpus landed 2026-11-13)
+- Real local corpus merged: `data/legal-index.json` 733 chunks (629 numbered). Supabase `0002…0013` staged, not applied (read-only DB).
 
 ## Phase 4 — Legal Knowledge (PARTIAL)
 - 7 PDF sources integrated. Need: more sources, article parsing, versioning, search (FTS).

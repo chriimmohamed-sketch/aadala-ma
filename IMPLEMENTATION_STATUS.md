@@ -140,4 +140,18 @@ Extraction rules: duplicate numbers are kept with unique keys (dahir vs. penal-c
 - المصادقة الحقيقية للوحة الأدمن (RBAC + Supabase Auth + MFA) — الخطوات في `docs/ADMIN_GUIDE.md`، تنتظر التنفيذ من المالك.
 - Supabase ما زال read-only — الهجرات والتحقق (2970 مادة + `match_legal_articles`) معلّقة.
 - `aadala.ma` غير مربوط بعد.
+
+## 2026-11-13 — الليلة الثالثة: الدمج الكامل لخط الإنتاج (Full-stack merge)
+
+**المصدر:** `AADALA.MA-SIGNATURE-enhanced.zip` (2026-11-10، 269 ملفاً، الحالة الموثقة 68/68 اختباراً / 383 صفحة في FINAL_REPORT.md) + ملفات اصطلاحية من `aadala-ma-v0.2.0.zip` (error/not-found/manifest/robots/sitemap + lib/site/config + data/glossary).
+
+| البند | النتيجة |
+|---|---|
+| ما أُضيف | المصادقة كاملة (`/login`، `/register`، `/mfa`، `/forgot`، `/update-password`) + `@supabase/ssr` + `proxy.ts` (Next 16) ببوابة إدارة fail-closed (503 بلا إعداد Supabase) |
+| API | `/api/ai` الكامل (حماية من حقن التعليمات، تحقق مشترك، Cloudflare Rate Limit binding + بديل داخلي، `suggestNearest`، **pgvector اختياري** عبر `AI_VECTOR_SEARCH=1`) + APIs: ingest/cases/cron/documents/notifications/student/workspaces |
+| البيانات | `data/legal-index.json` الحقيقي (**733 مقطعاً، 629 بأرقام فصول/مواد**) محل العيّنة (18KB) · `lib/ingestion` + `lib/documents` + `lib/gov` + `lib/study` + `lib/contracts` + `lib/miyar/explain.ts` + RBAC حقيقي + `migrations/0002…0013` |
+| محفوظ عمداً | الموقع الثابت الحي، دستور التصميم (`app/globals.css` + `.aadala-shell` + الشعار)، إعداد النشر الآمن، `قانونية البحث tfidf` كfallback، React/Next 16.4.5 |
+| الحارس | `tsc` نظيف · ESLint **0 أخطاء** (6 تحذيرات قديمة) · **81/81 اختبار** · build **387/387 صفحة** · golden-set أُعيد معايرته إلى v2 (real corpus؛ مطابقة المادة 230 + صدق المصادر) |
+| غير مكتمل صراحة | الهجرات `0002…0013` **لم تُطبق** (قاعدة read-only) · MFA/RLS مُبرمجة بلا تفعيل (تتطلب مالك + SQL Editor + لوحة Supabase) · لم يُنشر أي شيء جديد: الموقع الحي ما زال الـstatic site فقط · حساب Cloudflare ليس فيه Worker لـ`aadala-ma` بعد النشر الأخير ما زال هو نفسه (assets-only) · npm: 9 تحذيرات moderate (أدوات بناء فقط) |
+| CI | `deploy-cloudflare.yml` مُحدّث (فحص أسرار + `NEXT_PUBLIC_SUPABASE_URL/ANON_KEY` + `wrangler deploy`) — يتطلب `CLOUDFLARE_API_TOKEN` و`CLOUDFLARE_ACCOUNT_ID` في GitHub Secrets |
 - ملاحظة: `/open-next.config.ts.deploy-bak` تسرب إلى النشر الأول (كان موجوداً ملفياً أثناء النشر)؛ أُضيف `*.deploy-bak` إلى `.assetsignore` والنشر التالي يُسقطه تلقائياً من الـmanifest.

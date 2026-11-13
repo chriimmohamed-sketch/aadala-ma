@@ -3,6 +3,10 @@ import { useState } from "react";
 import { procedures } from "@/data/legal-services";
 import { generateDraft } from "@/lib/legal-services/drafts";
 import type { ProcedureDocType } from "@/lib/legal-services/types";
+import ProcedureWizard from "@/components/ProcedureWizard";
+import DeadlineCalculator from "@/components/DeadlineCalculator";
+import DocumentGenerator from "@/components/DocumentGenerator";
+import DownloadButton from "@/components/DownloadButton";
 
 export default function LegalServices() {
   const [selected, setSelected] = useState(procedures[0]?.id ?? "");
@@ -18,8 +22,12 @@ export default function LegalServices() {
 
   return (
     <div className="space-y-6">
+      <ProcedureWizard />
       <section className="aadala-card p-5">
-        <h2 className="font-semibold text-navy">المساطر</h2>
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
+          <h2 className="font-semibold text-navy">المساطر</h2>
+          {proc?.lastReviewed && <span className="text-xs text-graphite-soft">آخر مراجعة: {proc.lastReviewed}</span>}
+        </div>
         <select className="mt-3 w-full rounded border border-border px-3 py-2 text-sm" value={selected} onChange={(e) => setSelected(e.target.value)}>
           {procedures.map((p) => <option key={p.id} value={p.id}>{p.title}</option>)}
         </select>
@@ -47,8 +55,14 @@ export default function LegalServices() {
         <textarea className="w-full rounded border border-border px-3 py-2 text-sm" rows={3} placeholder="الوقائع" value={facts} onChange={(e) => setFacts(e.target.value)} />
         <textarea className="w-full rounded border border-border px-3 py-2 text-sm" rows={2} placeholder="الطلب" value={request} onChange={(e) => setRequest(e.target.value)} />
         <button onClick={gen} className="aadala-btn-primary">توليد مسودة</button>
+        <div className="pt-1">
+          <DownloadButton fileUrl={draft ? `data:text/plain;charset=utf-8,${encodeURIComponent(draft)}` : "#"} label="تنزيل المسودة" />
+        </div>
         {draft && <textarea className="mt-3 w-full rounded border border-border bg-ivory px-3 py-2 text-sm" rows={16} value={draft} onChange={(e) => setDraft(e.target.value)} />}
       </section>
+
+      <DeadlineCalculator />
+      <DocumentGenerator />
     </div>
   );
 }
