@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>قاعدة المصادر والوثائق — AADALA.MA</title>
-  <meta name="description" content="قاعدة مصادر ووثائق قانونية مرفوعة (PDF) مع بيانات وصفية — قيد التحقق والمعالجة.">
+  <meta name="description" content="قاعدة مصادر ووثائق قانونية مرفوعة (PDF) مع بيانات وصفية، حالة التحقق، وروابط الملفات — مرتبطة بقاعدة بيانات Supabase للقراءة العامة.">
   <link rel="stylesheet" href="assets/css/main.css">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -15,17 +15,44 @@
     <div class="container">
       <div class="section-title">
         <h2>قاعدة المصادر والوثائق القانونية</h2>
-        <p>الوثائق المرفوعة (PDF) مع بيانات وصفية أولية — للرجوع والمعالجة والتحقق</p>
+        <p>فهرس مرجعي للوثائق (PDF) مع بيانات المصدر وحالة التحقق — القراءة العامة من قاعدة البيانات</p>
       </div>
 
-      <div class="alert alert-warning mb-3">
-        <strong>تنبيه:</strong> هذه قاعدة أولية مبنية على ملفات PDF مرفوعة من المستخدم. البيانات الوصفية (الرقم، التاريخ، حالة النفاذ) قد تكون جزئية أو تتطلب تحققاً مقابل النص المنشور في الجريدة الرسمية. العرض هنا لا يعني اكتمال الفهرسة أو صحة الاستخراج النصي.
+      <div id="dbConnection" class="alert alert-info mb-3">
+        <strong>حالة الاتصال:</strong> جارٍ تحميل الفهرس المرجعي...
+      </div>
+
+      <div class="stats-grid mb-3">
+        <div class="stat-card"><div class="stat-value" id="dbTotal">0</div><div class="stat-label">سجلات معروضة</div></div>
+        <div class="stat-card"><div class="stat-value" id="dbRemote">0</div><div class="stat-label">من قاعدة البيانات</div></div>
+        <div class="stat-card"><div class="stat-value" id="dbFiles">0</div><div class="stat-label">ملفات PDF مرتبطة</div></div>
+        <div class="stat-card"><div class="stat-value" id="dbVerified">0</div><div class="stat-label">مدقق بشرياً</div></div>
+      </div>
+
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:1rem;">
+        <div class="alert alert-warning" style="margin:0;">
+          <strong>تنبيه:</strong> السجلات الحالية بوصف <strong>«مرجع عام — تحقق مطلوب»</strong>: تعرض البيانات الوصفية فقط، ولا تُنشر نصوص المواد إلا بعد تدقيق بشري مقابل الجريدة الرسمية. العرض هنا لا يعني اكتمال الفهرسة ولا صحة الاستخراج النصي.
+        </div>
+        <div class="card" style="box-shadow:none;">
+          <h4 style="margin-bottom:.5rem;">كيف تعمل القاعدة؟</h4>
+          <ul style="list-style:none;line-height:1.9;margin:0;font-size:.95rem;">
+            <li>• الجداول العامة: <code>legal_documents</code>، <code>legal_document_versions</code>، <code>legal_articles</code>، <code>legal_sources</code>.</li>
+            <li>• الحماية: <strong>RLS</strong> مفعّل؛ القراءة العامة للسجلات المنشورة/المرجعية فقط.</li>
+            <li>• الكتابة: مقصورة على مدير عبر <code>is_admin()</code> — لا مفاتيح خدمة في المتصفح.</li>
+            <li>• عند تعذّر الاتصال: يُعرض الفهرس المحلي المرفق مع الموقع تلقائياً.</li>
+          </ul>
+        </div>
       </div>
 
       <div class="card mb-3">
         <div class="flex gap-2 flex-wrap items-center justify-between mb-3">
           <input type="text" class="form-input" id="dbSearch" placeholder="بحث في العنوان، الرقم، النوع، الملاحظات..." oninput="renderDocs()" style="max-width:520px;flex:1;">
-          <div class="text-muted" id="dbStats"></div>
+          <div class="flex gap-2 flex-wrap items-center">
+            <select class="form-select" id="dbCategory" onchange="renderDocs()" style="width:auto;min-width:170px;">
+              <option value="">كل المجالات</option>
+            </select>
+            <div class="text-muted" id="dbStats"></div>
+          </div>
         </div>
         <div style="overflow:auto;">
           <table class="data-table">
@@ -46,8 +73,8 @@
       </div>
 
       <div class="card">
-        <h3>تفاصيل ومقتطفات مستخرجة (آلياً — غير مراجع)</h3>
-        <p class="text-muted" style="margin-bottom:1rem;">المقتطفات مستخرجة آلياً من الصفحات الأولى وقد تحتوي أخطاء OCR/ترميز. المرجع المعتمد هو ملف PDF الأصلي والنص الرسمي المنشور.</p>
+        <h3>تفاصيل السجلات</h3>
+        <p class="text-muted" style="margin-bottom:1rem;">النسخ المتاحة، ملاحظات المصدر، وحالة التحقق. المقتطفات المحلية (إن وُجدت) مستخرجة آلياً وقد تحتوي أخطاء OCR/ترميز؛ المرجع المعتمد هو ملف PDF الأصلي والنص الرسمي المنشور.</p>
         <div id="dbDetails" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;"></div>
       </div>
     </div>
@@ -59,46 +86,140 @@
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/legal-content.js"></script>
   <script src="assets/js/sources-db.js"></script>
+  <script src="assets/js/supabase-db.js"></script>
   <script>
     document.getElementById('header').innerHTML = renderHeader('database.html');
     document.getElementById('footer').innerHTML = renderFooter();
     updateAuthUI();
 
+    const CATEGORY_LABEL = {
+      constitution: 'الدستور', civil: 'الالتزامات والعقود', penal: 'القانون الجنائي',
+      procedure_penale: 'المسطرة الجنائية', procedure_civile: 'المسطرة المدنية',
+      famille: 'مدونة الأسرة', travail: 'مدونة الشغل', commerce: 'القانون التجاري',
+      droits_reels: 'الحقوق العينية', urbanisme: 'التعمير', fiscal: 'الضرائب',
+      administratif: 'الإداري', propriete_intel: 'الملكية الفكرية',
+      consommation: 'حماية المستهلك', banque: 'البنكي', assurance: 'التأمين',
+      gazette: 'الجريدة الرسمية', autre: 'أخرى'
+    };
+
     function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g, m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m])); }
+    function catLabel(c){ return CATEGORY_LABEL[c] || c || '-'; }
+
+    function fillCategories(docs){
+      const sel = document.getElementById('dbCategory');
+      const current = sel.value;
+      const cats = Array.from(new Set(docs.map(d => d.category).filter(Boolean))).sort();
+      sel.innerHTML = '<option value="">كل المجالات</option>' + cats.map(c =>
+        `<option value="${esc(c)}">${esc(catLabel(c))}</option>`).join('');
+      if (cats.includes(current)) sel.value = current;
+    }
 
     function renderDocs(){
       const q = (document.getElementById('dbSearch').value || '').toLowerCase().trim();
+      const cat = document.getElementById('dbCategory').value;
       const docs = (window.SourcesDB && SourcesDB.documents) ? SourcesDB.documents : [];
-      const filtered = docs.filter(d => !q || [d.title,d.type,d.number,d.category,d.note,d.snippet,d.file].join(' ').toLowerCase().includes(q));
+      const filtered = docs.filter(d =>
+        (!cat || d.category === cat) &&
+        (!q || [d.title,d.type,d.number,d.category,d.note,d.snippet,d.file,d.status,d.source].join(' ').toLowerCase().includes(q))
+      );
+
       document.getElementById('dbStats').textContent = `المعروض: ${filtered.length} / الإجمالي: ${docs.length}`;
+      document.getElementById('dbTotal').textContent = filtered.length;
+      document.getElementById('dbRemote').textContent = docs.filter(d => d.origin === 'supabase').length;
+      document.getElementById('dbFiles').textContent = docs.filter(d => d.file).length;
+      document.getElementById('dbVerified').textContent = docs.filter(d => d.last_verified).length;
+
       const body = document.getElementById('dbBody');
       if(!filtered.length){
         body.innerHTML = '<tr><td colspan="7" class="text-muted text-center" style="padding:1.5rem;">لا توجد نتائج.</td></tr>';
       } else {
         body.innerHTML = filtered.map(d => `
           <tr>
-            <td><strong>${esc(d.title)}</strong><br><span class="text-muted" style="font-size:.85rem;">${esc(d.id)}</span></td>
+            <td>
+              <strong>${esc(d.title)}</strong>
+              <br><span class="text-muted" style="font-size:.85rem;">${esc(d.id)}</span>
+              ${d.origin === 'supabase' ? '<span class="badge badge-primary" style="margin-inline-start:.4rem;">قاعدة البيانات</span>' : '<span class="badge badge-secondary" style="margin-inline-start:.4rem;">فهرس محلي</span>'}
+            </td>
             <td>${esc(d.type||'-')}</td>
             <td>${esc(d.number||'-')}</td>
-            <td>${esc(d.category||'-')}</td>
+            <td>${esc(catLabel(d.category))}</td>
             <td>${d.pages!=null?esc(d.pages):'-'}</td>
             <td><span class="badge badge-accent">${esc(d.status||'—')}</span></td>
-            <td><a class="btn btn-outline btn-sm" href="${esc(d.file)}" target="_blank" rel="noopener">فتح PDF</a></td>
+            <td>${d.file ? `<a class="btn btn-outline btn-sm" href="${esc(d.file)}" target="_blank" rel="noopener">فتح PDF</a>` : '<span class="text-muted">—</span>'}</td>
           </tr>`).join('');
       }
+
       const details = document.getElementById('dbDetails');
-      details.innerHTML = filtered.map(d => `
+      details.innerHTML = filtered.map(d => {
+        const versions = Array.isArray(d.versions) && d.versions.length
+          ? `<div style="margin-top:.5rem;"><strong style="font-size:.9rem;">النسخ/الملفات (${d.versions.length}):</strong><ul style="margin:.25rem 0 0;padding-inline-start:1.1rem;font-size:.85rem;line-height:1.8;">` +
+            d.versions.map(v => `<li><a href="${esc(v.file)}" target="_blank" rel="noopener">${esc(v.label||'ملف')}</a>${v.notes ? ' — ' + esc(v.notes) : ''}</li>`).join('') +
+            '</ul></div>'
+          : '';
+        return `
         <div class="card" style="box-shadow:none;">
           <h4 style="margin-bottom:.25rem;">${esc(d.title)}</h4>
-          <p class="text-muted" style="font-size:.85rem;margin-bottom:.5rem;">${esc(d.file)} · ${(d.size_bytes?Math.round(d.size_bytes/1024):'-')} KB</p>
-          <p style="font-size:.9rem;margin-bottom:.5rem;"><strong>ملاحظة:</strong> ${esc(d.note||'-')}</p>
-          <div style="background:var(--color-bg-alt);border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:.75rem;font-size:.85rem;line-height:1.7;max-height:180px;overflow:auto;">
-            <strong>مقتطف (آلي):</strong><br>${esc(d.snippet||'—')}
+          <p class="text-muted" style="font-size:.85rem;margin-bottom:.5rem;">
+            ${d.file ? esc(d.file) + ' · ' : ''}${d.size_bytes ? Math.round(d.size_bytes/1024) + ' KB' : ''}
+          </p>
+          <p style="font-size:.9rem;margin-bottom:.4rem;"><strong>المصدر:</strong> ${esc(d.source||'-')}</p>
+          <p style="font-size:.9rem;margin-bottom:.4rem;"><strong>ملاحظة:</strong> ${esc(d.note||'-')}</p>
+          <p style="font-size:.9rem;margin-bottom:.4rem;"><strong>آخر تحقق:</strong> ${d.last_verified ? esc(new Date(d.last_verified).toLocaleDateString('ar-MA')) : '<span style="color:var(--color-danger,#b44);">لم يُدقق بعد</span>'}</p>
+          ${d.usage_rights ? `<p style="font-size:.85rem;margin-bottom:.4rem;"><strong>شروط الاستخدام:</strong> ${esc(d.usage_rights)}</p>` : ''}
+          ${d.snippet ? `<div style="background:var(--color-bg-alt);border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:.75rem;font-size:.85rem;line-height:1.7;max-height:180px;overflow:auto;">
+            <strong>مقتطف (آلي، غير مراجع):</strong><br>${esc(d.snippet)}
+          </div>` : ''}
+          ${versions}
+          <div style="margin-top:.6rem;display:flex;gap:.5rem;flex-wrap:wrap;">
+            ${d.file ? `<a class="btn btn-outline btn-sm" href="${esc(d.file)}" target="_blank" rel="noopener">فتح الملف الأساسي</a>` : ''}
+            ${d.source_url ? `<a class="btn btn-ghost btn-sm" href="${esc(d.source_url)}" target="_blank" rel="noopener">المصدر الرسمي</a>` : ''}
           </div>
-        </div>`).join('');
+        </div>`;
+      }).join('');
     }
 
-    renderDocs();
+    function renderConnection(){
+      const el = document.getElementById('dbConnection');
+      const st = window.SupabaseDB ? SupabaseDB.state : null;
+      if (!st) {
+        el.className = 'alert alert-warning mb-3';
+        el.innerHTML = '<strong>حالة الاتصال:</strong> وحدة قاعدة البيانات غير محمّلة — يُعرض الفهرس المحلي فقط.';
+        return;
+      }
+      if (st.status === 'live') {
+        el.className = 'alert alert-success mb-3';
+        el.innerHTML = `<strong>متصل بقاعدة البيانات:</strong> تم تحميل ${st.docs.length} سجلاً مرجعياً من Supabase (قراءة عامة عبر RLS). آخر مزامنة: ${new Date(st.syncedAt).toLocaleString('ar-MA')}.`;
+      } else if (st.status === 'fallback') {
+        el.className = 'alert alert-warning mb-3';
+        el.innerHTML = `<strong>تعذّر الاتصال بقاعدة البيانات:</strong> يُعرض الفهرس المحلي المرفق حالياً. السبب: <span dir="ltr" style="font-family:monospace;font-size:.85rem;">${esc(st.error||'')}</span>`;
+      } else {
+        el.className = 'alert alert-info mb-3';
+        el.innerHTML = '<strong>حالة الاتصال:</strong> جارٍ تحميل الفهرس المرجعي...';
+      }
+    }
+
+    function boot(){
+      const docs = (window.SourcesDB && SourcesDB.documents) ? SourcesDB.documents : [];
+      fillCategories(docs);
+      renderDocs();
+      renderConnection();
+
+      window.addEventListener('aadala:sources-updated', () => {
+        fillCategories((window.SourcesDB && SourcesDB.documents) || []);
+        renderDocs();
+        renderConnection();
+      });
+
+      if (window.SupabaseDB) {
+        SupabaseDB.load().then(() => {
+          fillCategories((window.SourcesDB && SourcesDB.documents) || []);
+          renderDocs();
+          renderConnection();
+        });
+      }
+    }
+
+    boot();
   </script>
 </body>
 </html>

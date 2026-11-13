@@ -1,7 +1,7 @@
 # IMPLEMENTATION_STATUS.md — AADALA.MA
 
 ## Snapshot
-- **Date:** 2026-11-12
+- **Date:** 2026-11-13
 - **Version:** 0.1.x prototype (static-first)
 - **Live:** https://aadala-ma.cheraimmohamed20.workers.dev
 - **Repo:** https://github.com/chriimmohamed-sketch/aadala-ma (branch `master`)
@@ -60,3 +60,24 @@
 3. Backend auth/RBAC + database + secure document handling.
 4. Grounded Legal AI (RAG, citations, uncertainty/refusal).
 5. Componentized UI, accessibility pass, and full i18n workflow.
+
+## Database (Supabase) — 2026-11-13
+
+| Item | Status | Notes |
+|---|---:|---|
+| Supabase project wiring | ✅ | Project `pvoenvxinkipgpnddumt`; browser uses publishable key only |
+| Public read client | ✅ | `assets/js/supabase-db.js`; local index renders first, live data upgrades it; graceful fallback |
+| Sources database page | ✅ | `database.html` — search, category filter, connection status, per-document versions |
+| Encyclopedia integration | ✅ | Category view merges Supabase documents + local fallback, shows origin badge |
+| RLS policies (legal core) | 🟡 | SQL ready in `supabase/migrations/` + `supabase/apply_all.sql`; **not yet applied** (tool access is read-only) |
+| Seed 6 reference documents / 9 PDF files | 🟡 | Seed SQL ready; **not yet applied** for the same reason |
+| Article-level text (`legal_articles`) | ⛔ | Deliberately not seeded; requires verified extraction + human review |
+| Auth / RBAC | ⛔ | Still localStorage demo; `is_admin()` policies prepared for future Supabase Auth |
+| RAG / pgvector | ⛔ | Not implemented |
+
+### Blocker for the database step
+The Supabase MCP connection and the local Supabase access token both resolve to
+`supabase_read_only_user`, so schema changes and seeding cannot be applied from
+this environment. One-paste fix: run `supabase/apply_all.sql` in the Supabase
+SQL editor (steps in `supabase/README.md`). After that the site shows live data
+with no code changes.

@@ -43,6 +43,7 @@
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/legal-content.js"></script>
   <script src="assets/js/sources-db.js"></script>
+  <script src="assets/js/supabase-db.js"></script>
   <script>
     document.getElementById('header').innerHTML = renderHeader('encyclopedia.html');
     document.getElementById('footer').innerHTML = renderFooter();
@@ -96,8 +97,15 @@
       if (docs.length > 0) {
         html += `<div class="mt-3"><h4>وثائق PDF مرفوعة (قاعدة المصادر)</h4><p class="text-muted" style="font-size:.9rem;">ملفات مرفوعة للرجوع والمعالجة — تحقق مطلوب مقابل المصدر الرسمي.</p>`;
         docs.forEach(d => {
+          const versions = Array.isArray(d.versions) && d.versions.length
+            ? '<div style="font-size:.85rem;margin-top:.25rem;"><strong>النسخ:</strong> ' +
+              d.versions.map(v => `<a href="${v.file}" target="_blank" rel="noopener">${v.label || 'ملف'}</a>`).join(' · ') + '</div>'
+            : '';
           html += `<div class="card mb-2" style="background:var(--color-bg-alt);box-shadow:none;">
-            <h4 style="margin-bottom:.25rem;">${d.title} <span class="badge badge-accent">${d.status || 'مرفوع'}</span></h4>
+            <h4 style="margin-bottom:.25rem;">${d.title}
+              <span class="badge ${d.origin === 'supabase' ? 'badge-primary' : 'badge-secondary'}">${d.origin === 'supabase' ? 'قاعدة البيانات' : 'فهرس محلي'}</span>
+              <span class="badge badge-accent">${d.status || 'مرفوع'}</span>
+            </h4>
             <table class="data-table" style="font-size:.9rem;">
               <tr><td><strong>النوع</strong></td><td>${d.type || '-'}</td></tr>
               <tr><td><strong>الرقم</strong></td><td>${d.number || '-'}</td></tr>
@@ -106,7 +114,8 @@
               <tr><td><strong>المصدر</strong></td><td>${d.source || '-'}</td></tr>
             </table>
             <p style="font-size:.9rem;margin:.5rem 0;"><strong>ملاحظة:</strong> ${d.note || '-'}</p>
-            <a href="${d.file}" target="_blank" rel="noopener" class="btn btn-outline btn-sm">فتح PDF</a>
+            ${versions}
+            ${d.file ? `<a href="${d.file}" target="_blank" rel="noopener" class="btn btn-outline btn-sm">فتح PDF</a>` : ''}
           </div>`;
         });
         html += `</div>`;
@@ -123,6 +132,22 @@
         el.style.display = el.textContent.toLowerCase().includes(q) ? '' : 'none';
       });
     }
+
+    // Live database hydration (public reference rows read from Supabase via RLS).
+    // The local index is already rendered; when the live data arrives we refresh
+    // the currently open category without disturbing the rest of the page.
+    let activeCategory = cat || null;
+    const _showCategory = showCategory;
+    showCategory = function (id) {
+      activeCategory = id;
+      return _showCategory(id);
+    };
+    window.addEventListener('aadala:sources-updated', () => {
+      if (activeCategory && !document.getElementById('textDetail').classList.contains('hidden')) {
+        _showCategory(activeCategory);
+      }
+    });
+    if (window.SupabaseDB) { SupabaseDB.load(); }
   </script>
 </body>
 </html>
