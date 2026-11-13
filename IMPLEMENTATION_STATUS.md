@@ -69,15 +69,13 @@
 | Public read client | ✅ | `assets/js/supabase-db.js`; local index renders first, live data upgrades it; graceful fallback |
 | Sources database page | ✅ | `database.html` — search, category filter, connection status, per-document versions |
 | Encyclopedia integration | ✅ | Category view merges Supabase documents + local fallback, shows origin badge |
-| RLS policies (legal core) | 🟡 | SQL ready in `supabase/migrations/` + `supabase/apply_all.sql`; **not yet applied** (tool access is read-only) |
-| Seed 6 reference documents / 9 PDF files | 🟡 | Seed SQL ready; **not yet applied** for the same reason |
+| RLS policies (legal core) | ✅ | Applied 2026-11-13: public read for `reference`/`published`, admin-only writes via `is_admin()` |
+| Seed 6 reference documents / 9 PDF files | ✅ | Applied 2026-11-13; all rows `reference` with `last_verified_at = NULL` |
 | Article-level text (`legal_articles`) | ⛔ | Deliberately not seeded; requires verified extraction + human review |
 | Auth / RBAC | ⛔ | Still localStorage demo; `is_admin()` policies prepared for future Supabase Auth |
 | RAG / pgvector | ⛔ | Not implemented |
 
-### Blocker for the database step
-The Supabase MCP connection and the local Supabase access token both resolve to
-`supabase_read_only_user`, so schema changes and seeding cannot be applied from
-this environment. One-paste fix: run `supabase/apply_all.sql` in the Supabase
-SQL editor (steps in `supabase/README.md`). After that the site shows live data
-with no code changes.
+### Verified after applying (2026-11-13)
+- `legal_documents` = 6، `legal_document_versions` = 9، `legal_sources` = 6، `legal_articles` = 0.
+- REST عام بـ publishable key يُرجع 6 سجلات مع نسخها؛ صفحة `database.html` تعرض «متصل بقاعدة البيانات — 6 سجلات».
+- Security advisor: لم تبقَ تحذيرات `rls_enabled_no_policy` على جداول القانون الأربعة.

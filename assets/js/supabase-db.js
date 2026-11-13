@@ -112,8 +112,16 @@
       : [];
     const byId = new Map(local.map(d => [d.id, d]));
     mapped.forEach(d => byId.set(d.id, d));
-    const merged = Array.from(byId.values());
-    // Supabase-backed documents first, then local-only duplicates.
+
+    // Files already represented as a version of a database document must not
+    // appear again as standalone local "duplicate" rows.
+    const coveredFiles = new Set();
+    mapped.forEach(d => (d.versions || []).forEach(v => { if (v.file) coveredFiles.add(v.file); }));
+
+    const merged = Array.from(byId.values()).filter(
+      d => d.origin === 'supabase' || !coveredFiles.has(d.file)
+    );
+    // Supabase-backed documents first, then local-only entries.
     merged.sort((a, b) => {
       if (a.origin === 'supabase' && b.origin !== 'supabase') return -1;
       if (b.origin === 'supabase' && a.origin !== 'supabase') return 1;

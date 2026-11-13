@@ -126,7 +126,8 @@
       document.getElementById('dbStats').textContent = `المعروض: ${filtered.length} / الإجمالي: ${docs.length}`;
       document.getElementById('dbTotal').textContent = filtered.length;
       document.getElementById('dbRemote').textContent = docs.filter(d => d.origin === 'supabase').length;
-      document.getElementById('dbFiles').textContent = docs.filter(d => d.file).length;
+      document.getElementById('dbFiles').textContent = docs.reduce((n, d) =>
+        n + ((Array.isArray(d.versions) && d.versions.length) ? d.versions.length : (d.file ? 1 : 0)), 0);
       document.getElementById('dbVerified').textContent = docs.filter(d => d.last_verified).length;
 
       const body = document.getElementById('dbBody');
