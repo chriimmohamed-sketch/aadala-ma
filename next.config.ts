@@ -63,6 +63,7 @@ async function redirects() {
 }
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   cacheComponents: false,
   partialPrefetching: false,
   headers,
