@@ -327,6 +327,7 @@ function renderFooter() {
             <li><a href="database.html">قاعدة المصادر (PDF)</a></li>
             <li><a href="qanun.html">القانون بنصّه ومادّته</a></li>
             <li><a href="huwiya.html">الهوية المغربية</a></li>
+            <li><a href="al-ilm.html">العلم — المعرفة القانونية</a></li>
           </ul>
         </div>
         <div>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="بطاقات قانونية مبسطة من سلسلة «العلم»: القانون المغربي بلغة واضحة — شروط صحة العقد، آجال قانونية، قانون الشغل، المستهلك، الحقوق العينية. محتوى تثقيفي قيد المراجعة.">
+  <meta name="theme-color" content="#14110E">
+  <title>العلم — المعرفة القانونية المبسطة — AADALA.MA</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .ilm-table { width: 100%; border-collapse: collapse; font-size: .92rem; margin: .5rem 0; }
+    .ilm-table th, .ilm-table td { border: 1px solid var(--color-border, #D9CBB4); padding: .35rem .6rem; text-align: right; }
+    .ilm-table th { background: var(--color-secondary, #167C80); color: #fff; font-weight: 700; }
+    .ilm-table tr:nth-child(even) td { background: rgba(22, 124, 128, .07); }
+    .ilm-card { overflow: hidden; }
+    .ilm-card details > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: .65rem; }
+    .ilm-card details > summary::-webkit-details-marker { display: none; }
+    .ilm-num { flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; border-radius: 9999px; background: var(--color-gold, #C9A24B); color: #14110E; font-weight: 800; font-size: .9rem; }
+    .ilm-body { border-top: 1px dashed var(--color-border, #D9CBB4); margin-top: .6rem; padding-top: .6rem; line-height: 1.9; }
+    .ilm-body h4 { font-weight: 800; margin: .5rem 0 .25rem; }
+    .ilm-body ul, .ilm-body ol { padding-inline-start: 1.4rem; margin: .35rem 0; }
+    .ilm-body li { margin: .18rem 0; }
+    .ilm-meta { font-size: .78rem; opacity: .75; margin-top: .6rem; }
+    .ilm-search { width: 100%; padding: .8rem 1rem; border: 1px solid var(--color-border, #D9CBB4); border-radius: 12px; background: var(--color-surface, #FBF7EF); color: var(--color-text, #2B2421); font: inherit; margin-bottom: .5rem; }
+    .ilm-search:focus { outline: 3px solid var(--color-secondary, #167C80); outline-offset: 2px; }
+    .badge-unverified { display: inline-flex; align-items: center; gap: .35rem; background: rgba(185, 74, 72, .12); color: #9B1B30; border: 1px solid rgba(185, 74, 72, .35); border-radius: 999px; padding: .1rem .6rem; font-size: .78rem; font-weight: 700; }
+    @media print { #header, #footer, .ilm-search, .no-print { display: none !important; } .ilm-card { break-inside: avoid; } }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>العلم — المعرفة القانونية</h2>
+        <p>بطاقات مبسطة تشرح القانون المغربي بلغة واضحة، من سلسلة «العلم» (الصور 1–35)</p>
+      </div>
+
+      <div class="alert alert-info mb-3" role="note">
+        ⚠️ <strong>محتوى تثقيفي قيد المراجعة القانونية:</strong> هذه البطاقات تُقدَّم كما وردت من المصدر،
+        ولم تُطابَق بعدُ مع الجريدة الرسمية. هي للتوعية والتثقيف فقط، <strong>ولا تُغني عن استشارة محامٍ مؤهل</strong>.
+        قبل أي تصرف قانوني، تحقق من النص الرسمي وتاريخ آخر تحديث.
+      </div>
+
+      <div class="no-print">
+        <input type="search" id="ilmSearch" class="ilm-search" placeholder="ابحث في البطاقات… (مثال: السميك، الصداق، مطل المدين، إفلاس)" aria-label="البحث في بطاقات العلم">
+        <p class="text-muted" style="font-size:.85rem;margin-bottom:1rem;"><span id="ilmCount"></span> <span id="ilmTotal"></span></p>
+      </div>
+
+      <div class="service-grid" id="ilmList" aria-live="polite"></div>
+      <p id="ilmEmpty" class="text-muted" hidden>لا توجد بطاقة مطابقة لبحثك — جرّب كلمة أخرى.</p>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/al-ilm-content.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script>
+    document.getElementById('header').innerHTML = renderHeader('al-ilm.html');
+    document.getElementById('footer').innerHTML = renderFooter();
+    updateAuthUI();
+
+    const cards = (window.AlIlmContent || []);
+    const list = document.getElementById('ilmList');
+    const empty = document.getElementById('ilmEmpty');
+    const count = document.getElementById('ilmCount');
+    document.getElementById('ilmTotal').textContent = 'بطاقة ' + cards.length;
+
+    function render(items) {
+      list.innerHTML = items.map(function (e) {
+        return '<article class="card ilm-card"><details>' +
+          '<summary><span class="ilm-num">' + e.image + '</span>' +
+          '<span><strong>' + escapeHtml(e.title) + '</strong><br>' +
+          '<span class="badge-unverified">⚠️ قيد المراجعة</span></span></summary>' +
+          '<div class="ilm-body">' + e.html +
+          '<p class="ilm-meta">المصدر: سلسلة «العلم» — الصورة ' + e.image + ' · لم تُطابق مع المصدر الرسمي بعد</p>' +
+          '</div></details></article>';
+      }).join('');
+      count.textContent = items.length;
+      empty.hidden = items.length !== 0;
+    }
+    function escapeHtml(s) { const d = document.createElement('div'); d.textContent = String(s); return d.innerHTML; }
+    function applyFilter(q) {
+      q = (q || '').trim();
+      if (!q) return render(cards);
+      const nq = q.replace(/[\u064B-\u0652\u0670\u0640]/g, '');
+      render(cards.filter(function (e) {
+        const hay = (e.title + ' ' + e.html).replace(/[\u064B-\u0652\u0670\u0640]/g, '');
+        return hay.indexOf(nq) !== -1;
+      }));
+    }
+    document.getElementById('ilmSearch').addEventListener('input', function (ev) { applyFilter(ev.target.value); });
+    render(cards);
+  </script>
+</body>
+</html>

@@ -129,13 +129,15 @@ Extraction rules: duplicate numbers are kept with unique keys (dahir vs. penal-c
 | صفحة رئيسية Next | ✔ (كانت مبنية سابقاً بهذا التصميم) — تتحقق تلقائياً مع كل build (245 صفحة ناجحة) |
 | MIYAR | ✔ يبقى كما هو (15 اختباراً) — مراجعة مختص قانوني مطلوبة قبل أي اعتماد (تنبيه دائم في الواجهة) |
 | الموقع الثابت (Workers assets) | ⏳ إعادة تطبيق نفس اللوحة (`assets/css/main.css` tokens + `index.html` hero + `assets/js/app.js` renderHeader ليعرض الشعار بدل حرف «A») — مؤجلة إلى ما بعد اكتمال نشر اليوم (في الخلفية)، منعاً لتلف الأصول المرفوعة |
-| نشر اليوم | ⏳ Worker `aadala-ma` كان **غير موجود** (10007) وجميع المسارات 404 ← أُعيد نشره بوضع assets بعد إصلاح `.assetsignore` (#5653256). النتيجة تُسجَّل هنا فور اكتمال المهمة |
+| نشر اليوم | ✅ تم — Worker `aadala-ma` أُعيد إنشاؤه في وضع assets على `https://aadala-ma.cheraimmohamed20.workers.dev`. النشر الأول (69 أصلاً، إصدار `dcdd3651-…`) تحقق خارجياً: كل المسارات الأساسية 200. النشر الثاني (4 أصول: `qanun.html`, `huwiya.html`, `app.js`, `sitemap.xml`؛ إصدار `8cf43c7f-…`) تحقق: الصفحتان 200 و`.deploy-bak` أصبح 404. نشر ثالث (صفحة «العلم») معلّق على commit هذه الجولة |
 | Build/اختبارات | ✔ `next build`: 245/245 صفحة بنجاح · lint 0 أخطاء · typecheck نظيف · 50/50 اختباراً |
 | التدقيق الشامل | ✔ موثق سابقاً (AADALA_MASTER_PROJECT_AUDIT.md + DESIGN_AUDIT.md + SECURITY_*). مرجع عملي محدّث: `docs/DESIGN_CONSTITUTION.md` + `docs/GOLDEN_SET.md` |
 
 ### غير مكتمل (بصراحة)
-- تطبيق اللوحة على الموقع الثابت وإعادة نشره — بعد انتهاء نشر اليوم.
+- تطبيق اللوحة على الموقع الثابت (`assets/css/main.css` tokens — اللوحة الحالية ما تزال crimson/ink القديمة) وتوحيدها مع `docs/DESIGN_CONSTITUTION.md`.
+- «العلم — المعرفة القانونية» مُدمجة: صفحة `al-ilm.html` تعرض 33 بطاقة (الصور 1–35؛ الصورتان 14 و15 غير متوفرتين في المصدر). المحتوى حرفياً من المصدر بوسم «قيد المراجعة» — بانتظار مطابقة مع المصدر الرسمي (D9).
 - MIYAR يحتاج مراجعة مختص شرعي/قانوني قبل أي استعمال حقيقي (الواجهة تمنع الاعتماد القانوني صراحة).
 - المصادقة الحقيقية للوحة الأدمن (RBAC + Supabase Auth + MFA) — الخطوات في `docs/ADMIN_GUIDE.md`، تنتظر التنفيذ من المالك.
-- Supabase ما زال read-only — الهجرات والتحقق (2970 مادة + `match_legal_articles`)معلّقة.
+- Supabase ما زال read-only — الهجرات والتحقق (2970 مادة + `match_legal_articles`) معلّقة.
 - `aadala.ma` غير مربوط بعد.
+- ملاحظة: `/open-next.config.ts.deploy-bak` تسرب إلى النشر الأول (كان موجوداً ملفياً أثناء النشر)؛ أُضيف `*.deploy-bak` إلى `.assetsignore` والنشر التالي يُسقطه تلقائياً من الـmanifest.
