@@ -1,0 +1,20 @@
+# Ignore legacy Python integration scripts
+data/build_apply_all.js
+data/tmp_integrate.js
+
+# Ignore build/output artifacts
+.next/
+out/
+build/
+/.open-next/
+
+# Ignore TypeScript and metadata files
+tsconfig.tsbuildinfo
+*.d.ts
+
+# Ignore environment files
+.env*.local
+
+# Ignore IDE folders
+.vscode/
+.idea/

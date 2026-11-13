@@ -70,6 +70,12 @@ group by slug order by slug;
 
 > النصوص المستخرجة آلةً وغير مدققة؛ لا تتحول إلى `verified` إلا بمراجعة بشرية ضد الجريدة الرسمية. العرض العام على الموقع يتماشى مع ذلك دائماً.
 
+### المرحلة 1 - البنية التحتية للبحث المتجهي (BAA) - 2026-11-13
+
+- `supabase/migrations/20261114000100_legal_articles_vector.sql` (pgvector extension, `legal_articles.embedding vector(1024)`, HNSW index, Arabic FTS GIN index, `match_legal_articles()` function).
+- `data/build_embeddings.py` (env: `EMBEDDING_PROVIDER`, `EMBEDDING_API_KEY`, `EMBEDDING_MODEL`, `EMBEDDING_BASE_URL`).
+
+
 ## 4. الواجهة
 
 | الملف | الدور |

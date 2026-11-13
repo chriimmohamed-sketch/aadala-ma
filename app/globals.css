@@ -1,29 +1,64 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   AADALA.MA — Design Constitution Tokens (Phase 2 — single source of truth)
+   Light:  ivory surfaces + ink text + crimson affirmation + gold details.
+   Dark:   ink-900 background, crimson-900 surfaces, gold-300 details.
+   ========================================================================== */
+
 :root {
-  --aadala-navy: #0B1D3A;
-  --aadala-navy-soft: #13294B;
-  --aadala-gold: #C9A227;
-  --aadala-gold-soft: #E6C96A;
-  --aadala-ivory: #F7F3EA;
-  --aadala-ivory-deep: #EFE7D6;
-  --aadala-graphite: #2B2B2B;
-  --aadala-graphite-soft: #5A5A5A;
-  --aadala-surface: #FFFFFF;
-  --aadala-border: #D9D2C3;
-  --aadala-danger: #9B2C2C;
+  --crimson-900: #4A0A14;
+  --crimson-700: #6E0B1B;
+  --crimson-500: #9B1B30;
+  --gold-300: #E3C77A;
+  --gold-500: #C9A24B;
+  --gold-700: #9A7A2E;
+  --ivory-50: #FBF7EF;
+  --ivory-100: #F3ECDD;
+  --ink-900: #14110E;
+  --ink-700: #2B2421;
+
+  /* Derived aliases — same source, consumed across components. */
+  --aadala-navy: var(--ink-900);
+  --aadala-navy-soft: var(--ink-700);
+  --aadala-gold: var(--gold-500);
+  --aadala-gold-soft: var(--gold-300);
+  --aadala-ivory: var(--ivory-50);
+  --aadala-ivory-deep: var(--ivory-100);
+  --aadala-graphite: var(--ink-700);
+  --aadala-graphite-soft: #6B6257;
+  --aadala-surface: var(--ivory-50);
+  --aadala-border: #D9CBB4;
+  --aadala-danger: var(--crimson-500);
   --aadala-success: #2F6B4F;
-  --aadala-glass: rgba(255,255,255,0.08);
+  --aadala-glass: rgba(201, 162, 39, 0.08);
 }
 
 [data-theme="dark"] {
-  --aadala-ivory: #0B1D3A;
-  --aadala-ivory-deep: #13294B;
-  --aadala-surface: #13294B;
-  --aadala-graphite: #F7F3EA;
+  --crimson-900: #4A0A14;
+  --crimson-700: #6E0B1B;
+  --crimson-500: #9B1B30;
+  --gold-300: #E3C77A;
+  --gold-500: #C9A24B;
+  --gold-700: #9A7A2E;
+  --ivory-50: #14110E;
+  --ivory-100: #4A0A14;
+  --ink-900: #FBF7EF;
+  --ink-700: #F3ECDD;
+
+  --aadala-navy: var(--ink-900);
+  --aadala-navy-soft: var(--ink-700);
+  --aadala-gold: var(--gold-300);
+  --aadala-gold-soft: var(--gold-500);
+  --aadala-ivory: var(--ink-900);
+  --aadala-ivory-deep: var(--crimson-900);
+  --aadala-graphite: var(--ivory-100);
   --aadala-graphite-soft: #C9C3B5;
-  --aadala-border: #2B4A7A;
-  --aadala-glass: rgba(201,162,39,0.08);
+  --aadala-surface: var(--crimson-900);
+  --aadala-border: rgba(227, 199, 122, 0.25);
+  --aadala-danger: var(--crimson-500);
+  --aadala-success: #2F6B4F;
+  --aadala-glass: rgba(227, 199, 122, 0.08);
 }
 
 @theme inline {
@@ -39,6 +74,17 @@
   --color-border: var(--aadala-border);
   --color-danger: var(--aadala-danger);
   --color-success: var(--aadala-success);
+  /* Design constitution tokens (Phase 2) */
+  --color-crimson-500: var(--crimson-500);
+  --color-crimson-700: var(--crimson-700);
+  --color-crimson-900: var(--crimson-900);
+  --color-gold-300: var(--gold-300);
+  --color-gold-500: var(--gold-500);
+  --color-gold-700: var(--gold-700);
+  --color-ivory-50: var(--ivory-50);
+  --color-ivory-100: var(--ivory-100);
+  --color-ink-900: var(--ink-900);
+  --color-ink-700: var(--ink-700);
   --font-sans: "Tajawal", "Cairo", "Noto Sans Arabic", "Segoe UI", sans-serif;
 }
 
@@ -54,7 +100,7 @@ body {
 
 /* Animated gradient background for hero */
 .hero-bg {
-  background: linear-gradient(135deg, #0B1D3A 0%, #1a3a6b 50%, #0B1D3A 100%);
+  background: linear-gradient(135deg, #4A0A14 0%, #6E0B1B 50%, #4A0A14 100%);
   background-size: 200% 200%;
   animation: gradientShift 8s ease infinite;
 }

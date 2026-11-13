@@ -4,46 +4,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700;900&display=swap');
 
 :root {
-  /* AADALA.MA — "Architecture of Justice" Design Tokens */
-  /* Core palette */
-  --color-navy: #101D32;           /* Deep Justice Navy */
-  --color-navy-mid: #172B45;       /* Midnight Blue */
-  --color-navy-light: #243B5A;     /* Royal Ink */
-  --color-gold: #C6A56B;           /* Justice Gold */
-  --color-gold-muted: #A88952;     /* Muted Brass */
-  --color-ivory: #F4F1E9;          /* Warm Ivory */
-  --color-paper: #FCFBF8;          /* Paper White */
+  /* AADALA.MA — Design Constitution tokens (Phase 2; mirrors app/globals.css) */
+  /* Core palette — ink + ivory + crimson + gold (light) */
+  --color-navy: #14110E;           /* ink-900 */
+  --color-navy-mid: #2B2421;       /* ink-700 */
+  --color-navy-light: #2B2421;     /* ink-700 */
+  --color-gold: #C9A24B;           /* gold-500 */
+  --color-gold-muted: #9A7A2E;     /* gold-700 */
+  --color-ivory: #FBF7EF;          /* ivory-50 */
+  --color-paper: #FBF7EF;          /* ivory-50 */
   --color-teal: #167C80;           /* Digital Teal */
   --color-sand: #D9CBB4;           /* Soft Sand */
-  --color-graphite: #252B33;       /* Graphite */
-  --color-border-neutral: #E3E1DB; /* Neutral Border */
+  --color-graphite: #2B2421;       /* ink-700 */
+  --color-border-neutral: #D9CBB4; /* Soft Sand */
 
-  /* Semantic tokens (light mode) */
-  --color-primary: var(--color-navy);
-  --color-primary-light: var(--color-navy-light);
-  --color-primary-dark: #0A1422;
-  --color-accent: var(--color-gold);
-  --color-accent-light: #D4B88A;
-  --color-accent-dark: var(--color-gold-muted);
+  /* Semantic tokens (light mode) — Constitution: crimson affirmation, gold details */
+  --color-primary: #9B1B30;        /* crimson-500 */
+  --color-primary-light: #6E0B1B;  /* crimson-700 */
+  --color-primary-dark: #4A0A14;  /* crimson-900 */
+  --color-accent: #C9A24B;
+  --color-accent-light: #E3C77A;   /* gold-300 */
+  --color-accent-dark: #9A7A2E;    /* gold-700 */
   --color-secondary: var(--color-teal);
   --color-secondary-light: #1FA0A5;
-  --color-bg: var(--color-ivory);
-  --color-bg-alt: var(--color-paper);
-  --color-surface: var(--color-paper);
-  --color-text: var(--color-graphite);
-  --color-text-muted: #687385;
-  --color-border: var(--color-border-neutral);
-  --color-danger: #B91C1C;
-  --color-success: #15803D;
+  --color-bg: #FBF7EF;
+  --color-bg-alt: #F3ECDD;
+  --color-surface: #FBF7EF;
+  --color-text: #2B2421;
+  --color-text-muted: #6B6257;
+  --color-border: #D9CBB4;
+  --color-danger: #9B1B30;
+  --color-success: #2F6B4F;
   --color-warning: #B45309;
   --color-info: var(--color-teal);
 
-  /* Dark mode overrides */
-  --color-dark-bg: #0B1424;
-  --color-dark-surface: #111E31;
-  --color-dark-text: #F4F1E9;
-  --color-dark-muted: #AAB5C4;
-  --color-dark-border: rgba(255,255,255,0.13);
+  /* Dark mode overrides — Constitution: ink-900 bg, crimson-900 surfaces, gold-300 details */
+  --color-dark-bg: #14110E;
+  --color-dark-surface: #4A0A14;
+  --color-dark-text: #F3ECDD;
+  --color-dark-muted: #C9C3B5;
+  --color-dark-border: rgba(227,199,122,0.25);
 
   /* Typography */
   --font-body: 'Tajawal', 'Cairo', sans-serif;

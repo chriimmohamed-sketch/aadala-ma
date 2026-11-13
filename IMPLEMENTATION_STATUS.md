@@ -95,3 +95,23 @@ Extraction rules: duplicate numbers are kept with unique keys (dahir vs. penal-c
 - `legal_documents` = 6، `legal_document_versions` = 9، `legal_sources` = 6، `legal_articles` = 0.
 - REST عام بـ publishable key يُرجع 6 سجلات مع نسخها؛ صفحة `database.html` تعرض «متصل بقاعدة البيانات — 6 سجلات».
 - Security advisor: لم تبقَ تحذيرات `rls_enabled_no_policy` على جداول القانون الأربعة.
+
+## 2026-11-13 — مساءً: Golden Set + audit + advisors (بيئة قراءة فقط)
+
+| Item | Result |
+|---|---|
+| Supabase write mode | **ما زال read-only** (`default_transaction_read_only = on`, وليست نسخة استشفاء). `legal_articles` = 0. الهجرة `supabase/apply_articles.sql` (2970 مادة) **لم تُطبَّق** — يتطلب إجراءً من المالك في لوحة التحكم (حصة القرص / الفوترة في الخطة المجانية) |
+| Supabase migrations list | فارغة — لم تُطبَّق أي هجرة عبر الأدوات |
+| Security advisors (إعادة فحص) | 12× RLS-no-policy (INFO، مقفلة افتراضياً عن قصد) · 2× `search_path` متغيّر (`set_updated_at`، `touch_doc_updated_at`) · 4× دوال SECURITY DEFINER قابلة للتنفيذ من `anon` (`handle_new_user`، `is_admin`، `is_workspace_member`، `is_workspace_owner`) · نفسها من `authenticated`. لا إصلاح الآن — القاعدة في وضع القراءة فقط |
+| Performance advisors (إعادة فحص) | 22× مفاتيح أجنبية بلا فهرس · 25× `auth_rls_initplan` (يُنصح بـ`(select auth.<fn>())`) · 30× فهارس غير مستعملة · 20× سياسات permissive متعددة · 2× فهارس مكررة (`legal_articles`: idx_legal_articles_doc ≈ legal_articles_document_idx · `legal_documents`: slug_key ≈ slug_uidx) |
+| Golden Set | أُنشئ: `docs/GOLDEN_SET.md` + `lib/ai-assistant/golden-set.test.ts`. مجموعة الاسترجاع دون اتصال **25/25 ناجحة** (22 افتراض top-1 للنطاق + 3 مضادات هلوسة). التشغيل الكامل end-to-end معلّق: مفتاح مزوّد + تطبيق الهجرة + `AI_VECTOR_SEARCH=1` |
+| npm audit | 14 ثغرة (2 حرجة / 4 عالية / 8 معتدلة) ← **9 معتدلة** بعد `vitest@3→5.1.0` و`@types/node@20→24` و`npm audit fix`. المتبقية كلها في أدوات البناء (glob/minimatch عبر @opennextjs/cloudflare و@typescript-eslint)؛ لا تصل إلى حزمة Next.js أو Workers |
+| Quality gate | **50/50 اختباراً** · 0 أخطاء lint (11 تحذيراً متوقعاً) · typecheck نظيف |
+| WSL | **غير مثبت** على هذا الجهاز ← النشر بـ wrangler غير ممكن محلياً؛ استخدم لوحة Cloudflare ← Workers ← Deploy |
+| 2FA للأدمن | غير مطبّق. الخطوات في `docs/ADMIN_GUIDE.md` (§ 2FA) |
+| Git | التغييرات المُرحّلة والجديدة أُودعت ودُفعت إلى `origin/master` |
+
+### الحالة الصادقة
+- **لم يُطبَّق أي شيء على القاعدة ولم يُنشر أي شيء** — كلاهما معلّق على إجراء المالك، لا على الأدوات.
+- `/api/ai` يبقى عرضاً للبحث الموجّه: KB المحلية 14 مقطعاً (7 مصادر)؛ كوربوس 2970 مادة موجود فقط كـ SQL مولّد بانتظار التطبيق.
+- لوحة الأدمن ليست لإنتاج (لا مصادقة حقيقية)؛ 2FA موثّق ولم يُفعّل.
