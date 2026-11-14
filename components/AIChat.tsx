@@ -9,6 +9,8 @@ interface Citation {
   location?: string;
   score?: number;
   confidence?: "direct" | "inference" | "no_text";
+  verified?: boolean;
+  kind?: "statute" | "jurisprudence";
 }
 
 interface Answer {
@@ -91,6 +93,16 @@ export default function AIChat({ locale }: { locale: string }) {
                       <span className={`rounded-full border px-2 py-0.5 text-[10px] ${r.confidence === "direct" ? "border-teal/40 bg-teal/10 text-teal" : "border-gold/50 bg-gold/10 text-graphite"}`}>
                         {CONFIDENCE_LABEL[r.confidence ?? "inference"] ?? "مصدر"}
                       </span>
+                      {r.kind === "jurisprudence" && (
+                        <span className="rounded-full border border-gold/60 bg-gold/10 px-2 py-0.5 text-[10px] text-brass">
+                          اجتهاد قضائي — غير مُراجع
+                        </span>
+                      )}
+                      {r.verified === false && (
+                        <span className="rounded-full border border-border bg-surface px-2 py-0.5 text-[10px] text-graphite">
+                          قيد المراجعة
+                        </span>
+                      )}
                     </div>
                     <div className="mt-1 text-graphite-soft">{r.excerpt.slice(0, 240)}…</div>
                     <div className="mt-2">
@@ -107,7 +119,9 @@ export default function AIChat({ locale }: { locale: string }) {
               </ul>
             ) : (
               <div className="mt-2 rounded border border-gold/60 bg-gold/10 p-3 text-xs text-graphite">
-                لا يوجد نص مسترجع لهذا السؤال. لم يخترع المساعد أي مادة. هذه أقرب المواضيع في المكتبة للاطلاع، ليست أدلة:
+                {ans.procedurePath?.length
+                  ? "المسار الإجرائي أعلاه مبني على بيانات داخلية قيد التحقق، وليس على نصّ مادة مسترجعة. راجع قانون المسطرة قبل الاعتماد."
+                  : "لا يوجد نص مسترجع لهذا السؤال. لم يخترع المساعد أي مادة. هذه أقرب المواضيع في المكتبة للاطلاع، ليست أدلة:"}
                 {ans.suggestions?.length > 0 && (
                   <ul className="mt-2 space-y-2">
                     {ans.suggestions.map((s, i) => (

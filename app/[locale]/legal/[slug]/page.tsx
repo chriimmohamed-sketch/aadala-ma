@@ -6,9 +6,11 @@ import LegalArticleView, { LegalTreeView } from "@/components/LegalArticle";
 import SourceCard from "@/components/SourceCard";
 import { legalSources } from "@/data/legal-sources";
 import { legalDatabase } from "@/data/legal-database";
-import { getStructuredDocument } from "@/lib/legal-data";
+import { getStructuredDocument, isStructured } from "@/lib/legal-data";
 import { flattenArticles } from "@/lib/legal-data/types";
 import quality from "@/data/legal-quality.json";
+import JurisprudenceView from "@/components/JurisprudenceView";
+import { JURISPRUDENCE_DECISIONS, JURISPRUDENCE_SLUG } from "@/lib/legal-data/jurisprudence";
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
@@ -35,9 +37,12 @@ export default async function DetailPage({ params }: { params: Promise<{ locale:
       </div>
     );
   }
-  const filePath = path.join(process.cwd(), "public", src.file.replace(/^\//, ""));
   let text = "";
-  try { text = fs.readFileSync(filePath, "utf8"); } catch { text = "تعذر قراءة الملف."; }
+  // Structured documents have no extracted .txt file: the structured view below is the source.
+  if (!isStructured(slug) && src.file) {
+    const filePath = path.join(process.cwd(), "public", src.file.replace(/^\//, ""));
+    try { text = fs.readFileSync(filePath, "utf8"); } catch { text = "تعذر قراءة الملف."; }
+  }
   const q = (quality as Record<string, { quality: string }>)[slug]?.quality;
   const rec = legalDatabase.find((r) => r.slug === slug);
   const idx = legalSources.findIndex((s) => s.slug === slug);
@@ -64,7 +69,11 @@ export default async function DetailPage({ params }: { params: Promise<{ locale:
         </dl>
         <CitationActions locale={locale} title={src.title} lawNumber={rec?.lawNumber ?? src.type} slug={slug} promulgated={rec?.promulgated ?? null} published={rec?.published ?? null} />
 
-        {structured && (
+        {structured && structured.metadata.slug === JURISPRUDENCE_SLUG && (
+          <JurisprudenceView decisions={JURISPRUDENCE_DECISIONS} />
+        )}
+
+        {structured && structured.metadata.slug !== JURISPRUDENCE_SLUG && (
           <section className="mt-6 grid gap-4 lg:grid-cols-[1fr_280px]">
             <div>
               <h2 className="mb-3 text-xl font-bold text-navy">النص (منظَّم — {structuredArticles.length} مادة)</h2>

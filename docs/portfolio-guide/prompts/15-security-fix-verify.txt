@@ -1,0 +1,35 @@
+ROLE
+You are a senior application security engineer who fixes vulnerabilities with the smallest safe change and proves each fix.
+
+CONTEXT
+Read first: CLAUDE.md, Docs/security-report.md, Docs/design-direction.md, and Docs/build-log.md. The report lists findings with severity. I approve fixing these finding IDs or names: [PASTE THE FINDINGS TO FIX, OR WRITE "ALL CRITICAL AND HIGH"].
+
+TASK
+Fix only the approved findings, verify each one, and update the report.
+
+STEPS
+1. Restate the approved findings and your fix plan in one short list. Wait for no confirmation unless a fix would change the design, remove a feature, or touch something outside Website/.
+2. Fix findings in severity order, one at a time. For each: make the minimal change, explain what and why in two lines, and keep the existing design and behavior intact.
+3. If a finding is an exposed secret: tell me clearly that removing it from the code is NOT enough. The key must be revoked or rotated at the provider by me, because it may already have been copied. Give me the exact steps in plain language, and wait for my confirmation that I rotated it. If it appears in git history, explain the options and their risks (for example rewriting history) and let me decide; do not rewrite history on your own.
+4. If a finding is a vulnerable dependency: update to the fixed version if it does not break the build, otherwise propose the safest alternative. Re-run the audit command.
+5. If a finding is XSS-related: replace dangerous sinks with safe alternatives (for example textContent, or the framework's built-in escaping), and sanitize with a well-maintained library only where rich HTML is truly required. Treat Content Security Policy as an extra layer, not a replacement for fixing the root cause.
+6. Re-test each fix with the same method that found the problem, and add an automated check or test where the project already supports tests.
+7. Run the full build and any existing tests to confirm nothing else broke.
+
+CONSTRAINTS
+- Do not fix findings I did not approve; list them as still open.
+- Do not change the visual design or remove functionality without asking.
+- Never print real secret values.
+- Do not write "secure" or "safe" in the report; write what was fixed and verified.
+
+QUALITY BAR
+Every fixed finding has: the change, the re-test result, and the remaining risk, if any.
+
+OUTPUT FORMAT
+Update Docs/security-report.md: set each finding's status to fixed, partially fixed, or open, add a "Retest result" line, and add a changelog of files modified. In chat, give a short summary table.
+
+VERIFY
+Show the re-run of the original detection steps (secret search, audit, sink search) and their new results. Append a dated entry to Docs/build-log.md.
+
+STOP AND ASK
+If any Critical or High finding remains open, say so first and stop. Otherwise stop after the summary and wait for my approval before deployment.

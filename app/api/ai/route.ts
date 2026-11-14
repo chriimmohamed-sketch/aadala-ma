@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { retrieveWithRefs, suggestNearest, unverifiedCitations } from "@/lib/ai-assistant/retrieval";
+import { retrieveWithRefs, retrievalQuality, suggestNearest, unverifiedCitations } from "@/lib/ai-assistant/retrieval";
+import { matchProcedure } from "@/lib/ai-assistant/procedures";
 import { callProvider, embed } from "@/lib/ai-assistant/provider";
 import type { AICitation, AIAnswer } from "@/lib/ai-assistant/types";
 import { confidenceFor } from "@/lib/ai-assistant/types";
@@ -86,7 +87,11 @@ export async function POST(req: Request) {
     location: c.location,
     score: c.score,
     confidence: confidenceFor(c.score),
+    verified: c.verified,
+    kind: c.kind,
   }));
+  const JURISPRUDENCE_NOTE =
+    "بعض المصادر من الاجتهاد القضائي (قرارات محاكم تجارية) — مرجع استئناسي غير مُراجع وغير ملزم، وليست نصوصًا قانونية.";
   const suggestions: AICitation[] = effectiveChunks.length
     ? []
     : suggestNearest(question, 3).map((c) => ({
@@ -130,26 +135,102 @@ ${question}
 
   const raw = await callProvider(prompt, SYSTEM_PROMPT);
 
+  // Relevance of the retrieval itself (not of the model): drives certainty + honesty.
+  const quality = retrievalQuality(question, effectiveChunks);
+  const RAG_ONLY = "لا يوجد مفتاح AI provider — الجواب مبني على الاسترجاع (RAG) فقط، وليس تحليلًا مُركَّبًا. لتفعيل التحليل (AI)، أضف AI_PROVIDER_API_KEY في .env.";
+
   let parsed: Record<string, unknown> | null = null;
   if (raw) {
     try {
       const m = raw.match(/\{[\s\S]*\}/);
       if (m) { const j = JSON.parse(m[0]); if (j && typeof j === "object" && !Array.isArray(j)) parsed = j as Record<string, unknown>; }
     } catch { parsed = null; }
+  } else if (effectiveChunks.length > 0) {
+    // Retrieval-only fallback: when no AI provider is configured, answer from retrieved effectiveChunks.
+    parsed = {
+      factsAssumed: "تم البحث في قاعدة البيانات (RAG). " + effectiveChunks.length + " مقطع مسترجع.",
+      legalIssue: "سؤال: " + question,
+      legalBasis: effectiveChunks.map((c, i) => "[" + (i + 1) + "] " + c.title + (c.location ? " — " + c.location : "")).join("\n"),
+      analysis: effectiveChunks.map((c, i) => "[" + (i + 1) + "] " + c.excerpt).join("\n\n"),
+      possibleApplications: "راجع المقاطع المسترجعة أعلاه (المراجع).",
+      references: refs,
+      certainty: quality === "low" ? "low" : "medium",
+      missingInfo: [
+        RAG_ONLY,
+        ...(quality === "low"
+          ? ["الصلة بين السؤال والنصوص المسترجعة محدودة — أعد الصياغة بمصطلح قانوني أدق (مثلاً: عقد بيع، تحفيظ، نفقة، شيك)."]
+          : []),
+      ],
+      disclaimer: "هذا الجواب مبني على مقاطع مسترجعة من قاعدة البيانات (RAG)، وليس تحليلًا قانونيًا. استشر محاميًا مغربيًا في قضيتك.",
+      textInterpretation: "",
+      oldVsNewComparison: "",
+      procedurePath: [],
+      documentList: [],
+      legalSummary: effectiveChunks.map((c) => c.title).join("، "),
+      draftTemplate: "",
+    };
+  } else {
+    // No passage matched. Either a procedural question we can answer from curated
+    // procedure data, or an honest statement of the limits — never a dead end.
+    const proc = matchProcedure(question);
+    if (proc) {
+      parsed = {
+        factsAssumed: "سؤال إجرائي — لم تُفترض وقائع إضافية.",
+        legalIssue: "سؤال: " + question,
+        legalBasis: `${proc.sources.join("، ")} — الجهة المختصة: ${proc.authority}`,
+        analysis: `المسار الإجرائي: ${proc.stages.map((s, i) => `${i + 1}. ${s}`).join(" ← ")}.`,
+        possibleApplications: `الآجال: ${proc.deadlines}. الرسوم: ${proc.fees}. طرق الطعن: ${proc.remedies.join("، ")}. المساعدة القانونية: ${proc.legalAid}`,
+        references: [],
+        certainty: "low",
+        missingInfo: [
+          "بيانات المسطرة داخلية وقيد التحقق — راجع النص الرسمي (قانون المسطرة) قبل الاعتماد.",
+        ],
+        disclaimer: "هذا ليس استشارة مهنية نهائية. راجع مختصاً.",
+        textInterpretation: "",
+        oldVsNewComparison: "",
+        procedurePath: proc.stages,
+        documentList: proc.documents,
+        legalSummary: `${proc.title} — ${proc.authority}`,
+        draftTemplate: "",
+      };
+    } else {
+      parsed = {
+        factsAssumed: "لم تُفترض أي وقائع إضافية.",
+        legalIssue: "سؤال: " + question,
+        legalBasis: "لا يوجد نص قانوني مسترجع لهذا السؤال ضمن النصوص المفهرسة حاليًا.",
+        analysis:
+          "لا أستطيع تقديم جواب قانوني موثّق دون نصّ مستند إليه، ولن أخترع مادة أو حكمًا. " +
+          "أضف تفاصيل تحدّد المجال (أسرة، عقار، شغل، جنائي، تجاري) والوقائع والتاريخ، أو اختر أقرب موضوع من الاقتراحات أدناه.",
+        possibleApplications: "أعد طرح السؤال بمصطلح قانوني (مثلاً: «شروط صحة عقد البيع»، «التحفيظ العقاري»، «النفقة»، «شيك بدون رصيد»).",
+        references: [],
+        certainty: "insufficient_sources",
+        missingInfo: [
+          "ينقص: المجال القانوني، الوقائع الأساسية، والتاريخ — بدونها لا يمكن بناء أساس قانوني.",
+          "المكتبة المفهرسة لا تغطي كل الفروع بعد؛ ما لا يوجد نصّه يبقى «قيد التجهيز» ولا يُخمَّن.",
+        ],
+        disclaimer: "هذا ليس استشارة مهنية نهائية. راجع مختصاً.",
+        textInterpretation: "",
+        oldVsNewComparison: "",
+        procedurePath: [],
+        documentList: [],
+        legalSummary: "",
+        draftTemplate: "",
+      };
+    }
   }
 
   // Every field from the model is type-checked: a non-string value must never reach the UI.
   const certaintyRaw = parsed?.certainty;
   const answer: AIAnswer = {
-    factsAssumed: str(parsed?.factsAssumed) || "لم يُحدد AI provider. عرض مقاطع مسترجعة فقط.",
-    legalIssue: str(parsed?.legalIssue) || "يتطلب AI provider للتحليل.",
-    legalBasis: str(parsed?.legalBasis) || (effectiveChunks.length ? "مقاطع مسترجعة (انظر المراجع)." : "لا توجد مصادر كافية."),
-    analysis: str(parsed?.analysis) || (effectiveChunks.length ? "تعذّر التحليل (لا AI provider). راجع المقاطع." : "لا توجد مصادر كافية."),
+    factsAssumed: str(parsed?.factsAssumed) || "تم البحث في قاعدة البيانات (RAG).",
+    legalIssue: str(parsed?.legalIssue) || "سؤال: " + question,
+    legalBasis: str(parsed?.legalBasis) || (effectiveChunks.length ? "مقاطع مسترجعة (انظر المراجع)." : "لم يتم العثور على مقالات مطابقة. جرّب كلمات مختلفة."),
+    analysis: str(parsed?.analysis) || (effectiveChunks.length ? "تعذّر التحليل (لا AI provider). راجع المقاطع أعلاه." : "جرّب إعادة صياغة السؤال أو استخدام كلمات مفتاحية (مثلاً: \"عقد بيع\", \"تحفيظ\", \"ميراث\")."),
     possibleApplications: str(parsed?.possibleApplications),
     references: refs,
     suggestions,
     certainty: CERTAINTY.includes(certaintyRaw as AIAnswer["certainty"]) ? (certaintyRaw as AIAnswer["certainty"]) : (effectiveChunks.length ? "low" : "insufficient_sources"),
-    missingInfo: parsed ? arr(parsed.missingInfo) : ["AI provider API key", "وقائع إضافية"],
+    missingInfo: parsed ? arr(parsed.missingInfo) : ["لا يوجد مفتاح AI provider — الجواب مبني على الاسترجاع (RAG) فقط. لتفعيل التحليل (AI)، أضف AI_PROVIDER_API_KEY."],
     disclaimer: str(parsed?.disclaimer) || "هذا ليس استشارة مهنية نهائية. راجع مختصاً.",
     textInterpretation: str(parsed?.textInterpretation),
     oldVsNewComparison: str(parsed?.oldVsNewComparison),
@@ -160,10 +241,16 @@ ${question}
   };
 
   // No retrieved sources means the model has nothing to rely on: never present that as a confident answer.
-  if (parsed && !effectiveChunks.length) answer.certainty = "insufficient_sources";
+  if (raw && parsed && !effectiveChunks.length) answer.certainty = "insufficient_sources";
 
-  // Anti-hallucination check: any article number cited but absent from the retrieved passages downgrades the answer.
-  if (parsed) {
+  // The retrieval caps certainty: a weak match is never presented as a strong one.
+  if (raw) {
+    if (quality === "insufficient_sources") answer.certainty = "insufficient_sources";
+    else if (quality === "low" && answer.certainty !== "insufficient_sources") answer.certainty = "low";
+  }
+
+  // Anti-hallucination check on generated text only: a RAG-only answer quotes the sources verbatim.
+  if (raw && parsed) {
     const bad = unverifiedCitations(
       `${answer.legalBasis} ${answer.analysis} ${answer.possibleApplications} ${answer.textInterpretation} ${answer.legalSummary} ${answer.draftTemplate}`,
       effectiveChunks,
@@ -172,6 +259,10 @@ ${question}
       answer.certainty = answer.certainty === "insufficient_sources" ? "insufficient_sources" : "low";
       answer.missingInfo = [...answer.missingInfo, `إحالات غير مؤكدة بالمصادر المسترجعة (الأرقام: ${bad.join("، ")}). تحقق منها قبل الاعتماد.`];
     }
+  }
+  // Jurisprudence disclosure: an answer leaning on court decisions must say so.
+  if (effectiveChunks.some((c) => c.kind === "jurisprudence") && !answer.missingInfo.includes(JURISPRUDENCE_NOTE)) {
+    answer.missingInfo = [...answer.missingInfo, JURISPRUDENCE_NOTE];
   }
   return NextResponse.json(answer);
 }

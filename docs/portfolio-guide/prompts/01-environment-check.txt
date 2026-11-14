@@ -1,0 +1,34 @@
+ROLE
+You are a patient senior developer onboarding a complete beginner. Assume I have never built a website with an AI coding tool before.
+
+CONTEXT
+I am about to build a personal portfolio website from an empty folder, using you as my coding assistant. My operating system is: [YOUR OS: Windows / macOS / Linux]. My profession is: [YOUR PROFESSION]. I have no programming experience unless I say otherwise: [YOUR EXPERIENCE LEVEL].
+
+TASK
+Check whether my machine is ready, and tell me exactly what is missing. Do not install or change anything without asking me first.
+
+STEPS
+1. Inspect the current working directory and tell me whether it is empty, and what it is called.
+2. Check which of these are installed and print their versions (read-only commands only): git, node, npm. If a command is not found, say so plainly instead of guessing.
+3. Check whether git is configured with a user name and email (git config --global user.name and user.email). Never print any password, token, or credential.
+4. Tell me whether I can run a local web server on this machine (for example: node installed, or python installed).
+5. List what is missing, in order of importance, and for each missing item give: what it is (one plain sentence), why I need it for a portfolio website, and the official download or install page.
+6. Tell me which items are optional (for example a code editor) and which are required.
+
+CONSTRAINTS
+- Read-only commands only in this step. Do not install, delete, or modify anything.
+- Do not invent version requirements. If you are unsure whether something is required, say "I am not sure" and tell me where to verify.
+- Explain every technical term the first time you use it, in one simple sentence.
+- Never ask me to paste secrets, passwords, or API keys.
+
+QUALITY BAR
+A non-technical person must be able to follow your report without searching anything else.
+
+OUTPUT FORMAT
+A short table: Tool | Installed? | Version | Required? | What to do. Then a "Next actions" list of at most 5 items, and one sentence saying whether I am ready to continue to the next step.
+
+VERIFY
+Show the exact commands you ran and what they returned, so I can see the evidence.
+
+STOP AND ASK
+When the report is done, stop. Wait for me to install anything missing and tell you to re-check.

@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
 
-type NavLink = { href: string; label: string; description: string; icon: typeof Scale; key?: string };
+type NavLink = { href: string; label: string; description: string; icon: typeof Scale; key?: string; external?: boolean };
 type NavGroup = { title: string; eyebrow: string; links: NavLink[] };
 
 const groups: NavGroup[] = [
@@ -33,6 +33,12 @@ const groups: NavGroup[] = [
     { href: "/updates", label: "المستجدات", description: "آخر الإضافات والتحديثات القانونية", icon: BriefcaseBusiness },
     { href: "/showcase", key: "showcase", label: "استكشف المنصة", description: "تعرف على إمكانات AADALA.MA", icon: Sparkles },
     { href: "/founder", key: "founder", label: "عن المؤسس", description: "الرؤية والفريق وهوية المشروع", icon: UserRound },
+  { href: "/founder", key: "founder", label: "�� ��ꛫ�", description: "�驛� ����� ���� ��ꬩ��", icon: UserRound },
+  ]},
+  { title: "المصادر والهوية", eyebrow: "SOURCES & IDENTITY", links: [
+    { href: "/encyclopedia.html", label: "الموسوعة القانونية", description: "شروحات مبسطة لأهم القوانين المغربية", icon: BookOpen, external: true },
+    { href: "/aadala-ma.html", label: "AADALA.MA — الهوية", description: "القانون المغربي بنصّه ومادّته", icon: Landmark, external: true },
+    { href: "/institutions", key: "institutions", label: "المؤسسات الجامعية", description: "المؤسسات (جامعة ابن زهر)", icon: GraduationCap },
   ]},
 ];
 
@@ -66,7 +72,7 @@ export default function Header({ locale, messages }: { locale: string; messages:
                 </button>
                 <div className={`justice-mega-menu mega-${index + 1}`}>
                   <div className="justice-mega-heading"><span>{group.eyebrow}</span><strong>{group.title}</strong><p>بوابتك المنظمة إلى المعرفة والخدمات القانونية.</p></div>
-                  <div className="justice-mega-links">{group.links.map((item) => { const Icon = item.icon; return <Link key={item.href} href={`/${locale}${item.href}`} className={isActive(item.href) ? "is-active" : ""} onClick={close}><span className="justice-menu-icon"><Icon size={19}/></span><span><b>{item.key ? nav[item.key] ?? item.label : item.label}</b><small>{item.description}</small></span><ArrowUpLeft className="justice-menu-arrow" size={15}/></Link>; })}</div>
+                  <div className="justice-mega-links">{group.links.map((item) => { const Icon = item.icon; return <Link key={item.href} href={item.external ? item.href : `/${locale}${item.href}`} className={isActive(item.href) ? "is-active" : ""} onClick={close}><span className="justice-menu-icon"><Icon size={19}/></span><span><b>{item.key ? nav[item.key] ?? item.label : item.label}</b><small>{item.description}</small></span><ArrowUpLeft className="justice-menu-arrow" size={15}/></Link>; })}</div>
                   <div className="justice-mega-foot"><Scale size={14}/> معرفة قانونية منظمة، في متناول الجميع</div>
                 </div>
               </div>
@@ -81,7 +87,7 @@ export default function Header({ locale, messages }: { locale: string; messages:
       <aside className={`justice-mobile-drawer ${open ? "is-open" : ""}`} aria-hidden={!open}>
         <div className="justice-drawer-head"><div><span className="justice-drawer-seal"><Scale size={22}/></span><span><b>AADALA.MA</b><small>بوابة العدالة والمعرفة القانونية</small></span></div><button onClick={close} aria-label="إغلاق القائمة"><X/></button></div>
         <label className="justice-drawer-search"><Search size={17}/><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="ابحث داخل أقسام المنصة..." /></label>
-        {query.trim() ? <div className="justice-drawer-results">{filtered.map((item) => { const Icon = item.icon; return <Link key={item.href} href={`/${locale}${item.href}`} onClick={close}><Icon size={18}/><span>{item.label}<small>{item.description}</small></span></Link>; })}{filtered.length === 0 && <p>لا توجد نتائج مطابقة.</p>}</div> : <div className="justice-drawer-content"><Link className="justice-drawer-home" href={`/${locale}`} onClick={close}><Landmark size={19}/>الرئيسية<ArrowUpLeft size={16}/></Link>{groups.map((group) => <section key={group.eyebrow}><div className="justice-drawer-section-title"><span>{group.eyebrow}</span><b>{group.title}</b></div>{group.links.map((item) => { const Icon = item.icon; return <Link key={item.href} href={`/${locale}${item.href}`} onClick={close} className={isActive(item.href) ? "is-active" : ""}><Icon size={18}/><span>{item.key ? nav[item.key] ?? item.label : item.label}</span><ArrowUpLeft size={14}/></Link>; })}</section>)}</div>}
+        {query.trim() ? <div className="justice-drawer-results">{filtered.map((item) => { const Icon = item.icon; return <Link key={item.href} href={item.external ? item.href : `/${locale}${item.href}`} onClick={close}><Icon size={18}/><span>{item.label}<small>{item.description}</small></span></Link>; })}{filtered.length === 0 && <p>لا توجد نتائج مطابقة.</p>}</div> : <div className="justice-drawer-content"><Link className="justice-drawer-home" href={`/${locale}`} onClick={close}><Landmark size={19}/>الرئيسية<ArrowUpLeft size={16}/></Link>{groups.map((group) => <section key={group.eyebrow}><div className="justice-drawer-section-title"><span>{group.eyebrow}</span><b>{group.title}</b></div>{group.links.map((item) => { const Icon = item.icon; return <Link key={item.href} href={item.external ? item.href : `/${locale}${item.href}`} onClick={close} className={isActive(item.href) ? "is-active" : ""}><Icon size={18}/><span>{item.key ? nav[item.key] ?? item.label : item.label}</span><ArrowUpLeft size={14}/></Link>; })}</section>)}</div>}
         <div className="justice-drawer-footer"><ShieldCheck size={16}/> منصة معرفية مستقلة للتوعية والبحث القانوني</div>
       </aside>
     </>

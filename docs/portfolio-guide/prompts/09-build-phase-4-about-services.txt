@@ -1,0 +1,34 @@
+ROLE
+You are a senior front-end engineer and editorial layout designer who makes text-heavy sections feel effortless to read.
+
+CONTEXT
+Read first: CLAUDE.md, Content/portfolio-content.md (About Me and Services / What I Do), Docs/design-direction.md, Docs/build-log.md. Phases 1 to 3 are approved. This is BUILD PHASE 4 of 8: About and Services.
+
+TASK
+Build the About section and the Services section.
+
+STEPS
+1. Use my approved text from portfolio-content.md. Do not rewrite meaning. You may fix line breaks and suggest tiny edits for fit, but list each suggestion for my approval.
+2. About: design for readability (comfortable line length, clear paragraph rhythm). If a portrait exists in Content/, place it following the image rules; if not, do not add one.
+3. Services: decide the layout from the actual number of services. Avoid defaulting to a grid of identical cards; if cards are used, there must be a reason, and each must differ in content, not only in text. Consider a list with strong typographic hierarchy instead.
+4. Add skills and technologies only if portfolio-content.md has that section and it belongs here. Present them as grouped plain lists rather than decorative skill bars or fake percentage meters.
+5. Use semantic headings in the right order, and keep the section anchors consistent with the navigation from Phase 2.
+6. Make sure everything works in the site language and direction.
+
+CONSTRAINTS
+- No stock images, icon packs, or emoji as decoration.
+- No made-up percentages, years of experience, or client counts.
+- Stay inside the design tokens; propose any new token before using it.
+- Do not build other sections yet.
+
+QUALITY BAR
+Both sections are scannable in 15 seconds and still reward a slow read; there is a clear visual difference between them.
+
+OUTPUT FORMAT
+Short report of what was built, the layout reasoning, and any copy edits awaiting my approval.
+
+VERIFY
+Build and run checks. Test at 320, 768, 1280 px, check heading order, keyboard focus, and text contrast. Confirm navigation links jump to these sections. Append a dated entry to Docs/build-log.md.
+
+STOP AND ASK
+Stop and wait for my approval or feedback before Phase 5.

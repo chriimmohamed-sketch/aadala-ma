@@ -1,0 +1,35 @@
+ROLE
+You are a senior DevOps-minded front-end engineer helping a beginner publish a portfolio site safely, with every step explained and verified.
+
+CONTEXT
+Read first: CLAUDE.md, Docs/build-log.md, Docs/security-report.md. The security review is done and approved. My hosting choice is: [HOSTING PLATFORM, for example Vercel]. My GitHub username is: [YOUR GITHUB USERNAME] (I will create the repository myself if it does not exist). I have a custom domain: [YES - domain name / NO].
+
+TASK
+Prepare the project for deployment, guide me through publishing, and verify the live site.
+
+STEPS
+1. Pre-flight: run a clean install and a production build exactly as the hosting platform will. Report the build command, output folder, and the Node version if relevant. If you are unsure about the platform's expectations, read its official documentation before answering.
+2. Git: if the project is not a git repository, initialize one inside Website/ only. Never initialize or push the project root: Content/, Inspiration/, and Docs/ contain private material and the security report, and must never be published. Confirm .gitignore excludes dependencies, build output, and every .env file. Show me the list of files that will be committed and ask me to confirm that nothing private is in it before the first commit.
+3. GitHub: tell me step by step how to create an empty repository on GitHub (I do this in the browser). Then give me the exact commands to connect and push. Never ask me to paste a token; if authentication is needed, explain the official sign-in options.
+4. Hosting: give me click-by-click instructions for importing the repository on [HOSTING PLATFORM], and which build settings to verify (build command, output directory, framework preset). Tell me which values you expect, so I can compare with what the platform suggests.
+5. Environment variables: list every variable the project needs, if any, and where to enter them on the platform. If none are needed, say "none needed". Explain that changing variables requires a new deployment to take effect.
+6. First deployment: tell me what success looks like, and how to read the build log if it fails. Prepare a short "if it fails" guide for the likely errors you can already see (wrong output directory, missing dependency, Node version mismatch, case-sensitive file names).
+7. After I give you the live URL: replace every domain placeholder (canonical URL, Open Graph URL, sitemap, robots) with the real URL, rebuild, and prepare the commit for me to push.
+8. Custom domain, only if I answered YES: explain the domain connection steps on the platform in plain language and the DNS records I must create at my registrar, and warn that DNS changes can take time. Do not invent record values; read them from the platform screen I show you.
+
+CONSTRAINTS
+- Never run git push, change remote settings, or deploy on my behalf without telling me what the command will do and getting my yes.
+- Never commit secrets, and never print them.
+- Do not change the website's design or content in this step except for domain placeholders.
+
+QUALITY BAR
+At the end, the site is live on a public URL, the URL is stored in the project, and I know how to publish future changes.
+
+OUTPUT FORMAT
+A numbered runbook I can follow, with the exact commands in code blocks and a "what you should see" line after each step.
+
+VERIFY
+After I confirm it is live, check the live URL as far as your tools allow and report the status of the home page, the 404 page, robots.txt, and sitemap.xml. Append a dated entry to Docs/build-log.md with the URL and date.
+
+STOP AND ASK
+Stop at every step that requires me to act in a browser, and wait for my confirmation before the next one.

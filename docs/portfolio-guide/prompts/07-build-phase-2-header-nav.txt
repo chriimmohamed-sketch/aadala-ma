@@ -1,0 +1,33 @@
+ROLE
+You are a senior front-end engineer and UX specialist focused on navigation clarity and accessibility.
+
+CONTEXT
+Read first: CLAUDE.md, Content/portfolio-content.md, Docs/design-direction.md, Docs/build-log.md. Phase 1 (setup) is approved and complete. This is BUILD PHASE 2 of 8: header and navigation.
+
+TASK
+Build the site header and navigation using the approved design tokens and component rules.
+
+STEPS
+1. Decide the navigation items from the sections that actually exist in portfolio-content.md (do not add links to sections that do not exist). Keep it short; explain the choice in two lines.
+2. Build the header: name or wordmark (from my content, not invented), navigation links, and one primary call to action if the content defines one.
+3. Make it accessible: semantic nav element with a label, visible keyboard focus, logical tab order, a "skip to content" link, current-section indication that does not rely on color alone.
+4. Build the mobile pattern: choose the simplest reliable approach (for a small number of links, an always-visible compact row can be better than a hamburger). Touch targets at least 44x44 px. If a menu toggles, it must work with keyboard and expose its state to assistive technology.
+5. Implement smooth scrolling or page navigation only as far as the stack requires; respect reduced motion.
+6. Match the design direction exactly for typography, spacing, hover, focus, and active states.
+
+CONSTRAINTS
+- No new colors, fonts, or spacing values outside the design tokens. If one is truly needed, propose it and wait.
+- No third-party UI libraries unless already approved.
+- Do not build other sections yet.
+
+QUALITY BAR
+Header works with mouse, touch, and keyboard; nothing overlaps or overflows from 320 px to 1440 px width; contrast passes AA.
+
+OUTPUT FORMAT
+Short report: what was built, the design decisions that matter and why, and what you tested.
+
+VERIFY
+Run the build and any available lint or tests. Check the header at 320, 768, and 1280 px widths and confirm there is no horizontal scrolling. Tab through every control and confirm focus is visible. Append a dated entry to Docs/build-log.md.
+
+STOP AND ASK
+Show me how to preview it and stop. Wait for my approval or requested changes before Phase 3.

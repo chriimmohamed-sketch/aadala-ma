@@ -32,12 +32,13 @@ async function headers() {
       ],
     },
     {
-      // Stricter headers for admin routes (legacy rhythm, kept from the hardened branch)
+      // Stricter headers for admin routes (auth subpaths)
       source: "/:locale/admin/:path*",
       headers: [
         {
           key: "Content-Security-Policy",
-          value: "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; connect-src 'self' https://pvoenvxinkipgpnddumt.supabase.co; frame-ancestors 'self'; object-src 'none'",
+          value:
+            "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; connect-src 'self' https://pvoenvxinkipgpnddumt.supabase.co; frame-ancestors 'self'; object-src 'none'",
         },
         { key: "X-Frame-Options", value: "SAMEORIGIN" },
         { key: "X-Content-Type-Options", value: "nosniff" },
@@ -55,10 +56,33 @@ async function headers() {
   ];
 }
 
+// Redirect legacy static HTML paths to the canonical Next.js routes (from the deployed app)
+async function redirects() {
+  const map = [
+    { from: "/index.html", to: "/" },
+    { from: "/encyclopedia.html", to: "/ar/legal" },
+    { from: "/gazette.html", to: "/ar/gazette" },
+    { from: "/legal-ai.html", to: "/ar/ai" },
+    { from: "/academic.html", to: "/ar/academic" },
+    { from: "/real-estate.html", to: "/ar/property" },
+    { from: "/inheritance.html", to: "/ar/miyar" },
+    { from: "/criminal.html", to: "/ar/criminal" },
+    { from: "/procedures.html", to: "/ar/procedures" },
+    { from: "/contact.html", to: "/ar/contact" },
+    { from: "/founder.html", to: "/ar/founder" },
+  ];
+  return map.map(({ from, to }) => ({
+    source: from,
+    destination: to,
+    permanent: false,
+  }));
+}
+
 const nextConfig: NextConfig = {
   cacheComponents: false,
   partialPrefetching: false,
   headers,
+  redirects,
   webpack: (config) => {
     // Windows build workaround: fabric native bindings are invalid, alias to the JS shim
     config.resolve.alias.fabric = "fabric-net";

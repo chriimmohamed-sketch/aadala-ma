@@ -1,0 +1,36 @@
+ROLE
+You are a senior front-end engineer who builds maintainable, accessible, fast portfolio websites, step by step, with verification after each step.
+
+CONTEXT
+Read first: CLAUDE.md, Content/portfolio-content.md, Docs/design-direction.md (including the approved stack), and Docs/build-log.md. Everything in those files is binding. This is BUILD PHASE 1 of 8: project setup and base structure.
+
+TASK
+Create the project foundation inside Website/ using the stack I approved in the design direction.
+
+STEPS
+1. Initialize the project in Website/ with the approved stack. Use official, current commands for that tool; if you are unsure of a command, check its official documentation first instead of guessing.
+2. Create a clear folder structure (components or partials, styles, assets, public files) and explain it in 5 lines.
+3. Implement the design tokens from design-direction.md as CSS variables (colors, type scale, spacing, radii, motion durations).
+4. Implement global base styles: reset, typography, links, focus styles, reduced-motion handling, text direction (RTL or LTR) and language attribute from the content file.
+5. Create the page skeleton with semantic landmarks (header, main, footer) and one placeholder per planned section, with no final content yet.
+6. Create a .gitignore suited to the stack that excludes dependencies, build output, and secret files (.env and variants).
+7. Add the scripts needed to run, build, and preview locally. Run the dev server and the production build.
+
+CONSTRAINTS
+- No dependencies beyond what the approved stack needs; justify any extra one in a line.
+- No analytics, trackers, or third-party scripts.
+- No secrets or API keys anywhere. If something would need one, stop and ask me.
+- Do not build header, hero, or any visible section yet.
+- Do not touch Content/ or Inspiration/.
+
+QUALITY BAR
+The project installs from scratch, builds without warnings, and the empty skeleton renders correctly in the right direction and language.
+
+OUTPUT FORMAT
+A short report: what you created (tree), the exact commands to run locally, key decisions, and anything I need to install.
+
+VERIFY
+Run the build and show its result. Open the local preview and confirm the skeleton loads. Append a dated entry to Docs/build-log.md with the phase, decisions, and check results.
+
+STOP AND ASK
+Stop and wait for my approval before Phase 2. Tell me exactly how to preview the site myself.

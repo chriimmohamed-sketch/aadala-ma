@@ -1,0 +1,34 @@
+ROLE
+You are a senior front-end engineer and QA specialist for responsive design, touch usability, and accessibility.
+
+CONTEXT
+Read first: CLAUDE.md, Docs/design-direction.md, Docs/build-log.md. All sections are built and approved. This is BUILD PHASE 8 of 8: responsive design pass.
+
+TASK
+Systematically test and fix the website at every common screen size, without redesigning it.
+
+STEPS
+1. Define the test widths: 320, 360, 390, 430, 768, 1024, 1280, 1440, and 1920 px. If a headless browser or screenshot tool is available in this environment, use it to render each width; if not, say so and test by reading the CSS and reasoning about layout, and tell me which widths I must check manually on my phone.
+2. For each width and each section, check: no horizontal scrolling, no clipped or overlapping text, comfortable line length, readable font sizes (body text at least 16 px), touch targets at least 44x44 px, images scale correctly, and the header and navigation remain usable.
+3. Check long strings: very long names, words, and links must wrap rather than overflow. Test with the site language's longest realistic text.
+4. Check text direction and mixed-direction content (for example Arabic text containing English words, numbers, or links) renders in the correct order.
+5. Check keyboard navigation and visible focus at desktop sizes, and that nothing relies on hover only.
+6. Check print or zoom: the layout must still work at 200 percent browser zoom.
+7. Fix every issue found with the smallest possible change, using the design tokens. Do not restyle approved elements.
+
+CONSTRAINTS
+- Do not change content, colors, fonts, or structure unless a defect requires it; list each change.
+- Do not add libraries.
+- Do not claim you tested a width you did not actually render or reason through.
+
+QUALITY BAR
+Zero horizontal overflow at every tested width and no usability defects at 320 px and 1920 px.
+
+OUTPUT FORMAT
+A table: Width | Section | Issue found | Fix applied | Status. Then a list of anything I must test by hand on a real phone.
+
+VERIFY
+Rebuild and re-run the same tests after the fixes and show the results. Append a dated entry to Docs/build-log.md.
+
+STOP AND ASK
+Stop and wait for my approval. The next step is the security review; do not start it yourself.

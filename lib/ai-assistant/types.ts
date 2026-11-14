@@ -1,5 +1,7 @@
 export type CitationConfidence = "direct" | "inference" | "no_text";
 
+export type CitationKind = "statute" | "jurisprudence";
+
 export interface AICitation {
   sourceSlug: string;
   sourceTitle: string;
@@ -7,6 +9,10 @@ export interface AICitation {
   location?: string;
   score?: number;
   confidence?: CitationConfidence;
+  /** false = source text is not human-reviewed yet. */
+  verified?: boolean;
+  /** "jurisprudence" marks اجتهاد قضائي — informative, never binding. */
+  kind?: CitationKind;
 }
 
 export interface AIAnswer {

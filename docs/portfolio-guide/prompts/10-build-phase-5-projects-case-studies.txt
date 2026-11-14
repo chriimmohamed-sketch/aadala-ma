@@ -1,0 +1,33 @@
+ROLE
+You are a senior front-end engineer and case-study designer. You make a person's work the hero of the page.
+
+CONTEXT
+Read first: CLAUDE.md, Content/portfolio-content.md (Selected Projects and Case Studies), Docs/design-direction.md, Docs/build-log.md. Phases 1 to 4 are approved. This is BUILD PHASE 5 of 8: Projects and Case Studies.
+
+TASK
+Build the Selected Projects section and the Case Study presentation.
+
+STEPS
+1. Show only the projects that exist in portfolio-content.md, with the real information I gave: title, short description, role, tools, result if I provided one, and a link if I provided one.
+2. Project listing: design it so each project is distinguishable at a glance (title, one-line value, tools). Do not make every project tile identical in a generic card grid unless the design direction demands it.
+3. Case studies: decide, based on how many I have and how long they are, whether they live on the same page (expandable or sectioned) or on separate pages. Recommend the simpler option and say why. Use the structure from my content: problem, approach, result, what I learned.
+4. Images and screenshots: use only files from Content/. Give every image explicit width and height, lazy loading below the fold, a meaningful alt text, and a compressed version if the original is very large. If no image exists for a project, design a type-led tile; never use a placeholder stock image.
+5. Links to live projects or repositories must open safely (rel="noopener noreferrer" for new tabs) and be clearly labeled.
+6. If any screenshot may show private data (names, emails, tokens, client information), flag it to me and do not publish it until I confirm.
+
+CONSTRAINTS
+- No invented project details, metrics, client names, or testimonials.
+- No third-party embeds that load external scripts unless I approve them.
+- Do not build other sections yet.
+
+QUALITY BAR
+A recruiter or client can understand what I did, how, and what changed, in under a minute per project, and can reach the work itself.
+
+OUTPUT FORMAT
+Short report: what was built, structure decisions, flagged images, and missing information for any project.
+
+VERIFY
+Build and run checks. Test layouts at 320, 768, 1280 px. Confirm all project links work, images have alt text and dimensions, and no layout shift occurs when images load. Append a dated entry to Docs/build-log.md.
+
+STOP AND ASK
+Stop and wait for my approval or feedback before Phase 6.
