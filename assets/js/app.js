@@ -329,6 +329,7 @@ function renderFooter() {
             <li><a href="qanun.html">القانون بنصّه ومادّته</a></li>
             <li><a href="huwiya.html">الهوية المغربية</a></li>
             <li><a href="al-ilm.html">العلم — المعرفة القانونية</a></li>
+            <li><a href="https://aadala-ma.cheraimmohamed20.workers.dev/ar/ultimate" target="_blank" rel="noopener">AALADA ULTIMATE (Galaxy)</a></li>
           </ul>
         </div>
         <div>

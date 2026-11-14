@@ -23,6 +23,7 @@ export default function Footer({ locale, messages }: { locale: string; messages:
             <a className="underline" href="/mushkilati.html">مشكلتي</a>
             <Link href="/profile/" className="underline">ملفي</Link>
             <a className="underline" href={`/${locale}/founder`}>عن المؤسس</a>
+            <a className="underline" href={`/${locale}/ultimate`}>AALADA ULTIMATE</a>
             <a className="underline" href={`/${locale}/privacy`}>{f.privacy ?? "سياسة الخصوصية"}</a>
             <a className="underline" href={`/${locale}/terms`}>{f.terms ?? "الشروط والأحكام"}</a>
             <a className="underline" href={`/${locale}/disclaimer`}>{f.disclaimer ?? "إخلاء المسؤولية"}</a>

@@ -45,6 +45,20 @@
 
 # Changelog ظ¤ AADALA.MA
 
+## [0.3.2] - 2026-11-14 — الدستور حي على الموقع الثابت + الشعار الرسمي
+
+### Changed
+- `assets/css/main.css`: entire palette swapped to the Design Constitution (`docs/DESIGN_CONSTITUTION.md`) — navy #263247 identity, ivory #F7F5F0 surfaces, white cards, #B99A5B gold details, #2D7778 teal actions, #5F6875 gray muted text, #B94A48 errors only; navy-tinted shadows/borders.
+- `index.html`: `theme-color` #263247; hero aurora re-toned (navy→teal glow + gold hint).
+- `al-ilm.html`, `document.html`, `design-system.html`: last legacy literals replaced; design-system page swatches updated.
+- `renderHeader`: letter badge "A" → official AADALA.MA logo (`assets/img/aadala-logo.jpg`) clipped to a circle with a gold ring; depth-aware path for root and subdirectories (admin/, auth/).
+- `.eslintignore` removed (superseded by flat-config `.open-next/**`); `docs/NEXT_STEPS.md` added (owner runbook for migrations/auth/domain/merge gate).
+
+### Verification
+- `grep` over *.html/*.css/*.js: zero references to the pre-constitution palette.
+- `node --check assets/js/app.js`: syntax OK.
+- `wrangler deploy` verification: pending (background job).
+
 ## [0.3.1] - 2026-11-13 — OpenNext deploy preparation (branch `fix/opennext-deploy`)
 
 ### Added / Changed

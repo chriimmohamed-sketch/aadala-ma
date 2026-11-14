@@ -154,7 +154,19 @@ Extraction rules: duplicate numbers are kept with unique keys (dahir vs. penal-c
 | الحارس | `tsc` نظيف · ESLint **0 أخطاء** (6 تحذيرات قديمة) · **81/81 اختبار** · build **387/387 صفحة** · golden-set أُعيد معايرته إلى v2 (real corpus؛ مطابقة المادة 230 + صدق المصادر) |
 | غير مكتمل صراحة | الهجرات `0002…0013` **لم تُطبق** (قاعدة read-only) · MFA/RLS مُبرمجة بلا تفعيل (تتطلب مالك + SQL Editor + لوحة Supabase) · لم يُنشر أي شيء جديد: الموقع الحي ما زال الـstatic site فقط · حساب Cloudflare ليس فيه Worker لـ`aadala-ma` بعد النشر الأخير ما زال هو نفسه (assets-only) · npm: 9 تحذيرات moderate (أدوات بناء فقط) |
 | CI | `deploy-cloudflare.yml` مُحدّث (فحص أسرار + `NEXT_PUBLIC_SUPABASE_URL/ANON_KEY` + `wrangler deploy`) — يتطلب `CLOUDFLARE_API_TOKEN` و`CLOUDFLARE_ACCOUNT_ID` في GitHub Secrets |
-- ملاحظة: `/open-next.config.ts.deploy-bak` تسرب إلى النشر الأول (كان موجوداً ملفياً أثناء النشر)؛ أُضيف `*.deploy-bak` إلى `.assetsignore` والنشر التالي يُسقطه تلقائياً من الـmanifest.
+- M  note: `/open-next.config.ts.deploy-bak` تسرب إلى النشر الأول (كان موجوداً ملفياً أثناء النشر)؛ أُضيف `*.deploy-bak` إلى `.assetsignore` والنشر التالي يُسقطه تلقائياً من الـmanifest.
+
+## 2026-11-14 — ليلاً: تطبيق الدستور على الموقع الثابت الحي + الشعار
+
+| البند | النتيجة |
+|---|---|
+| `assets/css/main.css` | لوحة الدستور كاملة: كحلي #263247 · عاجي #F7F5F0 · أبيض #FFFFFF · ذهبي #B99A5B · أخضر مزرق #2D7778 · رمادي #5F6875 · أحمر #B94A48 (أخطاء فقط) — الظلال والحدود أُعيدت بصبغة كحلية |
+| `index.html` | `theme-color` #263247 · hero aurora بالكحلي/الأخضر/الذهبي · زر CSS #263247 |
+| `al-ilm.html` · `document.html` · `design-system.html` | كل القيم الحية محدثة (swatches في نظام التصميم صارت: Navy/Gold/Ivory/Card/Teal/Sand/Graphite/Grey بالدستور) |
+| `assets/img/aadala-logo.jpg` | الشعار الرسمي (ميزان + دائرة تقنية) — **كان مفقوداً في النشر الحي، الآن مدموج** |
+| `renderHeader` | حرف «A» محل الصورة الشعاعية — الآن الشعار الحقيقي داخل دائرة بإطار ذهبي (لا صورة مكسورة) |
+| التحقق | صفر آثار لوني قديمة عبر `grep` على كل *.html/*.css/*.js · `app.js` سليم نحوياً |
+| النشر | بانتظار اكتمال `wrangler deploy` (في الخلفية) |
 
 ## 2026-11-13 — ليلاً: OpenNext جاهز للنشر عبر Cloudflare (فرع `fix/opennext-deploy`)
 
