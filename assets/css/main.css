@@ -5,45 +5,45 @@
 
 :root {
   /* AADALA.MA — Design Constitution tokens (Phase 2; mirrors app/globals.css) */
-  /* Core palette — ink + ivory + crimson + gold (light) */
-  --color-navy: #14110E;           /* ink-900 */
-  --color-navy-mid: #2B2421;       /* ink-700 */
-  --color-navy-light: #2B2421;     /* ink-700 */
-  --color-gold: #C9A24B;           /* gold-500 */
-  --color-gold-muted: #9A7A2E;     /* gold-700 */
-  --color-ivory: #FBF7EF;          /* ivory-50 */
-  --color-paper: #FBF7EF;          /* ivory-50 */
-  --color-teal: #167C80;           /* Digital Teal */
-  --color-sand: #D9CBB4;           /* Soft Sand */
-  --color-graphite: #2B2421;       /* ink-700 */
-  --color-border-neutral: #D9CBB4; /* Soft Sand */
+  /* Core palette — navy + ivory + gold + teal (light) */
+  --color-navy: #263247;           /* ink-900 */
+  --color-navy-mid: #1F2A3D;       /* ink-700 */
+  --color-navy-light: #33415C;     /* ink-700 */
+  --color-gold: #B99A5B;           /* gold-500 */
+  --color-gold-muted: #8F7442;     /* gold-700 */
+  --color-ivory: #F7F5F0;          /* ivory-50 */
+  --color-paper: #F7F5F0;          /* ivory-50 */
+  --color-teal: #2D7778;           /* Digital Teal */
+  --color-sand: #DCD8CB;           /* Soft Sand */
+  --color-graphite: #33415C;       /* ink-700 */
+  --color-border-neutral: #DCD8CB; /* Soft Sand */
 
   /* Semantic tokens (light mode) — Constitution: crimson affirmation, gold details */
-  --color-primary: #9B1B30;        /* crimson-500 */
-  --color-primary-light: #6E0B1B;  /* crimson-700 */
-  --color-primary-dark: #4A0A14;  /* crimson-900 */
-  --color-accent: #C9A24B;
-  --color-accent-light: #E3C77A;   /* gold-300 */
-  --color-accent-dark: #9A7A2E;    /* gold-700 */
+  --color-primary: #263247;        /* crimson-500 */
+  --color-primary-light: #1F2A3D;  /* crimson-700 */
+  --color-primary-dark: #141E2E;  /* crimson-900 */
+  --color-accent: #B99A5B;
+  --color-accent-light: #D4BC8E;   /* gold-300 */
+  --color-accent-dark: #8F7442;    /* gold-700 */
   --color-secondary: var(--color-teal);
-  --color-secondary-light: #1FA0A5;
-  --color-bg: #FBF7EF;
-  --color-bg-alt: #F3ECDD;
-  --color-surface: #FBF7EF;
-  --color-text: #2B2421;
-  --color-text-muted: #6B6257;
-  --color-border: #D9CBB4;
-  --color-danger: #9B1B30;
-  --color-success: #2F6B4F;
+  --color-secondary-light: #3E9292;
+  --color-bg: #F7F5F0;
+  --color-bg-alt: #EDEAE1;
+  --color-surface: #FFFFFF;
+  --color-text: #33415C;
+  --color-text-muted: #5F6875;
+  --color-border: #DCD8CB;
+  --color-danger: #B94A48;
+  --color-success: #2D7778;
   --color-warning: #B45309;
   --color-info: var(--color-teal);
 
   /* Dark mode overrides — Constitution: ink-900 bg, crimson-900 surfaces, gold-300 details */
-  --color-dark-bg: #14110E;
-  --color-dark-surface: #4A0A14;
-  --color-dark-text: #F3ECDD;
-  --color-dark-muted: #C9C3B5;
-  --color-dark-border: rgba(227,199,122,0.25);
+  --color-dark-bg: #141E2E;
+  --color-dark-surface: #1A2333;
+  --color-dark-text: #E7E4DA;
+  --color-dark-muted: #A9B4C4;
+  --color-dark-border: rgba(185,154,91,.30);
 
   /* Typography */
   --font-body: 'Tajawal', 'Cairo', sans-serif;
@@ -188,14 +188,20 @@ a:hover { color: var(--color-accent); }
 .logo-icon {
   width: 42px;
   height: 42px;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-  border-radius: var(--radius-md);
+  border-radius: 50%;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  font-weight: 900;
-  font-size: 1.2rem;
+  background: #FFFFFF;
+  box-shadow: 0 0 0 1.5px rgba(185,154,91,.55), 0 2px 8px rgba(20,30,46,.35);
+  flex-shrink: 0;
+}
+.logo-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .nav-links {
@@ -866,7 +872,7 @@ a:hover { color: var(--color-accent); }
 .alert-warning {
   background: rgba(243,156,18,0.08);
   border-color: var(--color-warning);
-  color: #8a6d00;
+  color: #8F7442;
 }
 
 .alert-danger {

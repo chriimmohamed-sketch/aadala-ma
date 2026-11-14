@@ -266,6 +266,7 @@ function updateAuthUI() {
 
 // Shared header HTML generator
 function renderHeader(activePage) {
+  const LP = (location.pathname.split('/').filter(Boolean).length > 1) ? '../' : '';
   const t = (k, fb) => (window.I18N && I18N.t ? (I18N.t(k) !== k ? I18N.t(k) : fb) : fb);
   const pages = [
     { href: 'index.html', label: t('home','الرئيسية') },
@@ -284,7 +285,7 @@ function renderHeader(activePage) {
     <div class="container">
       <nav class="navbar">
         <a href="index.html" class="logo" aria-label="AADALA.MA">
-          <div class="logo-icon" style="font-family:Georgia,serif;">A</div>
+          <span class="logo-icon" aria-hidden="true"><img src="${LP}assets/img/aadala-logo.jpg" alt="" width="42" height="42"></span>
           <span>AADALA.MA</span>
         </a>
         <ul class="nav-links" id="navLinks">${links}</ul>
