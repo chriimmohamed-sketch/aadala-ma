@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { legalSources } from "@/data/legal-sources";
 
 const STEPS = [
   ["أدخل الورثة والتركة والديون", "تُوزَّع الأنصبة خطوة بخطوة", "راجع النتيجة مع مختص قبل أي اعتماد"],
@@ -14,17 +15,6 @@ export default function HomeInteractions({ locale }: { locale: string }) {
     const d = document;
     const root = d.documentElement;
     const rm = matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    // Signature micro-interaction: a single, lightweight pointer aura.
-    // It never runs on touch devices and respects reduced-motion.
-    const hero = d.querySelector(".hero") as HTMLElement | null;
-    const moveAura = (e: PointerEvent) => {
-      if (!hero || e.pointerType === "touch") return;
-      const r = hero.getBoundingClientRect();
-      hero.style.setProperty("--mx", `${e.clientX - r.left}px`);
-      hero.style.setProperty("--my", `${e.clientY - r.top}px`);
-    };
-    if (hero && !rm) hero.addEventListener("pointermove", moveAura, { passive: true });
     root.classList.add("js");
 
     // Progress bar
@@ -96,19 +86,24 @@ export default function HomeInteractions({ locale }: { locale: string }) {
       });
     }
 
-    // Command palette (Ctrl+K / /)
-    const items: [string, string, string][] = [
+    // Command palette (Ctrl+K / /) — pages + library articles (sync with /search)
+    const articleItems: [string, string, string][] = legalSources.map((s) => [s.title, `/${locale}/legal/${s.slug}`, "نص"]);
+    const pageItems: [string, string, string][] = [
       ["المساعد القانوني", `/${locale}/ai`, "قسم"],
       ["المكتبة القانونية", `/${locale}/legal`, "قسم"],
       ["البحث في النصوص", `/${locale}/search`, "قسم"],
       ["حاسبة الميراث (MIYAR)", `/${locale}/miyar`, "أداة"],
       ["النزاعات العقارية", `/${locale}/property`, "أداة"],
+      ["قسمة العقار", `/${locale}/property`, "أداة"],
+      ["إنهاء عقد الزواج", `/${locale}/procedures`, "أداة"],
       ["الاجتهاد القضائي", `/${locale}/case-law`, "قسم"],
       ["المختبر الجنائي", `/${locale}/criminal`, "أداة"],
       ["المساطر والنماذج", `/${locale}/procedures`, "أداة"],
       ["لوحة AADALA", `/${locale}/dashboard`, "قسم"],
       ["تبديل الوضع الداكن", "theme", "إجراء"],
+      ["أبلغ عن خطأ في مادة", `/${locale}/report`, "قسم"],
     ];
+    const items: [string, string, string][] = [...pageItems, ...articleItems];
     const dlg = d.createElement("dialog");
     dlg.className = "pal";
     dlg.setAttribute("aria-label", "انتقال سريع");
@@ -131,7 +126,7 @@ export default function HomeInteractions({ locale }: { locale: string }) {
         root.setAttribute("data-theme", dark ? "light" : "dark");
         try { localStorage.setItem("aadala-theme", dark ? "light" : "dark"); } catch { /* ignore */ }
       } else {
-        location.href = it[1];
+        window.location.href = it[1];
       }
     };
     const open = () => { list = items; cur = 0; inp.value = ""; paint(); dlg.showModal(); inp.focus(); };
@@ -154,9 +149,6 @@ export default function HomeInteractions({ locale }: { locale: string }) {
 
     const kbd = d.getElementById("kbd");
     if (kbd) kbd.addEventListener("click", open);
-    // Keep the sample answer meaningful on first paint.
-    if (btns.length) show(0);
-
     const onKey = (e: KeyboardEvent) => {
       const t = (e.target as HTMLElement).tagName || "";
       if ((e.key === "k" || e.key === "K") && (e.ctrlKey || e.metaKey)) {
@@ -174,7 +166,6 @@ export default function HomeInteractions({ locale }: { locale: string }) {
       removeEventListener("keydown", onKey);
       io.disconnect();
       dlg.remove();
-      if (hero && !rm) hero.removeEventListener("pointermove", moveAura);
     };
   }, [locale]);
 

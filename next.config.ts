@@ -1,93 +1,77 @@
-/** @type {import('next').NextConfig} */
-const nextConfig: import('next').NextConfig = {
-  webpack: (config) => {
-    config.resolve.alias.fabric = 'fabric-net';
-    return config;
-  },
-  async headers() {
-    return [
-      {
-        // Apply these headers to all routes
-        source: '/:all',
-        headers: [
-          // Content Security Policy - restrict sources
-          {
-            key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://*.supabase.co wss://*.supabase.co; frame-src 'none'; base-uri 'self'; form-action 'self';",
-          },
-          // HTTP Strict Transport Security
-          {
-            key: 'Strict-Transport-Security',
-            value: 'max-age=31536000; includeSubDomains; preload',
-          },
-          // X-Frame-Options - prevent clickjacking
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY',
-          },
-          // X-Content-Type-Options - prevent MIME sniffing
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-          // Referrer-Policy
-          {
-            key: 'Referrer-Policy',
-            value: 'origin-when-cross-origin',
-          },
-          // Permissions-Policy
-          {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()',
-          },
-        ],
-      },
-      {
-        // Stricter headers for admin routes
-        source: '/:locale/admin/:path*',
-        headers: [
-          {
-            key: 'Content-SecurityPolicy',
-            value: "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; frame-src 'none';",
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN',
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-        ],
-      },
-      {
-        // Secure headers for API routes
-        source: '/api/:path*',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'none'; style-src 'self'; img-src 'self'; connect-src 'self'; frame-src 'none';",
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY',
-          },
-          {
-            key: 'RateLimit-Limit',
-            value: '8',
-          },
-          {
-            key: 'RateLimit-Window',
-            value: '60',
-          },
-        ],
-      },
-    ]
-  },
+import type { NextConfig } from "next";
+
+// Security headers for the Next.js app (Workers). The static HTML prototype keeps its own CSP meta.
+// Dev keeps 'unsafe-eval' for React Refresh/HMR; production stays strict.
+const isDev = process.env.NODE_ENV !== "production";
+const scriptSrc = ["'self'", "'unsafe-inline'", ...(isDev ? ["'unsafe-eval'"] : [])].join(" ");
+const csp = [
+  "default-src 'self'",
+  `script-src ${scriptSrc}`,
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "font-src 'self' https://fonts.gstatic.com data:",
+  "img-src 'self' data: https:",
+  "connect-src 'self' https://pvoenvxinkipgpnddumt.supabase.co wss://pvoenvxinkipgpnddumt.supabase.co https://aadala-ma.cheraimmohamed20.workers.dev",
+  "frame-ancestors 'self'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "object-src 'none'",
+  "upgrade-insecure-requests",
+].join("; ");
+
+async function headers() {
+  return [
+    {
+      source: "/(.*)",
+      headers: [
+        { key: "Content-Security-Policy", value: csp },
+        { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
+        { key: "X-Frame-Options", value: "SAMEORIGIN" },
+        { key: "X-Content-Type-Options", value: "nosniff" },
+        { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+        { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+      ],
+    },
+    {
+      // Stricter headers for admin routes (legacy rhythm, kept from the hardened branch)
+      source: "/:locale/admin/:path*",
+      headers: [
+        {
+          key: "Content-Security-Policy",
+          value: "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; connect-src 'self' https://pvoenvxinkipgpnddumt.supabase.co; frame-ancestors 'self'; object-src 'none'",
+        },
+        { key: "X-Frame-Options", value: "SAMEORIGIN" },
+        { key: "X-Content-Type-Options", value: "nosniff" },
+      ],
+    },
+    {
+      // API surface: no framing, no scripts
+      source: "/api/:path*",
+      headers: [
+        { key: "Content-Security-Policy", value: "default-src 'none'; frame-ancestors 'none'" },
+        { key: "X-Content-Type-Options", value: "nosniff" },
+        { key: "X-Frame-Options", value: "DENY" },
+      ],
+    },
+  ];
 }
 
-module.exports = nextConfig
+const nextConfig: NextConfig = {
+  cacheComponents: false,
+  partialPrefetching: false,
+  headers,
+  webpack: (config) => {
+    // Windows build workaround: fabric native bindings are invalid, alias to the JS shim
+    config.resolve.alias.fabric = "fabric-net";
+    return config;
+  },
+  turbopack: {
+    rules: {
+      "*.css": {
+        loaders: ["@tailwindcss/turbopack"],
+        as: "*.css",
+      },
+    },
+  },
+};
+
+export default nextConfig;

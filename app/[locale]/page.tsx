@@ -1,8 +1,10 @@
 import { getMessages } from "@/lib/i18n/getMessages";
-import Header from "@/components/layout/Header";
+import HeaderSupreme from "@/components/layout/HeaderSupreme";
 import Footer from "@/components/layout/Footer";
 import ZelligeCanvas from "@/components/ZelligeCanvas";
 import HomeInteractions from "@/components/HomeInteractions";
+import AnswerAnimator from "@/components/AnswerAnimator";
+import { legalDatabase } from "@/data/legal-database";
 import Link from "next/link";
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
@@ -12,9 +14,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     <div className="flex min-h-screen flex-col bg-bg">
       <div className="bar" id="bar" />
       <HomeInteractions locale={locale} />
-      <Header locale={locale} messages={messages} />
+      <AnswerAnimator />
+      <HeaderSupreme locale={locale} messages={messages} />
       <div id="v-home">
-        <main id="top">
+        <main id="main">
           <div className="hero">
             <ZelligeCanvas />
             <div className="hero-aurora" aria-hidden="true" />
@@ -95,6 +98,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                   <button className="part" type="button" data-k="3" aria-pressed="false"><i>٤</i><b>درجة اليقين</b><span>وعندما لا تكفي المصادر، يقول ذلك صراحة.</span></button>
                 </div>
                 <Link href={`/${locale}/ai`} className="btn play">▶ اسأل المساعد</Link>
+                <button id="watch-answer" type="button" className="btn play" style={{ marginInlineStart: "0.5rem", background: "transparent", color: "var(--teal)", border: "1px solid var(--teal)" }}>شاهد الجواب يتشكّل</button>
               </div>
               <article className="sample rv" aria-label="شكل الإجابة">
                 <span className="tag">شكل توضيحي — ليس جوابًا قانونيًا</span>
@@ -114,13 +118,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <h2>المكتبة القانونية</h2>
               <p className="sub">مصادر منشورة، تُقرأ كاملة وتُستخدم مرجعًا للمساعد.</p></div>
               <div className="shelf">
-                <Link className="book rv" style={{ "--c": "var(--aadala-teal)" } as React.CSSProperties} href={`/${locale}/legal`}><span className="ty">دستور</span><h3>دستور المملكة المغربية</h3><small>2011</small><b>اقرأ النص ←</b></Link>
-                <Link className="book" style={{ "--c": "#8A5F1C" } as React.CSSProperties} href={`/${locale}/legal`}><span className="ty">قانون</span><h3>قانون الالتزامات والعقود</h3><small>صيغة محينة</small><b>اقرأ النص ←</b></Link>
-                <Link className="book" style={{ "--c": "#6B4A8A" } as React.CSSProperties} href={`/${locale}/legal`}><span className="ty">مدونة</span><h3>مدونة الأسرة</h3><small>القانون 70.03 · 29 مادة</small><b>اقرأ النص ←</b></Link>
-                <Link className="book" style={{ "--c": "#2D4A7A" } as React.CSSProperties} href={`/${locale}/legal`}><span className="ty">مدونة</span><h3>مدونة الحقوق العينية</h3><small>القانون 39.08 · 7 مواد</small><b>اقرأ النص ←</b></Link>
-                <Link className="book" style={{ "--c": "#7A2D3C" } as React.CSSProperties} href={`/${locale}/legal`}><span className="ty">ظهير</span><h3>ظهير التحفيظ العقاري</h3><small>كما وقع تغييره وتتميمه</small><b>اقرأ النص ←</b></Link>
-                <Link className="book" style={{ "--c": "#4A4A4A" } as React.CSSProperties} href={`/${locale}/legal`}><span className="ty">مجموعة</span><h3>مجموعة القانون الجنائي</h3><small>صيغة محينة</small><b>اقرأ النص ←</b></Link>
-              </div>
+                <Link className="book rv" style={{ "--c": "var(--aadala-teal)" } as React.CSSProperties} href={`/${locale}/legal/constitution-2011`}><span className="ty">دستور · <span className="badge">متاح</span></span><h3>دستور المملكة المغربية</h3><small>{(legalDatabase.find((r) => r.slug === "constitution-2011")?.articlesCount ?? 0) > 0 ? `${legalDatabase.find((r) => r.slug === "constitution-2011")?.articlesCount} مادة مفهرسة` : "2011 — يُحصَرم بالفصول"}</small><b>اقرأ النص ←</b></Link>
+                <Link className="book" style={{ "--c": "#8A5F1C" } as React.CSSProperties} href={`/${locale}/legal/obligations-contrats`}><span className="ty">قانون · <span className="badge">متاح</span></span><h3>قانون الالتزامات والعقود</h3><small>{legalDatabase.find((r) => r.slug === "obligations-contrats")?.articlesCount} مادة مفهرسة</small><b>اقرأ النص ←</b></Link>
+                <Link className="book" style={{ "--c": "#6B4A8A" } as React.CSSProperties} href={`/${locale}/legal`}><span className="ty">مدونة · <span className="badge">قيد التجهيز</span><span className="badge-yellow">قرار مطلوب</span></span><h3>مدونة الأسرة</h3><small>القانون 70.03 — النص الكامل قيد الإدماج والتحقق</small><b>عرض الباحث ←</b></Link>
+                <Link className="book" style={{ "--c": "#2D4A7A" } as React.CSSProperties} href={`/${locale}/legal/droits-reels-2025`}><span className="ty">مدونة · <span className="badge">متاح</span></span><h3>مدونة الحقوق العينية</h3><small>القانون 39.08 — {legalDatabase.find((r) => r.slug === "droits-reels-2018")?.articlesCount} مادة في صيغة 2018</small><b>اقرأ النص ←</b></Link>
+                <Link className="book" style={{ "--c": "#7A2D3C" } as React.CSSProperties} href={`/${locale}/legal/tahfidh-immobilier`}><span className="ty">ظهير · <span className="badge">متاح</span></span><h3>ظهير التحفيظ العقاري</h3><small>كما وقع تغييره وتتميمه</small><b>اقرأ النص ←</b></Link>
+                <Link className="book" style={{ "--c": "#4A4A4A" } as React.CSSProperties} href={`/${locale}/legal/code-penal`}><span className="ty">مجموعة · <span className="badge">متاح</span></span><h3>مجموعة القانون الجنائي</h3><small>صيغة محينة</small><b>اقرأ النص ←</b></Link>
+                <Link className="book" style={{ "--c": "#0F5C52" } as React.CSSProperties} href={`/${locale}/legal/bulletin-officiel-7437`}><span className="ty">جريدة رسمية · <span className="badge">متاح</span></span><h3>الجريدة الرسمية عدد 7437</h3><small>عدد مدمج كما هو في المصدر</small><b>اقرأ النص ←</b></Link>
+                            </div>
             </div>
           </section>
 
@@ -150,6 +155,18 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                   <h3>فضاء طلبة القانون</h3>
                   <p>لطلبة شعبة القانون: أدوات الدراسة والبحث، ورابط موقع المؤسِّس الثاني دليل الطالب CHRAIM.</p>
                 </Link>
+                <Link href={`/${locale}/procedures`} className="tool" data-n="٦">
+                  <h3>إنهاء عقد الزواج<span className="badge">تعليمي</span></h3>
+                  <p>مسار الطلاق/الخلع بخطواته ووثائقه، دون استشارة نهائية.</p>
+                </Link>
+                <Link href={`/${locale}/property`} className="tool" data-n="٧">
+                  <h3>قسمة العقار<span className="badge">تجريبي</span></h3>
+                  <p>تحليل الشياع والوثائق الناقصة قبل أي قسمة؛ تُراجع وثائقيًا.</p>
+                </Link>
+                <a href="/mushkilati.html" className="tool" data-n="٨">
+                  <h3>مشكلتي<span className="badge">جديد</span></h3>
+                  <p>أجوبة جاهزة وخطوات وأدوات تفاعلية لمشاكلك اليومية.</p>
+                </a>
               </div>
             </div>
           </section>

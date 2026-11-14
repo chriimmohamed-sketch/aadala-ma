@@ -1,99 +1,38 @@
 import Link from "next/link";
 
-const platformLinks: Array<[string, string]> = [
-  ["/legal", "الموسوعة القانونية"],
-  ["/search", "البحث القانوني"],
-  ["/ai", "المساعد القانوني الذكي"],
-  ["/miyar", "محرك الإرث (MIYAR)"],
-  ["/procedures", "المساطر والوثائق"],
-];
-
-const sourceLinks: Array<[string, string]> = [
-  ["/updates", "المستجدات التشريعية"],
-  ["/case-law", "الاجتهاد القضائي"],
-  ["/criminal", "المختبر الجنائي"],
-  ["/sharia", "الشريعة والفقه"],
-  ["/academic", "الفضاء الأكاديمي"],
-];
-
 export default function Footer({ locale, messages }: { locale: string; messages: Record<string, unknown> }) {
   const f = (messages.footer ?? {}) as Record<string, string>;
-  const tagline = (messages.tagline as string) ?? "القانون مفهوم، والحق معلوم.";
-
+  const tagline = (messages.tagline as string) ?? "";
   return (
-    <footer className="aadala-shell">
-      <div className="aadala-divider" />
-      <div className="mx-auto max-w-6xl px-4 py-10">
-        <div className="grid gap-8 md:grid-cols-4">
-          <div className="md:col-span-1">
-            <div className="flex items-center gap-2">
-              <span className="aadala-logo-badge h-9 w-9 ring-1 ring-white/25">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo.png" alt="" width={36} height={36} />
-              </span>
-              <span className="text-lg font-extrabold text-gold">AADALA.MA</span>
-            </div>
-            <p className="mt-3 text-sm text-ivory/85">{tagline}</p>
-            <p className="mt-2 text-xs leading-6 text-ivory/60">
-              منصة المعرفة القانونية المغربية. المحتوى للتوعية والتثقيف ولا يُغني عن استشارة محامٍ مؤهل.
-            </p>
-          </div>
-
-          <nav aria-label="المنصة">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-gold">المنصة</h2>
-            <ul className="mt-3 space-y-2 text-sm">
-              {platformLinks.map(([href, label]) => (
-                <li key={href}>
-                  <Link href={`/${locale}${href}`} className="text-ivory/80 transition-colors hover:text-gold">
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <nav aria-label="المصادر والمنهجية">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-gold">المصادر والمنهجية</h2>
-            <ul className="mt-3 space-y-2 text-sm">
-              {sourceLinks.map(([href, label]) => (
-                <li key={href}>
-                  <Link href={`/${locale}${href}`} className="text-ivory/80 transition-colors hover:text-gold">
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <nav aria-label="الثقة والشركة">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-gold">الثقة والشركة</h2>
-            <ul className="mt-3 space-y-2 text-sm">
-              <li>
-                <Link href={`/${locale}/founder`} className="text-ivory/80 transition-colors hover:text-gold">
-                  عن المؤسس
-                </Link>
-              </li>
-              <li>
-                <Link href={`/${locale}/privacy`} className="text-ivory/80 transition-colors hover:text-gold">
-                  {f.privacy ?? "الخصوصية"}
-                </Link>
-              </li>
-              <li>
-                <Link href={`/${locale}/terms`} className="text-ivory/80 transition-colors hover:text-gold">
-                  {f.terms ?? "الشروط والأحكام"}
-                </Link>
-              </li>
-              <li>
-                <Link href={`/${locale}/disclaimer`} className="text-ivory/80 transition-colors hover:text-gold">
-                  {f.disclaimer ?? "إخلاء المسؤولية"}
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-      <div className="border-t border-white/10 py-3 text-center text-xs text-ivory/50">
-        © 2026 AADALA.MA — جميع الحقوق محفوظة · القانون مفهوم، والحق معلوم.
+    <footer data-locale={locale}>
+      <div className="wrap">
+        <p>
+          AADALA.MA منصة مستقلة وغير تابعة لوزارة العدل أو لأي جهة رسمية. المحتوى للتوعية القانونية ولا يُعد استشارة مهنية؛
+          استشر محاميًا مغربيًا في قضيتك.
+        </p>
+        <p>
+          أسّسها محمد شرايم — طالب بكلية العلوم القانونية والاقتصادية والاجتماعية، جامعة ابن زهر بأكادير —
+          السنة الأولى، القانون الخاص، العلوم الجنائية.
+        </p>
+        <nav aria-label="روابط المنصة">
+          <p className="mt-2 flex flex-wrap gap-4">
+            <a className="underline" href={`/${locale}/report`}>أبلغ عن خطأ في مادة</a>
+            <a className="underline" href={`/${locale}/legal`}>الموسوعة</a>
+            <a className="underline" href={`/${locale}/ai`}>المساعد</a>
+            <a className="underline" href={`/${locale}/procedures`}>المساطر والنماذج</a>
+            <a className="underline" href="/mushkilati.html">مشكلتي</a>
+            <Link href="/profile/" className="underline">ملفي</Link>
+            <a className="underline" href={`/${locale}/founder`}>عن المؤسس</a>
+            <a className="underline" href={`/${locale}/privacy`}>{f.privacy ?? "سياسة الخصوصية"}</a>
+            <a className="underline" href={`/${locale}/terms`}>{f.terms ?? "الشروط والأحكام"}</a>
+            <a className="underline" href={`/${locale}/disclaimer`}>{f.disclaimer ?? "إخلاء المسؤولية"}</a>
+          </p>
+        </nav>
+        <p className="text-xs text-muted">
+          القانون مفهوم، والحق معلوم.
+          {tagline ? ` ${tagline}` : ""}
+          {"  "}© 2026 AADALA.MA.
+        </p>
       </div>
     </footer>
   );

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="عالم العدالة: أجوبة جاهزة وخطوات وأدوات تفاعلية لمشاكلك القانونية اليومية في المغرب.">
+<meta name="theme-color" content="#0B1D3A">
+<title>مشكلتي — AADALA.MA</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F3EFE4;--surface:#FFFDF6;--ink:#0C1A2B;--muted:#4B5964;--line:#D9D2BE;--teal:#0F5C52;--teal-ink:#FFFFFF;--brass:#8A5F1C;--glow:rgba(15,92,82,.14);--danger:#9A3328;
+--display:"Reem Kufi","Noto Kufi Arabic",Tahoma,sans-serif;--body:"IBM Plex Sans Arabic","Noto Sans Arabic",Tahoma,sans-serif;--text:"Amiri","Noto Naskh Arabic",serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#08121A;--surface:#101D28;--ink:#EAEEE6;--muted:#9FB0B8;--line:#22323F;--teal:#47B9A3;--teal-ink:#06201B;--brass:#E0B25C;--glow:rgba(71,185,163,.16);--danger:#E8806F;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#08121A;--surface:#101D28;--ink:#EAEEE6;--muted:#9FB0B8;--line:#22323F;--teal:#47B9A3;--teal-ink:#06201B;--brass:#E0B25C;--glow:rgba(71,185,163,.16);--danger:#E8806F;color-scheme:dark}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.9 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+:focus-visible{outline:3px solid var(--brass);outline-offset:3px;border-radius:4px}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.35;margin:0}
+p{margin:0}
+.wrap{max-width:1160px;margin-inline:auto;padding-inline:1.25rem}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;gap:1.5rem;min-height:64px}
+.logo{font:700 1.25rem var(--display);text-decoration:none;color:inherit;display:flex;align-items:center;gap:.6rem;letter-spacing:.02em}
+.logo svg{width:32px;height:32px;color:var(--teal);transition:transform .8s}.logo:hover svg{transform:rotate(90deg)}
+nav{display:flex;gap:1.5rem;margin-inline-start:auto;font-size:.95rem}
+nav a{text-decoration:none;color:var(--muted);position:relative;padding-block:.2rem}
+nav a::after{content:"";position:absolute;inset-inline:0;bottom:-2px;height:2px;background:var(--brass);transform:scaleX(0);transition:transform .3s}
+nav a:hover{color:var(--ink)}nav a:hover::after{transform:scaleX(1)}
+.theme{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;width:40px;height:40px;cursor:pointer;font-size:1.05rem}
+.bar{position:fixed;top:0;inset-inline:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--brass));transform:scaleX(0);transform-origin:100% 50%;z-index:20}
+.hero{position:relative;overflow:hidden;padding:4.5rem 0 5rem}
+.cv{position:absolute;inset:0;width:100%;height:100%;-webkit-mask-image:radial-gradient(ellipse 85% 100% at 35% 40%,#000 25%,transparent 78%);mask-image:radial-gradient(ellipse 85% 100% at 35% 40%,#000 25%,transparent 78%)}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.25fr .75fr;gap:2rem;align-items:center}
+.kicker{font:500 .9rem var(--body);color:var(--brass);display:inline-flex;gap:.6rem;align-items:center;margin-bottom:1rem}
+.kicker::before{content:"";width:34px;height:2px;background:var(--brass)}
+.hero h1{font-size:clamp(2.5rem,6.6vw,4.8rem);max-width:14ch}
+.hero h1 em{font-style:normal;position:relative;color:var(--teal);white-space:nowrap}
+.hero h1 em svg{position:absolute;inset-inline:0;bottom:-.25em;width:100%;height:.4em;overflow:visible}
+.hero h1 em path{stroke:var(--brass);stroke-width:4;fill:none;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420;animation:draw 1.4s .5s forwards}
+.lead{max-width:46ch;color:var(--muted);font-size:1.15rem;margin:1.6rem 0 2rem}
+.ask{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:.5rem;display:flex;gap:.5rem;max-width:700px;box-shadow:0 22px 44px -26px rgba(12,26,43,.5);transition:box-shadow .3s,border-color .3s}
+.ask:focus-within{border-color:var(--teal);box-shadow:0 0 0 4px var(--glow),0 22px 44px -26px rgba(12,26,43,.5)}
+.ask input{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:inherit;padding:.8rem 1rem}
+.ask input:focus-visible{outline:none}
+.btn{background:var(--teal);color:var(--teal-ink);border:0;border-radius:11px;padding:.8rem 1.6rem;font:600 1rem var(--body);cursor:pointer;transition:transform .2s,filter .2s;text-decoration:none;display:inline-block}
+.btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--teal);border:1px solid var(--teal)}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem;max-width:700px}
+.chip{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:.3rem .95rem;font:inherit;font-size:.9rem;cursor:pointer;transition:.2s}
+.chip:hover{border-color:var(--teal);color:var(--ink);background:var(--glow)}
+.note{margin-top:1rem;font-size:.92rem;color:var(--brass)}
+.seal{width:min(100%,330px);justify-self:center;color:var(--ink)}
+.seal .ring{transform-origin:50% 50%;animation:spin 40s linear infinite}
+.seal .rose{transform-origin:50% 50%;animation:spin 60s linear infinite reverse;color:var(--teal)}
+.seal text{font:600 15px var(--display);fill:currentColor;letter-spacing:.14em}
+.seal .gold{color:var(--brass)}
+.tick{overflow:hidden;border-block:1px solid var(--line);background:var(--surface);direction:ltr;padding:.85rem 0}
+.trk{display:flex;width:max-content;animation:tk 60s linear infinite}
+.tick:hover .trk{animation-play-state:paused}
+.trk span{direction:rtl;font:700 1.15rem var(--display);padding-inline:1.6rem;white-space:nowrap;display:flex;align-items:center;gap:3.2rem}
+.trk span::after{content:"";width:11px;height:11px;border:2px solid var(--brass);transform:rotate(45deg)}
+section{padding:5rem 0;border-top:1px solid var(--line)}
+.num{font:700 .95rem var(--display);color:var(--brass);letter-spacing:.1em;display:block;margin-bottom:.6rem}
+h2{font-size:clamp(1.8rem,3.8vw,2.6rem);margin-bottom:.7rem}
+.sub{color:var(--muted);max-width:56ch;margin:0 0 2.5rem}
+.parts{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-bottom:1.6rem}
+.part{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:2.4rem 1fr;gap:.2rem .8rem;padding:.9rem 1.1rem;border:1px solid var(--line);border-radius:12px;transition:.25s}
+.part:focus-visible{outline:3px solid var(--brass);outline-offset:3px}
+.part i{font:700 1.4rem var(--display);font-style:normal;color:var(--c,var(--brass));grid-row:span 2;align-self:center}
+.part b{font:700 1.1rem var(--display)}.part span{color:var(--muted);font-size:.93rem}
+.part:hover,.part[aria-pressed="true"]{border-color:var(--teal);background:var(--surface);transform:translateX(-6px);box-shadow:0 14px 30px -22px rgba(12,26,43,.6)}
+.shelf{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
+.book{all:unset;box-sizing:border-box;cursor:pointer;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1.4rem 1.3rem 1.2rem;border-inline-start:10px solid var(--c,var(--teal));color:var(--ink);display:flex;flex-direction:column;gap:.5rem;min-height:170px;transition:.3s}
+.book:focus-visible{outline:3px solid var(--brass);outline-offset:3px}
+.book:hover{transform:translateY(-8px) rotate(-.6deg);box-shadow:0 24px 36px -26px rgba(12,26,43,.7)}
+.book .ty{font:500 .82rem var(--body);color:var(--brass)}
+.book h3{font-size:1.18rem}.book small{color:var(--muted);margin-top:auto}.book b{color:var(--teal);font-weight:600;font-size:.95rem}
+a.book{text-decoration:none}
+.empty{grid-column:1/-1;color:var(--muted);border:1px dashed var(--line);border-radius:12px;padding:1.6rem;text-align:center}
+.tools{display:grid;grid-template-columns:repeat(6,1fr);gap:1rem}
+.tool{background:var(--surface);border:1px solid var(--line);border-radius:6px 30px 6px 30px;padding:2rem 1.7rem;position:relative;overflow:hidden;transition:.3s;grid-column:span 3}
+.tool:nth-child(1){grid-column:span 4}.tool:nth-child(2){grid-column:span 2}.tool:nth-child(3){grid-column:span 2}.tool:nth-child(4){grid-column:span 4}
+.tool::after{content:attr(data-n);position:absolute;inset-inline-end:1rem;top:-.4rem;font:700 6rem/1 var(--display);color:var(--teal);opacity:.07;pointer-events:none}
+.tool:hover{border-color:var(--teal)}
+.tool h3{font-size:1.3rem;margin-bottom:.4rem}.tool p{color:var(--muted);margin-bottom:.8rem}
+label{display:block;font-size:.9rem;font-weight:500;margin:.7rem 0 .2rem;color:var(--muted)}
+input,select,textarea{width:100%;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:.65rem .85rem;font:inherit}
+textarea{min-height:84px;resize:vertical}
+.row{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem}
+.res{margin-top:1rem;background:var(--glow);border-inline-start:3px solid var(--teal);border-radius:10px;padding:.8rem 1rem}
+dialog{border:1px solid var(--line);border-radius:8px 32px 8px 32px;padding:0;width:min(760px,94vw);max-height:90vh;background:var(--surface);color:var(--ink);box-shadow:0 40px 80px -30px rgba(0,0,0,.6)}
+dialog::backdrop{background:rgba(8,18,26,.5);backdrop-filter:blur(6px)}
+.dh{position:sticky;top:0;background:var(--surface);border-bottom:1px solid var(--line);padding:1.1rem 1.4rem;display:flex;gap:1rem;align-items:flex-start;z-index:2}
+.dh h2{font-size:1.4rem;margin:0;flex:1}
+.db{padding:1.2rem 1.4rem 1.6rem}
+.sample{border:1px solid var(--line);border-radius:8px 28px 8px 28px;padding:1.2rem 1.3rem;background:var(--glow)}
+.sample .tag{display:inline-block;font-size:.8rem;color:var(--brass);border:1px dashed var(--brass);border-radius:999px;padding:0 .8rem;margin-bottom:.4rem}
+.sample p{font:400 1.2rem/1.8 var(--text)}
+.meta{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.9rem}
+.meta span{border:1px solid var(--line);border-radius:999px;padding:0 .9rem;font-size:.85rem;color:var(--muted)}
+.db h3{font-size:1.1rem;color:var(--teal);margin:1.5rem 0 .5rem}
+.pbar{height:6px;background:var(--line);border-radius:9px;overflow:hidden;margin:0 0 .7rem}.pbar div{height:100%;background:linear-gradient(90deg,var(--teal),var(--brass));width:0;transition:.3s}
+.db ul{margin:0;padding-inline-start:1.2rem}
+.chk{list-style:none;padding:0!important;counter-reset:s}
+.chk li{counter-increment:s;display:flex;gap:.7rem;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:.55rem .8rem;margin-bottom:.4rem}
+.chk li::before{content:counter(s,arabic-indic);width:1.7rem;height:1.7rem;flex:none;border-radius:50%;background:var(--teal);color:var(--teal-ink);display:grid;place-content:center;font:700 .85rem var(--display);margin-top:.15rem}
+.chk input{width:auto;order:3;margin-top:.5rem;accent-color:var(--teal);margin-inline-start:auto}
+.chk li.done span{text-decoration:line-through;opacity:.55}
+.warn{border-inline-start:3px solid var(--danger);background:color-mix(in srgb,var(--danger) 9%,transparent);border-radius:10px;padding:.7rem 1rem}
+footer{border-top:1px solid var(--line);padding:2.5rem 0 3rem;color:var(--muted);font-size:.93rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:space-between}footer p{max-width:62ch}
+.flinks{display:flex;gap:.5rem;flex-wrap:wrap;width:100%}.flinks a{color:var(--muted);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:0 .9rem}.flinks a:hover{border-color:var(--teal);color:var(--ink)}
+.js .rv{opacity:0;transform:translateY(22px);transition:opacity .8s,transform .8s}.js .rv.in{opacity:1;transform:none}
+@keyframes draw{to{stroke-dashoffset:0}}@keyframes spin{to{transform:rotate(360deg)}}@keyframes tk{to{transform:translateX(-50%)}}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr}.seal{width:200px;order:-1}.shelf,.parts{grid-template-columns:1fr}.tools{display:block}.tool{margin-bottom:1rem}nav{display:none}.theme{margin-inline-start:auto}.hero{padding:2.5rem 0 3.5rem}.ask{flex-direction:column}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.seal .ring,.seal .rose,.trk{animation:none}.hero h1 em path{animation:none;stroke-dashoffset:0}.js .rv{opacity:1;transform:none;transition:none}}
+@media print{header,.hero,.tick,.bar,section:not(#tools),footer,.tool:not(:nth-child(2)){display:none}}
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<header><div class="wrap">
+<a class="logo" href="index.html" aria-label="AADALA.MA — الصفحة الرئيسية"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="9" y="9" width="22" height="22"/><rect x="9" y="9" width="22" height="22" transform="rotate(45 20 20)"/><line x1="20" y1="13" x2="20" y2="27"/><line x1="14" y1="15" x2="26" y2="15"/></svg>AADALA.MA</a>
+<nav aria-label="التنقل الرئيسي"><a href="#worlds">المشاكل</a><a href="#tools">الأدوات</a><a href="#bag">حقيبتي</a><a href="#platform">المنصة</a><a href="index.html">الرئيسية</a></nav>
+<button class="theme" id="theme" type="button" aria-label="تبديل الوضع الداكن">◐</button>
+</div></header>
+<main>
+<div class="hero"><canvas class="cv" id="cv" aria-hidden="true"></canvas>
+<div class="wrap"><div>
+<span class="kicker">عالم من العدالة في متناول يدك</span>
+<h1>مشكلتك القانونية، <em>حلّها بخطوات.<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M2 14 C50 4, 110 18, 198 6"/></svg></em></h1>
+<p class="lead">اكتب مشكلتك بكلماتك، فتجد جوابا جاهزا وسندا قانونيا وخطوات تنجزها بنفسك ووثيقة تحرّرها في دقيقة.</p>
+<form class="ask" id="askForm" role="search"><input id="q" type="text" placeholder="مثال: طردوني من العمل" aria-label="صف مشكلتك" autocomplete="off"><button class="btn" type="submit">ابحث</button></form>
+<div class="chips" role="group" aria-label="مشاكل شائعة"><button class="chip" type="button">طردوني من العمل</button><button class="chip" type="button">مشكل مع صاحب الكراء</button><button class="chip" type="button">الطلاق</button><button class="chip" type="button">استدعتني الشرطة</button></div>
+<p class="note">للطوارئ: الشرطة 19 · الدرك الملكي 177. المحتوى للتوعية ولا يغني عن استشارة محام.</p>
+</div>
+<svg class="seal" viewBox="0 0 320 320" aria-hidden="true"><defs><path id="circ" d="M160 160 m-128 0 a128 128 0 1 1 256 0 a128 128 0 1 1 -256 0"/></defs>
+<g class="ring"><text><textPath href="#circ" startOffset="0">عالم العدالة ✦ جواب جاهز ✦ خطوات واضحة ✦ وثيقة في دقيقة ✦</textPath></text></g>
+<circle cx="160" cy="160" r="104" fill="none" stroke="currentColor" stroke-width="1" opacity=".4"/>
+<g class="rose" fill="none" stroke="currentColor" stroke-width="2.2" style="transform-box:fill-box"><rect x="100" y="100" width="120" height="120"/><rect x="100" y="100" width="120" height="120" transform="rotate(45 160 160)"/><circle cx="160" cy="160" r="34"/></g>
+<g class="gold" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="160" y1="132" x2="160" y2="188"/><line x1="134" y1="140" x2="186" y2="140"/><path d="M134 140 l-10 24 h20z M186 140 l-10 24 h20z" fill="none"/></g></svg>
+</div></div>
+<div class="tick" aria-hidden="true"><div class="trk" id="trk"></div></div>
+
+<section id="worlds"><div class="wrap">
+<div class="rv"><span class="num">٠١ · العوالم</span><h2>اختر عالمك، ثم مشكلتك.</h2><p class="sub">لكل مشكلة جواب مختصر، وسند قانوني، وخطة خطوة بخطوة، والوثائق وأخطاء ينبغي تجنبها.</p></div>
+<div class="parts" id="gt" role="group" aria-label="العوالم"></div>
+<div class="shelf" id="gd"></div>
+</div></section>
+
+<section id="tools"><div class="wrap">
+<div class="rv"><span class="num">٠٢ · الأدوات</span><h2>أدوات تعمل لأجلك.</h2><p class="sub">تُنجز داخل متصفحك، ولا يُرسل منها شيء إلى أي خادم.</p></div>
+<div class="tools">
+<div class="tool rv" data-n="١"><h3>محرّر الوثائق</h3><p>شكاية أو إنذار أو طلب مساعدة قضائية، جاهزة للنسخ والطباعة.</p>
+<label for="tp">نوع الوثيقة</label><select id="tp"><option value="s">شكاية إلى السيد وكيل الملك</option><option value="e">إنذار قبل اللجوء إلى القضاء</option><option value="a">طلب المساعدة القضائية</option></select>
+<label for="f1">اسمك الكامل</label><input id="f1"><label for="f2">الجهة الموجهة إليها أو الطرف الآخر</label><input id="f2">
+<label for="f3">الوقائع بإيجاز (التواريخ والأماكن)</label><textarea id="f3"></textarea><label for="f4">ما تطلبه</label><input id="f4" placeholder="مثال: فتح بحث وترتيب الآثار القانونية">
+<div class="row"><button class="btn" type="button" onclick="mk()">حرّر الوثيقة</button><button class="btn ghost" type="button" onclick="cp()">نسخ</button><button class="btn ghost" type="button" onclick="window.print()">طباعة</button></div>
+<textarea id="out" style="min-height:170px;margin-top:1rem" placeholder="ستظهر الوثيقة هنا" aria-label="الوثيقة"></textarea></div>
+<div class="tool rv" data-n="٢"><h3>حاسبة الآجال</h3><p>آخر يوم للطعن انطلاقا من تاريخ التبليغ.</p>
+<label for="dt">نوع الإجراء</label><select id="dt"><option value="30">استئناف حكم مدني أو أسري (30 يوما)</option><option value="30">نقض في قضية مدنية (30 يوما)</option><option value="10">استئناف حكم جنحي (10 أيام)</option><option value="0">أجل مخصص</option></select>
+<label for="dn">عدد الأيام للأجل المخصص</label><input type="number" id="dn" min="1" value="15">
+<label for="dd">تاريخ التبليغ</label><input type="date" id="dd">
+<div class="row"><button class="btn" type="button" onclick="calc()">احسب</button></div><div class="res" id="dr" role="status">إن صادف الأجل يوم عطلة امتد إلى أول يوم عمل.</div></div>
+<div class="tool rv" data-n="٣"><h3>هل أحتاج محاميا؟</h3><p>ثلاثة أسئلة لتوصية سريعة.</p>
+<label for="r1">هل يترتب على قضيتك سجن أو فقدان سكن أو حضانة؟</label><select id="r1"><option value="0">لا</option><option value="2">نعم</option></select>
+<label for="r2">هل الطرف الآخر شركة أو مؤسسة؟</label><select id="r2"><option value="0">لا</option><option value="1">نعم</option></select>
+<label for="r3">هل مرّ أكثر من نصف الأجل القانوني؟</label><select id="r3"><option value="0">لا</option><option value="1">نعم</option></select>
+<div class="row"><button class="btn" type="button" onclick="adv()">النتيجة</button></div><div class="res" id="ar" role="status">أجب لتحصل على توصية.</div></div>
+<div class="tool rv" data-n="٤"><h3>مسارات المنصة الأصلية</h3><p>كل ما بُني قبل هذا العالم باقٍ كما هو، ويمكنك الانتقال إليه مباشرة.</p>
+<div class="chips" style="max-width:none"><a class="chip" href="legal-ai.html">المساعد القانوني</a><a class="chip" href="encyclopedia.html">الموسوعة</a><a class="chip" href="inheritance.html">مِعيار للإرث</a><a class="chip" href="real-estate.html">العقار</a><a class="chip" href="criminal.html">الجنائي</a><a class="chip" href="procedures.html">المساطر</a><a class="chip" href="fiqh.html">الفقه</a><a class="chip" href="academic.html">الفضاء الأكاديمي</a><a class="chip" href="case-law.html">الاجتهاد القضائي</a><a class="chip" href="gazette.html">الجريدة الرسمية</a><a class="chip" href="legal-aid.html">المساعدة القانونية</a><a class="chip" href="founder.html">المؤسس</a></div></div>
+</div></div></section>
+
+<section id="bag"><div class="wrap">
+<div class="rv"><span class="num">٠٣ · حقيبتي</span><h2>حقيبتي القانونية.</h2><p class="sub">المشاكل التي حفظتها وتقدّمك في خطواتها، محفوظة في متصفحك وحده.</p></div>
+<div class="shelf" id="bg"></div></div></section>
+<section id="platform"><div class="wrap"><div class="rv"><span class="num">٠٤ · المنصة</span><h2>عالم العدالة جزء من AADALA.MA.</h2><p class="sub">يضاف هذا العالم إلى المكتبة والأدوات القائمة ولا يستبدل شيئا منها.</p><p><a class="btn" href="index.html">العودة إلى الرئيسية ←</a></p></div></div></section>
+</main>
+<footer><div class="wrap"><p>AADALA.MA منصة مستقلة وغير تابعة لوزارة العدل أو لأي جهة رسمية. المحتوى للتوعية القانونية ولا يُعد استشارة مهنية؛ استشر محاميًا مغربيًا في قضيتك، وتحقق من النص المحيّن في الجريدة الرسمية.</p><p>أسّسها محمد شرايم، طالب بكلية العلوم القانونية والاقتصادية والاجتماعية، جامعة ابن زهر، أكادير.</p></div></footer>
+
+<dialog id="dg" aria-labelledby="dtl"><div class="dh"><h2 id="dtl"></h2><button class="theme" type="button" onclick="dg.close()" aria-label="إغلاق">✕</button></div><div class="db" id="dbd"></div></dialog>
+
+<script>
+const G=[["work","١","الشغل","العقد والفصل والتصريح","#0F5C52"],["fam","٢","الأسرة","النفقة والطلاق والحضانة","#6B4A8A"],["home","٣","السكن والعقار","الكراء وشراء العقار","#8A5F1C"],["pen","٤","الشرطة والمحاكم","الحقوق والشكايات والمساطر","#2D4A7A"],["con","٥","الاستهلاك","السلع المعيبة والتراجع","#9A3328"],["inh","٦","الإرث","الورثة والتركة والقسمة","#3F7D4E"]];
+const P=[
+{c:"work",t:"طردوني من العمل دون سبب",k:"طرد فصل تسريح تعسفي شغل عمل مشغل شركة",a:"الفصل لا يكون مشروعا إلا بسبب مبرر وبمسطرة كتابية تتيح لك الدفاع عن نفسك. إن لم يحترمها المشغل، فمن حقك المطالبة بتعويضات عن الإخطار والفصل والضرر.",l:"مدونة الشغل 65.99",s:["احتفظ بعقدك وكل ما يثبت العلاقة الشغلية: كشوف الأجر، رسائل، شهود","اطلب سبب الفصل كتابة، ولا توقّع على أي تصريح بالتنازل","توجه إلى مفتشية الشغل لمحاولة الصلح وتسجيل شكايتك","إن فشل الصلح، قدّم مقالا إلى المحكمة الابتدائية (الغرفة الاجتماعية)"],d:["نسخة العقد","كشوف الأجر","شهادة العمل أو التصريح لدى الضمان الاجتماعي","رسالة الفصل إن وُجدت"],m:["التوقيع على وثيقة تنازل أو استلام نهائي دون فهمها","انتظار شهور قبل التحرك، فالآجال قصيرة"],w:"مفتشية الشغل ثم المحكمة الابتدائية"},
+{c:"work",t:"المشغل لا يصرّح بي في الضمان الاجتماعي",k:"cnss ضمان اجتماعي تصريح أجور شغل تأمين",a:"التصريح بالأجير في الصندوق الوطني للضمان الاجتماعي التزام على المشغل وليس منّة. يمكنك الاستفسار عن وضعيتك مباشرة لدى الصندوق، وتبليغ مفتشية الشغل عن الإخلال.",l:"مدونة الشغل 65.99 وقانون الضمان الاجتماعي",s:["اطلب كشف مسارك المهني لدى الصندوق للتأكد من وضعيتك","اجمع أدلة اشتغالك: رسائل، تحويلات بنكية، صور، شهود","ارفع شكاية إلى مفتشية الشغل","استشر محاميا للمطالبة بالتعويض عن الضرر"],d:["بطاقة التعريف","أدلة الاشتغال","كشف الصندوق"],m:["الاكتفاء بوعد شفوي بالتسوية لاحقا"],w:"فرع الصندوق ومفتشية الشغل"},
+{c:"fam",t:"زوجي لا ينفق علي وعلى أولادنا",k:"نفقة زوج أطفال أولاد إنفاق مصاريف طلاق",a:"النفقة حق للزوجة والأولاد على الأب. دعاوى النفقة معفاة من الرسوم القضائية، وتستمر نفقة الأولاد حتى سن الرشد، أو 25 سنة لمن يتابع دراسته.",l:"مدونة الأسرة 70.03 (المادة 198 وما بعدها)",s:["اجمع عقد الزواج ورسوم ازدياد الأولاد","ابحث عما يثبت دخل الزوج أو عمله","قدّم مقالا إلى قسم قضاء الأسرة بالمحكمة الابتدائية","احضر جلسة الصلح، واطلب نفقة مؤقتة إن كان الوضع مستعجلا"],d:["عقد الزواج","رسوم الازدياد","شهادة الدخل أو العمل","وثائق مصاريف الأولاد: مدرسة، علاج"],m:["المبالغة في المبلغ دون ما يثبته","إهمال إثبات دخل الطرف الآخر"],w:"قسم قضاء الأسرة"},
+{c:"fam",t:"أريد الطلاق، ما الأنواع وما الأنسب؟",k:"طلاق خلع شقاق اتفاق تطليق زواج انفصال",a:"هناك طلاق بإذن المحكمة، وطلاق بالاتفاق (المادة 114)، والخلع (115 وما بعدها)، والتطليق للشقاق (94 وما بعدها). الاتفاق أسرعها وأقلها كلفة إن توافق الطرفان.",l:"مدونة الأسرة 70.03",s:["حدّد أولوياتك: الحضانة، النفقة، السكن، الصداق","جرّب التفاهم على اتفاق مكتوب يحدد الحقوق","قدّم الطلب إلى قسم قضاء الأسرة","احضر محاولة الصلح، فهي إجراء إلزامي"],d:["عقد الزواج","رسوم الازدياد","ما يثبت الدخل","الاتفاق المكتوب إن وُجد"],m:["التنازل عن حقوق الأولاد بدافع الاستعجال","عدم تدوين ما اتُّفق عليه شفويا"],w:"قسم قضاء الأسرة"},
+{c:"home",t:"صاحب الكراء يريد إخراجي أو يهددني",k:"كراء مكري مكتري إفراغ سكن شقة إيجار كراء قطع الماء الكهرباء",a:"لا يحق للمكري إفراغك بنفسه أو قطع الماء والكهرباء. الإفراغ لا يتم إلا بحكم قضائي ومسطرة قانونية، ومعك الحق في أن تدافع عن نفسك أمام المحكمة.",l:"القانون 67.12 المتعلق بكراء المحلات السكنية والمهنية",s:["احتفظ بعقد الكراء ووصولات أداء الكراء بالتحويل أو بوصل مكتوب","ادفع الكراء بوسيلة تترك أثرا، وأي إنذار يصلك فاحتفظ به","أي رسالة أو إنذار بواسطة مفوض قضائي؟ اقرأ أجله وردّ عليه كتابة","استشر محاميا فورا إن توصلت بدعوى إفراغ"],d:["عقد الكراء","وصولات الأداء","الإنذار","مراسلات المكري"],m:["الدفع نقدا بلا وصل","إهمال الإنذار أو عدم الحضور للجلسة"],w:"المحكمة الابتدائية"},
+{c:"home",t:"أريد شراء عقار، كيف لا أُخدع؟",k:"شراء عقار بيع شقة أرض موثق محافظة عقارية رسم ملكية",a:"قبل أن تدفع درهما، اطلب شهادة ملكية حديثة من المحافظة العقارية، وتأكد من خلو العقار من الرهون والتحملات. عقود الحقوق العينية يجب أن تحرَّر بمحرر رسمي أو ثابت التاريخ يُعدّه محام مؤهل أو موثق.",l:"القانون 39.08 المتعلق بالحقوق العينية",s:["اطلب شهادة ملكية وبيانا بالتحملات من المحافظة العقارية","تحقق من هوية البائع وصفته (مالك أو وكيل)","حرّر عقد البيع عند موثق أو محام مؤهل، ولا تكتفِ بورقة عرفية","سجّل العقد بالمحافظة العقارية، فالتسجيل هو ما يحميك"],d:["شهادة الملكية","نسخ هويات الطرفين","وصل ضريبة الجماعة إن لزم","عقد البيع"],m:["دفع عربون كبير دون ورقة مكتوبة","الشراء من شخص يعد بالأوراق لاحقا"],w:"المحافظة العقارية والموثق"},
+{c:"pen",t:"استدعتني الشرطة أو وُضعت تحت الحراسة النظرية",k:"شرطة درك حراسة نظرية استدعاء اعتقال تحقيق محضر محامي",a:"احتفظ بهدوئك. لك حق معرفة سبب إيقافك، وإخبار أحد أقاربك، وطلب فحص طبي، وقراءة محضرك قبل أن توقّعه. الحراسة النظرية في الجرائم العادية 48 ساعة قابلة للتمديد مرة واحدة بإذن النيابة العامة.",l:"قانون المسطرة الجنائية (الحراسة النظرية)",s:["اسأل عن سبب الاستدعاء أو الإيقاف","اطلب الاتصال بقريب أو بمحام وفق المقتضيات المقررة","اقرأ المحضر كاملا قبل التوقيع، واطلب تصحيح أي خطأ","لا توقّع على أي شيء لم تفهمه، وسجّل اعتراضك كتابة"],d:["بطاقة التعريف","ما يثبت وجهتك أو موقعك وقت الواقعة","وكالة لمحام إن أمكن"],m:["التوقيع على محضر لم تقرأه","الاعتراف تحت الضغط"],w:"محام فورا، ووكيل الملك عند الاقتضاء"},
+{c:"pen",t:"كيف أرفع شكاية ضد من اعتدى علي؟",k:"شكاية وكيل الملك اعتداء عنف شرطة سرقة نصب ضرب شهادة طبية",a:"قدّم شكايتك لدى الشرطة أو الدرك أو مباشرة إلى وكيل الملك. في حالات العنف، الشهادة الطبية والشهود أهم أدلتك، وفي العنف ضد النساء يطبق القانون 103.13.",l:"المسطرة الجنائية والقانون 103.13",s:["اطلب شهادة طبية إن أُصبت، ولا تتأخر في ذلك","اجمع الأدلة: رسائل، صور، أسماء شهود","حرّر شكايتك بمحرر الوثائق أسفل الصفحة","احتفظ بوصل الإيداع، وتابع مآل الشكاية"],d:["الشهادة الطبية","صور ورسائل","هوية الشاكي","محضر المعاينة إن وُجد"],m:["التنازل شفويا ثم تفاجأ بالتقادم","نسيان الاحتفاظ بنسخة من الشكاية"],w:"وكيل الملك أو الشرطة أو الدرك"},
+{c:"con",t:"اشتريت سلعة معيبة أو من الإنترنت وأريد إرجاعها",k:"استهلاك سلعة معيبة ضمان إرجاع بيع عن بعد متجر استرجاع",a:"في البيع عن بعد لك حق التراجع خلال 7 أيام. والسلعة المعيبة يحق لك فيها الإصلاح أو الاستبدال أو الاسترجاع حسب الحالة، والبائع ملزم بتقديم فاتورة وضمان.",l:"القانون 31.08 المتعلق بحماية المستهلك",s:["صوّر العيب واحتفظ بالفاتورة وعلبة المنتج","راسل البائع كتابة بوسيلة تترك أثرا","اشتكِ إلى المديرية الجهوية للتجارة أو جمعية حماية المستهلك","إن لم يستجب، قدّم دعوى استهلاك بسيطة أمام المحكمة"],d:["الفاتورة","صور العيب","المراسلات مع البائع"],m:["رمي علبة المنتج أو التطبيق","التواصل شفويا فقط"],w:"المديرية الجهوية للتجارة ثم المحكمة"},
+{c:"inh",t:"كيف يوزع إرث والدي بين الورثة؟",k:"إرث ميراث وراثة تركة أخ أخت أبناء زوجة أم فرائض",a:"للزوجة الثمن إن كان للميت فرع وارث، والربع إن لم يكن. وللزوج الربع مع الفرع الوارث، والنصف دونه. وللبنت الواحدة النصف، وللبنتين فأكثر الثلثان، ومع الذكور يكون للذكر مثل حظ الأنثيين. للتفاصيل استعمل حاسبة ميزان.",l:"مدونة الأسرة 70.03 (كتاب الإرث)",s:["احصل على شهادة الوفاة","أنجز إراثة عند عدلين لتحديد الورثة","أحص التركة: عقارات، حسابات، منقولات، وديون","وزّع بالتراضي أو عبر القسمة القضائية، واستعن بحاسبة ميزان"],d:["شهادة الوفاة","رسم الإراثة","عقد الزواج","وثائق التركة"],m:["الاستيلاء على التركة قبل تحديد الورثة","القسمة الشفوية بلا توثيق"],w:"العدول ثم المحكمة عند الخلاف"}
+];
+const $=s=>document.querySelector(s),dg=$("#dg"),root=document.documentElement;root.classList.add("js");
+let cat="all",sv={},pg={};
+try{sv=JSON.parse(localStorage.getItem("aw_sv")||"{}");pg=JSON.parse(localStorage.getItem("aw_pg")||"{}")}catch(e){}
+const save=()=>{try{localStorage.setItem("aw_sv",JSON.stringify(sv));localStorage.setItem("aw_pg",JSON.stringify(pg))}catch(e){}};
+const norm=s=>s.replace(/[\u064B-\u0652ـ]/g,"").replace(/[أإآ]/g,"ا").replace(/ة/g,"ه").replace(/ى/g,"ي");
+const gi=c=>G.find(g=>g[0]==c);
+function gates(){$("#gt").innerHTML=[["all","∗","الكل","كل المشاكل في مكان واحد","#8A5F1C"],...G].map(g=>`<button class="part" style="--c:${g[4]}" aria-pressed="${cat==g[0]}" onclick="cat='${g[0]}';gates();list()"><i>${g[1]}</i><b>${g[2]}</b><span>${g[3]}</span></button>`).join("")}
+function card(i){const p=P[i],g=gi(p.c),n=pg[i]?pg[i].length:0;return `<button class="book" style="--c:${g[4]}" onclick="openC(${i})"><span class="ty">${g[2]}</span><h3>${p.t}</h3><small>${p.l}${n?` · أنجزت ${n} من ${p.s.length}`:""}</small><b>افتح الحل ←</b></button>`}
+function list(){const w=norm($("#q").value.trim()).split(/\s+/).filter(x=>x.length>1);
+const r=P.map((p,i)=>i).filter(i=>(cat=="all"||P[i].c==cat)&&(!w.length||w.some(x=>norm(P[i].t+" "+P[i].k+" "+P[i].a).includes(x))));
+$("#gd").innerHTML=r.length?r.map(card).join(""):'<div class="empty">لم نجد مشكلة مطابقة. جرّب كلمة أبسط أو اسأل <a href="legal-ai.html">المساعد القانوني</a>.</div>';
+const b=Object.keys(sv).filter(k=>sv[k]);$("#bg").innerHTML=b.length?b.map(card).join(""):'<div class="empty">لم تحفظ شيئا بعد. افتح أي مشكلة واضغط «احفظ في حقيبتي».</div>'}
+$("#askForm").addEventListener("submit",e=>{e.preventDefault();cat="all";gates();list();$("#worlds").scrollIntoView()});
+$("#q").addEventListener("input",list);
+document.querySelectorAll(".chip[type=button]").forEach(c=>c.onclick=()=>{$("#q").value=c.textContent;cat="all";gates();list();$("#worlds").scrollIntoView()});
+function openC(i){const p=P[i],ul=a=>"<ul>"+a.map(x=>`<li>${x}</li>`).join("")+"</ul>";$("#dtl").textContent=p.t;
+$("#dbd").innerHTML=`<div class="sample"><span class="tag">الجواب المختصر</span><p>${p.a}</p></div><div class="meta"><span>السند: ${p.l}</span><span>الجهة: ${p.w}</span></div>
+<h3>خطتك خطوة بخطوة</h3><div class="pbar"><div id="pb"></div></div><ul class="chk">${p.s.map((x,j)=>`<li id="s${j}"><span>${x}</span><input type="checkbox" id="c${j}" aria-label="أنجزت الخطوة" onchange="tick(${i},${j},this.checked)"></li>`).join("")}</ul>
+<h3>الوثائق التي تحتاجها</h3>${ul(p.d)}<h3>أخطاء تجنّبها</h3><div class="warn">${ul(p.m)}</div>
+<div class="row"><a class="btn" href="#tools" onclick="dg.close()">حرّر وثيقتي</a><button class="btn ghost" id="sb" type="button" onclick="fav(${i})"></button><a class="btn ghost" href="legal-ai.html">اسأل المساعد</a></div>`;
+(pg[i]||[]).forEach(j=>{$("#c"+j).checked=true;$("#s"+j).classList.add("done")});fb(i);bar(i);dg.showModal();$("#dbd").parentNode.scrollTop=0}
+function tick(i,j,v){pg[i]=(pg[i]||[]).filter(x=>x!=j);if(v)pg[i].push(j);$("#s"+j).classList.toggle("done",v);save();bar(i);list()}
+function bar(i){$("#pb").style.width=((pg[i]||[]).length/P[i].s.length*100)+"%"}
+function fav(i){sv[i]=!sv[i];save();fb(i);list()}
+function fb(i){$("#sb").textContent=sv[i]?"محفوظة في حقيبتي ✓":"احفظ في حقيبتي"}
+function calc(){const d=$("#dd").value;if(!d){$("#dr").textContent="اختر تاريخ التبليغ أولا.";return}
+const n=$("#dt").selectedIndex==3?+$("#dn").value:+$("#dt").value,x=new Date(d+"T12:00:00");x.setDate(x.getDate()+n);let note="";
+while([0,6].includes(x.getDay())){x.setDate(x.getDate()+1);note=" (مُدّد إلى أول يوم عمل لمصادفته عطلة)"}
+$("#dr").innerHTML="آخر يوم: <b>"+x.toLocaleDateString("ar-MA",{weekday:"long",year:"numeric",month:"long",day:"numeric"})+"</b>"+note+"<br><small>لا تنتظر اليوم último، وتحقق من العطل الرسمية.</small>"}
+function mk(){const n=$("#f1").value||"……",o=$("#f2").value||"……",f=$("#f3").value||"……",r=$("#f4").value||"……",t=$("#tp").value,dt=new Date().toLocaleDateString("ar-MA");
+const T={s:`إلى السيد وكيل الملك لدى المحكمة الابتدائية\n\nالموضوع: شكاية\n\nتحية طيبة وبعد،\nأنا الموقع أسفله ${n}، أتقدم إلى سيادتكم بهذه الشكاية ضد ${o}.\n\nالوقائع:\n${f}\n\nلذلك، ألتمس من سيادتكم: ${r}.\n\nمرفقات: الأدلة والوثائق المدعمة.\nوتقبلوا فائق التقدير والاحترام.\n\nحرر في ${dt}\nالإمضاء: ${n}`,
+e:`إنذار\n\nمن: ${n}\nإلى: ${o}\n\nأنذركم بهذا بما يلي:\n${f}\n\nوعليه، أطلب منكم: ${r}، داخل أجل معقول لا يتعدى 15 يوما من تاريخ توصلكم بهذا الإنذار، وإلا اضطررت إلى سلوك المساطر القضائية دون إشعار آخر.\n\nحرر في ${dt}\nالإمضاء: ${n}`,
+a:`إلى السيد رئيس المحكمة\n\nالموضوع: طلب الاستفادة من المساعدة القضائية\n\nأنا الموقع أسفله ${n}، أتقدم إليكم بهذا الطلب بخصوص قضيتي ضد ${o}.\n\nوبما أنني لا أتوفر على الموارد الكافية لأداء مصاريف الدعوى، وتبيانا للوقائع:\n${f}\n\nألتمس من سيادتكم: ${r}.\n\nمرفقات: شهادة عدم التوفر على دخل كاف وما يثبت وضعيتي.\n\nحرر في ${dt}\nالإمضاء: ${n}`};$("#out").value=T[t]}
+function cp(){const o=$("#out");o.select();try{navigator.clipboard.writeText(o.value)}catch(e){document.execCommand("copy")}}
+function adv(){const s=+$("#r1").value+ +$("#r2").value+ +$("#r3").value;
+$("#ar").innerHTML=s>=3?"<b>نعم، استعن بمحام الآن.</b> الأمر يمس حقا جوهريا أو آجالا حرجة. إن لم تكن لديك إمكانية فاطلب المساعدة القضائية.":s>=1?"<b>يُستحسن استشارة محام</b> ولو في موعد واحد لمراجعة الملف قبل رفعه.":"<b>يمكنك البدء بنفسك</b> بخطوات الصفحة، مع إمكانية الاستشارة لاحقا إن تعقد الأمر."}
+$("#theme").onclick=()=>{const d=root.getAttribute("data-theme")==="dark"||(!root.getAttribute("data-theme")&&matchMedia("(prefers-color-scheme: dark)").matches);root.setAttribute("data-theme",d?"light":"dark")};
+$("#trk").innerHTML=[0,1].map(()=>`<span>${P.map(p=>p.t).join("</span><span>")}</span>`).join("");
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.1});
+document.querySelectorAll(".rv").forEach((el,i)=>{el.style.transitionDelay=(i%3)*90+"ms";io.observe(el)});
+addEventListener("scroll",()=>{const h=root.scrollHeight-innerHeight;$("#bar").style.transform="scaleX("+(h>0?scrollY/h:0)+")"},{passive:true});
+(function(){const c=$("#cv"),x=c.getContext("2d"),rm=matchMedia("(prefers-reduced-motion:reduce)").matches;let w,h,t=0;
+function rs(){w=c.width=c.offsetWidth;h=c.height=c.offsetHeight}rs();addEventListener("resize",rs);
+function star(cx,cy,r,a){x.beginPath();for(let i=0;i<16;i++){const q=i%2?r*.55:r,u=a+i*Math.PI/8;x.lineTo(cx+q*Math.cos(u),cy+q*Math.sin(u))}x.closePath();x.stroke()}
+function f(){x.clearRect(0,0,w,h);x.strokeStyle=getComputedStyle(root).getPropertyValue("--teal").trim()||"#0F5C52";x.globalAlpha=.28;x.lineWidth=1.2;const s=76;
+for(let i=0;i<w/s+1;i++)for(let j=0;j<h/s+1;j++)star(i*s,j*s,26+Math.sin(t+i*.5+j*.5)*5,t*.2+(i+j)%2*.4);t+=.012;if(!rm)requestAnimationFrame(f)}f()})();
+gates();list();
+</script>
+<script src="/assets/navigation.js" defer></script>
+</body>
+</html>

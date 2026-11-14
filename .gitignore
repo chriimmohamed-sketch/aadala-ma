@@ -7,11 +7,17 @@ node_modules/
 .env
 .env.local
 .env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+!.env.example
 
 # Next.js build output
 /.next/
 /out/
 /build/
+tsconfig.tsbuildinfo
+*.tsbuildinfo
 /.open-next/
 
 # Misc
@@ -41,11 +47,9 @@ desktop.ini
 .wrangler
 .dev.vars*
 !.dev.vars.example
-!.env.example
 .vercel
 
 # Extraction pipeline artifacts
 data/__pycache__/
 data/ocr/
 *.pyc
-

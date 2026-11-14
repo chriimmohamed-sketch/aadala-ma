@@ -171,4 +171,11 @@ Extraction rules: duplicate numbers are kept with unique keys (dahir vs. penal-c
 | 7. التحقق | `tsc` نظيف · ESLint **0 أخطاء** (6 تحذيرات موروثة) · **81/81** · **`cf:build نجح على Windows`**: `.open-next/worker.js` (2216 بايت) + `.open-next/assets/` (89 ملفاً، 4.7MB)؛ 387 مساراً ثابت/SSG + 11 API ديناميكية |
 | 8. الدفع | `git push -u origin fix/opennext-deploy` |
 | 9. الإنتاج | **لم يُنفّذ أي `wrangler deploy`** ولم يُدمج في `master` — بانتظار مراجعتك لـpreview |
-| الـWorker الحي | ما زال النسخة الساكنة على `aadala-ma.cheraimmohamed20.workers.dev` |
+| الـWorker الحي | ما زال النسخة الساكنة على `aadala-ma.cheraimmohamed20.workers.dev` |>>>>>>> origin/design/aadala-refresh
+
+
+## 2026-11-13 — دمج Supreme Justice Navigation (فرع `design/aadala-refresh`)
+- **الدمج نفسه مكتمل على المستوى البرمجي** (merge commit على `integrate/aadala-refresh`؛ راجع git history): Supreme nav, FloatingAI, structured legal data registry (`lib/legal-data/*`), من خطأ `0015` RLS recursion, صفحات `/ar/report`, `public/mushkilati.html`، `public/profile/`، `supabase/apply/2026-11-11_pending_bundle.sql`, rate-limit على admin ingest + templates, migrations `0014`–`0016`.
+- **التحقق المحلي ما زال ممنوعاً على Windows**: `cf:build` نجح (387 صفحة). لم يُتحقق من التشغيل الحقيقي على Workers (يتطلب WRANGLER secrets في CI).
+- **القاعدة لا تزال read-only** (`default_transaction_read_only=on` منذ 2026-11-13) — لا يمكن تطبيق `2026-11-11_pending_bundle.sql` عبر الأدوات؛ يحتاج SQL Editor.
+- **`/ar/*` ما زالت بلا 2FA مفعّل** — الخطوات في `docs/ADMIN_GUIDE.md` (§ 2FA).
