@@ -10,8 +10,8 @@ const PROJECTS = [
   { id: "aadala-ai", name: "AADALA AI", url: "https://aadala-ma.cheraimmohamed20.workers.dev/ar/ai", status: "preview", cpu: 34, mem: 62 },
   { id: "miyar", name: "MIYAR", url: "https://aadala-ma.cheraimmohamed20.workers.dev/ar/miyar", status: "live", cpu: 8, mem: 31 },
   { id: "legal-ency", name: "الموسوعة", url: "https://aadala-ma.cheraimmohamed20.workers.dev/ar/legal", status: "live", cpu: 15, mem: 50 },
-  { id: "qanun", name: "القانون بنصّه", url: "https://aadala-ma.cheraimmohamed20.workers.dev/qanun.html", status: "live", cpu: 4, mem: 20 },
-  { id: "al-ilm", name: "العلم", url: "https://aadala-ma.cheraimmohamed20.workers.dev/al-ilm.html", status: "live", cpu: 6, mem: 26 },
+  { id: "qanun", name: "القانون بنصّه", url: "/ar/legal", status: "live", cpu: 4, mem: 20 },
+  { id: "al-ilm", name: "العلم", url: "/ar/academic", status: "live", cpu: 6, mem: 26 },
 ];
 
 function spark(seed: number) {

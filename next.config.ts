@@ -61,15 +61,17 @@ async function redirects() {
   const map = [
     { from: "/index.html", to: "/" },
     { from: "/encyclopedia.html", to: "/ar/legal" },
-    { from: "/gazette.html", to: "/ar/gazette" },
+    { from: "/gazette.html", to: "/ar/legal/bulletin-officiel-7437" },
     { from: "/legal-ai.html", to: "/ar/ai" },
     { from: "/academic.html", to: "/ar/academic" },
     { from: "/real-estate.html", to: "/ar/property" },
     { from: "/inheritance.html", to: "/ar/miyar" },
     { from: "/criminal.html", to: "/ar/criminal" },
     { from: "/procedures.html", to: "/ar/procedures" },
-    { from: "/contact.html", to: "/ar/contact" },
     { from: "/founder.html", to: "/ar/founder" },
+    { from: "/case-law.html", to: "/ar/case-law" },
+    { from: "/legal-aid.html", to: "/ar/legal-aid" },
+    { from: "/privacy.html", to: "/ar/privacy" },
   ];
   return map.map(({ from, to }) => ({
     source: from,
