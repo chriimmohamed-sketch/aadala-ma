@@ -2,46 +2,60 @@ import { getMessages } from "@/lib/i18n/getMessages";
 import HeaderSupreme from "@/components/layout/HeaderSupreme";
 import Footer from "@/components/layout/Footer";
 import ZelligeCanvas from "@/components/ZelligeCanvas";
-import BlurText from "@/components/BlurText";
-import LightRays from "@/components/LightRays";
-import StarBorder from "@/components/StarBorder";
 import HomeInteractions from "@/components/HomeInteractions";
 import AnswerAnimator from "@/components/AnswerAnimator";
 import { legalDatabase } from "@/data/legal-database";
+import { GalaxyCanvas } from "@/components/aalada-ultimate/GalaxyBackground";
+import AgentTerminal from "@/components/aalada-ultimate/AgentTerminal";
+import BlurText from "@/components/BlurText";
+import LightRays from "@/components/LightRays";
+import StarBorder from "@/components/StarBorder";
 import Link from "next/link";
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const messages = await getMessages(locale);
   return (
-    <div className="flex min-h-screen flex-col" style={{ backgroundColor: "var(--aadala-bg)", color: "var(--aadala-graphite)" }}>
+    <div className="flex min-h-screen flex-col bg-bg">
+      <GalaxyCanvas />
       <div className="bar" id="bar" />
       <HomeInteractions locale={locale} />
       <AnswerAnimator />
       <HeaderSupreme locale={locale} messages={messages} />
       <div id="v-home">
         <main id="main">
-          <div className="hero">
+          <div className="hero" style={{ position: "relative", overflow: "hidden" }}>
             <ZelligeCanvas />
-            <LightRays color="#C9A227" count={6} />
             <div className="hero-aurora" aria-hidden="true" />
             <div className="hero-orbit" aria-hidden="true" />
             <div className="hero-status" aria-label="حالة المنصة">
               <span className="status-dot" aria-hidden="true" />
-              <span>AADALA.MA · <b>حيّة الآن</b></span>
+              <span>AADALA.MA · <b>حية الآن</b></span>
               <span className="status-sep">/</span>
               <span>نسخة موثقة المصدر</span>
             </div>
+            <LightRays color="#C9A227" count={6} />
             <div className="wrap">
               <div>
                 <span className="kicker">منصة قانونية مغربية مستقلة</span>
-                <h1><BlurText text="القانون المغربي، بنصّه" delay={0.2} /> <em>ومادّته.<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M2 14 C50 4, 110 18, 198 6" /></svg></em></h1>
-                <p className="lead">اسأل سؤالك القانوني واحصل على جواب مبني على النص الأصلي، مع المرجع الذي يمكنك التحقق منه قبل أن تعتمد عليه.</p>
+                <h1>
+                  <BlurText text="القانون المغربي، بنصّه  ومادّته." delay={0.2} />{" "}
+                  <em>
+                    .<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true">
+                      <path d="M2 14 C50 4, 110 18, 198 6" />
+                    </svg>
+                  </em>
+                </h1>
+                <p className="lead">
+                  اسأل سؤالك القانوني واحصل على جواب مبني على النص الأصلي، مع المرجع الذي يمكنك التحقق منه قبل أن تعتمد عليه.
+                </p>
                 <form className="ask" action={`/${locale}/ai`} method="get" role="search">
-                  <input name="q" type="text" maxLength={2000} placeholder="مثال: ما شروط صحة عقد البيع؟" aria-label="سؤالك القانوني" autoComplete="off" />
-                  <StarBorder color="#C9A227"><button className="btn" type="submit">اسأل</button></StarBorder>
+                  <input name="q" type="text" maxLength={2000} placeholder="مثال: ما شروط صحة عقد البيع؟" aria-label="البحث القانوني" autoComplete="off" />
+                  <StarBorder color="#C9A227">
+                    <button className="btn" type="submit">ابحث</button>
+                  </StarBorder>
                 </form>
-                <div className="chips" role="group" aria-label="أسئلة مقترحة">
+                <div className="chips" role="group" aria-label="أسئلة شائعة">
                   <Link className="chip" href={`/${locale}/ai?q=${encodeURIComponent("ما شروط صحة عقد البيع؟")}`}>ما شروط صحة عقد البيع؟</Link>
                   <Link className="chip" href={`/${locale}/ai?q=${encodeURIComponent("كيف يتم تحفيظ عقار؟")}`}>كيف يتم تحفيظ عقار؟</Link>
                   <Link className="chip" href={`/${locale}/ai?q=${encodeURIComponent("ما الفرق بين الشياع والقسمة؟")}`}>ما الفرق بين الشياع والقسمة؟</Link>
@@ -55,7 +69,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </div>
               <svg className="seal" viewBox="0 0 320 320" aria-hidden="true">
                 <defs><path id="circ" d="M160 160 m-128 0 a128 128 0 1 1 256 0 a128 128 0 1 1 -256 0" /></defs>
-                <g className="ring"><text><textPath href="#circ" startOffset="0">AADALA.MA ✦ القانون بنصّه ومادّته ✦ مصدر قابل للتحقق ✦</textPath></text></g>
+                <g className="ring"><text><textPath href="#circ" startOffset="0">AADALA.MA — منصة العدالة والذكاء القانوني المغربي — النص first — المرجع ظاهر — اليقين معلن</textPath></text></g>
                 <circle cx="160" cy="160" r="104" fill="none" stroke="currentColor" strokeWidth="1" opacity=".4" />
                 <g className="rose" fill="none" stroke="currentColor" strokeWidth="2.2">
                   <rect x="100" y="100" width="120" height="120" />
@@ -69,12 +83,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 </g>
               </svg>
             </div>
-          </div>
-
-          <div className="tick" aria-hidden="true">
-            <div className="trk">
-              <span>دستور المملكة المغربية</span><span>قانون الالتزامات والعقود</span><span>مدونة الحقوق العينية</span><span>ظهير التحفيظ العقاري</span><span>مجموعة القانون الجنائي</span><span>الجريدة الرسمية عدد 7437</span>
-              <span>دستور المملكة المغربية</span><span>قانون الالتزامات والعقود</span><span>مدونة الحقوق العينية</span><span>ظهير التحفيظ العقاري</span><span>مجموعة القانون الجنائي</span><span>الجريدة الرسمية عدد 7437</span>
+            <div className="tick" aria-hidden="true">
+              <div className="trk">
+                <span>القانون بنصّه ومادّته</span><span>الجريدة الرسمية · 7437</span><span>العدالة والذكاء القانوني</span><span>أي جواب بلا قابلية للتحقق = لا جواب</span><span>القانون بنصّه ومادّته</span><span>الجريدة الرسمية · 7437</span><span>العدالة والذكاء القانوني</span><span>أي جواب بلا قابلية للتحقق = لا جواب</span>
+              </div>
             </div>
           </div>
 
@@ -106,12 +118,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </div>
               <article className="sample rv" aria-label="شكل الإجابة">
                 <span className="tag">شكل توضيحي — ليس جوابًا قانونيًا</span>
-                <p className="q">سؤالك يظهر هنا…</p>
+                <p className="q">ما شروط صحة عقد بيع؟</p>
                 <div className="blk"><h3>الوقائع المفترضة</h3><p>صياغة السؤال في نقطة قانونية محددة.</p></div>
                 <div className="blk"><h3>الأساس القانوني</h3><p><span className="ph">رقم المادة</span> من <span className="ph">اسم النص القانوني</span>، مع مقطع من النص الأصلي.</p></div>
                 <div className="blk"><h3>التحليل</h3><p>تطبيق النص على الوقائع، وبيان المعلومات الناقصة التي تغيّر الجواب لو توفرت.</p></div>
                 <div className="blk"><h3>درجة اليقين</h3><p>مرتفعة · متوسطة · منخفضة · مصادر غير كافية</p></div>
-                <div className="stamp" aria-hidden="true">مرجع<br />قابل<br />للتحقق</div>
+                <div className="stamp" aria-hidden="true">AADALA<br />MASDAR<br />MUSTA'AN</div>
               </article>
             </div>
           </section>
@@ -129,7 +141,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 <Link className="book" style={{ "--c": "#7A2D3C" } as React.CSSProperties} href={`/${locale}/legal/tahfidh-immobilier`}><span className="ty">ظهير · <span className="badge">متاح</span></span><h3>ظهير التحفيظ العقاري</h3><small>كما وقع تغييره وتتميمه</small><b>اقرأ النص ←</b></Link>
                 <Link className="book" style={{ "--c": "#4A4A4A" } as React.CSSProperties} href={`/${locale}/legal/code-penal`}><span className="ty">مجموعة · <span className="badge">متاح</span></span><h3>مجموعة القانون الجنائي</h3><small>صيغة محينة</small><b>اقرأ النص ←</b></Link>
                 <Link className="book" style={{ "--c": "#0F5C52" } as React.CSSProperties} href={`/${locale}/legal/bulletin-officiel-7437`}><span className="ty">جريدة رسمية · <span className="badge">متاح</span></span><h3>الجريدة الرسمية عدد 7437</h3><small>عدد مدمج كما هو في المصدر</small><b>اقرأ النص ←</b></Link>
-                            </div>
+              </div>
             </div>
           </section>
 
@@ -179,7 +191,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <div className="wrap">
               <div className="rv"><span className="num">٠٤ · منهجنا</span>
               <h2>كيف نحافظ على ثقتك</h2>
-              <p className="sub">منصة قانونية تخسر قيمتها بخطأ واحد. لهذا نلتزم بثلاث قواعد.</p></div>
+              <p className="sub">منصة قانونية تخسر قيمتها بخطأ واحد. لهذا نلتزم بثلاث قواعد وخمس خطوات تحقق.</p></div>
+              <ol className="parts" style={{ listStyle: "none", padding: 0 }}>
+                <li className="part" style={{ cursor: "default" }}><i>١</i><b>نأخذ النص من مصدر منشور</b><span>لا تُعاد صياغة المواد؛ يُنقل النص كما هو.</span></li>
+                <li className="part" style={{ cursor: "default" }}><i>٢</i><b>نُبقي النسخة وتاريخها</b><span>رقم الظهير وتاريخه وعدد الجريدة الرسمية مذكورة في كل صفحة نص.</span></li>
+                <li className="part" style={{ cursor: "default" }}><i>٣</i><b>نبني الأجوبة على النص وحده</b><span>بلا اجتهاد مخترع؛ ما لم يرد في مصدر مدمج لا يُذكر.</span></li>
+                <li className="part" style={{ cursor: "default" }}><i>٤</i><b>نُعلن درجة اليقين</b><span>مرتفعة · متوسطة · منخفضة · مصادر غير كافية — ونعيّنها في كل جواب.</span></li>
+                <li className="part" style={{ cursor: "default" }}><i>٥</i><b>نُصحّح علنًا</b><span>عبر صفحة «أبلغ عن خطأ»؛ يُراجع البلاغ يدويًا ولا تُصحّح شيئاً تلقائياً.</span></li>
+              </ol>
               <div className="trust">
                 <div>
                   <svg viewBox="0 0 54 54" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true"><circle cx="27" cy="27" r="22" /><path d="M15 15l24 24" /></svg>
@@ -197,11 +216,17 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                   <p>تُعالج بياناتك وفق القانون 09.08، ويمكنك طلب حذفها.</p>
                 </div>
               </div>
+              <div className="sample rv" style={{ marginTop: "2rem" }}>
+                <span className="tag">حدود المنصة</span>
+                <p>ليست استشارة مهنية؛ النصوص مستخرجة وتحتاج تحققًا من الجريدة الرسمية قبل أي اعتماد. الأدوات موسومة «تجريبي» أو «تعليمي» ولا تُغني عن محامٍ أو موثق.</p>
+              </div>
             </div>
           </section>
+
+          <Footer locale={locale} messages={messages} />
         </main>
       </div>
-      <Footer locale={locale} messages={messages} />
+      <AgentTerminal />
     </div>
   );
 }
