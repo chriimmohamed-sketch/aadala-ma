@@ -246,3 +246,33 @@
 - `wrangler.toml [[ratelimits]]` ظ¤ kept current toml (in-memory limiter); add binding after a dry run.
 - `docs/DEPLOYMENT.md` (patch is older) ظ¤ kept current dual-track docs.
 
+# Changelog — AADALA.MA
+
+## [0.4.0] - 2026-11-15 — OpenNext full deploy + «العلم» + استرجاع الساكن
+
+### Added
+- `data/knowledge.ts` + `components/KnowledgeHub.tsx` + `app/[locale]/knowledge/page.tsx` + `/ar/knowledge`
+  — «العلم — المعرفة القانونية المبسطة»: 32 بطاقة مُعاد صياغتها بالكامل (لا نسخ حرفي)؛ بحث فوري، 9 تصنيفات،
+  سند قانوني لكل بطاقة، badges للتحقق (راسخ/قابل للتحديث/يحتاج تحقق اختصاصي)؛ ليست استشارة قانونية.
+- hreflang لكل اللغات + `x-default` + canonical في `/knowledge` (نموذج مرجعي للصفحات الباقية).
+- JSON-LD: `WebPage` + `CollectionPage` + `BreadcrumbList` في `/knowledge`.
+- Link «العلم» في أدوات الرئيسية (`data-n=٩`) ومجموعة «المعرفة القانونية» بالترويسة.
+- `docs/MASTER_AUDIT_REPORT.md` — تقرير التدقيق والتنفيذ وفق «MASTER REDESIGN & REPAIR PROMPT».
+
+### Fixed
+- Restored the 9 legacy static pages after they 404'd under OpenNext:
+  `al-ilm`,`contact`,`database`,`design-system`,`document`,`fiqh`,`huwiya`,`qanun`,`terms` — now served from
+  `public/` (with `assets/css/main.css` + `assets/js/*.js`); repo-root originals untouched.
+- `next.config.ts`: `gazette.html → /ar/legal/bulletin-officiel-7437` (was dead `/ar/gazette`),
+  added `case-law.html`, `legal-aid.html`, `privacy.html` redirects; removed dead `/contact.html` redirect.
+- lint (0 errors): `GalaxyBackground.tsx` seeded PRNG (pure render), `AgentTerminal.tsx` async reset + `&quot;` escape,
+  `page.tsx` `&apos;`.
+
+### Unchanged / honesty
+- Institutions CSV audited vs `data/institutions.json`: byte-identical — no change needed.
+- `master` untouched; no force-push; no secrets in repo; Supabase remains read-only via MCP.
+- Legal corpus remains `verified:false`; «العلم» is educational — needs expert review before reliance.
+- i18n: only `ar` is fully implemented; other 9 locales remain scaffolding.
+
+### Deploy
+- Version ID: `ab2e4f45-d85a-4134-8067-1c0401cf29ab` (assets-only restore) — then `f3ca5f5` rebuild deployed after this file.
