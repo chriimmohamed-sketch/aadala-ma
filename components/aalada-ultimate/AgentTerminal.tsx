@@ -64,8 +64,12 @@ export default function AgentTerminal() {
   useEffect(() => {
     if (!running) return;
     const timers: number[] = [];
-    setLines([]);
-    setPhase("researching");
+    timers.push(
+      window.setTimeout(() => {
+        setLines([]);
+        setPhase("researching");
+      }, 0),
+    );
     for (const step of SCRIPTED_RUN) {
       const id = ++counter.current;
       timers.push(window.setTimeout(() => {
@@ -115,7 +119,7 @@ export default function AgentTerminal() {
             </div>
             <div ref={scrollRef} className="h-72 overflow-y-auto px-4 py-3 font-mono text-xs leading-relaxed text-gray-200">
               {lines.length === 0 && (
-                <p className="text-gray-500">Press "Run cycle" to start the self-correction loop.</p>
+                <p className="text-gray-500">Press &quot;Run cycle&quot; to start the self-correction loop.</p>
               )}
               {lines.map((l) => (
                 <div key={l.id} className={`${PHASE_COLOR[l.phase]} whitespace-pre-wrap`}>

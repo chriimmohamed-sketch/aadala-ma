@@ -6,6 +6,19 @@ import * as THREE from "three";
 
 const PARTICLE_COUNT = 10000;
 
+// Deterministic PRNG (mulberry32) — keeps render pure for React Compiler lint.
+// The galaxy is visually identical on every load.
+function mulberry32(seed: number) {
+  let a = seed >>> 0;
+  return function () {
+    a |= 0;
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
 function Galaxy({ mouse }: { mouse: React.MutableRefObject<THREE.Vector2> }) {
   const points = useRef<THREE.Points>(null);
   const geometry = useMemo(() => {
@@ -14,14 +27,15 @@ function Galaxy({ mouse }: { mouse: React.MutableRefObject<THREE.Vector2> }) {
     const colors = new Float32Array(PARTICLE_COUNT * 3);
     const sizes = new Float32Array(PARTICLE_COUNT);
     // Spiral galaxy: arms around a core
+    const rand = mulberry32(20261114);
     for (let i = 0; i < PARTICLE_COUNT; i++) {
       const i3 = i * 3;
-      const radius = Math.random() * 5 + 0.5;
+      const radius = rand() * 5 + 0.5;
       const spinAngle = radius * 0.8;
       const branchAngle = ((i % 3) / 3) * Math.PI * 2;
-      const randomX = (Math.random() - 0.5) * 0.3 * radius;
-      const randomY = (Math.random() - 0.5) * 0.3 * radius;
-      const randomZ = (Math.random() - 0.5) * 0.3 * radius;
+      const randomX = (rand() - 0.5) * 0.3 * radius;
+      const randomY = (rand() - 0.5) * 0.3 * radius;
+      const randomZ = (rand() - 0.5) * 0.3 * radius;
       positions[i3] = Math.cos(branchAngle + spinAngle) * radius + randomX;
       positions[i3 + 1] = randomY;
       positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ;
@@ -32,7 +46,7 @@ function Galaxy({ mouse }: { mouse: React.MutableRefObject<THREE.Vector2> }) {
       colors[i3] = (1 - t) * 1.0 + t * 0.1;
       colors[i3 + 1] = (1 - t) * 0.5 + t * 0.8;
       colors[i3 + 2] = (1 - t) * 0.1 + t * 1.0;
-      sizes[i] = Math.random() * 1.5 + 0.5;
+      sizes[i] = rand() * 1.5 + 0.5;
     }
     g.setAttribute("position", new THREE.BufferAttribute(positions, 3));
     g.setAttribute("color", new THREE.BufferAttribute(colors, 3));

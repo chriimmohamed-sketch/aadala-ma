@@ -19,6 +19,7 @@ const groups: NavGroup[] = [
     { href: "/search", key: "search", label: "البحث القانوني", description: "اعثر على النص أو المعلومة القانونية", icon: FileSearch },
     { href: "/case-law", key: "caseLaw", label: "الاجتهاد القضائي", description: "قرارات وأحكام ومبادئ قضائية", icon: Gavel },
     { href: "/sharia", label: "الدراسات الشرعية", description: "مراجع ومعارف في الدراسات الشرعية", icon: BookOpen },
+    { href: "/knowledge", label: "العلم — المعرفة القانونية", description: "بطاقات مبسطة لأهم موضوعات القانون المغربي", icon: Sparkles },
   ]},
   { title: "الخدمات والأدوات", eyebrow: "JUSTICE SERVICES", links: [
     { href: "/ai", key: "ai", label: "المساعد القانوني الذكي", description: "افهم سؤالك القانوني وابدأ البحث", icon: Sparkles },

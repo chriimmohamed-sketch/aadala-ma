@@ -123,7 +123,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 <div className="blk"><h3>الأساس القانوني</h3><p><span className="ph">رقم المادة</span> من <span className="ph">اسم النص القانوني</span>، مع مقطع من النص الأصلي.</p></div>
                 <div className="blk"><h3>التحليل</h3><p>تطبيق النص على الوقائع، وبيان المعلومات الناقصة التي تغيّر الجواب لو توفرت.</p></div>
                 <div className="blk"><h3>درجة اليقين</h3><p>مرتفعة · متوسطة · منخفضة · مصادر غير كافية</p></div>
-                <div className="stamp" aria-hidden="true">AADALA<br />MASDAR<br />MUSTA'AN</div>
+                <div className="stamp" aria-hidden="true">AADALA<br />MASDAR<br />MUSTA&apos;AN</div>
               </article>
             </div>
           </section>
@@ -183,6 +183,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                   <h3>مشكلتي<span className="badge">جديد</span></h3>
                   <p>أجوبة جاهزة وخطوات وأدوات تفاعلية لمشاكلك اليومية.</p>
                 </a>
+                <Link href={`/${locale}/knowledge`} className="tool" data-n="٩">
+                  <h3>العلم — المعرفة القانونية</h3>
+                  <p>بطاقات مبسطة بـ32 بطاقة لأهم موضوعات القانون المغربي مع السند القانوني والتحقق.</p>
+                </Link>
               </div>
             </div>
           </section>
