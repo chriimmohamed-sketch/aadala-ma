@@ -581,3 +581,87 @@ html[dir="ltr"] .justice-mobile-drawer.is-open{transform:translateX(0)}
 [data-theme="dark"] .kbd-badge-caution { color: #e9d7a4; }
 [data-theme="dark"] .kbd-note { color: #eadfae; background: rgba(185,154,91,.18); }
 [data-theme="dark"] .kbd-source { color: var(--aadala-gold-soft, #E6C96A); }
+
+/* === DESIGN REFRESH v2 — Premium Moroccan Legal Intelligence (2026-11-15) === */
+/* كل شيء محفوظ — إضافات فقط فوق القواعد القائمة، بلا حذف أو استبدال. */
+:root {
+  --gold-grad: linear-gradient(135deg, #E9CE8C 0%, #C9A227 48%, #8A6A20 100%);
+}
+html { scroll-behavior: smooth; }
+body {
+  background-image:
+    radial-gradient(1100px 700px at 88% -12%, rgba(201, 162, 39, 0.07), transparent 58%),
+    radial-gradient(950px 650px at -18% 108%, rgba(15, 92, 82, 0.06), transparent 55%);
+}
+::selection { background: #C9A227; color: #0B1D3A; }
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-thumb { background: linear-gradient(#C9A227, #8A6A20); border-radius: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+.hero h1 { text-shadow: 0 2px 26px rgba(11, 29, 58, 0.35); letter-spacing: 0.005em; }
+.kicker { letter-spacing: 0.22em; font-weight: 600; }
+.kicker::before { width: 46px; background: var(--gold-grad); border-radius: 2px; height: 2px; }
+.lead { line-height: 1.95; }
+
+.btn {
+  background: linear-gradient(160deg, #147066 0%, #0F5C52 55%, #0A4A42 100%);
+  border: 1px solid rgba(201, 162, 39, 0.5);
+  border-radius: 12px;
+  box-shadow: 0 12px 26px -12px rgba(11, 29, 58, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  letter-spacing: 0.015em;
+}
+.btn:hover {
+  box-shadow: 0 16px 32px -12px rgba(11, 29, 58, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px);
+  filter: none;
+}
+.btn:focus-visible, a:focus-visible, button:focus-visible, .chip:focus-visible, input:focus-visible {
+  outline: 2px solid #C9A227; outline-offset: 3px; border-radius: 6px;
+}
+
+.ask input { transition: box-shadow 0.25s ease; }
+.ask input:focus-visible { outline: none; box-shadow: inset 0 0 0 2px #C9A227; border-radius: 6px; }
+.chip { transition: all 0.2s ease; }
+.chip:hover { transform: translateY(-1px); }
+
+.book { border-radius: 14px 22px 14px 22px; }
+.book, .tool, .trust > div, .sample {
+  box-shadow: 0 12px 32px -24px rgba(11, 29, 58, 0.55), 0 2px 8px rgba(11, 29, 58, 0.05);
+}
+.book:hover {
+  box-shadow: 0 28px 48px -26px rgba(11, 29, 58, 0.7), 0 0 0 1px rgba(201, 162, 39, 0.35) inset;
+}
+.tool { border-radius: 16px 26px 16px 26px; }
+.tool:hover {
+  box-shadow: 0 26px 44px -24px rgba(11, 29, 58, 0.68), 0 0 0 1px rgba(201, 162, 39, 0.4) inset;
+  border-color: var(--brass);
+}
+.tool h3 { font-family: var(--display); }
+.book h3 { font-family: var(--display); }
+.sample {
+  border-radius: 12px 30px 12px 30px;
+  box-shadow: 0 26px 50px -28px rgba(11, 29, 58, 0.6), 0 0 0 1px rgba(201, 162, 39, 0.3) inset;
+}
+.trust > div {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 1.4rem;
+  background: var(--surface);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.trust > div:hover {
+  transform: translateY(-4px);
+  border-color: var(--brass);
+  box-shadow: 0 22px 40px -24px rgba(11, 29, 58, 0.65);
+}
+
+h2 { font-family: var(--display); letter-spacing: 0.005em; }
+
+[data-theme="dark"] .book, [data-theme="dark"] .tool, [data-theme="dark"] .trust > div, [data-theme="dark"] .sample {
+  box-shadow: 0 16px 40px -24px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(201, 162, 39, 0.18) inset;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .seal .ring, .seal .rose { animation: none; }
+}
