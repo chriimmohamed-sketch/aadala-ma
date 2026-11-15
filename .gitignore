@@ -53,3 +53,5 @@ desktop.ini
 data/__pycache__/
 data/ocr/
 *.pyc
+
+docs/legal-intelligence/raw/
