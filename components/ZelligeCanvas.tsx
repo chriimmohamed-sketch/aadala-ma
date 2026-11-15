@@ -5,6 +5,8 @@ export default function ZelligeCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    // Tier 1 reduced-motion: skip canvas entirely, stay with calm hero
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const canvas = canvasRef.current;
     // Parent is .hero (see app/[locale]/page.tsx). Canvas must size to it.
     const hero = canvas?.parentElement as HTMLElement | null;

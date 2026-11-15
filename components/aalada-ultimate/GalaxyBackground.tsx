@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useMemo, useEffect } from "react";
+import { useReducedMotion } from "framer-motion";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -92,6 +93,9 @@ export default function GalaxyBackground() {
 }
 
 export function GalaxyCanvas() {
+  // Tier 1 reduced-motion: skip the 3D canvas entirely, keep the calm hero
+  const reduce = useReducedMotion();
+  if (reduce) return null;
   return (
     <div className="fixed inset-0 -z-10 pointer-events-none" aria-hidden="true">
       <Canvas

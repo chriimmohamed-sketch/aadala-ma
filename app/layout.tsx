@@ -1,13 +1,33 @@
 import type { Metadata } from "next";
+import { siteUrl, siteName } from "@/lib/site/config";
 
 export const metadata: Metadata = {
-  title: "AADALA.MA",
-  description: "منصة العدالة والذكاء القانوني المغربي",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "AADALA.MA — منصة العدالة والذكاء القانوني المغربي",
+    template: "%s | AADALA.MA",
+  },
+  description:
+    "منصة قانونية مغربية مستقلة: القانون بنصّه ومادّته — نصوص موثّقة من الجريدة الرسمية، جواب قابل للتحقق، أدوات عملية (MIYAR للإرث، المساطر، المساعد الذكي)، من إعداد MOHAMED CHRAIM.",
+  applicationName: siteName,
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: "website",
+    siteName,
+    title: "AADALA.MA — منصة العدالة والذكاء القانوني المغربي",
+    description: "القانون المغربي بنصّه ومادّته — جواب قابل للتحقق، لا جواب بلا سند.",
+    url: siteUrl,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AADALA.MA — منصة العدالة والذكاء القانوني المغربي",
+    description: "القانون المغربي بنصّه ومادّته — جواب قابل للتحقق، لا جواب بلا سند.",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html suppressHydrationWarning>
+    <html lang="ar" dir="rtl" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{

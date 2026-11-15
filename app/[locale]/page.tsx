@@ -1,11 +1,10 @@
 import { getMessages } from "@/lib/i18n/getMessages";
 import HeaderSupreme from "@/components/layout/HeaderSupreme";
 import Footer from "@/components/layout/Footer";
-import ZelligeCanvas from "@/components/ZelligeCanvas";
 import HomeInteractions from "@/components/HomeInteractions";
 import AnswerAnimator from "@/components/AnswerAnimator";
 import { legalDatabase } from "@/data/legal-database";
-import { GalaxyCanvas } from "@/components/aalada-ultimate/GalaxyBackground";
+import InstitutionalBackground from "@/components/InstitutionalBackground";
 import AgentTerminal from "@/components/aalada-ultimate/AgentTerminal";
 import BlurText from "@/components/BlurText";
 import LightRays from "@/components/LightRays";
@@ -17,7 +16,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const messages = await getMessages(locale);
   return (
     <div className="flex min-h-screen flex-col bg-bg">
-      <GalaxyCanvas />
+      <InstitutionalBackground showZellige={false} />
       <div className="bar" id="bar" />
       <HomeInteractions locale={locale} />
       <AnswerAnimator />
@@ -25,7 +24,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <div id="v-home">
         <main id="main">
           <div className="hero" style={{ position: "relative", overflow: "hidden" }}>
-            <ZelligeCanvas />
+            <InstitutionalBackground showGalaxy={false} />
             <div className="hero-aurora" aria-hidden="true" />
             <div className="hero-orbit" aria-hidden="true" />
             <div className="hero-status" aria-label="حالة المنصة">

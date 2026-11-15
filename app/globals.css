@@ -665,3 +665,53 @@ h2 { font-family: var(--display); letter-spacing: 0.005em; }
   html { scroll-behavior: auto; }
   .seal .ring, .seal .rose { animation: none; }
 }
+
+
+/* === AALADA SKEUOMORPHIC CARD + INSTITUTIONAL BACKGROUND (2026-11-15) === */
+.skeu-card { border-radius: 20px; }
+.skeu-inner {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  padding: 1.4rem 1.5rem;
+  border-radius: 20px;
+  background: linear-gradient(165deg, rgba(255,255,255,.72) 0%, rgba(247,245,240,.55) 42%, rgba(247,245,240,.82) 100%);
+  border: 1px solid rgba(185,154,91,.4);
+  box-shadow:
+    0 26px 48px -28px rgba(11,29,58,.55),
+    0 0 0 1px rgba(255,255,255,.55) inset,
+    inset 0 1px 0 rgba(255,255,255,.85);
+  backdrop-filter: blur(10px) saturate(1.02);
+  -webkit-backdrop-filter: blur(10px) saturate(1.02);
+}
+[data-theme="dark"] .skeu-inner {
+  background: linear-gradient(165deg, rgba(19,41,75,.72) 0%, rgba(11,29,58,.62) 45%, rgba(19,41,75,.8) 100%);
+  border-color: rgba(185,154,91,.32);
+  box-shadow:
+    0 30px 54px -30px rgba(0,0,0,.8),
+    0 0 0 1px rgba(247,245,240,.06) inset,
+    inset 0 1px 0 rgba(247,245,240,.09);
+}
+.skeu-eyebrow { display: inline-flex; width: max-content; font-size: .66rem; letter-spacing: .22em; text-transform: uppercase; font-weight: 700; color: var(--aadala-teal); border-bottom: 1px solid var(--aadala-gold); padding-bottom: .35rem; }
+[data-theme="dark"] .skeu-eyebrow { color: var(--aadala-gold-soft, #E6C96A); }
+.skeu-title { font-family: var(--font-display, "Amiri", serif); font-size: 1.15rem; line-height: 1.8; color: var(--aadala-navy); font-weight: 700; }
+[data-theme="dark"] .skeu-title { color: #EDE9DB; }
+.skeu-body { color: var(--aadala-graphite); font-size: .88rem; line-height: 1.95; }
+.skeu-foot { margin-top: auto; border-top: 1px dashed var(--aadala-border); padding-top: .65rem; font-size: .72rem; color: var(--aadala-muted); }
+
+.inst-bg-static {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(1000px 520px at 78% -8%, rgba(185,154,91,.16), transparent 60%),
+    radial-gradient(760px 560px at 12% 118%, rgba(45,119,120,.14), transparent 58%),
+    radial-gradient(1400px 900px, transparent 62%, rgba(38,50,71,.08) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeu-card, .skeu-inner { transition: none !important; will-change: auto; }
+}
