@@ -1,0 +1,67 @@
+{
+  "project": "AADALA.MA — MOROCCAN NATIONAL LEGAL INTELLIGENCE PROJECT",
+  "directive": "OMEGA MASTER DIRECTIVE (internal, user-approved mission) — 2026-11-15",
+  "version": 1,
+  "updated_at": "2026-11-15T22:30:00+01:00",
+  "agent": "Claude (OpenCode)",
+  "honest_status": "Bounded first batch complete (Priority 1: SGG legis index + BO + وزارة العدل + بوابة عدالة). The full national crawl (all institutions, OCR, extraction, indexing) is NOT complete and cannot be done in a single session — work continues in batches.",
+  "institutions": {
+    "priority_order": ["P1_SGG", "P2_JUSTICE", "P3_SECURITY", "P4_CONSTITUTION_HR", "P5_SECTORAL_PROFESSIONS"],
+    "discovered": 9,
+    "accessed": 4,
+    "partial_depth_2": 2,
+    "failed": 0,
+    "pending": [
+      "P1: maroc.ma, cg.gov.ma, chambredesrepresentants.ma, chambredesconseillers.ma",
+      "P2: cspj.ma, cour-constitutionnelle.ma, courdecassation.ma, pmp.ma, mahakim.ma, juriscassation.cspj.ma",
+      "P3: dgsn.gov.ma, gr.ma, interieur.gov.ma, protectioncivile.ma, dgapr.gov.ma",
+      "P4: cndh.ma, mediateur.ma, courdescomptes.ma, inpplc.ma, conseil-concurrence.ma, cese.ma, cndp.ma, haca.ma",
+      "P5: ancfcc.gov.ma, ompic.ma, cnss.ma, finances.gov.ma, men.gov.ma, sante.gov.ma, emploi-public.ma"
+    ]
+  },
+  "documents": {
+    "discovered_batch1": {
+      "sgg_consolidated_texts": 67,
+      "gazette_latest_issues": 5,
+      "adala_recent_uploads_visible": 12,
+      "total_visible": 84
+    },
+    "extraction_stage": "NONE — PDF text extraction/parsing/chunking not started (pipeline design exists; no claims of verified content)",
+    "ocr": "NOT_RUN",
+    "verified_head_samples": [
+      "https://www.sgg.gov.ma/Portals/1/textesconsolides/39_08.pdf (HTTP 200, 809275 bytes)",
+      "https://www.sgg.gov.ma/BO/AR/3111/2026/BO_7558_Ar.pdf (HTTP 200, 654164 bytes)"
+    ],
+    "verified_full_documents": 0,
+    "articles_legal_indexed": 0,
+    "judgments_indexed": 0,
+    "false_positive_guard": "No document text is claimed as read unless it appears verbatim in this task's fetched/verified outputs."
+  },
+  "counts_accurate": true,
+  "counts_scope": "Counts reflect only URLs directly visible in fetched official pages this session (2026-11-15). Nothing beyond the batch scope is counted.",
+  "progress_log": [
+    "2026-11-15: fetched https://www.sgg.gov.ma/ — structures mapped: التشريع / الجريدة الرسمية / النصوص الموطدة (67) / نصوص مهمة / يقظة قانونية / محرك بحث فهارس BO / الجمعيات وإعلاناتها",
+    "2026-11-15: fetched https://www.sgg.gov.ma/arabe/BulletinOfficiel.aspx — النشرة العامة / نشرة الاتفاقيات / نشرة الإعلانات + محرك البحث",
+    "2026-11-15: fetched https://www.sgg.gov.ma/arabe/textesconsolides.aspx — 9 قوانين تنظيمية + 39 قانونا + 19 مرسوما (67 official consolidated PDF links captured)",
+    "2026-11-15: fetched https://www.justice.gov.ma/ — map of service ecosystem: 89 tribunal ابتدائي, 23 استئناف, 10 إداري, 10 تجاري, 82 مركز قضائي؛ الروابط إلى mahakim.ma, marjii.justice.gov.ma, data.gov.ma, cnasnu.justice.gov.ma, vcfemme.pmp.ma",
+    "2026-11-15: fetched https://adala.justice.gov.ma/ — قسم المصادر (الخطب الملكية/اتفاقيات/نصوص تشريعية/مجلة القضاء والقانون) + المستجدات الأخيرة (BO 7556-bis + تقرير النزاهة 2025 + مرسوم تطبيقي 2.26.326 للقانون 59.24) + رابط الاجتهادات juriscassation.cspj.ma",
+    "2026-11-15: HEAD verification of 2 sample official PDFs (200 + application/pdf)",
+    "2026-11-15: build+deploy of AADALA.MA Phase 1 + SEO fixes (sitemap 390 URLs) — completed & verified external"
+  ],
+  "errors_and_gaps": [
+    "full BO index listing could not be parsed (JavaScript-driven grid — only thumbnails/latest 4 visible; search widget itself untested)",
+    "adala.justice.gov.ma resources grid is JS-driven; exact count of documents not enumerable without browser instrumentation",
+    "no PDF content extraction attempted yet — Article/section parsing not started",
+    "no OCR performed (see CONSTRAINTS for PDF-scans roadside)",
+    "legislation search engine (sgg rechercheSommairesBO) NOT executed — needs query terms"
+  ],
+  "next_actions": [
+    "Wire official corpus into AADALA corpus: the 6 laws currently embedded via data/legal-* are CREDITS to these official PDFs; next: replace extraction pipeline with verified BO texts (requires legal-coding signoff)",
+    "Incrementally HEAD-verify the remaining 65 consolidated PDFs and 5 BO issues → upgrade levels A/B",
+    "Fetch + parse BO 7558 + BO 7556-bis fully (pdf-parse exists in deps) → chunker with article preservation",
+    "Priority 2 batch: cspj.ma, cour-constitutionnelle.ma, courdecassation.ma, pmp.ma, mahakim.ma, juriscassation.cspj.ma",
+    "Build AADALA KNOWLEDGE CORE schema (INSTITUTIONS/SOURCES/DOCUMENTS/ARTICLES/JUDGMENTS…) in Postgres (Supabase) via migration — requires owner's SQL-Editor access (MCP read-only)"
+  ],
+  "privacy_and_security": "Public pages only. No auth bypass attempted; no member-only data fetched; RGPD/CNDP-compliant method (no personal data collected).",
+  "license_notice": "All documents referenced remain property of their official publishers (Kingdom of Morocco). AADALA.MA indexes and attributes — it does not rewrite official texts; any display credits source + verification level."
+}
