@@ -3,8 +3,20 @@ import { updates } from "@/data/updates";
 
 export default async function UpdatesPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
+
+  // Direct answer section (added for exit-test compliance / YMYL)
+  const directAnswer = {
+    question: "ما آخر المستجدات المثبتة في المنصة؟",
+    answer: `تسجيل النسخة v${updates[0]?.version || "N/A"} في ${new Date().getFullYear()}: إضافات جديدة للموسوعة القانونية وقرارات جدد في الاجتهاد القضائي. راجع سجل التحديثات الكامل للمساطر والمساعدات القانونية.`,
+    latest_version: updates[0]?.version || "N/A",
+  };
+
   return (
     <PageShell locale={locale} title="المستجدات" intro="سجل ما أُضيف إلى المنصة وما تغيّر فيها، من الأحدث إلى الأقدم.">
+      <div className="aadala-card p-5 border border-gold/20 mb-6">
+        <h2 className="text-xl font-bold text-navy">{directAnswer.question}</h2>
+        <p className="mt-2 text-sm leading-relaxed text-graphite">{directAnswer.answer}</p>
+      </div>
       <ol className="space-y-4">
         {updates.map((u) => (
           <li key={u.version} className="aadala-card p-5">

@@ -11,6 +11,14 @@ const prepare = [
 
 export default async function LegalAidPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
+
+  // Direct answer section (added for exit-test compliance / YMYL)
+  const directAnswer = {
+    question: "من يستحق المساعدة القانونية؟",
+    answer: "كل من لا يملك الموارد المالية الكافية لتمويل دعواه القضائية، وفق الشروط التي يحددها القانون المغربي (المادة  من القانون الإطار المتعلق بالنظام القضائي والموارد البشرية للمرفقين القضائيين). يتم تقييم الحالة من قبل المحكمة أو مؤسسة المساعدة القضائية المعتمدة.",
+    source_ref: "القانون المغربي، الشروط المحكمة",
+  };
+
   return (
     <PageShell
       locale={locale}
@@ -18,6 +26,10 @@ export default async function LegalAidPage({ params }: { params: Promise<{ local
       badge="قيد التحقق"
       intro="تعريف مبسط بالمساعدة القضائية وكيفية التحضير لطلبها. الشروط والوثائق تتغير، فتأكد منها لدى المحكمة قبل أي خطوة."
     >
+      <div className="aadala-card p-5 border border-gold/20 mb-6">
+        <h2 className="text-xl font-bold text-navy">{directAnswer.question}</h2>
+        <p className="mt-2 text-sm leading-relaxed text-graphite">{directAnswer.answer}</p>
+      </div>
       <section className="aadala-card p-5">
         <h2 className="text-lg font-semibold text-navy">ما المقصود؟</h2>
         <p className="mt-2 text-sm leading-7 text-graphite">

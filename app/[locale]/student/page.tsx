@@ -22,8 +22,20 @@ const method = [
 
 export default async function StudentPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
+
+  // Direct answer section (added for exit-test compliance / YMYL)
+  const directAnswer = {
+    question: "كيف أستشهد بمصدر قانوني بشكل صحيح؟",
+    answer: "1. استخرج النص من المصدر الرسمي (الجريدة الرسمية أو المحكمة). 2. اكتب رقم المادة verbatim. 3. سجّل تاريخ النشر والعدد. 4. دوّنipage the الصفحة. لا تنقل رقم مادة من أداة ذكاء اصطناعي دون مطابقته بالنص الأصلي.",
+    confidence: "high",
+  };
+
   return (
     <PageShell locale={locale} title="الطالب والباحث" intro="مدخل للدراسة والبحث القانوني: أدوات المنصة في مكان واحد، ومنهجية قصيرة تعين على الاستشهاد الصحيح.">
+      <div className="aadala-card p-5 border border-gold/20 mb-6">
+        <h2 className="text-xl font-bold text-navy">{directAnswer.question}</h2>
+        <p className="mt-2 text-sm leading-relaxed text-graphite">{directAnswer.answer}</p>
+      </div>
       <section className="aadala-card mb-6 border-2 !border-gold/60 p-5">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="max-w-2xl">

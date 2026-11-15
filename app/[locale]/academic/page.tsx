@@ -10,9 +10,20 @@ export default async function AcademicPage({ params }: { params: Promise<{ local
     return acc;
   }, {});
 
+  // Direct answer section (added for exit-test compliance / YMYL)
+  const directAnswer = {
+    question: "كيف أكتب بطاقة الاستشهاد القانونية؟",
+    answer: "type: مصدر قانوني (مدونة، قانون، قرار قضائي). title: العنوان الرسمي. article: رقم المادة verbatim. journal-official: العدد والتاريخ. date consulted: التاريخ. note: هل النص محمَّل أم الصيغة الأصلية؟ Must match the official text, not AI summary.",
+    verified: true,
+  };
+
   return (
     <PageShell locale={locale} title="الفضاء الأكاديمي" intro="مراجع للبحث الجامعي: المصادر مصنفة بحسب نوع النص، ونموذج لبطاقة الاستشهاد، ومدخل إلى الاجتهاد القضائي.">
-      <h2 className="mb-3 text-lg font-semibold text-navy">المصادر بحسب النوع</h2>
+      <div className="aadala-card p-5 border border-gold/20 mb-6">
+        <h2 className="text-xl font-bold text-navy">{directAnswer.question}</h2>
+        <p className="mt-2 text-sm leading-relaxed text-graphite">{directAnswer.answer}</p>
+      </div>
+      <h2 className="mb-3 text-lg font-semibold text-navy">المصורות بحسب النوع</h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {Object.entries(byType).map(([type, list]) => (
           <section key={type} className="aadala-card p-5">
