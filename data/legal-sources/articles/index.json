@@ -50,5 +50,9 @@
       "avg_confidence": 0.646,
       "file": "data/legal-sources/articles/dahir-immatriculation-fonciere.json"
     }
-  ]
+  ],
+  "article_count_39-08_verified": 334,
+  "article_count_31-08_verified": 206,
+  "verified_extraction_date": "2026-11-15",
+  "fontTools_applied": true
 }

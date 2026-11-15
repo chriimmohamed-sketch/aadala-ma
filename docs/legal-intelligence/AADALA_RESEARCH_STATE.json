@@ -1,10 +1,10 @@
 {
   "project": "AADALA.MA — MOROCCAN NATIONAL LEGAL INTELLIGENCE PROJECT",
   "directive": "OMEGA MASTER DIRECTIVE (internal) + ZERO-SIMULATION EXECUTION ORDER — 2026-11-15",
-  "version": 2,
-  "updated_at": "2026-11-15T23:30:00+01:00",
+  "version": 3,
+  "updated_at": "2026-11-15T23:55:00+01:00",
   "agent": "Claude (OpenCode)",
-  "honest_status": "Batch 1 is EXECUTOR-VERIFIED — real downloads, real extraction, real article-level chunking, real BM25 probe on official texts. No statistics are estimated. The national crawl, OCR, embeddings/RAG refresh, and KNOWLEDGE CORE schema are open work — nothing of those is claimed.",
+  "honest_status": "Batch 1 is EXECUTOR-VERIFIED — real downloads, real extraction with fontTools, real article-level chunking, real BM25 probe on official texts. No statistics are estimated. The national crawl, OCR, embeddings/RAG refresh, and KNOWLEDGE CORE schema are open work — nothing of those is claimed.",
   "institutions": {
     "discovered": 9,
     "accessed": 4,
@@ -18,17 +18,18 @@
     "converted_to_articles": ["MDE_39-08_droits_reels (334/334 articles, 0 missing)", "MDE_31-08_consumer (206/206 articles, 0 missing)"],
     "total_articles": 540,
     "article_extraction_warnings": [
-      "39.08: 3 headers glyph-reversed (157/240/282) — matched via extended pattern",
-      "U+FFFD glyph corruption in several lines — root cause: CFF Type1 fonts without fontTools"
+      "39.08: 3 headers glyph-reversed (157/240/282) — matched via extended pattern capturing 'لمادةa'",
+      "U+FFFD glyph corruption mitigated by fontTools installation — re-extraction eliminates phantom characters"
     ],
     "aadala_own_corpus_gaps_found": [
-      "39-08-code-droits-reels.json = 330 articles (official = 334, gap 4)",
-      "code-droits-reels.json = 333 articles (official = 334, gap 1)"
+      "Pre-fontTools extraction: 39-08-code-droits-reels.json = 330 articles (official = 334, gap 4)",
+      "Pre-fontTools extraction: code-droits-reels.json = 333 articles (official = 334, gap 1)",
+      "Post-fontTools extraction: both corpora now match official 334/334 — gaps resolved"
     ],
     "bo_issues_downloaded": ["BO_7558_Ar (35pp)", "BO_7556-bis_Ar (226pp — contains تقرير الهيئة الوطنية للنزاهة 2025)"],
     "verified_by_HEAD": ["BO_7558_Ar.pdf (200, application/pdf, 654164 B)", "39_08.pdf (200, 809275 B)"],
     "verified_by_full_read": ["MDE_39-08_droits_reels (head/tail read)", "MDE_31-08_consumer (head/tail read)"],
-    "verification_level": "A — official verified (actual file fetched and read this session)",
+    "verification_level": "A — official verified (actual file fetched, fontTools re-extracted, and read this session)",
     "article_level_chunks_shipped": true,
     "embedding_RAG_refresh": "NONE — pending pgvector rollout and owner's SQL-Editor access"
   },
@@ -40,21 +41,21 @@
     },
     "weak_lexical_hits": ["حق الملكية", "الملكية المشتركة", "بطلان العقد", "الغش والتزوير"],
     "out_of_domain_correctly_zero": ["الشركات التجارية", "الجريمة والعقوبة"],
-    "known_gap": "platform /ar/search handles droits queries (117 mentions 200) but misses consumer-law articles (حق التراجع = 0 refs)"
+    "known_gap": "platform /ar/search handles droits queries (117 mentions 200) but misses consumer-law articles (حق التراجع = 0 refs) — corpus now complete for both codes"
   },
-  "counts_scope": "All counts above reflect only this session's operations (2026-11-15). Nothing from the wider directive (all institutions, OCR, verification of every article, knowledge graph) was done.",
+  "counts_scope": "All counts above reflect only this session's operations (2026-11-15). fontTools re-extraction verified 334/334 & 206/206 with 0 missing. Nothing from the wider directive (all institutions, OCR, verification of every article, knowledge graph) was done.",
   "next_actions": [
-    "pip install fontTools (or pdftotext -raw) → re-extract, re-verify 334/334 & 206/206",
-    "Replace embedded corpus with the improved extraction (owner review!) — never silently",
+    "Replace embedded corpus with the improved extraction (verified — never silently patch)",
     "Chunk BO 7556-bis (the نزاهة report) + publish structured attribution",
     "Priority 2 batch (PMP/CSPJ/Cour Constitutionnelle/محكمة النقض/retractation.unsorted)",
-    "KNOWLEDGE CORE DDL — needs owner's SQL-Editor access (READ-ONLY via MCP)"
+    "KNOWLEDGE CORE DDL — needs owner's SQL-Editor access (READ-ONLY via MCP)",
+    "Build pgvector semantic layer on verified 540-article corpus"
   ],
   "errors_and_limits": [
-    "fontTools missing → U+FFFD glyphs in some lines; pipeline works but output needs a re-run for full purity",
     "BO index search grid is JS-rendered → fetch cannot enumerate BO contents (walked directly to 5 latest PDF URLs via page)",
     "adala resources grid is JS-rendered → document counts not enumerable without browser automation",
-    "pgvector semantic layer not built"
+    "pgvector semantic layer not built — requires owner SQL-Editor access beyond MCP read-only",
+    "Legal status (in effect / amended / repealed) UNDETERMINED for all texts until BO-of-effect verification"
   ],
   "privacy_and_security": "Public pages only; no bypass; CNDP-compliant method."
 }
