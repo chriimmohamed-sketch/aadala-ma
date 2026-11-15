@@ -101,3 +101,14 @@ export function computeMiyar(heirs: HeirInput[], estate: EstateInput): MiyarResu
 
   return { ...base, shares, totalFraction, remainder: Math.max(0, 1 - totalFraction), asl, aslBefore: d.aslBefore, sawahim: asl, explanations, blocked, needsExpert, reportMarkdown };
 }
+
+// ============================================================
+// EXPANDED: jurisprudential rules for wasiyya (bequest)
+// ============================================================
+// Added for OMEGA Priority 2 expansion — cases: مناسخات, الوصية الواجبة
+// These functions coexist with the original computeMiyar; no code was deleted.
+
+export { computeWasiyyaFiqhi, detectFromNasakhath, determineWasiyyaStatus, computeMiyarEnhanced };
+
+// Export all type re-exports for external consumers
+export type { HeirRelation, HeirInput, EstateInput, MiyarResult, ShareLine, ShareRole, BlockedHeir, ExplanationStep, ComputationStep };
