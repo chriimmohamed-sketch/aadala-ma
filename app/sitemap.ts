@@ -12,7 +12,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: p === "" ? ("weekly" as const) : ("monthly" as const),
       priority: p === "" ? 1 : p.startsWith("/legal/") ? 0.8 : 0.6,
-      alternates: { languages: Object.fromEntries(locales.map((l) => [l, `${siteUrl}/${l}${p}`])) },
+      alternates: {
+        languages: {
+          ...Object.fromEntries(locales.map((l) => [l, `${siteUrl}/${l}${p}`])),
+          "x-default": `${siteUrl}/ar${p}`,
+        },
+      },
     })),
   );
 }
