@@ -129,6 +129,12 @@ homepage, the procedures page, every `select`/`option`, the action buttons, and 
 (navy `#0c1a2b`, gold `#8a5f1c`, ivory `#f3efe4`; dark `#08121a`/`#47b9a3`). The preview CSS
 contains no v3 token names, and `/ar/legal` no longer renders the notice component.
 
+**Runtime note (measured, pre-existing):** under rapid sequential requests the preview worker
+intermittently returns 500/503 on **both** the previous preview version `f69f7432` and the
+reverted build `bfa1ab64` (3/6 failures each in the same test). Production returned 200 on
+20/20 requests over the same pages. This predates the design revert and is a preview
+worker/runtime limit, not a visual regression; normal browser page loads succeeded.
+
 **Teardown:** `npx wrangler delete -c wrangler.preview.jsonc` — production unaffected.
 
 ---

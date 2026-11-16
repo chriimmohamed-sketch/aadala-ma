@@ -62,6 +62,14 @@ npx wrangler delete -c wrangler.preview.jsonc
 
 This deletes the preview worker and its versions. Production is unaffected.
 
+## Known issue — intermittent 5xx
+
+Under rapid sequential requests the preview worker intermittently returns 500/503
+(the previous `f69f7432` preview and the reverted `bfa1ab64` build both show it).
+Production returned 200 on 20/20 requests over the same pages. This is a preview
+worker/runtime limit, not a design regression; normal browser page loads succeed.
+Treat it as a separate reliability task before using the preview for load testing.
+
 ## Gate
 
 Production deployment (`npx wrangler deploy` with the default `wrangler.jsonc`)
