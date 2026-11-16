@@ -1,94 +1,62 @@
 import { getMessages } from "@/lib/i18n/getMessages";
-import HeaderSupreme from "@/components/layout/HeaderSupreme";
 import Footer from "@/components/layout/Footer";
 import HomeInteractions from "@/components/HomeInteractions";
 import AnswerAnimator from "@/components/AnswerAnimator";
 import { legalDatabase } from "@/data/legal-database";
-import InstitutionalBackground from "@/components/InstitutionalBackground";
 import AgentTerminal from "@/components/aalada-ultimate/AgentTerminal";
-import BlurText from "@/components/BlurText";
-import LightRays from "@/components/LightRays";
-import StarBorder from "@/components/StarBorder";
+import HomeHeader from "@/components/home-moroccan/HomeHeader";
+import MoroccanHome from "@/components/home-moroccan/MoroccanHome";
+import { siteUrl } from "@/lib/site/config";
 import Link from "next/link";
+import "../home-moroccan.css";
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const messages = await getMessages(locale);
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "AADALA.MA",
+      url: `${siteUrl}/${locale}`,
+      inLanguage: locale,
+      potentialAction: {
+        "@type": "SearchAction",
+        target: `${siteUrl}/${locale}/search?q={search_term_string}`,
+        "query-input": "required name=search_term_string",
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "AADALA.MA",
+      url: siteUrl,
+      areaServed: "MA",
+      founder: { "@type": "Person", name: "محمد شرايم" },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: "AADALA.MA — منصة العدالة والذكاء القانوني المغربي",
+      description:
+        "منصة قانونية مغربية مستقلة: النصوص القانونية، مساعد قانوني موثّق المصادر، وأدوات عملية للمساطر والإرث والعقار.",
+      url: `${siteUrl}/${locale}`,
+      inLanguage: locale,
+      isPartOf: { "@type": "WebSite", name: "AADALA.MA", url: siteUrl },
+    },
+  ];
   return (
-    <div className="flex min-h-screen flex-col bg-bg">
-      <InstitutionalBackground showZellige={false} />
+    <div id="v-home" className="mh-page flex min-h-screen flex-col">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <div className="bar" id="bar" />
       <HomeInteractions locale={locale} />
       <AnswerAnimator />
-      <HeaderSupreme locale={locale} messages={messages} />
-      <div id="v-home">
-        <main id="main">
-          <div className="hero" style={{ position: "relative", overflow: "hidden" }}>
-            <InstitutionalBackground showGalaxy={false} />
-            <div className="hero-aurora" aria-hidden="true" />
-            <div className="hero-orbit" aria-hidden="true" />
-            <div className="hero-status" aria-label="حالة المنصة">
-              <span className="status-dot" aria-hidden="true" />
-              <span>AADALA.MA · <b>حية الآن</b></span>
-              <span className="status-sep">/</span>
-              <span>نسخة موثقة المصدر</span>
-            </div>
-            <LightRays color="#C9A227" count={6} />
-            <div className="wrap">
-              <div>
-                <span className="kicker">منصة قانونية مغربية مستقلة</span>
-                <h1>
-                  <BlurText text="القانون المغربي، بنصّه  ومادّته." delay={0.2} />{" "}
-                  <em>
-                    .<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true">
-                      <path d="M2 14 C50 4, 110 18, 198 6" />
-                    </svg>
-                  </em>
-                </h1>
-                <p className="lead">
-                  اسأل سؤالك القانوني واحصل على جواب مبني على النص الأصلي، مع المرجع الذي يمكنك التحقق منه قبل أن تعتمد عليه.
-                </p>
-                <form className="ask" action={`/${locale}/ai`} method="get" role="search">
-                  <input name="q" type="text" maxLength={2000} placeholder="مثال: ما شروط صحة عقد البيع؟" aria-label="البحث القانوني" autoComplete="off" />
-                  <StarBorder color="#C9A227">
-                    <button className="btn" type="submit">ابحث</button>
-                  </StarBorder>
-                </form>
-                <div className="chips" role="group" aria-label="أسئلة شائعة">
-                  <Link className="chip" href={`/${locale}/ai?q=${encodeURIComponent("ما شروط صحة عقد البيع؟")}`}>ما شروط صحة عقد البيع؟</Link>
-                  <Link className="chip" href={`/${locale}/ai?q=${encodeURIComponent("كيف يتم تحفيظ عقار؟")}`}>كيف يتم تحفيظ عقار؟</Link>
-                  <Link className="chip" href={`/${locale}/ai?q=${encodeURIComponent("ما الفرق بين الشياع والقسمة؟")}`}>ما الفرق بين الشياع والقسمة؟</Link>
-                </div>
-                <p className="note">منهج AADALA: <strong>نصّ أصلي → تحليل → مرجع → درجة يقين.</strong> لا جواب بلا قابلية للتحقق.</p>
-                <div className="hero-proof" role="list" aria-label="مبادئ المنصة">
-                  <span role="listitem"><b>01</b> النص أولًا</span>
-                  <span role="listitem"><b>02</b> المرجع ظاهر</span>
-                  <span role="listitem"><b>03</b> عدم اليقين معلن</span>
-                </div>
-              </div>
-              <svg className="seal" viewBox="0 0 320 320" aria-hidden="true">
-                <defs><path id="circ" d="M160 160 m-128 0 a128 128 0 1 1 256 0 a128 128 0 1 1 -256 0" /></defs>
-                <g className="ring"><text><textPath href="#circ" startOffset="0">AADALA.MA — منصة العدالة والذكاء القانوني المغربي — النص first — المرجع ظاهر — اليقين معلن</textPath></text></g>
-                <circle cx="160" cy="160" r="104" fill="none" stroke="currentColor" strokeWidth="1" opacity=".4" />
-                <g className="rose" fill="none" stroke="currentColor" strokeWidth="2.2">
-                  <rect x="100" y="100" width="120" height="120" />
-                  <rect x="100" y="100" width="120" height="120" transform="rotate(45 160 160)" />
-                  <circle cx="160" cy="160" r="34" />
-                </g>
-                <g className="gold" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
-                  <line x1="160" y1="132" x2="160" y2="188" />
-                  <line x1="134" y1="140" x2="186" y2="140" />
-                  <path d="M134 140 l-10 24 h20z M186 140 l-10 24 h20z" fill="none" />
-                </g>
-              </svg>
-            </div>
-            <div className="tick" aria-hidden="true">
-              <div className="trk">
-                <span>القانون بنصّه ومادّته</span><span>الجريدة الرسمية · 7437</span><span>العدالة والذكاء القانوني</span><span>أي جواب بلا قابلية للتحقق = لا جواب</span><span>القانون بنصّه ومادّته</span><span>الجريدة الرسمية · 7437</span><span>العدالة والذكاء القانوني</span><span>أي جواب بلا قابلية للتحقق = لا جواب</span>
-              </div>
-            </div>
-          </div>
+      <HomeHeader locale={locale} />
+      <main id="main">
+        <MoroccanHome locale={locale} />
 
+        {/* ————— الطبقة القديمة: المعلومات والأدوات نفسها، دون حذف ————— */}
+        <div className="legacy-home">
           <section className="manifesto" aria-label="هوية AADALA">
             <div className="wrap manifesto-grid">
               <div className="manifesto-mark">A</div>
@@ -225,11 +193,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </div>
             </div>
           </section>
-
-          <Footer locale={locale} messages={messages} />
-        </main>
+        </div>
+      </main>
+      <Footer locale={locale} messages={messages} />
+      <div className="legacy-agent">
+        <AgentTerminal />
       </div>
-      <AgentTerminal />
     </div>
   );
 }
