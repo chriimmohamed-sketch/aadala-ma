@@ -11,7 +11,7 @@ export default function DownloadButton({ fileUrl, label = "تنزيل" }: { file
       whileHover={{ scale: 1.04 }}
       whileTap={{ scale: 0.96 }}
       onClick={() => window.open(fileUrl, "_blank", "noopener")}
-      className="inline-flex items-center gap-2 rounded-full border-2 border-teal bg-teal px-5 py-2 text-sm font-bold text-white"
+      className="inline-flex items-center gap-2 rounded-full border-2 border-teal-deep bg-teal-deep px-5 py-2 text-sm font-bold text-on-teal"
     >
       <ArrowDown size={18} />
       {label}

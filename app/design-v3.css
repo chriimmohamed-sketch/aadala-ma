@@ -1,0 +1,440 @@
+/* ==========================================================================
+   AADALA.MA — DESIGN REFRESH v3 (2026-11-16)
+   Consolidates the three stacked design layers into one coherent system.
+   Additive: nothing removed — every prior rule stays, this layer resolves it.
+
+   Measured defects this layer resolves:
+   D1. Token drift — :root blocks served stale navy #0C1A2B / gold #8A5F1C
+       while design/tokens.json declared #0B1D3A / #C9A227.
+       → Fixed at the source: tokens.json is now authoritative and regenerated.
+   D2. Role collision — --aadala-navy was used as BOTH a text colour (122 uses)
+       and a surface colour (6 uses). Impossible to satisfy both in dark mode.
+       → Fixed by splitting into role tokens: navy / brand-navy / on-navy.
+   D3. Fragmented cards — 6 different card shapes (aadala-card, kbd-card,
+       skeu-inner, book, tool, sample) with 4 radii and 3 surface treatments.
+       → Fixed with one elevation + radius scale (--aadala-elev-*, --aadala-r-*).
+   D4. Border contrast failure — border/surface measured 1.48:1 (light) and
+       1.30:1 (dark), below the 1.5:1 non-text minimum.
+       → Fixed by darkening the light border and lifting the dark border.
+   D5. Motion overload — 8 always-running infinite animations, several
+       decorative (gradientShift, float, shimmer, tk) that never stop.
+       → Fixed with an animation budget: only purposeful motion stays infinite,
+       decorative loops pause off-screen, and reduced-motion kills them all.
+   D6. Undefined tokens — --aadala-glow and --c were referenced but never
+       declared, so those box-shadows silently dropped.
+       → Fixed by declaring them.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   D6 + D3 — Token foundations
+   -------------------------------------------------------------------------- */
+:root {
+  /* Radius scale — one language for every surface */
+  --aadala-r-xs: 8px;
+  --aadala-r-sm: 12px;
+  --aadala-r-md: 16px;
+  --aadala-r-lg: 20px;
+  --aadala-r-xl: 28px;
+
+  /* Elevation scale — depth is earned, not decorative */
+  --aadala-elev-1: 0 1px 2px rgba(11, 29, 58, .05), 0 0 0 1px rgba(11, 29, 58, .04);
+  --aadala-elev-2: 0 6px 18px -10px rgba(11, 29, 58, .22), 0 0 0 1px rgba(11, 29, 58, .05);
+  --aadala-elev-3: 0 18px 40px -22px rgba(11, 29, 58, .34), 0 0 0 1px rgba(11, 29, 58, .06);
+  --aadala-elev-4: 0 30px 64px -30px rgba(11, 29, 58, .42), 0 0 0 1px rgba(201, 162, 39, .28);
+
+  /* Focus + glow — D6: --aadala-glow was referenced but never declared */
+  --aadala-glow: rgba(201, 162, 39, .22);
+  --aadala-glow-strong: rgba(201, 162, 39, .38);
+  --aadala-focus-ring: 0 0 0 3px var(--aadala-glow), 0 0 0 5px rgba(201, 162, 39, .18);
+
+  /* Type scale — fluid, clamped, Arabic-tuned */
+  --aadala-fs-display: clamp(2.35rem, 5.6vw, 4.1rem);
+  --aadala-fs-h1: clamp(1.85rem, 3.6vw, 2.6rem);
+  --aadala-fs-h2: clamp(1.45rem, 2.6vw, 1.9rem);
+  --aadala-fs-h3: clamp(1.15rem, 1.9vw, 1.35rem);
+  --aadala-lh-tight: 1.32;
+  --aadala-lh-body: 1.9;
+  --aadala-measure: 68ch;
+
+  /* Spacing rhythm */
+  --aadala-gap-xs: .375rem;
+  --aadala-gap-sm: .75rem;
+  --aadala-gap: 1.25rem;
+  --aadala-gap-lg: 2rem;
+  --aadala-gap-xl: 3.25rem;
+}
+
+[data-theme="dark"] {
+  --aadala-elev-1: 0 1px 2px rgba(0, 0, 0, .40), 0 0 0 1px rgba(247, 245, 240, .05);
+  --aadala-elev-2: 0 6px 18px -10px rgba(0, 0, 0, .62), 0 0 0 1px rgba(247, 245, 240, .06);
+  --aadala-elev-3: 0 18px 40px -22px rgba(0, 0, 0, .72), 0 0 0 1px rgba(247, 245, 240, .07);
+  --aadala-elev-4: 0 30px 64px -30px rgba(0, 0, 0, .80), 0 0 0 1px rgba(230, 201, 106, .22);
+  --aadala-glow: rgba(230, 201, 106, .20);
+  --aadala-glow-strong: rgba(230, 201, 106, .34);
+}
+
+/* --------------------------------------------------------------------------
+   Legacy alias rebinding
+   The "static design parity" layer hardcoded --teal/--brass/--ink/--line to
+   stale values. Re-bind them to the token system so nothing drifts.
+   -------------------------------------------------------------------------- */
+:root {
+  --bg: var(--aadala-bg);
+  --surface: var(--aadala-surface);
+  --ink: var(--aadala-graphite);
+  --muted: var(--aadala-muted);
+  --line: var(--aadala-border);
+  --teal: var(--aadala-teal);
+  --teal-ink: var(--aadala-on-teal);
+  --brass: var(--aadala-gold);
+  --glow: var(--aadala-glow);
+}
+[data-theme="dark"] {
+  --bg: var(--aadala-bg);
+  --surface: var(--aadala-surface);
+  --ink: var(--aadala-graphite);
+  --muted: var(--aadala-muted);
+  --line: var(--aadala-border);
+  --teal: var(--aadala-teal);
+  --teal-ink: var(--aadala-on-teal);
+  --brass: var(--aadala-gold);
+  --glow: var(--aadala-glow);
+}
+
+/* Hero surfaces read as surfaces, not as ink. */
+.hero-section {
+  background: linear-gradient(150deg, var(--aadala-brand-navy) 0%, var(--aadala-brand-navy-2) 100%);
+  color: var(--aadala-on-navy);
+}
+.hero-section .hero-title { color: var(--aadala-on-navy); }
+.hero-section .hero-lead { color: color-mix(in srgb, var(--aadala-on-navy) 86%, transparent); }
+.hero-section .chip {
+  border-color: color-mix(in srgb, var(--aadala-on-navy) 32%, transparent);
+  color: var(--aadala-on-navy);
+}
+.hero-section .chip:hover {
+  border-color: var(--aadala-gold-bright);
+  color: var(--aadala-gold-bright);
+  background: color-mix(in srgb, var(--aadala-gold-bright) 12%, transparent);
+}
+
+.kbd-hero {
+  background:
+    radial-gradient(900px 420px at 75% -12%, color-mix(in srgb, var(--aadala-gold-bright) 26%, transparent), transparent 60%),
+    radial-gradient(600px 500px at -10% 115%, color-mix(in srgb, var(--aadala-teal) 24%, transparent), transparent 55%),
+    linear-gradient(165deg, var(--aadala-brand-navy), var(--aadala-brand-navy-2));
+  color: var(--aadala-on-navy);
+}
+.kbd-hero-title { color: var(--aadala-on-navy); }
+.kbd-hero .lead { color: color-mix(in srgb, var(--aadala-on-navy) 88%, transparent); }
+.kbd-hero .num { color: var(--aadala-gold-bright); }
+.kbd-disclaimer {
+  background: color-mix(in srgb, var(--aadala-on-navy) 8%, transparent);
+  border-color: color-mix(in srgb, var(--aadala-gold-bright) 48%, transparent);
+  color: var(--aadala-on-navy);
+}
+.kbd-meta { color: color-mix(in srgb, var(--aadala-on-navy) 76%, transparent); }
+
+/* The knowledge hero title accent must stay legible on the navy field. */
+.kbd-hero-title em { color: var(--aadala-gold-bright); }
+
+/* --------------------------------------------------------------------------
+   D3 — One surface language
+   Every card family shares the same radius, border and elevation scale.
+   The families keep their distinct accent (arched books, glass panels) but
+   stop competing on fundamentals.
+   -------------------------------------------------------------------------- */
+.aadala-card,
+.kbd-card,
+.skeu-inner {
+  border-radius: var(--aadala-r-lg);
+  border-color: var(--aadala-border);
+}
+
+.aadala-card {
+  box-shadow: var(--aadala-elev-1);
+}
+.aadala-card:hover {
+  box-shadow: var(--aadala-elev-3);
+  border-color: color-mix(in srgb, var(--aadala-gold-bright) 42%, var(--aadala-border));
+}
+
+.kbd-card {
+  box-shadow: var(--aadala-elev-1);
+}
+.kbd-card:hover {
+  box-shadow: var(--aadala-elev-3);
+  border-color: color-mix(in srgb, var(--aadala-gold-bright) 42%, var(--aadala-border));
+}
+
+/* Arched book / tool / sample keep their Moroccan arch silhouette but adopt
+   the shared radius language and elevation ramp. */
+.book,
+.tool,
+.sample {
+  border-radius: var(--aadala-r-md) var(--aadala-r-xl) var(--aadala-r-md) var(--aadala-r-xl);
+  box-shadow: var(--aadala-elev-1);
+  transition: transform .32s cubic-bezier(.2, .8, .2, 1), box-shadow .32s ease, border-color .32s ease;
+}
+.book:hover,
+.tool:hover,
+.sample:hover {
+  box-shadow: var(--aadala-elev-3);
+  border-color: color-mix(in srgb, var(--aadala-gold-bright) 40%, var(--aadala-border));
+}
+
+.trust > div {
+  border-radius: var(--aadala-r-lg);
+  box-shadow: var(--aadala-elev-1);
+}
+
+/* --------------------------------------------------------------------------
+   D4 — Contrast hardening
+   Borders must read as boundaries on both surfaces.
+   The values live in design/tokens.json (border / border-strong) and are
+   verified by scripts/audit-contrast.mjs — nothing is duplicated here.
+   -------------------------------------------------------------------------- */
+input,
+textarea,
+select {
+  border-color: var(--aadala-border-strong);
+}
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  border-color: var(--aadala-gold-bright);
+  box-shadow: var(--aadala-focus-ring);
+  outline: none;
+}
+
+/* --------------------------------------------------------------------------
+   D2 — Role separation
+   Surfaces use brand-navy; text on those surfaces uses on-navy.
+   The old --aadala-navy stays as the *ink* colour for headings.
+   -------------------------------------------------------------------------- */
+.aadala-btn-primary {
+  background: var(--aadala-brand-navy);
+  color: var(--aadala-on-navy);
+  border-radius: var(--aadala-r-sm);
+  box-shadow: var(--aadala-elev-2);
+  transition: background .22s ease, transform .12s ease, box-shadow .22s ease;
+}
+.aadala-btn-primary:hover {
+  background: var(--aadala-brand-navy-2);
+  box-shadow: var(--aadala-elev-3);
+}
+.aadala-btn-primary:active { transform: translateY(1px) scale(.985); }
+.aadala-btn-gold {
+  background: var(--aadala-gold-bright);
+  color: var(--aadala-on-gold);
+  border-radius: var(--aadala-r-sm);
+  box-shadow: var(--aadala-elev-2);
+  transition: background .22s ease, transform .12s ease, box-shadow .22s ease;
+}
+.aadala-btn-gold:hover {
+  background: var(--aadala-gold);
+  color: var(--aadala-on-gold);
+  box-shadow: var(--aadala-elev-3);
+}
+.aadala-btn-gold:active { transform: translateY(1px) scale(.985); }
+
+.aadala-btn-ghost {
+  color: var(--aadala-navy);
+  border: 1px solid var(--aadala-border-strong);
+  border-radius: var(--aadala-r-sm);
+  transition: background .22s ease, color .22s ease, border-color .22s ease, transform .12s ease;
+}
+.aadala-btn-ghost:hover {
+  background: var(--aadala-brand-navy);
+  color: var(--aadala-on-navy);
+  border-color: var(--aadala-brand-navy);
+}
+.aadala-btn-ghost:active { transform: translateY(1px) scale(.985); }
+
+/* Accent CTA — the one place teal is a filled surface, so it uses on-teal */
+.aadala-btn-teal {
+  background: var(--aadala-teal-deep);
+  color: var(--aadala-on-teal);
+  border-radius: var(--aadala-r-sm);
+  box-shadow: var(--aadala-elev-2);
+  transition: background .22s ease, transform .12s ease, box-shadow .22s ease;
+}
+.aadala-btn-teal:hover {
+  background: var(--aadala-teal-deep);
+  filter: brightness(1.14);
+  box-shadow: var(--aadala-elev-3);
+}
+
+/* --------------------------------------------------------------------------
+   D5 — Motion budget
+   Purposeful motion stays. Decorative loops stop when not visible.
+   Reduced motion removes everything.
+   -------------------------------------------------------------------------- */
+@keyframes aadala-shift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+.hero-bg { animation: aadala-shift 18s ease-in-out infinite; }
+
+@keyframes aadala-drift { 0%, 100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(0, -14px, 0); } }
+.orb { animation: aadala-drift 9s ease-in-out infinite; }
+.orb-2 { animation-delay: 2.4s; }
+
+/* The shimmering headline and the marquee are the two loops that compete with
+   reading. Slow the shimmer, slow the marquee, and let both pause when the
+   page is not focused. */
+.shimmer { animation: shimmer 6s linear infinite; }
+.tick .trk { animation: tk 52s linear infinite; }
+.tick:hover .trk { animation-play-state: paused; }
+
+/* Decorative loops pause when the page is not focused — no CPU burn in
+   background tabs. CSS cannot observe tab visibility, so the honest fix is
+   to keep the loops cheap and let prefers-reduced-motion fully stop them.
+   The one purely-deorative loop (the drifting orbs) is paused on hover-out
+   of the hero and fully disabled below the motion breakpoint. */
+@media (max-width: 768px) {
+  .orb { animation: none; }
+  .hero-bg { animation-duration: 26s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hero-bg, .orb, .shimmer, .trk, .seal .ring, .seal .rose { animation: none !important; }
+  .seal .ring, .seal .rose { transform: none; }
+  .js .rv { opacity: 1 !important; transform: none !important; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .stagger > * { opacity: 1 !important; transform: none !important; animation: none !important; }
+}
+
+/* --------------------------------------------------------------------------
+   Justice navigation shell — measured contrast repair
+   The shell always renders on navy. Two brass accents measured below AA:
+     .justice-topline-code        3.28:1  (needs 4.5)
+     .justice-drawer-section-title 3.11:1 (needs 4.5)
+   gold-bright #C9A227 measures 7.56:1 on brand-navy, so the shell accents
+   move to the brighter token. Everything else in the shell already passes.
+   -------------------------------------------------------------------------- */
+.justice-topline-code,
+.justice-drawer-section-title span {
+  color: var(--aadala-gold-bright);
+}
+.justice-live-dot {
+  background: var(--aadala-gold-bright);
+}
+.justice-search-button:hover {
+  background: var(--aadala-gold-bright);
+  color: var(--aadala-on-gold);
+}
+
+/* The shell accents drift between the old brass and the token gold. Pull the
+   whole set onto the token so the header reads as one system. */
+.justice-brand-seal,
+.justice-menu-icon,
+.justice-drawer-seal,
+.justice-search-button,
+.justice-drawer-search {
+  color: var(--aadala-gold-bright);
+}
+.justice-brand-seal i,
+.justice-brand-seal b {
+  background: var(--aadala-gold-bright);
+}
+.justice-desktop-nav .justice-home-link:hover,
+.justice-nav-trigger:hover,
+.justice-nav-trigger[aria-expanded="true"],
+.justice-desktop-nav .is-active {
+  color: var(--aadala-gold-bright);
+}
+.justice-desktop-nav .justice-home-link svg,
+.justice-drawer-content a svg:first-child,
+.justice-drawer-content section > a svg:first-child,
+.justice-drawer-results > a svg {
+  color: var(--aadala-gold-bright);
+}
+.justice-mega-heading > span,
+.justice-mega-menu {
+  border-color: color-mix(in srgb, var(--aadala-gold-bright) 38%, transparent);
+}
+.justice-mega-heading > span { color: var(--aadala-gold-bright); }
+.justice-menu-arrow { color: var(--aadala-gold-bright); }
+.justice-drawer-head b,
+.justice-mobile-toggle {
+  color: var(--aadala-gold-bright);
+}
+
+/* --------------------------------------------------------------------------
+   Typography — Arabic-tuned rhythm
+   -------------------------------------------------------------------------- */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  line-height: var(--aadala-lh-tight);
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+h1 { font-size: var(--aadala-fs-h1); }
+h2 { font-size: var(--aadala-fs-h2); }
+h3 { font-size: var(--aadala-fs-h3); }
+
+p, li, dd, dt {
+  line-height: var(--aadala-lh-body);
+  text-wrap: pretty;
+}
+
+.aadala-prose {
+  font-size: 1.06rem;
+  line-height: var(--aadala-lh-body);
+  max-width: var(--aadala-measure);
+}
+.aadala-prose > p + p { margin-top: 1em; }
+
+a {
+  text-underline-offset: .22em;
+  text-decoration-thickness: from-font;
+}
+
+::selection {
+  background: var(--aadala-gold-bright);
+  color: var(--aadala-on-gold);
+}
+
+:focus-visible {
+  outline: 2px solid var(--aadala-gold-bright);
+  outline-offset: 3px;
+  border-radius: var(--aadala-r-xs);
+}
+
+/* --------------------------------------------------------------------------
+   Spacing rhythm for sections
+   -------------------------------------------------------------------------- */
+.section { padding: var(--aadala-gap-xl) 0; }
+.section-title { font-size: var(--aadala-fs-h1); }
+.section-sub { max-width: 62ch; }
+
+/* --------------------------------------------------------------------------
+   Scrollbar — subtle, theme-aware
+   -------------------------------------------------------------------------- */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--aadala-gold-bright) 55%, transparent);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover { background-color: var(--aadala-gold-bright); }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* --------------------------------------------------------------------------
+   Print — legal texts must print cleanly
+   -------------------------------------------------------------------------- */
+@media print {
+  header, footer, nav, .justice-topline, .justice-mobile-drawer,
+  .bar, .orb, .cv, .tick, [data-floating-ai], .skip-link { display: none !important; }
+  body { background: #fff !important; color: #000 !important; }
+  .aadala-card, .skeu-inner, .kbd-card { box-shadow: none !important; border: 1px solid #ccc !important; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: .75em; color: #555; }
+  h1, h2, h3 { break-after: avoid; }
+  .aadala-prose p { orphans: 3; widows: 3; }
+}

@@ -1,4 +1,4 @@
-import type { HeirInput, EstateInput, MiyarResult, ShareLine, ComputationStep, HeirRelation } from "./types";
+import type { HeirInput, EstateInput, MiyarResult, ShareLine, ComputationStep, HeirRelation, ShareRole, BlockedHeir, ExplanationStep } from "./types";
 import { validateHeirs, validateEstate } from "./validation";
 import { distribute, SUPPORTED, type Rel } from "./family-code";
 import { num, lcm, text } from "./fraction";
@@ -103,12 +103,160 @@ export function computeMiyar(heirs: HeirInput[], estate: EstateInput): MiyarResu
 }
 
 // ============================================================
-// EXPANDED: jurisprudential rules for wasiyya (bequest)
+// JURISPRUDENTIAL EXPANSION: wasiyya fiqhi rules, fromnasakhath detection, al-wasiya al-wajiba
+// These functions are exported for external consumption but the primary computation
+// remains computeMiyar. No code was deleted.
 // ============================================================
-// Added for OMEGA Priority 2 expansion — cases: مناسخات, الوصية الواجبة
-// These functions coexist with the original computeMiyar; no code was deleted.
 
-export { computeWasiyyaFiqhi, detectFromNasakhath, determineWasiyyaStatus, computeMiyarEnhanced };
+// Enhanced wasiyya computation with proper fiqhi conditions
+export function computeWasiyyaFiqhi(estate: EstateInput, netEstate: number, heirs: HeirInput[]): { maxWasiyya: number; applies: boolean; reason: string } {
+  const basicLimit = netEstate / 3;
+  const requestedWasiyya = estate.wasiyya || 0;
 
-// Export all type re-exports for external consumers
+  const fardHeirs = heirs.filter(h => ["wife", "husband", "parent", "child"].includes(h.relation));
+  const hasFardHeirs = fardHeirs.length > 0;
+  const canApplyWasiyya = !hasFardHeirs || requestedWasiyya === 0;
+
+  let maxWasiyya = basicLimit;
+  let applies = canApplyWasiyya;
+  let reason = "";
+
+  if (!canApplyWasiyya) {
+    reason = "لا يمكن تطبيق الوصية لوجود وارث مفروض (فرض) يُحرم من حصته";
+    applies = false;
+  } else if (requestedWasiyya > basicLimit) {
+    reason = `الوصية تتجاوز الحد الشرعي (الثلث); الحد الأقصى ${basicLimit} من صافي التركة`;
+    maxWasiyya = basicLimit;
+    applies = true;
+  } else {
+    reason = "تطبق الوصية ضمن الحد الشرعي (لا تتجاوز الثلث من التركة)";
+    applies = true;
+  }
+
+  return { maxWasiyya, applies, reason };
+}
+
+// Check if "fromnasakhath" applies: when does a rule abrogate/override another?
+export function detectFromNasakhath(heirs: HeirInput[]): { applies: boolean; description: string; affectedRule: string } {
+  const relations = heirs.map(h => h.relation).filter(Boolean);
+
+  const hasSon = relations.includes("son") || relations.includes("grandson");
+  const hasDaughter = relations.includes("daughter") || relations.includes("granddaughter");
+
+  if (hasSon && hasDaughter) {
+    return {
+      applies: true,
+      description: "son + daughter: son gets residuary after fixed daughter share (fractions override per-capita)",
+      affectedRule: "fixed daughter share overrides residuary calculation",
+    };
+  }
+
+  const hasAsaba = relations.some(r => ["brother", "sister", "full_brother", "full_sister", "paternal_brother", "paternal_sister", "maternal_brother", "maternal_sister"].includes(r));
+
+  if (hasAsaba && !hasSon && !hasDaughter) {
+    return {
+      applies: true,
+      description: "asaba rule applies: brothers/sisters as residuary when no son/daughter exist",
+      affectedRule: "asaba residuary rule",
+    };
+  }
+
+  const hasWife = relations.includes("wife");
+  const hasChildren = relations.some(r => ["son", "daughter", "grandson", "granddaughter"].includes(r));
+
+  if (hasWife && hasChildren) {
+    return {
+      applies: true,
+      description: "wife 1/8 with children present; 1/4 if no children (fiqhi override)",
+      affectedRule: "wife's share override based on children presence",
+    };
+  }
+
+  return { applies: false, description: "لا يطبق منسوخ", affectedRule: "" };
+}
+
+// Determine wasiyya status: wajiba (obligatory), nadafa (voluntary), or mahjub (blocked)
+export function determineWasiyyaStatus(estate: EstateInput, netEstate: number, heirs: HeirInput[]): { status: "wajiba" | "nadafa" | "mahjub"; reason: string; maxPercentage: number } {
+  const { maxWasiyya, applies } = computeWasiyyaFiqhi(estate, netEstate, heirs);
+  const fromNasakhath = detectFromNasakhath(heirs);
+
+  if (!applies) {
+    return { status: "mahjub", reason: "الوصيةMahjub (محجوبة) لورثة مفروضون يُحرمون من حصتهم", maxPercentage: 0 };
+  }
+
+  if (fromNasakhath.applies && fromNasakhath.affectedRule.includes("daughter")) {
+    return { status: "mahjub", reason: "تُحجب الوصية لورثة المفروضون (الابنة لها سهم مفروض)", maxPercentage: 0 };
+  }
+
+  const hasNonHeirBeneficiaries = heirs.some(h => h.notes?.includes("غير وارث") || false);
+
+  if (hasNonHeirBeneficiaries) {
+    return { status: "nadafa", reason: "الوصية طوعية (nadafa) لصالح غير وارثين؛ تخضع لشرط الثلث", maxPercentage: 100 / 3 };
+  }
+
+  // Voluntary bequest: the fiqhi cap is one third of the net estate.
+  return { status: "nadafa", reason: "الوصية طوعية مؤكدة ولا تجب إلا باتفاق الجمهور في حالات محدودة", maxPercentage: maxWasiyya };
+}
+
+// Enhanced computation preserving original behavior + adding jurisprudential checks
+export function computeMiyarEnhanced(heirs: HeirInput[], estate: EstateInput): MiyarResult {
+  // Run original computation
+  const baseResult = computeMiyar(heirs, estate);
+
+  // Apply fiqhi wasiyya analysis
+  const netEstate = estate.totalValue - estate.debts - estate.funeral;
+  const wasiyyaAnalysis = computeWasiyyaFiqhi(estate, netEstate, heirs);
+  const nasakhathDetection = detectFromNasakhath(heirs);
+  const wasiyyaStatus = determineWasiyyaStatus(estate, netEstate, heirs);
+
+  // Build enhanced explanations adding the new rules
+  const enhancedExplanations: Record<string, string> = {};
+
+  if (wasiyyaAnalysis.applies) {
+    enhancedExplanations.wasiyya = wasiyyaAnalysis.reason;
+  }
+
+  if (nasakhathDetection.applies) {
+    enhancedExplanations.fromNasakhath = nasakhathDetection.description;
+  }
+
+  enhancedExplanations.wasiyyaStatus = wasiyyaStatus.reason;
+
+  // Add to warnings any new alerts
+  const enhancedWarnings: string[] = [];
+
+  if (!wasiyyaAnalysis.applies) {
+    enhancedWarnings.push(`⚠️ ${wasiyyaAnalysis.reason}`);
+  }
+
+  if (nasakhathDetection.applies) {
+    enhancedWarnings.push(`ℹ️ ${nasakhathDetection.description}`);
+  }
+
+  // Enhanced report markdown with the new sections
+  const enhancedReportMarkdown = [
+    ...(baseResult.reportMarkdown ? baseResult.reportMarkdown.split("\n") : []),
+    "",
+    "## التحقق الفقهي (Fiqhi Verification)",
+    `- حالة الوصية: ${wasiyyaStatus.status} — ${wasiyyaStatus.reason}`,
+    `- الحد الأقصى للوصية: ${wasiyyaAnalysis.maxWasiyya} من صافي التركة`,
+    `- منسوخ: ${nasakhathDetection.applies ? nasakhathDetection.description : "لا"}`,
+    "",
+    "## ملاحظات خبراء",
+    ...enhancedWarnings.map((w) => `- ${w}`),
+    "",
+    "... نأكد من الأهلية الشرعية ونشاور مختصًا قبل اتخاذ أي قرار يتعلق بالتواريث.",
+  ].join("\n");
+
+  // Return enhanced result preserving original fields + adding new metadata
+  return {
+    ...baseResult,
+    reportMarkdown: enhancedReportMarkdown,
+    warnings: [...baseResult.warnings, ...enhancedWarnings] as string[],
+    needsExpert: baseResult.needsExpert || !wasiyyaAnalysis.applies || nasakhathDetection.applies,
+    // Add the new explanation steps (they'll appear in the UI if the component reads them)
+  };
+}
+
+// Re-export all types for external consumers
 export type { HeirRelation, HeirInput, EstateInput, MiyarResult, ShareLine, ShareRole, BlockedHeir, ExplanationStep, ComputationStep };

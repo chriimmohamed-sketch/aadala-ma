@@ -16,6 +16,8 @@
     "design:audit": "node scripts/unify-design.mjs",
     "design:fix": "node scripts/unify-design.mjs --fix --legacy",
     "design:check": "node scripts/unify-design.mjs --check",
+    "design:sync": "node scripts/sync-design-tokens.mjs",
+    "design:contrast": "node scripts/audit-contrast.mjs",
     "legal:ingest": "node scripts/ingest-pdfs.mjs"
   },
   "dependencies": {
