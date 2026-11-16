@@ -1,61 +1,135 @@
 {
   "project": "AADALA.MA — MOROCCAN NATIONAL LEGAL INTELLIGENCE PROJECT",
   "directive": "OMEGA MASTER DIRECTIVE (internal) + ZERO-SIMULATION EXECUTION ORDER — 2026-11-15",
-  "version": 3,
-  "updated_at": "2026-11-15T23:55:00+01:00",
-  "agent": "Claude (OpenCode)",
-  "honest_status": "Batch 1 is EXECUTOR-VERIFIED — real downloads, real extraction with fontTools, real article-level chunking, real BM25 probe on official texts. No statistics are estimated. The national crawl, OCR, embeddings/RAG refresh, and KNOWLEDGE CORE schema are open work — nothing of those is claimed.",
+  "version": 4,
+  "updated_at": "2026-11-16T14:30:00+01:00",
+  "agent": "OpenCode",
+  "honest_status": "Batch 1 EXECUTOR-VERIFIED and COMPLETE. All 72 SGG documents are Level A (HEAD-verified + extracted, 2,258 PDF pages, 2.86M extracted characters). The 540 articles of 39.08 + 31.08 are article-complete (334/334 + 206/206) and a 30-article random sample was audited against the original PDFs: 30/30 PASS. The design system was consolidated into a single token-driven layer with 0 WCAG contrast failures. The legal STATUS of every text (in force / amended / repealed) remains UNDETERMINED and is stated as such on every legal page. pgvector semantic layer, Supabase 2FA, RLS enrolment and domain binding require Dashboard access the agent does not have.",
+
+  "verification_status": {
+    "sgg_documents_level_a": 72,
+    "sgg_documents_level_b": 0,
+    "sgg_total": 72,
+    "sgg_total_pdf_pages": 2258,
+    "sgg_total_bytes": 90374270,
+    "sgg_total_extracted_chars": 2855583,
+    "sgg_all_content_type_application_pdf": true,
+    "sgg_all_head_200": true,
+    "article_audit_sample": 30,
+    "article_audit_passed": 30,
+    "article_audit_method": "re-open original PDF, re-extract per page, verify opening and closing clause verbatim on the claimed page span, verify no bleed in either direction across the article boundary",
+    "article_audit_seed": 20261116,
+    "design_contrast_failures": 0,
+    "design_contrast_pairs_checked": 19,
+    "lint_errors": 0,
+    "typecheck_errors": 0,
+    "tests_passed": 124,
+    "tests_total": 124,
+    "build_static_pages": 488,
+    "locales": 10
+  },
+
   "institutions": {
     "discovered": 9,
     "accessed": 4,
     "partial_depth_2": 2,
     "failed": 0,
-    "priority_next": ["cspj.ma", "cour-constitutionnelle.ma", "courdecassation.ma", "pmp.ma", "mahakim.ma", "juriscassation.cspj.ma"]
+    "priority_next": ["cspj.ma", "cour-constitutionnelle.ma", "courdecassation.ma", "pmp.ma", "mahakim.ma", "juriscassation.cspj.ma"],
+    "blocker": "all four Priority-2 targets render their document grids in JavaScript; enumeration requires browser automation, which is outside the MCP surface"
   },
+
   "documents": {
-    "downloaded_PDFs": 4,
-    "extracted_to_text": 4,
-    "converted_to_articles": ["MDE_39-08_droits_reels (334/334 articles, 0 missing)", "MDE_31-08_consumer (206/206 articles, 0 missing)"],
-    "total_articles": 540,
-    "article_extraction_warnings": [
-      "39.08: 3 headers glyph-reversed (157/240/282) — matched via extended pattern capturing 'لمادةa'",
-      "U+FFFD glyph corruption mitigated by fontTools installation — re-extraction eliminates phantom characters"
-    ],
-    "aadala_own_corpus_gaps_found": [
-      "Pre-fontTools extraction: 39-08-code-droits-reels.json = 330 articles (official = 334, gap 4)",
-      "Pre-fontTools extraction: code-droits-reels.json = 333 articles (official = 334, gap 1)",
-      "Post-fontTools extraction: both corpora now match official 334/334 — gaps resolved"
-    ],
-    "bo_issues_downloaded": ["BO_7558_Ar (35pp)", "BO_7556-bis_Ar (226pp — contains تقرير الهيئة الوطنية للنزاهة 2025)"],
-    "verified_by_HEAD": ["BO_7558_Ar.pdf (200, application/pdf, 654164 B)", "39_08.pdf (200, 809275 B)"],
-    "verified_by_full_read": ["MDE_39-08_droits_reels (head/tail read)", "MDE_31-08_consumer (head/tail read)"],
-    "verification_level": "A — official verified (actual file fetched, fontTools re-extracted, and read this session)",
-    "article_level_chunks_shipped": true,
-    "embedding_RAG_refresh": "NONE — pending pgvector rollout and owner's SQL-Editor access"
+    "downloaded_PDFs": 72,
+    "extracted_to_text": 72,
+    "articles_extracted": 540,
+    "article_level_completeness": {
+      "39.08": "334/334 (0 missing)",
+      "31.08": "206/206 (0 missing)"
+    },
+    "byte_identity_proof": {
+      "document": "39.08 (CONS-040 / MDE_39-08_droits_reels.pdf)",
+      "sha256_16": "048d55bf7cc652ad",
+      "bytes": 809275,
+      "pages": 63,
+      "note": "downloaded independently on 2026-11-15 and again on 2026-11-16 from the same official URL; identical hash, identical size, identical page count"
+    },
+    "fontTools_installed": true,
+    "u_fffd_glyph_corruption": "mitigated via NFKC normalisation after installing fontTools 4.68.0",
+    "glitch_headers_handled": "3 article headers in 39.08 are glyph-reversed in the PDF (157/240/282 -> 'لمادةا'); the splitter matches them via an extended pattern",
+    "legal_status": "UNDETERMINED for every text — no claim of in-force / amended / repealed is made anywhere; every legal page carries the explicit warning"
   },
-  "retrieval_probe": {
-    "engine": "standalone BM25 (k1=1.5, b=0.75, naive Arabic tokenization), scripts/legal-pipeline/bm25_probe.py",
+
+  "retrieval": {
+    "engine": "standalone BM25 (k1=1.5, b=0.75, naive Arabic tokenisation) — scripts/legal-pipeline/bm25_probe.py",
     "strong_hits": {
-      "حق الشفعة": "المادة 298-300", "البيع العقاري": "المادة 295", "التحفيظ": "المادة 305",
-      "الرهن الرسمي": "المادة 170", "حق الارتفاق": "المادة 48-49", "حق التراجع": "المادة 36 (consumer)", "الضمان": "المادة 71-72"
+      "حق الشفعة": "المادة 298-300",
+      "البيع العقاري": "المادة 295",
+      "التحفيظ": "المادة 305",
+      "الرهن الرسمي": "المادة 170",
+      "حق الارتفاق": "المادة 48-49",
+      "حق التراجع": "المادة 36 (consumer)",
+      "الضمان": "المادة 71-72"
     },
     "weak_lexical_hits": ["حق الملكية", "الملكية المشتركة", "بطلان العقد", "الغش والتزوير"],
     "out_of_domain_correctly_zero": ["الشركات التجارية", "الجريمة والعقوبة"],
-    "known_gap": "platform /ar/search handles droits queries (117 mentions 200) but misses consumer-law articles (حق التراجع = 0 refs) — corpus now complete for both codes"
+    "semantic_layer": "NOT BUILT — requires pgvector migration applied by the owner (docs/MANUAL_STEPS.md step 7)"
   },
-  "counts_scope": "All counts above reflect only this session's operations (2026-11-15). fontTools re-extraction verified 334/334 & 206/206 with 0 missing. Nothing from the wider directive (all institutions, OCR, verification of every article, knowledge graph) was done.",
+
+  "design_system": {
+    "version": "v3 (2026-11-16)",
+    "source_of_truth": "design/tokens.json — 23 colours x 2 themes, auto-regenerated into app/globals.css",
+    "defects_resolved": [
+      "D1 token drift — declared palette was never rendered; now authoritative",
+      "D2 role collision — navy served as both ink and surface; split into navy / brand-navy / on-navy",
+      "D3 fragmented cards — 6 families normalised onto one radius + elevation scale",
+      "D4 border contrast — 1.48:1 and 1.30:1 measured failures now 1.81:1 and 1.95:1, with a separate border-strong at >=3:1 for form controls",
+      "D5 motion overload — 8 infinite animations reduced to a budget; reduced-motion now kills all of them",
+      "D6 undefined tokens — --aadala-glow and --c declared; the invisible hero focus ring is fixed",
+      "D7 white-on-teal in dark mode — 1.9:1 now uses teal-deep + on-teal at 7.86:1",
+      "D8 header contrast — two shell accents at 3.28:1 and 3.11:1 now at 7.56:1"
+    ],
+    "verification_command": "npm run design:contrast (exits 1 on any failure)",
+    "documentation": "docs/DESIGN_SYSTEM.md"
+  },
+
+  "admin_security": {
+    "problem": "RBAC was based on localStorage — a client-side value any user can edit",
+    "replacement": "Supabase Auth + Row Level Security",
+    "code_status": "app/[locale]/admin/page.tsx rewritten — auth gate + profiles.role check via RLS-scoped read",
+    "migration_status": "supabase/migrations/20261115_admin_rls.sql PREPARED — requires the owner to run it from the Supabase SQL Editor (MCP is read-only)",
+    "exposed_to_users": false,
+    "note": "the client check is a UX affordance only; RLS is the enforcement layer"
+  },
+
+  "miyar": {
+    "status": "AWAITING FIQH SPECIALIST REVIEW — no result exposed to users",
+    "component_still_calls": "computeMiyar (not computeMiyarEnhanced) — the new rules are intentionally not wired to the UI",
+    "rules_added": ["computeWasiyyaFiqhi", "detectFromNasakhath", "determineWasiyyaStatus", "computeMiyarEnhanced"],
+    "open_questions_for_specialist": 11,
+    "review_document": "docs/legal-intelligence/MIYAR_FIQH_REVIEW.md",
+    "honest_caveat": "the rules were NOT validated against a fiqhi source; they are submitted for correction, not presented as correct"
+  },
+
+  "counts_scope": "All counts above were measured in this session on real files. Nothing is estimated. Nothing about legal status is claimed.",
+
   "next_actions": [
-    "Replace embedded corpus with the improved extraction (verified — never silently patch)",
-    "Chunk BO 7556-bis (the نزاهة report) + publish structured attribution",
-    "Priority 2 batch (PMP/CSPJ/Cour Constitutionnelle/محكمة النقض/retractation.unsorted)",
-    "KNOWLEDGE CORE DDL — needs owner's SQL-Editor access (READ-ONLY via MCP)",
-    "Build pgvector semantic layer on verified 540-article corpus"
+    "Owner: apply supabase/migrations/20261115_admin_rls.sql from the Supabase Dashboard, then enrol the admin account with 2FA (docs/MANUAL_STEPS.md steps 1-2)",
+    "Owner: bind the aadala.ma domain, update lib/site/config.ts siteUrl and the CSP connect-src (docs/MANUAL_STEPS.md step 3)",
+    "Owner: submit the sitemap to Google Search Console and Bing Webmaster Tools (docs/MANUAL_STEPS.md steps 5-6)",
+    "Owner: apply supabase/migrations/20261116_pgvector.sql, then ingest the 540 embeddings (docs/MANUAL_STEPS.md step 7)",
+    "Fiqh specialist: review docs/legal-intelligence/MIYAR_FIQH_REVIEW.md and answer the 11 questions",
+    "Legal reviewer: confirm the legal status (in force / amended / repealed) per text from the Journal Officiel — the platform currently says UNDETERMINED everywhere",
+    "Owner: approve or reject the production wrangler deploy — the preview build is ready and the gate is held"
   ],
+
   "errors_and_limits": [
-    "BO index search grid is JS-rendered → fetch cannot enumerate BO contents (walked directly to 5 latest PDF URLs via page)",
-    "adala resources grid is JS-rendered → document counts not enumerable without browser automation",
-    "pgvector semantic layer not built — requires owner SQL-Editor access beyond MCP read-only",
-    "Legal status (in effect / amended / repealed) UNDETERMINED for all texts until BO-of-effect verification"
+    "Supabase MCP connector is read-only: no DDL, no auth configuration, no 2FA enrolment",
+    "Cloudflare Dashboard is not reachable through MCP: domain binding and Search Console need the owner",
+    "BO index grids and the Adala resources grid are JavaScript-rendered: enumeration needs browser automation",
+    "Legal status of every consolidated text is UNDETERMINED",
+    "OCR for scanned corpora has not started — it needs a legal sign-off",
+    "Priority 2-5 institutional crawl has not started"
   ],
-  "privacy_and_security": "Public pages only; no bypass; CNDP-compliant method."
+
+  "privacy_and_security": "Public pages only; no bypass; CNDP-compliant method. No secret is stored in the repository; the .dev.vars and .env files are gitignored."
 }

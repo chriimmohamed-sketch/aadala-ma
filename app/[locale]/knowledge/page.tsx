@@ -6,6 +6,7 @@ import { knowledge, KNOWLEDGE_CATEGORIES } from "@/data/knowledge";
 import KnowledgeHub from "@/components/KnowledgeHub";
 import { locales } from "@/lib/i18n/config";
 import { siteUrl } from "@/lib/site/config";
+import LegalStatusNotice from "@/components/LegalStatusNotice";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -109,6 +110,7 @@ export default async function KnowledgePage({
 
         <section aria-label="البطاقات" className="kbd-body">
           <div className="wrap">
+            <LegalStatusNotice className="mb-6" />
             <KnowledgeHub items={knowledge} categories={KNOWLEDGE_CATEGORIES} />
           </div>
         </section>

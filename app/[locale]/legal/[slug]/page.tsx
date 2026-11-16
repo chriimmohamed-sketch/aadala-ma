@@ -62,10 +62,28 @@ export default async function DetailPage({ params }: { params: Promise<{ locale:
         <h1 className="text-3xl font-bold text-navy">{src.title}</h1>
         <p className="mt-1 text-sm text-graphite-soft">{src.type} — {src.description}</p>
         <div className="aadala-divider mt-3" />
+
+        <div className="aadala-card p-4 border border-red/20 bg-red/5 mt-4">
+          <p className="text-xs text-red font-medium">
+            ⚠️ تنبيه: الحالة القانونية (ساري/معدّل/ملغى) لم تُتحقق بعد من سجلات النفاذ في الجريدة الرسمية.
+            ما يلي منقول كما ورد في نص المصدر نفسه، وليس تأكيدًا قانونيًا.
+            هذه المادة للاستعراض والاسترشاد فقط ولا تغني عن الاستشارة القانونية —
+            راجع مختصًا أو المحكمة المعنية قبل الاعتماد.
+          </p>
+        </div>
+
         <dl className="mt-4 grid grid-cols-1 gap-2 text-sm sm:grid-cols-3">
           <div className="aadala-card p-3"><dt className="font-semibold text-brass">حالة التحقق</dt><dd className="text-graphite">{verification}</dd></div>
           <div className="aadala-card p-3"><dt className="font-semibold text-brass">تاريخ الظهير</dt><dd className="text-graphite">{rec?.promulgated ?? "—"}</dd></div>
           <div className="aadala-card p-3"><dt className="font-semibold text-brass">الجريدة الرسمية</dt><dd className="text-graphite">{rec?.published ?? "—"}</dd></div>
+          <div className="aadala-card p-3 sm:col-span-3">
+            <dt className="font-semibold text-brass">الحالة القانونية (ساري/معدّل/ملغى)</dt>
+            <dd className="text-graphite">
+              {rec?.legalStatusVerified
+                ? <span className="text-success font-semibold">مُتحقَّق منها{rec.legalStatusSource ? ` — ${rec.legalStatusSource}` : ""}</span>
+                : <span className="text-danger font-semibold">غير مُتحقَّق منها — لم تُطابَق مع سجل النفاذ في الجريدة الرسمية</span>}
+            </dd>
+          </div>
         </dl>
         <CitationActions locale={locale} title={src.title} lawNumber={rec?.lawNumber ?? src.type} slug={slug} promulgated={rec?.promulgated ?? null} published={rec?.published ?? null} />
 

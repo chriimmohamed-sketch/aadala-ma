@@ -16,6 +16,18 @@ export interface LegalRecord {
   amendments: string; // what the source PDF itself says
   abrogation: string;
   effective: string;
+  /**
+   * Whether the legal status (in force / amended / repealed) was INDEPENDENTLY
+   * verified against the Journal Officiel's effectiveness ("نفاذ") records.
+   *
+   * `amendments`, `abrogation` and `effective` above are transcriptions of what
+   * the source PDF states about itself. They are NOT a legal-status verification.
+   * Defaults to `false` — nothing counts as verified until it has been checked
+   * against the Official Journal.
+   */
+  legalStatusVerified?: boolean;
+  /** Where the status was checked, once verified. Empty while unverified. */
+  legalStatusSource?: string;
   articlesCount: number; // counted from the extracted txt by scripts/ingest-pdfs.mjs
   sha256: string;
   bytes: number;
