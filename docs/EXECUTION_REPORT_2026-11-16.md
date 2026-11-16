@@ -17,6 +17,14 @@
 | `npm run design:sync` | 23 لون × ثيمين مُولَّدة |
 | Lighthouse (preview) | **Accessibility 0.98** · Best Practices **1.00** · SEO **1.00** |
 
+### إصلاح `skip-link` (Lighthouse)
+أظهر Lighthouse إخفاقًا واحدًا: `skip-link` غير قابل للتركيز. السبب: رابط التخطي في
+`app/[locale]/layout.tsx` يشير إلى `#main`، لكن **3 صفحات فقط** من 30 كانت تحمل
+`id="main"`. الإصلاح: أُضيف `id="main"` إلى `<main>` في **كل** صفحة (22 ملفًا)
+**و** إلى المكوّنَين اللذين يعرضان `<main>` داخليًا — `PageShell` (5 صفحات) و
+`UnifiedDashboard`. النتيجة في البناء: **380 صفحة بـ `id="main"` واحد**، **0 مكرَّر**،
+**0 ناقص**.
+
 ---
 
 ## 2. روابط المعاينة — الإنتاج لم يُمَسّ
