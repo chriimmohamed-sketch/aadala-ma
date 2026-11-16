@@ -111,7 +111,7 @@ export default function UnifiedDashboard() {
           </nav>
         </aside>
         {/* Main */}
-        <main className="flex-1 p-6">
+        <main id="main" className="flex-1 p-6">
           <div className="mb-6 flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold">Cloud Command Center</h1>
