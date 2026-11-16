@@ -1,5 +1,6 @@
 import PageShell from "@/components/layout/PageShell";
 import { updates } from "@/data/updates";
+import LegalStatusNotice from "@/components/LegalStatusNotice";
 
 export default async function UpdatesPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -17,6 +18,7 @@ export default async function UpdatesPage({ params }: { params: Promise<{ locale
         <h2 className="text-xl font-bold text-navy">{directAnswer.question}</h2>
         <p className="mt-2 text-sm leading-relaxed text-graphite">{directAnswer.answer}</p>
       </div>
+      <LegalStatusNotice className="mb-6" />
       <ol className="space-y-4">
         {updates.map((u) => (
           <li key={u.version} className="aadala-card p-5">

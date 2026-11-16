@@ -4,6 +4,7 @@ import Footer from "@/components/layout/Footer";
 import { legalSources } from "@/data/legal-sources";
 import { legalCategories } from "@/data/legal-categories";
 import { legalDatabase } from "@/data/legal-database";
+import LegalStatusNotice from "@/components/LegalStatusNotice";
 import Link from "next/link";
 
 export default async function LegalPage({ params }: { params: Promise<{ locale: string }> }) {
@@ -17,14 +18,10 @@ export default async function LegalPage({ params }: { params: Promise<{ locale: 
         <div className="aadala-divider mt-3" />
         <p className="mt-3 text-sm text-muted">17 تصنيفاً. لا محتوى افتراضي — كل نص مرتبط بمصدر قابل للتحقق.</p>
 
-        <div className="aadala-card p-4 border border-red/20 bg-red/5 mt-4">
-          <p className="text-xs text-red font-medium">
-            ⚠️ تنبيه: الحالة القانونية (ساري/معدّل/ملغى) لم تُتحقق بعد من سجلات النفاذ في الجريدة الرسمية.
-            الحقول أدناه منقولة كما وردت في نص المصدر نفسه، وليست تأكيدًا قانونيًا.
-            هذه المواد للاستعراض والاسترشاد فقط ولا تغني عن الاستشارة القانونية —
-            راجع مختصًا أو المحكمة المعنية قبل الاعتماد.
-          </p>
-        </div>
+        <LegalStatusNotice
+          className="mt-4"
+          text="الحالة القانونية (ساري/معدّل/ملغى) لم تُتحقق بعد من سجلات النفاذ في الجريدة الرسمية. الحقول أدناه منقولة كما وردت في نص المصدر نفسه، وليست تأكيدًا قانونيًا. هذه المواد للاستعراض والاسترشاد فقط ولا تغني عن الاستشارة القانونية — راجع مختصًا أو المحكمة المعنية قبل الاعتماد."
+        />
 
         <h2 className="mt-8 text-xl font-bold text-navy">التصنيفات (17)</h2>
         <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">

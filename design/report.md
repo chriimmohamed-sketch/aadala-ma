@@ -2,16 +2,109 @@
 
 Mode: CHECK
 
-## Off-palette colors needing a human decision (39)
+## Exact token matches (auto-fixable) (27)
+- app/design-v3.css: #0B1D3A → var(--aadala-on-gold)
+- app/design-v3.css: #C9A227 → var(--aadala-gold-bright)
+- app/design-v3.css: #fff → var(--aadala-on-teal)
+- app/globals.css: #FFFFFF → var(--aadala-on-teal)
+- app/globals.css: #C9A227 → var(--aadala-gold-bright)
+- app/globals.css: #8a6a20 → var(--aadala-gold)
+- app/globals.css: #E6C96A → var(--aadala-gold-soft)
+- app/globals.css: #0B1D3A → var(--aadala-on-gold)
+- app/globals.css: #8A6A20 → var(--aadala-gold)
+- app/globals.css: #0F5C52 → var(--aadala-teal-deep)
+- app/[locale]/page.tsx: #C9A227 → var(--aadala-gold-bright)
+- app/[locale]/page.tsx: #0F5C52 → var(--aadala-teal-deep)
+- components/LightRays.tsx: #C9A227 → var(--aadala-gold-bright)
+- components/MobileNavSupreme.tsx: #c9a227 → var(--aadala-gold-bright)
+- components/StarBorder.tsx: #C9A227 → var(--aadala-gold-bright)
+
+## Near-miss colors (--near to snap) (35)
+- app/design-v3.css: #0C1A2B ≈ navy (distance 15.3)
+- app/design-v3.css: #8A5F1C ≈ gold (distance 11.7)
+- app/design-v3.css: #555 ≈ graphite-soft (distance 8.7)
+- app/globals.css: #F7F5F0 ≈ on-navy (distance 6.3)
+- app/globals.css: #141E2E ≈ navy (distance 15.0)
+- app/globals.css: #8A5F1C ≈ gold (distance 11.7)
+- app/globals.css: #F3EFE4 ≈ on-navy (distance 8.2)
+- app/globals.css: #e5c66b ≈ gold-soft (distance 3.3)
+- app/globals.css: #0a1b31 ≈ navy (distance 9.3)
+- app/globals.css: #102b49 ≈ navy-soft (distance 4.1)
+- app/globals.css: #f7f0df ≈ on-navy (distance 11.4)
+- app/globals.css: #e3c46c ≈ gold-soft (distance 6.2)
+- app/globals.css: #091a2e ≈ navy (distance 12.5)
+- app/globals.css: #102c49 ≈ navy-soft (distance 4.7)
+- app/globals.css: #E9E5D6 ≈ ivory-deep (distance 6.3)
+- app/globals.css: #EDE9DB ≈ ivory-deep (distance 5.7)
+- app/[locale]/page.tsx: #8A5F1C ≈ gold (distance 11.7)
+- components/aalada-ultimate/UnifiedDashboard.tsx: #1f2937 ≈ graphite (distance 17.1)
+- components/MobileNavSupreme.tsx: #091a2e ≈ navy (distance 12.5)
+
+## Off-palette colors needing a human decision (145)
+- app/design-v3.css: #000 — nearest token "navy" #0b1d3a (distance 66). Add a token or choose one.
+- app/design-v3.css: #ccc — nearest token "border" #c9c0ab (distance 35). Add a token or choose one.
+- app/globals.css: #263247 — nearest token "navy-soft" #13294b (distance 21). Add a token or choose one.
+- app/globals.css: #B99A5B — nearest token "gold-bright" #c9a227 (distance 55). Add a token or choose one.
+- app/globals.css: #2D7778 — nearest token "success" #2f6b4f (distance 43). Add a token or choose one.
+- app/globals.css: #5F6875 — nearest token "graphite-soft" #5a5a5a (distance 31). Add a token or choose one.
+- app/globals.css: #B94A48 — nearest token "danger" #9b2c2c (distance 51). Add a token or choose one.
+- app/globals.css: #1F2A3D — nearest token "navy-soft" #13294b (distance 18). Add a token or choose one.
+- app/globals.css: #3E9292 — nearest token "success" #2f6b4f (distance 79). Add a token or choose one.
+- app/globals.css: #1A1A1A — nearest token "graphite" #2b2b2b (distance 29). Add a token or choose one.
+- app/globals.css: #FFD23F — nearest token "gold-soft" #e6c96a (distance 51). Add a token or choose one.
+- app/globals.css: #071426 — nearest token "navy" #0b1d3a (distance 22). Add a token or choose one.
+- app/globals.css: #e9dfc5 — nearest token "ivory-deep" #efe7d6 (distance 20). Add a token or choose one.
+- app/globals.css: #e8d7a7 — nearest token "border" #c9c0ab (distance 39). Add a token or choose one.
+- app/globals.css: #f5e7bf — nearest token "ivory-deep" #efe7d6 (distance 24). Add a token or choose one.
+- app/globals.css: #f4d987 — nearest token "gold-soft" #e6c96a (distance 36). Add a token or choose one.
+- app/globals.css: #d5b65e — nearest token "gold-soft" #e6c96a (distance 28). Add a token or choose one.
+- app/globals.css: #d8b95e — nearest token "gold-soft" #e6c96a (distance 24). Add a token or choose one.
+- app/globals.css: #b99a4a — nearest token "gold-bright" #c9a227 (distance 39). Add a token or choose one.
+- app/globals.css: #f0d98e — nearest token "gold-soft" #e6c96a (distance 41). Add a token or choose one.
+- app/globals.css: #d6b85e — nearest token "gold-soft" #e6c96a (distance 26). Add a token or choose one.
+- app/globals.css: #e9d7a4 — nearest token "border" #c9c0ab (distance 40). Add a token or choose one.
+- app/globals.css: #eadfae — nearest token "ivory-deep" #efe7d6 (distance 41). Add a token or choose one.
+- app/globals.css: #147066 — nearest token "teal" #0f5c52 (distance 29). Add a token or choose one.
+- app/globals.css: #0A4A42 — nearest token "teal" #0f5c52 (distance 25). Add a token or choose one.
 - app/globals.css: #000 — nearest token "navy" #0b1d3a (distance 66). Add a token or choose one.
-- app/[locale]/page.tsx: #8A5F1C — nearest token "danger" #9b2c2c (distance 56). Add a token or choose one.
 - app/[locale]/page.tsx: #6B4A8A — nearest token "graphite-soft" #5a5a5a (distance 53). Add a token or choose one.
 - app/[locale]/page.tsx: #2D4A7A — nearest token "teal" #0f5c52 (distance 53). Add a token or choose one.
 - app/[locale]/page.tsx: #7A2D3C — nearest token "danger" #9b2c2c (distance 37). Add a token or choose one.
 - app/[locale]/page.tsx: #4A4A4A — nearest token "graphite-soft" #5a5a5a (distance 28). Add a token or choose one.
+- app/[locale]/ultimate/page.tsx: Tailwind "text-gray-400" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/AgentTerminal.tsx: Tailwind "text-gray-400" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/AgentTerminal.tsx: Tailwind "text-cyan-300" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/AgentTerminal.tsx: Tailwind "text-emerald-300" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/AgentTerminal.tsx: Tailwind "text-amber-300" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/AgentTerminal.tsx: Tailwind "text-violet-300" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/AgentTerminal.tsx: Tailwind "text-orange-300" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/AgentTerminal.tsx: Tailwind "text-green-400" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/AgentTerminal.tsx: Tailwind "text-rose-400" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/AgentTerminal.tsx: Tailwind "border-cyan-400" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/AgentTerminal.tsx: Tailwind "bg-emerald-400" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/AgentTerminal.tsx: Tailwind "bg-gray-500" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/AgentTerminal.tsx: Tailwind "text-gray-200" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/AgentTerminal.tsx: Tailwind "text-gray-500" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/AgentTerminal.tsx: Tailwind "bg-cyan-500" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/UnifiedDashboard.tsx: #0b1220 — nearest token "navy" #0b1d3a (distance 28). Add a token or choose one.
+- components/aalada-ultimate/UnifiedDashboard.tsx: #22d3ee — nearest token "border" #c9c0ab (distance 181). Add a token or choose one.
+- components/aalada-ultimate/UnifiedDashboard.tsx: #f59e0b — nearest token "gold-bright" #c9a227 (distance 52). Add a token or choose one.
+- components/aalada-ultimate/UnifiedDashboard.tsx: #34d399 — nearest token "success" #2f6b4f (distance 128). Add a token or choose one.
+- components/aalada-ultimate/UnifiedDashboard.tsx: Tailwind "bg-emerald-400" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/UnifiedDashboard.tsx: Tailwind "bg-amber-400" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/UnifiedDashboard.tsx: Tailwind "bg-rose-400" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/UnifiedDashboard.tsx: Tailwind "text-cyan-300" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/UnifiedDashboard.tsx: Tailwind "text-cyan-200" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/UnifiedDashboard.tsx: Tailwind "text-gray-400" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/UnifiedDashboard.tsx: Tailwind "text-gray-300" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/UnifiedDashboard.tsx: Tailwind "from-cyan-400" has no mapping in tokens.tailwindMap
+- components/aalada-ultimate/UnifiedDashboard.tsx: Tailwind "to-orange-400" has no mapping in tokens.tailwindMap
+- components/AnimatedBeam.tsx: #ffaa40 — nearest token "gold-soft" #e6c96a (distance 58). Add a token or choose one.
+- components/AnimatedBeam.tsx: #9c40ff — nearest token "border" #c9c0ab (distance 160). Add a token or choose one.
 - components/LegalDashboard.tsx: #4B5964 — nearest token "graphite-soft" #5a5a5a (distance 18). Add a token or choose one.
+- components/MobileNavSupreme.tsx: #f0d98e — nearest token "gold-soft" #e6c96a (distance 41). Add a token or choose one.
 - components/ShowcaseGallery.tsx: #e0e0e0 — nearest token "ivory-deep" #efe7d6 (distance 19). Add a token or choose one.
-- components/ShowcaseGallery.tsx: #737373 — nearest token "graphite-soft" #5a5a5a (distance 43). Add a token or choose one.
+- components/ShowcaseGallery.tsx: #737373 — nearest token "border-strong" #8a7c5e (distance 32). Add a token or choose one.
 - components/ShowcaseGallery.tsx: Tailwind "bg-yellow-500" has no mapping in tokens.tailwindMap
 - components/ShowcaseGallery.tsx: Tailwind "bg-zinc-800" has no mapping in tokens.tailwindMap
 - components/ShowcaseGallery.tsx: Tailwind "border-yellow-600" has no mapping in tokens.tailwindMap
@@ -39,28 +132,139 @@ Mode: CHECK
 - components/ShowcaseGallery.tsx: Tailwind "bg-teal-300" has no mapping in tokens.tailwindMap
 - components/ShowcaseGallery.tsx: Tailwind "bg-zinc-900" has no mapping in tokens.tailwindMap
 - components/ShowcaseGallery.tsx: Tailwind "text-gray-600" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: #e0e0e0 — nearest token "ivory-deep" #efe7d6 (distance 19). Add a token or choose one.
+- components/UIKit.tsx: Tailwind "text-emerald-400" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "bg-yellow-500" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "bg-zinc-800" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "border-yellow-600" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "bg-yellow-400" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "bg-zinc-700" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "bg-purple-600" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "bg-zinc-900" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "border-emerald-500" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "text-emerald-500" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "bg-gray-100" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "text-gray-500" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "border-gray-300" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "bg-gray-50" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "text-gray-400" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "text-gray-700" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "border-gray-400" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "bg-gray-300" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "border-gray-200" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "text-blue-500" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "text-blue-600" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "bg-blue-100" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "bg-gray-800" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "text-gray-300" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "bg-purple-200" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "border-purple-400" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "border-purple-500" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "border-purple-300" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "border-gray-100" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "bg-blue-50" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "border-blue-100" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "text-gray-800" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "border-blue-500" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "bg-blue-600" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "from-zinc-800" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "text-cyan-400" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "border-cyan-500" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "bg-cyan-500" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "bg-cyan-400" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "text-gray-600" has no mapping in tokens.tailwindMap
+- components/UIKit.tsx: Tailwind "bg-neutral-900" has no mapping in tokens.tailwindMap
 
-## Legacy HTML colors (covered by the bridge CSS; migrate pages to Next.js) (27)
-- design-system.html: #101D32 (nearest navy, distance 9)
-- design-system.html: #C6A56B (nearest gold-soft, distance 48)
-- design-system.html: #F4F1E9 (nearest ivory, distance 4)
-- design-system.html: #252B33 (nearest graphite, distance 10)
-- design-system.html: #167C80 (nearest teal, distance 56)
-- design-system.html: #D9CBB4 (nearest border, distance 17)
-- design-system.html: #E8E9EB (nearest ivory, distance 18)
-- index.html: #9A3328 (nearest danger, distance 8)
-- index.html: #E8806F (nearest gold-soft, distance 73)
-- index.html: #8A5F1C (nearest danger, distance 56)
-- index.html: #6B4A8A (nearest graphite-soft, distance 53)
-- index.html: #2D4A7A (nearest teal, distance 53)
-- index.html: #7A2D3C (nearest danger, distance 37)
-- index.html: #4A4A4A (nearest graphite-soft, distance 28)
-- index.html: #5A7A2D (nearest graphite-soft, distance 55)
+## Legacy HTML colors (covered by the bridge CSS; migrate pages to Next.js) (117)
+- al-ilm.html: #263247 (nearest navy-soft, distance 21)
+- al-ilm.html: #DCD8CB (nearest ivory-deep, distance 27)
+- al-ilm.html: #2D7778 (nearest success, distance 43)
+- al-ilm.html: #B99A5B (nearest gold-bright, distance 55)
+- al-ilm.html: #F7F5F0 (nearest on-navy, distance 6)
+- al-ilm.html: #33415C (nearest navy-soft, distance 43)
+- al-ilm.html: #B94A48 (nearest danger, distance 51)
+- design-system.html: #263247 (nearest navy-soft, distance 21)
+- design-system.html: #B99A5B (nearest gold-bright, distance 55)
+- design-system.html: #F7F5F0 (nearest on-navy, distance 6)
+- design-system.html: #33415C (nearest navy-soft, distance 43)
+- design-system.html: #2D7778 (nearest success, distance 43)
+- design-system.html: #DCD8CB (nearest ivory-deep, distance 27)
+- design-system.html: #A9B4C4 (nearest border, distance 42)
+- document.html: #1b2f4f (nearest navy-soft, distance 11)
+- document.html: #2D7778 (nearest success, distance 43)
+- document.html: #fdecea (nearest on-navy, distance 9)
+- document.html: #8a1c1c (nearest danger, distance 28)
+- huwiya.html: #9A3328 (nearest danger, distance 8)
+- huwiya.html: #E8806F (nearest gold-soft, distance 73)
+- huwiya.html: #0F6B53 (nearest teal, distance 15)
+- huwiya.html: #4FC3A1 (nearest border-strong, distance 114)
+- huwiya.html: #8A5F1C (nearest gold, distance 12)
+- huwiya.html: #F0B955 (nearest gold-soft, distance 28)
+- huwiya.html: #0D1126 (nearest navy, distance 23)
+- huwiya.html: #151A35 (nearest navy, distance 12)
+- huwiya.html: #F4EAD3 (nearest ivory-deep, distance 7)
+- huwiya.html: #B5AE9E (nearest border, distance 30)
+- huwiya.html: #2B3259 (nearest navy-soft, distance 29)
+- huwiya.html: #1F4FB5 (nearest teal, distance 101)
+- huwiya.html: #8DB0FF (nearest border, distance 104)
+- huwiya.html: #7A5A12 (nearest gold, distance 27)
+- huwiya.html: #E9C46A (nearest gold-soft, distance 6)
+- huwiya.html: #B23A2B (nearest danger, distance 27)
+- huwiya.html: #F08A77 (nearest gold-soft, distance 65)
+- huwiya.html: #8C5A10 (nearest gold, distance 23)
+- huwiya.html: #8A4B12 (nearest gold, distance 34)
+- huwiya.html: #E2A25C (nearest gold-soft, distance 42)
+- huwiya.html: #3B6B3A (nearest success, distance 24)
+- huwiya.html: #8FC48B (nearest border, distance 66)
+- huwiya.html: #6B4A8A (nearest graphite-soft, distance 53)
+- huwiya.html: #2D4A7A (nearest teal, distance 53)
+- huwiya.html: #7A2D3C (nearest danger, distance 37)
+- huwiya.html: #4A4A4A (nearest graphite-soft, distance 28)
+- huwiya.html: #5A7A2D (nearest gold, distance 52)
+- index.html: #263247 (nearest navy-soft, distance 21)
+- index.html: #141E2E (nearest navy, distance 15)
+- index.html: #1F2A3D (nearest navy-soft, distance 18)
+- index.html: #d8e0e8 (nearest ivory-deep, distance 30)
+- index.html: #c8d1dc (nearest ivory-deep, distance 45)
+- index.html: #e8d7b7 (nearest ivory-deep, distance 36)
+- index.html: #9fb0c3 (nearest border, distance 51)
+- qanun.html: #9A3328 (nearest danger, distance 8)
+- qanun.html: #E8806F (nearest gold-soft, distance 73)
+- qanun.html: #0F6B53 (nearest teal, distance 15)
+- qanun.html: #4FC3A1 (nearest border-strong, distance 114)
+- qanun.html: #8A5F1C (nearest gold, distance 12)
+- qanun.html: #F0B955 (nearest gold-soft, distance 28)
+- qanun.html: #0D1126 (nearest navy, distance 23)
+- qanun.html: #151A35 (nearest navy, distance 12)
+- qanun.html: #F4EAD3 (nearest ivory-deep, distance 7)
+- qanun.html: #B5AE9E (nearest border, distance 30)
+- qanun.html: #2B3259 (nearest navy-soft, distance 29)
+- qanun.html: #1F4FB5 (nearest teal, distance 101)
+- qanun.html: #8DB0FF (nearest border, distance 104)
+- qanun.html: #7A5A12 (nearest gold, distance 27)
+- qanun.html: #E9C46A (nearest gold-soft, distance 6)
+- qanun.html: #B23A2B (nearest danger, distance 27)
+- qanun.html: #F08A77 (nearest gold-soft, distance 65)
+- qanun.html: #8C5A10 (nearest gold, distance 23)
+- qanun.html: #8A4B12 (nearest gold, distance 34)
+- qanun.html: #E2A25C (nearest gold-soft, distance 42)
+- qanun.html: #3B6B3A (nearest success, distance 24)
+- qanun.html: #8FC48B (nearest border, distance 66)
+- qanun.html: #6B4A8A (nearest graphite-soft, distance 53)
+- qanun.html: #2D4A7A (nearest teal, distance 53)
+- qanun.html: #7A2D3C (nearest danger, distance 37)
+- qanun.html: #4A4A4A (nearest graphite-soft, distance 28)
+- qanun.html: #5A7A2D (nearest gold, distance 52)
 
-## Skipped on purpose (2)
-- index.html: #0B1D3A → navy (canvas file)
-- index.html: #0F5C52 → teal (canvas file)
+## Skipped on purpose (4)
+- design-system.html: #FFFFFF → on-teal (legacy HTML)
+- huwiya.html: #0F5C52 → teal-deep (canvas file)
+- qanun.html: #0F5C52 → teal-deep (canvas file)
 
-## Inline color styles (move to classes) (1)
+## Inline color styles (move to classes) (5)
+- app/layout.tsx: 1 inline style(s) with colors
+- app/[locale]/layout.tsx: 1 inline style(s) with colors
+- app/[locale]/page.tsx: 1 inline style(s) with colors
+- components/layout/PageShell.tsx: 1 inline style(s) with colors
 - components/MiyarSharePie.tsx: 1 inline style(s) with colors
 

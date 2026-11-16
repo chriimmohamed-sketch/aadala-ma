@@ -1,0 +1,14 @@
+{
+  "$comment": "Preview environment for AADALA.MA — a separate Worker so production is never touched by a preview deploy. Mirrors wrangler.jsonc but with its own worker name and its own assets dir.",
+  "name": "aadala-ma-preview",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

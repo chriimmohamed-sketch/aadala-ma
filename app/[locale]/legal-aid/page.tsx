@@ -1,6 +1,7 @@
 import Link from "next/link";
 import PageShell from "@/components/layout/PageShell";
 import { procedures } from "@/data/legal-services";
+import LegalStatusNotice from "@/components/LegalStatusNotice";
 
 const prepare = [
   "حدّد نوع الدعوى أو الشكاية والمحكمة المختصة.",
@@ -30,6 +31,7 @@ export default async function LegalAidPage({ params }: { params: Promise<{ local
         <h2 className="text-xl font-bold text-navy">{directAnswer.question}</h2>
         <p className="mt-2 text-sm leading-relaxed text-graphite">{directAnswer.answer}</p>
       </div>
+      <LegalStatusNotice className="mb-6" />
       <section className="aadala-card p-5">
         <h2 className="text-lg font-semibold text-navy">ما المقصود؟</h2>
         <p className="mt-2 text-sm leading-7 text-graphite">

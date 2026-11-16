@@ -2,6 +2,7 @@ import Link from "next/link";
 import PageShell from "@/components/layout/PageShell";
 import ReviewMode from "@/components/ReviewMode";
 import { legalSources } from "@/data/legal-sources";
+import LegalStatusNotice from "@/components/LegalStatusNotice";
 
 export default async function AcademicPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -23,7 +24,8 @@ export default async function AcademicPage({ params }: { params: Promise<{ local
         <h2 className="text-xl font-bold text-navy">{directAnswer.question}</h2>
         <p className="mt-2 text-sm leading-relaxed text-graphite">{directAnswer.answer}</p>
       </div>
-      <h2 className="mb-3 text-lg font-semibold text-navy">المصורות بحسب النوع</h2>
+      <LegalStatusNotice className="mb-6" />
+      <h2 className="mb-3 text-lg font-semibold text-navy">المصادر بحسب النوع</h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {Object.entries(byType).map(([type, list]) => (
           <section key={type} className="aadala-card p-5">
@@ -44,11 +46,11 @@ export default async function AcademicPage({ params }: { params: Promise<{ local
         <h2 className="text-lg font-semibold text-navy">نموذج بطاقة استشهاد</h2>
         <p className="mt-2 text-sm leading-7 text-graphite-soft">املأ الحقول من النص الرسمي نفسه، لا من الذاكرة ولا من ملخص.</p>
         <pre dir="rtl" className="mt-3 overflow-x-auto rounded border border-border bg-ivory-deep p-3 text-sm leading-7 text-graphite">{`نوع النص: ...
-العنوان الرسمي: ...
-المادة: ...
-الجريدة الرسمية (العدد والتاريخ): ...
-تاريخ الاطلاع: ...
-ملاحظة: هل النص محيَّن أم الصيغة الأصلية؟`}</pre>
+ العنوان الرسمي: ...
+ المادة: ...
+ الجريدة الرسمية (العدد والتاريخ): ...
+ تاريخ الاطلاع: ...
+ ملاحظة: هل النص محيَّن أم الصيغة الأصلية؟`}</pre>
       </section>
 
       <ReviewMode locale={locale} />

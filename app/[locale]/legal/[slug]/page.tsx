@@ -4,6 +4,7 @@ import Footer from "@/components/layout/Footer";
 import CitationActions from "@/components/CitationActions";
 import LegalArticleView, { LegalTreeView } from "@/components/LegalArticle";
 import SourceCard from "@/components/SourceCard";
+import LegalStatusNotice from "@/components/LegalStatusNotice";
 import { legalSources } from "@/data/legal-sources";
 import { legalDatabase } from "@/data/legal-database";
 import { getStructuredDocument, isStructured } from "@/lib/legal-data";
@@ -63,14 +64,10 @@ export default async function DetailPage({ params }: { params: Promise<{ locale:
         <p className="mt-1 text-sm text-graphite-soft">{src.type} — {src.description}</p>
         <div className="aadala-divider mt-3" />
 
-        <div className="aadala-card p-4 border border-red/20 bg-red/5 mt-4">
-          <p className="text-xs text-red font-medium">
-            ⚠️ تنبيه: الحالة القانونية (ساري/معدّل/ملغى) لم تُتحقق بعد من سجلات النفاذ في الجريدة الرسمية.
-            ما يلي منقول كما ورد في نص المصدر نفسه، وليس تأكيدًا قانونيًا.
-            هذه المادة للاستعراض والاسترشاد فقط ولا تغني عن الاستشارة القانونية —
-            راجع مختصًا أو المحكمة المعنية قبل الاعتماد.
-          </p>
-        </div>
+        <LegalStatusNotice
+          className="mt-4"
+          text="الحالة القانونية (ساري/معدّل/ملغى) لم تُتحقق بعد من سجلات النفاذ في الجريدة الرسمية. ما يلي منقول كما ورد في نص المصدر نفسه، وليس تأكيدًا قانونيًا. هذه المادة للاستعراض والاسترشاد فقط ولا تغني عن الاستشارة القانونية — راجع مختصًا أو المحكمة المعنية قبل الاعتماد."
+        />
 
         <dl className="mt-4 grid grid-cols-1 gap-2 text-sm sm:grid-cols-3">
           <div className="aadala-card p-3"><dt className="font-semibold text-brass">حالة التحقق</dt><dd className="text-graphite">{verification}</dd></div>
