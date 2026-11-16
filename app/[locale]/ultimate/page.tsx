@@ -17,7 +17,7 @@ export default async function UltimatePage({ params }: { params: Promise<{ local
       <GalaxyCanvas />
       <div className="relative z-10">
         <HeaderSupreme locale={locale} messages={messages} />
-        <main className="mx-auto w-full max-w-7xl px-4 py-6">
+        <main id="main" className="mx-auto w-full max-w-7xl px-4 py-6">
           <div className="mb-6">
             <h1 className="text-3xl font-extrabold tracking-tight">AALADA ULTIMATE</h1>
             <p className="text-sm text-gray-400">

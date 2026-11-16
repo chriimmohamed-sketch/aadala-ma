@@ -9,7 +9,7 @@ export default async function MiyarPage({ params }: { params: Promise<{ locale: 
   return (
     <div className="flex min-h-screen flex-col bg-ivory">
       <Header locale={locale} messages={messages} />
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
+      <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
         <h1 className="text-3xl font-bold text-navy">MIYAR — محرك المواريث والتركات والقسمة</h1>
         <div className="aadala-divider mt-3" />
         <p className="mt-3 text-sm text-graphite-soft">محرك حسابي حتمي (experimental). requires expert review.</p>

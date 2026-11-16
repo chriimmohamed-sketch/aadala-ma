@@ -9,7 +9,7 @@ export default async function DashboardPage({ params }: { params: Promise<{ loca
   return (
     <div className="flex min-h-screen flex-col bg-bg">
       <Header locale={locale} messages={messages} />
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         <LegalDashboard />
       </main>
       <Footer locale={locale} messages={messages} />

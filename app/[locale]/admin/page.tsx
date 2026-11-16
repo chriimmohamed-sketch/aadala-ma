@@ -79,7 +79,7 @@ function AdminGate({ locale }: { locale: string }) {
   return (
     <div className="flex min-h-screen flex-col bg-ivory">
       <Header locale={locale} messages={{}} />
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
+      <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
         <div className="aadala-card p-5 border border-gold/20 mb-6">
           <h2 className="text-xl font-bold text-navy">{directAnswer.question}</h2>
           <p className="mt-2 text-sm leading-relaxed text-graphite">{directAnswer.answer}</p>

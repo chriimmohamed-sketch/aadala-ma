@@ -9,7 +9,7 @@ export default async function MfaPage({ params }: { params: Promise<{ locale: st
   return (
     <div className="flex min-h-screen flex-col bg-ivory">
       <Header locale={locale} messages={messages} />
-      <main className="flex-1 py-10">
+      <main id="main" className="flex-1 py-10">
         <MfaForm locale={locale} />
       </main>
       <Footer locale={locale} messages={messages} />

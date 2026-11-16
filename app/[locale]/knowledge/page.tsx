@@ -85,7 +85,7 @@ export default async function KnowledgePage({
       <Header locale={locale} messages={messages} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         <section className="kbd-hero" aria-label="العلم — المعرفة القانونية">
           <div className="kbd-hero-inner wrap">
             <span className="num">AADALA KNOWLEDGE · العلم</span>

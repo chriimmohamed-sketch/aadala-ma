@@ -10,7 +10,7 @@ export default async function CriminalPage({ params }: { params: Promise<{ local
   return (
     <div className="flex min-h-screen flex-col bg-ivory">
       <Header locale={locale} messages={messages} />
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
+      <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
 
         <LegalStatusNotice className="mb-4" />
         <h1 className="text-3xl font-bold text-navy">CRIMINAL LAW LAB — المختبر الجنائي</h1>

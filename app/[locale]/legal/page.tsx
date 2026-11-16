@@ -13,7 +13,7 @@ export default async function LegalPage({ params }: { params: Promise<{ locale: 
   return (
     <div className="flex min-h-screen flex-col bg-bg">
       <Header locale={locale} messages={messages} />
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
+      <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
         <h1 className="text-3xl font-bold text-navy">الموسوعة القانونية</h1>
         <div className="aadala-divider mt-3" />
         <p className="mt-3 text-sm text-muted">17 تصنيفاً. لا محتوى افتراضي — كل نص مرتبط بمصدر قابل للتحقق.</p>

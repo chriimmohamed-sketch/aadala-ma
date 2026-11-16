@@ -9,7 +9,7 @@ export default async function RegisterPage({ params }: { params: Promise<{ local
   return (
     <div className="flex min-h-screen flex-col bg-bg">
       <Header locale={locale} messages={messages} />
-      <main className="flex-1 px-4 py-10">
+      <main id="main" className="flex-1 px-4 py-10">
         <RegisterForm locale={locale} />
       </main>
       <Footer locale={locale} messages={messages} />

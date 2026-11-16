@@ -9,7 +9,7 @@ export default async function ShowcasePage({ params }: { params: Promise<{ local
   return (
     <div className="flex min-h-screen flex-col bg-bg">
       <Header locale={locale} messages={messages} />
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         <ShowcaseGallery locale={locale} />
       </main>
       <Footer locale={locale} messages={messages} />
