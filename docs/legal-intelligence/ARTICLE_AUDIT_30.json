@@ -1,0 +1,308 @@
+{
+  "method": "re-extract original PDF per page, locate article span, verify opening/closing clause verbatim on claimed pages, verify no bleed from previous article",
+  "seed": 20261116,
+  "sample_size": 30,
+  "passed": 30,
+  "results": [
+    {
+      "law": "39.08",
+      "article": "4",
+      "pdf_pages": "3-3",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "39.08",
+      "article": "7",
+      "pdf_pages": "4-4",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "39.08",
+      "article": "97",
+      "pdf_pages": "20-21",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "39.08",
+      "article": "108",
+      "pdf_pages": "22-23",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "39.08",
+      "article": "110",
+      "pdf_pages": "23-23",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "39.08",
+      "article": "165",
+      "pdf_pages": "31-31",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "39.08",
+      "article": "173",
+      "pdf_pages": "32-33",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "39.08",
+      "article": "208",
+      "pdf_pages": "38-38",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "39.08",
+      "article": "258",
+      "pdf_pages": "48-48",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "39.08",
+      "article": "259",
+      "pdf_pages": "48-48",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "39.08",
+      "article": "260",
+      "pdf_pages": "48-48",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "39.08",
+      "article": "267",
+      "pdf_pages": "49-49",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "39.08",
+      "article": "295",
+      "pdf_pages": "54-54",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "39.08",
+      "article": "326",
+      "pdf_pages": "60-60",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "39.08",
+      "article": "332",
+      "pdf_pages": "61-61",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "31.08",
+      "article": "11",
+      "pdf_pages": "5-5",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "31.08",
+      "article": "59",
+      "pdf_pages": "19-20",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "31.08",
+      "article": "64",
+      "pdf_pages": "21-21",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "31.08",
+      "article": "67",
+      "pdf_pages": "22-22",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "31.08",
+      "article": "93",
+      "pdf_pages": "30-30",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "31.08",
+      "article": "95",
+      "pdf_pages": "31-31",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "31.08",
+      "article": "113",
+      "pdf_pages": "35-36",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "31.08",
+      "article": "130",
+      "pdf_pages": "40-40",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "31.08",
+      "article": "135",
+      "pdf_pages": "42-42",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "31.08",
+      "article": "144",
+      "pdf_pages": "44-44",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "31.08",
+      "article": "145",
+      "pdf_pages": "44-45",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "31.08",
+      "article": "146",
+      "pdf_pages": "45-45",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "31.08",
+      "article": "149",
+      "pdf_pages": "45-46",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "31.08",
+      "article": "162",
+      "pdf_pages": "49-49",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    },
+    {
+      "law": "31.08",
+      "article": "182",
+      "pdf_pages": "55-55",
+      "open_clause": true,
+      "close_clause": true,
+      "boundary": true,
+      "bleed": "",
+      "result": "PASS"
+    }
+  ]
+}
