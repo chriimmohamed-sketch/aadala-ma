@@ -1,6 +1,5 @@
 import Link from "next/link";
 import PageShell from "@/components/layout/PageShell";
-import LegalStatusNotice from "@/components/LegalStatusNotice";
 
 const topics = ["الزواج", "الطلاق والتطليق", "النفقة", "الحضانة", "الإرث", "الوصية"];
 
@@ -25,7 +24,6 @@ export default async function ShariaPage({ params }: { params: Promise<{ locale:
         <h2 className="text-xl font-bold text-navy">{directAnswer.question}</h2>
         <p className="mt-2 text-sm leading-relaxed text-graphite">{directAnswer.answer}</p>
       </div>
-      <LegalStatusNotice className="mb-6" />
       <section className="aadala-card p-5">
         <h2 className="text-lg font-semibold text-navy">محاور الأحوال الشخصية</h2>
         <p className="mt-2 text-sm leading-7 text-graphite-soft">هذه المحاور ستُفتح تباعًا عند إضافة نصوصها الموثقة إلى المكتبة.</p>

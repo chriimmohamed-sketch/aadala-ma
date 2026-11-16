@@ -4,7 +4,6 @@ import Footer from "@/components/layout/Footer";
 import { legalSources } from "@/data/legal-sources";
 import { legalCategories } from "@/data/legal-categories";
 import { legalDatabase } from "@/data/legal-database";
-import LegalStatusNotice from "@/components/LegalStatusNotice";
 import Link from "next/link";
 
 export default async function LegalPage({ params }: { params: Promise<{ locale: string }> }) {
@@ -17,11 +16,6 @@ export default async function LegalPage({ params }: { params: Promise<{ locale: 
         <h1 className="text-3xl font-bold text-navy">الموسوعة القانونية</h1>
         <div className="aadala-divider mt-3" />
         <p className="mt-3 text-sm text-muted">17 تصنيفاً. لا محتوى افتراضي — كل نص مرتبط بمصدر قابل للتحقق.</p>
-
-        <LegalStatusNotice
-          className="mt-4"
-          text="الحالة القانونية (ساري/معدّل/ملغى) لم تُتحقق بعد من سجلات النفاذ في الجريدة الرسمية. الحقول أدناه منقولة كما وردت في نص المصدر نفسه، وليست تأكيدًا قانونيًا. هذه المواد للاستعراض والاسترشاد فقط ولا تغني عن الاستشارة القانونية — راجع مختصًا أو المحكمة المعنية قبل الاعتماد."
-        />
 
         <h2 className="mt-8 text-xl font-bold text-navy">التصنيفات (17)</h2>
         <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
@@ -50,13 +44,8 @@ export default async function LegalPage({ params }: { params: Promise<{ locale: 
                 <div><dt className="font-semibold text-brass">الصيغة</dt><dd className="text-graphite">{r.version}</dd></div>
                 <div><dt className="font-semibold text-brass">الإصدار</dt><dd className="text-graphite">{r.promulgated ?? "—"}</dd></div>
                 <div><dt className="font-semibold text-brass">النشر</dt><dd className="text-graphite">{r.published ?? "—"}</dd></div>
-                <div><dt className="font-semibold text-brass">التعديلات (كما ورد في المصدر)</dt><dd className="text-graphite">{r.amendments}</dd></div>
-                <div><dt className="font-semibold text-brass">الإلغاء (كما ورد في المصدر)</dt><dd className="text-graphite">{r.abrogation}</dd></div>
-                <div><dt className="font-semibold text-brass">الحالة القانونية</dt><dd className="text-graphite">
-                  {r.legalStatusVerified
-                    ? <span className="text-success font-semibold">مُتحقَّق منها{r.legalStatusSource ? ` — ${r.legalStatusSource}` : ""}</span>
-                    : <span className="text-danger font-semibold">غير مُتحقَّق منها</span>}
-                </dd></div>
+                <div><dt className="font-semibold text-brass">التعديلات</dt><dd className="text-graphite">{r.amendments}</dd></div>
+                <div><dt className="font-semibold text-brass">الإلغاء</dt><dd className="text-graphite">{r.abrogation}</dd></div>
                 <div><dt className="font-semibold text-brass">المواد المخزنة</dt><dd className="text-graphite">{r.articlesCount > 0 ? r.articlesCount : "تُحصَرم regex فقط (الاستخراج مختلط الصياغة)"}</dd></div>
                 <div><dt className="font-semibold text-brass">مصدر الاستيراد</dt><dd className="text-graphite">{r.sourceNote}</dd></div>
                 <div><dt className="font-semibold text-brass">SHA-256</dt><dd className="text-graphite" dir="ltr">{r.sha256.slice(0, 16)}… ({r.bytes} بايت)</dd></div>

@@ -17,11 +17,11 @@ const TABS = [
 export default function MobileNav({ locale }: { locale: string }) {
   const [active, setActive] = useState("home");
   return (
-    <nav aria-label="تنقل سريع" className="fixed bottom-4 left-1/2 z-40 flex -translate-x-1/2 items-center gap-1 rounded-full border border-gold-bright/25 bg-brand-navy/90 p-2 shadow-2xl backdrop-blur-lg md:hidden">
+    <nav aria-label="تنقل سريع" className="fixed bottom-4 left-1/2 z-40 flex -translate-x-1/2 items-center gap-1 rounded-full border border-white/20 bg-navy/85 p-2 shadow-2xl backdrop-blur-lg md:hidden">
       {TABS.map((t) => (
-        <Link key={t.id} href={`/${locale}${t.href}`} onClick={() => setActive(t.id)} className="relative rounded-full p-2.5 text-on-navy/70">
+        <Link key={t.id} href={`/${locale}${t.href}`} onClick={() => setActive(t.id)} className="relative rounded-full p-2.5 text-white/70">
           <t.icon size={20} />
-          {active === t.id && <motion.span layoutId="mobileTab" className="absolute inset-0 -z-10 rounded-full bg-gold-bright/25" transition={{ type: "spring", stiffness: 300, damping: 20 }} />}
+          {active === t.id && <motion.span layoutId="mobileTab" className="absolute inset-0 -z-10 rounded-full bg-teal/30" transition={{ type: "spring", stiffness: 300, damping: 20 }} />}
         </Link>
       ))}
     </nav>

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import PageShell from "@/components/layout/PageShell";
 import { legalSources } from "@/data/legal-sources";
-import LegalStatusNotice from "@/components/LegalStatusNotice";
 
 const tools = [
   { href: "/legal", title: "الموسوعة القانونية", text: `${legalSources.length} مصادر قابلة للقراءة والبحث.` },
@@ -37,7 +36,6 @@ export default async function StudentPage({ params }: { params: Promise<{ locale
         <h2 className="text-xl font-bold text-navy">{directAnswer.question}</h2>
         <p className="mt-2 text-sm leading-relaxed text-graphite">{directAnswer.answer}</p>
       </div>
-      <LegalStatusNotice className="mb-6" />
       <section className="aadala-card mb-6 border-2 !border-gold/60 p-5">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="max-w-2xl">

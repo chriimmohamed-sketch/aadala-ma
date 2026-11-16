@@ -5,7 +5,6 @@ import Link from "next/link";
 import { legalSources } from "@/data/legal-sources";
 import quality from "@/data/legal-quality.json";
 import { retrieveWithRefs } from "@/lib/ai-assistant/retrieval";
-import LegalStatusNotice from "@/components/LegalStatusNotice";
 
 const unreliable = legalSources.filter((s) => (quality as Record<string, { quality: string }>)[s.slug]?.quality === "unreliable");
 
@@ -21,7 +20,6 @@ export default async function SearchPage({ params, searchParams }: { params: Pro
       <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
         <h1 className="text-3xl font-bold text-navy">البحث في النصوص القانونية</h1>
         <div className="aadala-divider mt-3" />
-        <LegalStatusNotice className="mt-4" />
         <form method="get" role="search" className="zl-ask mt-6">
           <input name="q" defaultValue={query} maxLength={300} placeholder="كلمات من النص، أو رقم فصل/مادة مثل: الفصل 230" aria-label="بحث" autoComplete="off" />
           <button type="submit" className="zl-btn">بحث</button>

@@ -2,7 +2,6 @@ import { getMessages } from "@/lib/i18n/getMessages";
 import Header from "@/components/layout/HeaderSupreme";
 import Footer from "@/components/layout/Footer";
 import CriminalLab from "@/components/CriminalLab";
-import LegalStatusNotice from "@/components/LegalStatusNotice";
 
 export default async function CriminalPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -12,7 +11,6 @@ export default async function CriminalPage({ params }: { params: Promise<{ local
       <Header locale={locale} messages={messages} />
       <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
 
-        <LegalStatusNotice className="mb-4" />
         <h1 className="text-3xl font-bold text-navy">CRIMINAL LAW LAB — المختبر الجنائي</h1>
         <div className="aadala-divider mt-3" />
         <p className="mt-3 text-sm text-graphite-soft">محتوى أكاديمي. لا إرشادات لارتكاب جرائم أو الإفلات.</p>

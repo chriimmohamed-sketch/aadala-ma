@@ -10,7 +10,6 @@ import FloatingAI from "@/components/FloatingAI";
 import HtmlLangDir from "@/components/HtmlLangDir";
 import SmoothScroll from "@/components/SmoothScroll";
 import "../globals.css";
-import "../design-v3.css";
 
 export const dynamicParams = false;
 
@@ -62,7 +61,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
     <div lang={locale} dir={dir} className="min-h-screen antialiased" style={{ backgroundColor: "var(--aadala-ivory)", color: "var(--aadala-graphite)" }}>
       <HtmlLangDir locale={locale} rtl={dir === "rtl"} />
       <SmoothScroll />
-      <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-brand-navy focus:px-4 focus:py-2 focus:text-on-navy">تخطي إلى المحتوى الرئيسي</a>
+      <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-navy focus:px-4 focus:py-2 focus:text-ivory">تخطي إلى المحتوى الرئيسي</a>
       <GlobalLoader />
       {children}
       <MobileNavSupreme locale={locale} />

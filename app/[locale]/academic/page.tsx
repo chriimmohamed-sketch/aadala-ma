@@ -2,7 +2,6 @@ import Link from "next/link";
 import PageShell from "@/components/layout/PageShell";
 import ReviewMode from "@/components/ReviewMode";
 import { legalSources } from "@/data/legal-sources";
-import LegalStatusNotice from "@/components/LegalStatusNotice";
 
 export default async function AcademicPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -24,7 +23,6 @@ export default async function AcademicPage({ params }: { params: Promise<{ local
         <h2 className="text-xl font-bold text-navy">{directAnswer.question}</h2>
         <p className="mt-2 text-sm leading-relaxed text-graphite">{directAnswer.answer}</p>
       </div>
-      <LegalStatusNotice className="mb-6" />
       <h2 className="mb-3 text-lg font-semibold text-navy">المصادر بحسب النوع</h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {Object.entries(byType).map(([type, list]) => (

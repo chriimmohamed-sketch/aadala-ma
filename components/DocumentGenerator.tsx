@@ -83,7 +83,7 @@ export default function DocumentGenerator() {
       <div className="flex justify-center gap-3 text-xs">
         {[1, 2, 3].map((s) => (
           <span key={s} className={`flex items-center gap-1 ${step >= s ? "text-teal" : "text-graphite-soft"}`}>
-            <span className={`flex h-6 w-6 items-center justify-center rounded-full font-bold ${step >= s ? "bg-teal-deep text-on-teal" : "bg-ivory-deep"}`}>{s}</span>
+            <span className={`flex h-6 w-6 items-center justify-center rounded-full font-bold ${step >= s ? "bg-teal text-white" : "bg-ivory-deep"}`}>{s}</span>
             {s === 1 ? "القالب" : s === 2 ? "البيانات" : "المعاينة"}
           </span>
         ))}
@@ -94,7 +94,7 @@ export default function DocumentGenerator() {
           <div className="mb-4 flex flex-wrap justify-center gap-2">
             {CATEGORIES.map(([k, v]) => (
               <button key={k} type="button" onClick={() => setCategory(k)}
-                className={`rounded-full px-3 py-1 text-xs font-medium ${category === k ? "bg-teal-deep text-on-teal" : "border border-border bg-surface text-graphite"}`}>
+                className={`rounded-full px-3 py-1 text-xs font-medium ${category === k ? "bg-teal text-white" : "border border-border bg-surface text-graphite"}`}>
                 {v}
               </button>
             ))}

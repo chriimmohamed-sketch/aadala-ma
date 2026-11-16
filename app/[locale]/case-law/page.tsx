@@ -3,7 +3,6 @@ import { getMessages } from "@/lib/i18n/getMessages";
 import Header from "@/components/layout/HeaderSupreme";
 import Footer from "@/components/layout/Footer";
 import { searchDecisions } from "@/lib/jurisprudence/search";
-import LegalStatusNotice from "@/components/LegalStatusNotice";
 
 export default async function CaseLawPage({ params, searchParams }: { params: Promise<{ locale: string }>; searchParams: Promise<Record<string, string>> }) {
   const { locale } = await params;
@@ -35,7 +34,6 @@ export default async function CaseLawPage({ params, searchParams }: { params: Pr
           <h2 className="text-xl font-bold text-navy">{directAnswer.question}</h2>
           <p className="mt-2 text-sm leading-relaxed text-graphite">{directAnswer.answer}</p>
         </div>
-        <LegalStatusNotice className="mb-6" />
         <h1 className="text-3xl font-bold text-navy">AADALA JURISPRUDENCE — الاجتهاد القضائي</h1>
         <div className="aadala-divider mt-3" />
         <p className="mt-3 text-sm text-graphite-soft">قاعدة قرارات/أحكام متاحة قانوناً. لا قرارات مختلقة. حالة فارغة حتى استيراد مصادر موثقة.</p>
