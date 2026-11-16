@@ -1,5 +1,11 @@
 # AADALA.MA — Design System v3
 
+> **NOT SHIPPED (2026-11-16).** The owner rejected Design System v3 and asked to keep the
+> original design, option appearance, and visual/structural layout. This document is retained
+> as a design-analysis reference only. `app/design-v3.css` is no longer imported;
+> `design/tokens.json` and `app/globals.css` were restored to the pre-v3 baseline, and the
+> restyled components were reverted byte-for-byte.
+
 > 2026-11-16 — consolidation of three stacked design layers into one token-driven system.
 > **Additive only**: nothing was removed. Every prior rule still exists; the v3 layer resolves it.
 

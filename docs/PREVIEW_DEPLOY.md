@@ -41,8 +41,8 @@ npx wrangler versions list | head
 
 Everything the current branch has:
 
-- Design system v3 (token-driven, 0 WCAG contrast failures) — `app/design-v3.css`
-- Legal-status notice on every legal page — `components/LegalStatusNotice.tsx`
+- The original site design (Design Refresh v2 baseline) — v3 is not imported
+- Legal-intelligence data and docs (SGG verification, article audit, registry flags)
 - Supabase Auth admin gate (requires the RLS migration to be applied first)
 - 488 static pages across 10 locales
 
