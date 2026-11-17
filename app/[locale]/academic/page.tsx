@@ -13,7 +13,7 @@ export default async function AcademicPage({ params }: { params: Promise<{ local
   // Direct answer section (added for exit-test compliance / YMYL)
   const directAnswer = {
     question: "كيف أكتب بطاقة الاستشهاد القانونية؟",
-    answer: "type: مصدر قانوني (مدونة، قانون، قرار قضائي). title: العنوان الرسمي. article: رقم المادة verbatim. journal-official: العدد والتاريخ. date consulted: التاريخ. note: هل النص محمَّل أم الصيغة الأصلية؟ Must match the official text, not AI summary.",
+    answer: "تضم بطاقة الاستشهاد: نوع المصدر (مدونة، قانون، قرار قضائي)، والعنوان الرسمي، ورقم المادة كما ورد حرفيًا، والعدد والتاريخ، ثم ملاحظة حول ما إذا كان النص محمَّلًا أم الصيغة الأصلية. القاعدة: تطابق البطاقة النص الرسمي نفسه، لا ملخصًا آليًا.",
     verified: true,
   };
 

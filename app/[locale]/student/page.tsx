@@ -26,7 +26,7 @@ export default async function StudentPage({ params }: { params: Promise<{ locale
   // Direct answer section (added for exit-test compliance / YMYL)
   const directAnswer = {
     question: "كيف أستشهد بمصدر قانوني بشكل صحيح؟",
-    answer: "1. استخرج النص من المصدر الرسمي (الجريدة الرسمية أو المحكمة). 2. اكتب رقم المادة verbatim. 3. سجّل تاريخ النشر والعدد. 4. دوّنipage the الصفحة. لا تنقل رقم مادة من أداة ذكاء اصطناعي دون مطابقته بالنص الأصلي.",
+    answer: "1. استخرج النص من المصدر الرسمي (الجريدة الرسمية أو المحكمة). 2. اكتب رقم المادة كما ورد حرفيًا. 3. سجّل تاريخ النشر والعدد. 4. دوّن رقم الصفحة. لا تنقل رقم مادة من أداة ذكاء اصطناعي دون مطابقته بالنص الأصلي.",
     confidence: "high",
   };
 

@@ -1,23 +1,40 @@
-import { getMessages } from "@/lib/i18n/getMessages";
-import Header from "@/components/layout/HeaderSupreme";
-import Footer from "@/components/layout/Footer";
+import V5Shell from "@/components/layout/V5Shell";
+import AgentTerminal from "@/components/aalada-ultimate/AgentTerminal";
 import MiyarEngine from "@/components/MiyarEngine";
+import { siteUrl } from "@/lib/site/config";
 
 export default async function MiyarPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const messages = await getMessages(locale);
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: "AADALA.MA — محرك المواريث",
+      description: "محرك حسابي حتمي (نسخة تجريبية) يخضع لمراجعة المختص.",
+      url: `${siteUrl}/${locale}/miyar`,
+      inLanguage: locale,
+      isPartOf: { "@type": "WebSite", name: "AADALA.MA", url: siteUrl },
+    },
+  ];
   return (
-    <div className="flex min-h-screen flex-col bg-ivory">
-      <Header locale={locale} messages={messages} />
-      <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
-        <h1 className="text-3xl font-bold text-navy">MIYAR — محرك المواريث والتركات والقسمة</h1>
-        <div className="aadala-divider mt-3" />
-        <p className="mt-3 text-sm text-graphite-soft">محرك حسابي حتمي (experimental). requires expert review.</p>
-        <div className="mt-6">
-          <MiyarEngine locale={locale} />
-        </div>
+    <V5Shell locale={locale}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <main id="main">
+        <section id="assistant" className="section-v5">
+          <div className="wrap">
+            <div className="rv"><span className="num-v5">٠١ · الميراث</span>
+              <h1 className="title-v5">MIYAR — محرك المواريث والتركات والقسمة</h1>
+              <p className="sub-v5">محرك حسابي حتمي (نسخة تجريبية) يخضع لمراجعة المختص.</p>
+            </div>
+            <div style={{ marginTop: "2rem" }}>
+              <MiyarEngine locale={locale} />
+            </div>
+          </div>
+        </section>
       </main>
-      <Footer locale={locale} messages={messages} />
-    </div>
+      <div className="legacy-agent">
+        <AgentTerminal />
+      </div>
+    </V5Shell>
   );
 }

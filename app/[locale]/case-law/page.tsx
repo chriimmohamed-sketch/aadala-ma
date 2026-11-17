@@ -1,13 +1,10 @@
 export const dynamic = "force-dynamic";
-import { getMessages } from "@/lib/i18n/getMessages";
-import Header from "@/components/layout/HeaderSupreme";
-import Footer from "@/components/layout/Footer";
+import V5Shell from "@/components/layout/V5Shell";
 import { searchDecisions } from "@/lib/jurisprudence/search";
 
 export default async function CaseLawPage({ params, searchParams }: { params: Promise<{ locale: string }>; searchParams: Promise<Record<string, string>> }) {
   const { locale } = await params;
   const sp = await searchParams;
-  const messages = await getMessages(locale);
 
   // Search decisions from jurisprudence engine
   const results = searchDecisions({
@@ -22,13 +19,12 @@ export default async function CaseLawPage({ params, searchParams }: { params: Pr
   // Direct answer section (added for exit-test compliance / YMYL)
   const directAnswer = {
     question: "ماذا يشمل الاجتهاد القضائي الموثق؟",
-    answer: "يُستمد الاجتهاد من قرارات ومحاكم موثوقة source, مع القاعدة المستخلصة من المادة المقابلة. أمثلة: حق الشفعة المادة 298–300، الرهن الرسمي المادة 170، البيع العقاري المادة 295.",
+    answer: "يُستمد الاجتهاد من قرارات ومحاكم موثوقة، مع القاعدة المستخلصة من المادة المقابلة. أمثلة: حق الشفعة المادة 298–300، الرهن الرسمي المادة 170، البيع العقاري المادة 295.",
     score: 4.34,
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-ivory">
-      <Header locale={locale} messages={messages} />
+    <V5Shell locale={locale}>
       <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
         <div className="aadala-card p-5 border border-gold/20 mb-6">
           <h2 className="text-xl font-bold text-navy">{directAnswer.question}</h2>
@@ -66,7 +62,6 @@ export default async function CaseLawPage({ params, searchParams }: { params: Pr
           )}
         </div>
       </main>
-      <Footer locale={locale} messages={messages} />
-    </div>
+    </V5Shell>
   );
 }

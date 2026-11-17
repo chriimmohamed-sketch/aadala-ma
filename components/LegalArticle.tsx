@@ -91,14 +91,14 @@ export default function LegalArticleView({
             ← السابق: الفصل {prev.number}
           </a>
         ) : (
-          <span className="text-xs text-graphite-soft">لا السابق</span>
+          <span className="text-xs text-graphite-soft">أول مادة</span>
         )}
         {next ? (
           <a href={`#${next.number}`} className="aadala-btn-ghost text-xs">
             التالي: الفصل {next.number} →
           </a>
         ) : (
-          <span className="text-xs text-graphite-soft">لا التالي</span>
+          <span className="text-xs text-graphite-soft">آخر مادة</span>
         )}
       </nav>
     </article>

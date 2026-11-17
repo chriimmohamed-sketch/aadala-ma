@@ -1,104 +1,123 @@
 @import "tailwindcss";
 @import "lenis/dist/lenis.css";
-/* AADALA.MA — Design Constitution (2026-11, preserved reference layer).
-   Researched Premium Moroccan Legal Intelligence palette. Placed BEFORE the live
-   @design-tokens layer; the live layer wins on collisions by design. */
+/* Homepage Moroccan-city layer (kept global so /[locale] has a single CSS entry). */
+@import "./home-moroccan.css";
+
+/* Tailwind colour/font bridges (legacy utility names used across pages). */
+@theme inline {
+  --color-navy: var(--aadala-navy);
+  --color-navy-soft: var(--aadala-navy-soft);
+  --color-gold: var(--aadala-gold);
+  --color-gold-soft: var(--aadala-gold-soft);
+  --color-ivory: var(--aadala-ivory);
+  --color-ivory-deep: var(--aadala-ivory-deep);
+  --color-graphite: var(--aadala-graphite);
+  --color-graphite-soft: var(--aadala-graphite-soft);
+  --color-surface: var(--aadala-surface);
+  --color-border: var(--aadala-border);
+  --color-line: var(--aadala-border);
+  --color-ink: var(--aadala-graphite);
+  --color-danger: var(--aadala-danger);
+  --color-success: var(--aadala-success);
+  --color-teal: var(--aadala-teal);
+  --color-bg: var(--aadala-bg);
+  --color-muted: var(--aadala-muted);
+  --color-brass: var(--brass);
+
+  --font-display: "Reem Kufi", "Noto Kufi Arabic", "Amiri", Tahoma, sans-serif;
+  --font-body: "Tajawal", "Cairo", "IBM Plex Sans Arabic", "Noto Sans Arabic", "Segoe UI", sans-serif;
+  --font-sans: "IBM Plex Sans Arabic", "Noto Sans Arabic", Tahoma, sans-serif;
+}
+
+/* AADALA.MA — v5 Design (2026-11) — Applied globally.
+   Palette from attached AADALA_MA_v5.html: كحلي فاتح #EDF1F7 · عاجي #FBFCFF · حبر #0A1633 ·
+   muted #4A5875 · خط #CFD7E6 · أخضر مائل للأزرق #0B6E64 · ذهبي مطفأ #A8701A */
 /* ==========================================================================
-   AADALA.MA — Premium Moroccan Legal Intelligence (Design Constitution, 2026-11)
-   Palette: كحلي عميق #263247 · عاجي #F7F5F0 · أبيض #FFFFFF ·
-            ذهبي مطفأ #B99A5B · أخضر مزرق #2D7778 · رمادي #5F6875 · أحمر #B94A48
-   Derived shades are documented inline; components consume the semantic aliases only.
+   AADALA.MA — v5 Design (2026-11)
+   Colors & fonts taken directly from the v5 HTML template.
    ========================================================================== */
 
 :root {
-  --navy-900: #141E2E;
-  --navy-700: #1F2A3D;
-  --navy-500: #263247;
-  --navy-400: #33415C;
-  --gold-300: #D4BC8E;
-  --gold-500: #B99A5B;
-  --gold-700: #8F7442;
-  --ivory-50: #F7F5F0;
-  --ivory-100: #EDEAE1;
-  --ink-900: #263247;
-  --ink-700: #33415C;
-  --teal-500: #2D7778;
-  --teal-400: #3E9292;
-  --graphite-500: #5F6875;
-  --paper: #FFFFFF;
-  --danger: #B94A48;
+  /* v5 final palette: the warm Moroccan override at the end of the design. */
+  --bg: #F5ECD9;
+  --surface: #FFFBF1;
+  --ink: #1B1410;
+  --muted: #5A4A3C;
+  --line: #DCC8A0;
+  --teal: #0F6B53;
+  --teal-ink: #FFFFFF;
+  --brass: #8A5F1C;
+  --glow: color-mix(in srgb, #0F6B53 15%, transparent);
 
-  /* Semantic aliases — same source, consumed across components. */
-  --aadala-navy: var(--navy-500);
-  --aadala-navy-soft: var(--navy-400);
-  --aadala-gold: var(--gold-500);
-  --aadala-gold-soft: var(--gold-300);
-  --aadala-ivory: var(--ivory-50);
-  --aadala-ivory-deep: var(--ivory-100);
-  --aadala-graphite: var(--ink-700);
-  --aadala-graphite-soft: var(--graphite-500);
-  --aadala-surface: var(--paper);
-  --aadala-border: #DCD8CB;
-  --aadala-danger: var(--danger);
-  --aadala-success: var(--teal-500);
-  --aadala-teal: var(--teal-500);
-  --aadala-teal-soft: var(--teal-400);
-  --aadala-glass: rgba(185, 154, 91, 0.10);
+  --display: "Reem Kufi","Noto Kufi Arabic",Tahoma,sans-serif;
+  --body: "IBM Plex Sans Arabic","Noto Sans Arabic",Tahoma,sans-serif;
+  --text: "Amiri","Noto Naskh Arabic",serif;
+  --font-display: "Reem Kufi","Noto Kufi Arabic","Amiri",Tahoma,sans-serif;
+  --font-body: "Tajawal","Cairo","IBM Plex Sans Arabic","Noto Sans Arabic","Segoe UI",sans-serif;
+  --font-sans: "IBM Plex Sans Arabic","Noto Sans Arabic",Tahoma,sans-serif;
+
+  --aadala-navy: #1B1410;
+  --aadala-navy-soft: #3A2C22;
+  --aadala-gold: #8A5F1C;
+  --aadala-gold-soft: #A8701A;
+  --aadala-ivory: #F5ECD9;
+  --aadala-ivory-deep: #EFE3CB;
+  --aadala-graphite: #1B1410;
+  --aadala-graphite-soft: #5A4A3C;
+  --aadala-surface: #FFFBF1;
+  --aadala-border: #DCC8A0;
+  --aadala-danger: #9A3328;
+  --aadala-success: #2F6B4F;
+  --aadala-teal: #0F6B53;
+  --aadala-bg: #F5ECD9;
+  --aadala-muted: #5A4A3C;
+}
+
+/* Light theme (explicit toggle) keeps the same warm v5 palette. */
+[data-theme="light"] {
+  --bg: #F5ECD9;
+  --surface: #FFFBF1;
+  --ink: #1B1410;
+  --muted: #5A4A3C;
+  --line: #DCC8A0;
+  --teal: #0F6B53;
+  --teal-ink: #FFFFFF;
+  --brass: #8A5F1C;
+  --glow: color-mix(in srgb, #0F6B53 15%, transparent);
 }
 
 [data-theme="dark"] {
-  --navy-900: #0B1220;
-  --navy-700: #141E2E;
-  --navy-500: #1A2333;
-  --navy-400: #263247;
-  --gold-300: #D4BC8E;
-  --gold-500: #B99A5B;
-  --gold-700: #8F7442;
-  --ivory-50: #10182A;
-  --ivory-100: #1A2333;
-  --ink-900: #F7F5F0;
-  --ink-700: #C7CEDA;
-  --teal-500: #3E9292;
-  --teal-400: #5AABAB;
-  --graphite-500: #A9B4C4;
-  --paper: #1A2333;
-  --danger: #D26663;
-
-  --aadala-navy: var(--ink-900);
-  --aadala-navy-soft: var(--ivory-100);
-  --aadala-gold: var(--gold-300);
-  --aadala-gold-soft: var(--gold-500);
-  --aadala-ivory: var(--ivory-50);
-  --aadala-ivory-deep: var(--ivory-100);
-  --aadala-graphite: var(--ink-900);
-  --aadala-graphite-soft: var(--graphite-500);
-  --aadala-surface: var(--paper);
-  --aadala-border: rgba(185, 154, 91, 0.30);
-  --aadala-danger: var(--danger);
-  --aadala-success: var(--teal-500);
-  --aadala-teal: var(--teal-500);
-  --aadala-teal-soft: var(--teal-400);
-  --aadala-glass: rgba(185, 154, 91, 0.10);
+  --bg: #060E22;
+  --surface: #0E1A36;
+  --ink: #EAF0FA;
+  --muted: #9AABC8;
+  --line: #1E2E54;
+  --teal: #35CDB0;
+  --teal-ink: #04201B;
+  --brass: #F2BC4B;
+  --glow: rgba(53,205,176,.16);
 }
+
+/* Semantic aliases are declared inside :root below (single source of truth). */
 
 /* @design-tokens:start (generated by scripts/unify-design.mjs — edit design/tokens.json) */
 :root {
-  /* Moroccan artisanal palette (from original design) */
-  --aadala-navy: #0C1A2B;
-  --aadala-navy-soft: #13294B;
+  /* Moroccan artisanal palette (v5 warm identity) */
+  --aadala-navy: #1B1410;
+  --aadala-navy-soft: #3A2C22;
   --aadala-gold: #8A5F1C;
-  --aadala-gold-soft: #8A5F1C;
-  --aadala-ivory: #F3EFE4;
-  --aadala-ivory-deep: #E8E0D0;
-  --aadala-graphite: #0C1A2B;
-  --aadala-graphite-soft: #4B5964;
-  --aadala-surface: #FFFDF6;
-  --aadala-border: #D9D2BE;
+  --aadala-gold-soft: #A8701A;
+  --aadala-ivory: #F5ECD9;
+  --aadala-ivory-deep: #EFE3CB;
+  --aadala-graphite: #1B1410;
+  --aadala-graphite-soft: #5A4A3C;
+  --aadala-surface: #FFFBF1;
+  --aadala-border: #DCC8A0;
   --aadala-danger: #9A3328;
   --aadala-success: #2F6B4F;
-  --aadala-teal: #0F5C52;
-  --aadala-bg: #F3EFE4;
-  --aadala-muted: #4B5964;
+  --aadala-teal: #0F6B53;
+  --aadala-bg: #F5ECD9;
+  --aadala-muted: #5A4A3C;
 }
 
 [data-theme="dark"] {
@@ -119,32 +138,11 @@
   --aadala-teal: #47B9A3;
 }
 
-@theme inline {
-  --color-navy: var(--aadala-navy);
-  --color-navy-soft: var(--aadala-navy-soft);
-  --color-gold: var(--aadala-gold);
-  --color-gold-soft: var(--aadala-gold-soft);
-  --color-ivory: var(--aadala-ivory);
-  --color-ivory-deep: var(--aadala-ivory-deep);
-  --color-graphite: var(--aadala-graphite);
-  --color-graphite-soft: var(--aadala-graphite-soft);
-  --color-surface: var(--aadala-surface);
-  --color-border: var(--aadala-border);
-  --color-danger: var(--aadala-danger);
-  --color-success: var(--aadala-success);
-  --color-teal: var(--aadala-teal);
-  --color-bg: var(--aadala-bg);
-  --color-muted: var(--aadala-muted);
-  --font-sans: "Tajawal", "Cairo", "IBM Plex Sans Arabic", "Noto Sans Arabic", "Segoe UI", sans-serif;
-  --font-display: "Reem Kufi", "Noto Kufi Arabic", "Amiri", Tahoma, sans-serif;
-  --font-body: "Tajawal", "Cairo", "IBM Plex Sans Arabic", "Noto Sans Arabic", "Segoe UI", sans-serif;
-}
 /* @design-tokens:end */
 html { scroll-behavior: smooth; overflow-x: hidden; }
-*, *::before, *::after { box-sizing: border-box; }
 body {
   color: var(--aadala-graphite);
-  font-family: var(--font-sans);
+  font-family: var(--font-sans, "IBM Plex Sans Arabic","Noto Sans Arabic",Tahoma,sans-serif);
   -webkit-font-smoothing: antialiased;
   transition: background-color .2s ease, color .2s ease, border-color .2s ease;
   overflow-x: hidden;
@@ -155,75 +153,145 @@ body, .flex.min-h-screen, header, main, section, article, aside, nav, footer {
   transition: background-color .2s ease, color .2s ease, border-color .2s ease;
 }
 :focus-visible { outline: 3px solid var(--aadala-gold); outline-offset: 3px; border-radius: 4px; }
-@keyframes star-border { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+/* ==========================================================
+   HOME HERO & HOMEPAGE (v5 parity — replaces .mh-page scoping)
+   ========================================================== */
+/* Hero section (v5 styles — replaces .mh-page .mh-header) */
+.hero-v5 { position: relative; overflow: hidden; padding: 4.5rem 0 5rem; }
+.hero-v5 .wrap { position: relative; display: grid; grid-template-columns: 1.25fr .75fr; gap: 2rem; align-items: center; }
+.hero-v5 .kicker { font: 500 .9rem var(--body); color: var(--brass); display: inline-flex; gap: .6rem; align-items: center; margin-bottom: 1rem; }
+.hero-v5 .kicker::before { content: ""; width: 34px; height: 2px; background: var(--brass); }
+.hero-v5 h1 { font-size: clamp(2.5rem, 6.6vw, 4.8rem); max-width: 14ch; line-height: 1.1; }
+.hero-v5 h1 em { font-style: normal; color: var(--teal); white-space: nowrap; position: relative; }
+.hero-v5 h1 em svg { position: absolute; inset-inline: 0; bottom: -.25em; width: 100%; height: .4em; overflow: visible; }
+.hero-v5 h1 em path { stroke: var(--brass); stroke-width: 4; fill: none; stroke-linecap: round; stroke-dasharray: 420; stroke-dashoffset: 420; animation: draw 1.4s .5s forwards; }
+.hero-v5 .lead { max-width: 46ch; color: var(--muted); font-size: 1.15rem; margin: 1.6rem 0 2rem; }
+.hero-v5 .ask { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: .5rem; display: flex; gap: .5rem; max-width: 700px; box-shadow: 0 22px 44px -26px rgba(12,26,43,.5); transition: box-shadow .3s, border-color .3s; }
+.hero-v5 .ask:focus-within { border-color: var(--teal); box-shadow: 0 0 0 4px var(--glow), 0 22px 44px -26px rgba(12,26,43,.5); }
+.hero-v5 .ask input { flex: 1; min-width: 0; border: 0; background: transparent; color: var(--ink); font: inherit; padding: .8rem 1rem; }
+.hero-v5 .ask input:focus-visible { outline: none; }
+/* Search/chips */
+.hero-v5 .chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; max-width: 700px; }
+.hero-v5 .chip { background: transparent; border: 1px solid var(--line); color: var(--muted); border-radius: 999px; padding: .3rem .95rem; font: inherit; font-size: .9rem; cursor: pointer; transition: .2s; text-decoration: none; }
+.hero-v5 .chip:hover { border-color: var(--teal); color: var(--ink); background: var(--glow); }
+/* Section titles (v5) */
+.section-v5 { padding: 5rem 0; border-top: 1px solid var(--line); }
+.section-v5 .title-v5 { font-size: clamp(1.8rem, 3.8vw, 2.6rem); margin-bottom: .7rem; color: var(--aadala-navy); }
+.section-v5 .sub-v5 { color: var(--muted); max-width: 56ch; margin: 0 0 2.5rem; }
+/* Numbered section markers */
+.num-v5 { font: 700 .95rem var(--display); color: var(--brass); letter-spacing: .1em; display: block; margin-bottom: .6rem; }
+/* Split layout (v5) */
+.split-v5 { display: grid; grid-template-columns: .9fr 1.1fr; gap: 3rem; align-items: start; }
+.parts-v5 { display: grid; gap: .6rem; }
+/* Part items (v5) */
+.part-v5 { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: 2.4rem 1fr; gap: .2rem .8rem; padding: .9rem 1.1rem; border: 1px solid var(--line); border-radius: 12px; background: transparent; transition: .25s; }
+.part-v5:focus-visible { outline: 3px solid var(--brass); outline-offset: 3px; }
+.part-v5 i { font: 700 1.4rem var(--display); font-style: normal; color: var(--brass); grid-row: span 2; align-self: center; }
+.part-v5 b { font: 700 1.1rem var(--display); }
+.part-v5 span { color: var(--muted); font-size: .96rem; }
+.part-v5:hover, .part-v5[aria-pressed="true"] { border-color: var(--teal); background: var(--surface); transform: translateX(-6px); box-shadow: 0 14px 30px -22px rgba(12,26,43,.6); }
+/* Book shelf (v5) */
+.shelf-v5 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
+.book-v5 { background: var(--surface); border: 1px solid var(--line); border-radius: 6x; padding: 1.4rem 1.3rem 1.2rem; border-inline-start: 10px solid var(--teal); text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: .5rem; min-height: 170px; transition: .3s; }
+.book-v5:hover { transform: translateY(-8px) rotate(-.6deg); box-shadow: 0 24px 36px -26px rgba(12,26,43,.7); }
+.book-v5 .ty { font: 500 .82rem var(--body); color: var(--brass); }
+/* Trust section (v5) */
+.trust-v5 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; position: relative; }
+.trust-v5 svg { width: 54px; height: 54px; color: var(--teal); margin-bottom: 1rem; }
+.trust-v5 h3 { font-size: 1.3rem; margin-bottom: .4rem; }
+.trust-v5 p { color: var(--muted); }
+/* Seal animation (v5) */
+.seal-v5 { width: min(100%, 330px); justify-self: center; color: var(--ink); }
+.seal-v5 .ring { transform-origin: 50% 50%; animation: spin 40s linear infinite; }
+.seal-v5 .rose { transform-origin: 50% 50%; animation: spin 60s linear infinite reverse; color: var(--teal); }
+.seal-v5 text { font: 600 15px var(--display); fill: currentColor; letter-spacing: .14em; }
+.seal-v5 .gold { color: var(--brass); }
+/* Stamp */
+.stamp-v5 { position: absolute; inset-inline-start: 1.2rem; bottom: 1.1rem; width: 92px; height: 92px; border: 3px double var(--teal); border-radius: 50%; color: var(--teal); display: grid; place-content: center; text-align: center; font: 700 .8rem/1.3 var(--display); transform: rotate(-14deg) scale(1.6); opacity: 0; transition: .5s cubic-bezier(.2,1.6,.4,1); }
+.stamp-v5.on { opacity: .85; transform: rotate(-14deg) scale(1); }
+/* Tools / books grid */
+.tools-v5 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; }
+.tool-v5 { background: var(--surface); border: 1px solid var(--line); border-radius: 6x 30px 6px 30px; padding: 2rem 1.7rem; position: relative; overflow: hidden; transition: .3s; text-decoration: none; color: inherit; display: block; }
+.tool-v5:nth-child(1) { grid-column: span 4; }
+.tool-v5:nth-child(2) { grid-column: span 2; }
+.tool-v5:nth-child(3) { grid-column: span 2; }
+.tool-v5:nth-child(4) { grid-column: span 4; }
+.tool-v5::after { content: attr(data-n); position: absolute; inset-inline-end: 1rem; top: -.4rem; font: 700 6rem/1 var(--display); color: var(--teal); opacity: .07; transition: .4s; }
+.tool-v5:hover { border-color: var(--teal); transform: translateY(-4px); }
+.tool-v5:hover::after { opacity: .16; transform: scale(1.1); }
+.tool-v5 h3 { font-size: 1.3rem; margin-bottom: .4rem; }
+.tool-v5 p { color: var(--muted); max-width: 44ch; position: relative; }
+/* Badges */
+.badge-v5 { display: inline-block; margin-inline-start: .6rem; font: 500 .78rem var(--body); color: var(--brass); border: 1px solid var(--brass); border-radius: 999x; padding: 0 .6rem; vertical-align: middle; }
+.badge-yellow-v5 { display: inline-block; margin-inline-start: .6rem; font: 600 .78rem var(--body); color: #1A1A1A; background: #FFD23F; border: 1px solid #C9A227; border-radius: 999x; padding: 0 .6rem; vertical-align: middle; }
+/* Empty state */
+.empty-state-v5 { text-align: center; padding: 2rem 1rem; border: 1px dashed var(--line); border-radius: 12px; color: var(--muted); background: var(--surface); }
+/* KBD / command palette */
+.kbd-v5 { display: inline-flex; align-items: center; gap: .5rem; border: 1px solid var(--line); background: var(--surface); color: var(--muted); border-radius: 999px; padding: 0 .9rem; height: 40px; font: inherit; font-size: .88rem; cursor: pointer; }
+.kbd-v5:hover { border-color: var(--teal); color: var(--ink); }
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .seal-v5 .ring, .seal-v5 .rose { animation: none; }
+}
+/* ==========================================================
+   RESPONSIVE (v5 media queries)
+   ========================================================== */
+@media (max-width: 860px) {
+  .hero-v5 .wrap, .split-v5, .trust-v5 { grid-template-columns: 1fr; gap: 2rem; }
+  .seal-v5 { width: 200px; order: -1; }
+  .shelf-v5 { grid-template-columns: 1fr; }
+  .tools-v5 { display: block; }
+  .tool-v5 { margin-bottom: 1rem; }
+  .hero-v5 { padding: 2.5rem 0 3.5rem; }
+  .kbd-v5 kbd, .kbd-v5 span { display: none; }
+  .kbd-v5 { width: 40px; padding: 0; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .seal-v5 .ring, .seal-v5 .rose { animation: none; }
+  .hero-v5 h1 em path { animation: none; stroke-dashoffset: 0; }
+  .js .rv { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+/* ==========================================================
+   TYPOGRAPHY & UTILITIES (v5)
+   ========================================================== */
+.aadala-prose { line-height: 1.9; font-size: 1.05rem; }
+.stagger > * { opacity: 0; transform: translateY(15px); animation: staggerIn .5s ease forwards; }
+.stagger > *:nth-child(1) { animation-delay: .1s; }
+.stagger > *:nth-child(2) { animation-delay: .2s; }
+.stagger > *:nth-child(3) { animation-delay: .3s; }
+.stagger > *:nth-child(4) { animation-delay: .4s; }
+@keyframes staggerIn { to { opacity: 1; transform: translateY(0); } }
+.shimmer {
+  background: linear-gradient(90deg, var(--aadala-gold), var(--aadala-gold-soft), var(--aadala-gold));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+}
+@keyframes shimmer { to { background-position: 200% center; } }
+/* RTL support */
+html[dir="rtl"] .kbd-v5 { direction: rtl; }
+/* ==========================================================
+   FOOTER (v5 parity)
+   ========================================================== */
+footer { border-top: 1px solid var(--line); padding: 2.5rem 0 3rem; color: var(--aadala-graphite-soft); font-size: .93rem; background: var(--aadala-ivory-deep); }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: space-between; max-width: 1160px; margin-inline: auto; padding-inline: 1.25rem; }
+footer p { max-width: 62ch; }
+
+/* ==========================================================================
+   LEGACY COMPATIBILITY LAYER (v5 palette)
+   Keeps every pre-v5 page and shared component (HeaderSupreme, PageShell,
+   knowledge cards, aadala-* components, homepage sections) fully styled
+   while the page-by-page migration to the v5 shell continues.
+   ========================================================================== */
+
 .theme { min-width: 44px; min-height: 44px; display: inline-grid; place-items: center; background: transparent; border: 1px solid var(--aadala-border); border-radius: 8px; cursor: pointer; font-size: 1.1rem; color: var(--aadala-gold); transition: background .2s, color .2s; }
 .theme:hover { background: var(--aadala-ivory-deep); }
-.justice-drawer-content a, .justice-drawer-home { min-height: 44px; }
-h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.35; margin: 0; }
-p { margin: 0; }
-/* Brand shell + hero atmosphere (constitution layer, additive) */
-/* Brand shell: header/footer stay AADALA navy in both themes (identity). */
-.aadala-shell {
-  background: #263247;
-  color: #F7F5F0;
-}
-[data-theme="dark"] .aadala-shell {
-  background: #141E2E;
-}
-
-/* Animated gradient background for hero */
-.hero-bg {
-  background: linear-gradient(135deg, #141E2E 0%, #263247 55%, #1F2A3D 100%);
-  background-size: 200% 200%;
-  animation: gradientShift 10s ease infinite;
-}
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Floating gold orbs */
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(40px);
-  opacity: 0.35;
-  animation: float 6s ease-in-out infinite;
-}
-.orb-1 { width: 200px; height: 200px; background: var(--aadala-gold); top: 10%; right: 10%; animation-delay: 0s; }
-.orb-2 { width: 150px; height: 150px; background: var(--aadala-gold-soft); bottom: 20%; left: 5%; animation-delay: 2s; }
-@keyframes float {
-  0%, 100% { transform: translateY(0) translateX(0); }
-  50% { transform: translateY(-20px) translateX(10px); }
-}
-
-/* Glassmorphism */
-.aadala-glass {
-  background: var(--aadala-glass);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(185, 154, 91, 0.25);
-  border-radius: 1rem;
-}
-
-/* Layout */
 .wrap { max-width: 1160px; margin-inline: auto; padding-inline: 1.25rem; }
-
-/* Header */
-header { position: sticky; top: 0; z-index: 9; background: color-mix(in srgb, var(--aadala-ivory) 86%, transparent); backdrop-filter: blur(12px); border-bottom: 1px solid var(--aadala-border); }
-header .wrap { display: flex; align-items: center; gap: 1.5rem; min-height: 64px; }
-.logo { font: 700 1.25rem var(--font-display); text-decoration: none; color: var(--aadala-navy); display: flex; align-items: center; gap: .6rem; }
-.logo svg { width: 32px; height: 32px; color: var(--aadala-gold); transition: transform .8s; }
-.logo:hover svg { transform: rotate(90deg); }
-nav { display: flex; gap: 1.5rem; margin-inline-start: auto; font-size: .95rem; }
-nav a { text-decoration: none; color: var(--aadala-graphite-soft); position: relative; padding-block: .2rem; transition: color .2s; }
-nav a::after { content: ""; position: absolute; inset-inline: 0; bottom: -2px; height: 2px; background: var(--aadala-gold); transform: scaleX(0); transition: transform .3s; }
-nav a:hover { color: var(--aadala-navy); }
-nav a:hover::after { transform: scaleX(1); }
-nav a.active { color: var(--aadala-navy); }
-nav a.active::after { transform: scaleX(1); }
-
 /* Buttons */
 .aadala-btn-primary { background: var(--aadala-navy); color: var(--aadala-ivory); padding: .7rem 1.4rem; border-radius: .6rem; font-weight: 600; border: none; cursor: pointer; transition: background .2s, transform .1s; }
 .aadala-btn-primary:hover { background: var(--aadala-navy-soft); }
@@ -265,12 +333,6 @@ nav a.active::after { transform: scaleX(1); }
 .hero-search:focus-within { border-color: var(--aadala-gold); box-shadow: 0 0 0 4px var(--aadala-glow), 0 22px 44px -26px rgba(12,29,58,.5); }
 .hero-search input { flex: 1; min-width: 0; border: 0; background: transparent; color: var(--aadala-graphite); font: inherit; padding: .8rem 1rem; }
 .hero-search input:focus-visible { outline: none; }
-
-/* Chips */
-.chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; max-width: 700px; }
-.chip { background: transparent; border: 1px solid rgba(255,255,255,.3); color: var(--aadala-ivory); border-radius: 999px; padding: .3rem .95rem; font: inherit; font-size: .9rem; cursor: pointer; transition: .2s; text-decoration: none; }
-.chip:hover { border-color: var(--aadala-gold); color: var(--aadala-gold); background: rgba(201,162,39,.1); }
-
 /* Section */
 .section { padding: 5rem 0; border-top: 1px solid var(--aadala-border); }
 .section-title { font-size: clamp(1.8rem, 3.8vw, 2.6rem); margin-bottom: .7rem; color: var(--aadala-navy); }
@@ -279,55 +341,6 @@ nav a.active::after { transform: scaleX(1); }
 /* Grid layouts */
 .grid-modules { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
 .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-
-/* Footer */
-footer { border-top: 1px solid var(--aadala-border); padding: 2.5rem 0 3rem; color: var(--aadala-graphite-soft); font-size: .93rem; background: var(--aadala-ivory-deep); }
-footer .wrap { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: space-between; max-width: 1160px; margin-inline: auto; padding-inline: 1.25rem; }
-footer p { max-width: 62ch; }
-
-/* Animations */
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-.animate-fade-in { animation: fadeIn .5s ease forwards; }
-
-/* Responsive */
-@media (max-width: 768px) {
-  .hero-section .wrap { grid-template-columns: 1fr; }
-  nav { display: none; }
-  .grid-modules, .grid-cards { grid-template-columns: 1fr; }
-}
-
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) { color-scheme: dark; }
-}
-:root[data-theme="dark"] { color-scheme: dark; }
-
-/* ————— Static design parity (from index.html): teal/brass, keep class names ————— */
-:root {
-  --bg: var(--aadala-ivory);
-  --surface: var(--aadala-surface);
-  --ink: var(--aadala-navy);
-  --muted: var(--aadala-graphite-soft);
-  --line: var(--aadala-border);
-  --teal: #0F5C52;
-  --teal-ink: #FFFFFF;
-  --brass: #8A5F1C;
-  --glow: rgba(15, 92, 82, .14);
-  --display: var(--font-display);
-  --body: var(--font-sans);
-  --text: "Amiri", "Noto Naskh Arabic", serif;
-}
-[data-theme="dark"] {
-  --bg: #08121A;
-  --surface: #101D28;
-  --ink: #EAEEE6;
-  --muted: #9FB0B8;
-  --line: #22323F;
-  --teal: #47B9A3;
-  --teal-ink: #06201B;
-  --brass: #E0B25C;
-  --glow: rgba(71, 185, 163, .16);
-}
 .sr { position: absolute; left: -9999px; }
 
 /* Home hero (static parity; Next .hero-section is kept for other pages) */
@@ -354,9 +367,7 @@ footer p { max-width: 62ch; }
 .seal text { font: 600 15px var(--display); fill: currentColor; letter-spacing: .14em; }
 .seal .gold { color: var(--brass); }
 
-section { padding: 5rem 0; border-top: 1px solid var(--line); }
 .num { font: 700 .95rem var(--display); color: var(--brass); letter-spacing: .1em; display: block; margin-bottom: .6rem; }
-h2 { font-size: clamp(1.8rem, 3.8vw, 2.6rem); margin-bottom: .7rem; }
 .sub { color: var(--muted); max-width: 56ch; margin: 0 0 2.5rem; }
 .split { display: grid; grid-template-columns: .9fr 1.1fr; gap: 3rem; align-items: start; }
 .parts { display: grid; gap: .6rem; }
@@ -455,35 +466,6 @@ dialog.pal::backdrop { background: rgba(8,18,26,.5); backdrop-filter: blur(6px);
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 /* Scroll reveal */
-.reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-
-/* Typography */
-.aadala-prose { line-height: 1.9; font-size: 1.05rem; }
-
-/* Staggered children */
-.stagger > * { opacity: 0; transform: translateY(15px); animation: staggerIn .5s ease forwards; }
-.stagger > *:nth-child(1) { animation-delay: .1s; }
-.stagger > *:nth-child(2) { animation-delay: .2s; }
-.stagger > *:nth-child(3) { animation-delay: .3s; }
-.stagger > *:nth-child(4) { animation-delay: .4s; }
-@keyframes staggerIn { to { opacity: 1; transform: translateY(0); } }
-
-/* Shimmer text */
-.shimmer {
-  background: linear-gradient(90deg, var(--aadala-gold), var(--aadala-gold-soft), var(--aadala-gold));
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shimmer 3s linear infinite;
-}
-@keyframes shimmer { to { background-position: 200% center; } }
-/* ??? Supreme Justice Navigation (additive) ??? */
-/* ═══════════════════════════════════════════════════════════════
-   AADALA.MA — SUPREME JUSTICE NAVIGATION / architectural edition
-   Scoped navigation layer: preserves existing page and component styles.
-   ═══════════════════════════════════════════════════════════════ */
 .justice-topline{position:relative;z-index:31;background:#071426;color:#e9dfc5;border-bottom:1px solid rgba(201,162,39,.25);font-size:.72rem;letter-spacing:.025em}
 .justice-topline-inner{max-width:1440px;margin:auto;padding:.42rem clamp(1rem,3vw,2.5rem);display:flex;align-items:center;justify-content:space-between;gap:1rem}
 .justice-topline-inner>span:first-child{display:flex;align-items:center;gap:.55rem;color:#e8d7a7}
@@ -518,8 +500,6 @@ html[dir="rtl"] .justice-mobile-drawer{transform:translateX(-105%)}
 html[dir="rtl"] .justice-mobile-drawer.is-open{transform:translateX(0)}
 html[dir="ltr"] .justice-mobile-drawer{transform:translateX(105%)}
 html[dir="ltr"] .justice-mobile-drawer.is-open{transform:translateX(0)}
-
-
 /* === AADALA KNOWLEDGE — العلم === */
 .kbd-hero {
   background:
@@ -581,9 +561,6 @@ html[dir="ltr"] .justice-mobile-drawer.is-open{transform:translateX(0)}
 [data-theme="dark"] .kbd-badge-caution { color: #e9d7a4; }
 [data-theme="dark"] .kbd-note { color: #eadfae; background: rgba(185,154,91,.18); }
 [data-theme="dark"] .kbd-source { color: var(--aadala-gold-soft, #E6C96A); }
-
-/* === DESIGN REFRESH v2 — Premium Moroccan Legal Intelligence (2026-11-15) === */
-/* كل شيء محفوظ — إضافات فقط فوق القواعد القائمة، بلا حذف أو استبدال. */
 :root {
   --gold-grad: linear-gradient(135deg, #E9CE8C 0%, #C9A227 48%, #8A6A20 100%);
 }
@@ -655,7 +632,6 @@ body {
   box-shadow: 0 22px 40px -24px rgba(11, 29, 58, 0.65);
 }
 
-h2 { font-family: var(--display); letter-spacing: 0.005em; }
 
 [data-theme="dark"] .book, [data-theme="dark"] .tool, [data-theme="dark"] .trust > div, [data-theme="dark"] .sample {
   box-shadow: 0 16px 40px -24px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(201, 162, 39, 0.18) inset;
@@ -665,9 +641,6 @@ h2 { font-family: var(--display); letter-spacing: 0.005em; }
   html { scroll-behavior: auto; }
   .seal .ring, .seal .rose { animation: none; }
 }
-
-
-/* === AALADA SKEUOMORPHIC CARD + INSTITUTIONAL BACKGROUND (2026-11-15) === */
 .skeu-card { border-radius: 20px; }
 .skeu-inner {
   position: relative;
@@ -715,3 +688,25 @@ h2 { font-family: var(--display); letter-spacing: 0.005em; }
 @media (prefers-reduced-motion: reduce) {
   .skeu-card, .skeu-inner { transition: none !important; will-change: auto; }
 }
+
+/* --------------------------------------------------------------------------
+   Homepage legacy sections use the existing `.legacy-home` scope from
+   home-moroccan.css (the home <main> carries that class).
+   -------------------------------------------------------------------------- */
+.manifesto { padding: 2rem 0; border-block: 1px solid var(--line); background: var(--surface); }
+.manifesto-grid { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.5rem; }
+.manifesto-mark { display: grid; place-items: center; width: 58px; height: 58px; border: 1px solid var(--brass); border-radius: 50%; color: var(--brass); font: 700 1.9rem var(--display); }
+.manifesto p { color: var(--ink); font-size: 1.15rem; }
+.manifesto em { color: var(--teal); font-style: normal; }
+.manifesto-link { padding: .55rem 1.1rem; border: 1px solid var(--brass); border-radius: 999px; color: var(--brass); font-weight: 600; text-decoration: none; white-space: nowrap; transition: background .2s, color .2s; }
+.manifesto-link:hover { background: var(--brass); color: var(--bg); }
+@media (max-width: 768px) { .manifesto-grid { grid-template-columns: auto 1fr; } .manifesto-link { grid-column: 1 / -1; justify-self: start; } }
+@media (max-width: 768px) { .legacy-agent { display: none; } }
+
+/* Chips on light surfaces (PageShell badges + tool filters) */
+.chip { border-color: var(--line); color: var(--muted); background: var(--surface); }
+.chip:hover { border-color: var(--teal); color: var(--ink); background: var(--glow); }
+
+/* Global type rhythm for legacy pages (was in the old globals stylesheet). */
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.35; margin: 0; }
+p { margin: 0; }

@@ -1,18 +1,13 @@
-import { getMessages } from "@/lib/i18n/getMessages";
-import Header from "@/components/layout/HeaderSupreme";
-import Footer from "@/components/layout/Footer";
+import V5Shell from "@/components/layout/V5Shell";
 import ShowcaseGallery from "@/components/ShowcaseGallery";
 
 export default async function ShowcasePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const messages = await getMessages(locale);
   return (
-    <div className="flex min-h-screen flex-col bg-bg">
-      <Header locale={locale} messages={messages} />
+    <V5Shell locale={locale}>
       <main id="main" className="flex-1">
         <ShowcaseGallery locale={locale} />
       </main>
-      <Footer locale={locale} messages={messages} />
-    </div>
+    </V5Shell>
   );
 }

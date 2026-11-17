@@ -6,7 +6,7 @@ import { getSupabaseClient } from "@/lib/supabase/client";
 import Header from "@/components/layout/HeaderSupreme";
 import Footer from "@/components/layout/Footer";
 
-type AuthState = "checking" | "granted" | "denied";
+type AuthState = "checking" | "granted" | "denied" | "mfa_required";
 
 function AdminGate({ locale }: { locale: string }) {
   const [authState, setAuthState] = useState<AuthState>("checking");
@@ -33,6 +33,19 @@ function AdminGate({ locale }: { locale: string }) {
         if (profileError || !profile || profile.role !== "admin") {
           setAuthState("denied");
         } else {
+          // MFA enforcement for admin: require at least one verified TOTP factor
+          try {
+            const { data: factors } = await supabase.auth.mfa.listFactors();
+            const hasVerifiedTotp = factors?.totp?.some((f) => f.status === "verified");
+            if (!hasVerifiedTotp) {
+              setAuthState("mfa_required");
+              return;
+            }
+          } catch {
+            // If MFA check fails, fail-closed: require MFA setup
+            setAuthState("mfa_required");
+            return;
+          }
           setAuthState("granted");
         }
       } catch {
@@ -44,7 +57,8 @@ function AdminGate({ locale }: { locale: string }) {
 
   useEffect(() => {
     if (authState === "denied") redirect("/");
-  }, [authState]);
+    if (authState === "mfa_required") redirect(`/${locale}/mfa`);
+  }, [authState, locale]);
 
   // Direct answer for YMYL / exit-test compliance / RBAC replacement notice
   const directAnswer = {

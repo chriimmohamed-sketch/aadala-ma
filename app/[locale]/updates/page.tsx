@@ -7,7 +7,7 @@ export default async function UpdatesPage({ params }: { params: Promise<{ locale
   // Direct answer section (added for exit-test compliance / YMYL)
   const directAnswer = {
     question: "ما آخر المستجدات المثبتة في المنصة؟",
-    answer: `تسجيل النسخة v${updates[0]?.version || "N/A"} في ${new Date().getFullYear()}: إضافات جديدة للموسوعة القانونية وقرارات جدد في الاجتهاد القضائي. راجع سجل التحديثات الكامل للمساطر والمساعدات القانونية.`,
+    answer: `تسجيل النسخة v${updates[0]?.version || "N/A"} في ${new Date().getFullYear()}: إضافات جديدة للموسوعة القانونية وقرارات جديدة في الاجتهاد القضائي. راجع سجل التحديثات الكامل للمساطر والمساعدات القانونية.`,
     latest_version: updates[0]?.version || "N/A",
   };
 

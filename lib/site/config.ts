@@ -6,5 +6,5 @@ export const siteDescription = "منصة العدالة والذكاء القا�
 export const publicRoutes = [
   "", "/legal", "/search", "/ai", "/miyar", "/property", "/case-law", "/procedures",
   "/criminal", "/academic", "/sharia", "/legal-aid", "/updates", "/founder", "/student", "/privacy", "/terms",
-  "/knowledge", "/institutions", "/report",
+  "/disclaimer", "/knowledge", "/institutions", "/report",
 ] as const;

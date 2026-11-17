@@ -34,7 +34,6 @@ const groups: NavGroup[] = [
     { href: "/updates", label: "المستجدات", description: "آخر الإضافات والتحديثات القانونية", icon: BriefcaseBusiness },
     { href: "/showcase", key: "showcase", label: "استكشف المنصة", description: "تعرف على إمكانات AADALA.MA", icon: Sparkles },
     { href: "/founder", key: "founder", label: "عن المؤسس", description: "الرؤية والفريق وهوية المشروع", icon: UserRound },
-  { href: "/founder", key: "founder", label: "�� ��ꛫ�", description: "�驛� ����� ���� ��ꬩ��", icon: UserRound },
   ]},
   { title: "المصادر والهوية", eyebrow: "SOURCES & IDENTITY", links: [
     { href: "/encyclopedia.html", label: "الموسوعة القانونية", description: "شروحات مبسطة لأهم القوانين المغربية", icon: BookOpen, external: true },

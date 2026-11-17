@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getDocEngine } from "@/lib/documents/engine";
 import { getSessionUser } from "@/lib/supabase/auth.server";
 import { checkRateLimit } from "@/lib/security/rate-limit";
+import { sanitizeHtml } from "@/lib/documents/fill";
 
 const MAX_BODY = 32_768;
 
@@ -30,7 +31,10 @@ export async function POST(req: Request) {
 
   try {
     const data = await getDocEngine().generateDocument({ userId: user.id, templateId, formData, aiPrompt });
-    return NextResponse.json({ data });
+    // Defense-in-depth: re-sanitize final_html server-side before sending to client
+    // (dangerouslySetInnerHTML in DocumentGenerator renders this HTML).
+    const safeHtml = data.final_html ? sanitizeHtml(data.final_html) : null;
+    return NextResponse.json({ data: { ...data, final_html: safeHtml } });
   } catch (e) {
     const msg = e instanceof Error ? e.message : "error";
     const status =

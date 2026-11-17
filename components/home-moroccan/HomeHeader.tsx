@@ -70,9 +70,9 @@ export default function HomeHeader({ locale }: { locale: string }) {
 
           <nav className="mh-nav" aria-label="التنقل الرئيسي">
             <Link href={`/${locale}/ai`}>المساعد</Link>
-            <a href="#library">المكتبة</a>
-            <a href="#tools">الأدوات</a>
-            <a href="#trust">المنهجية</a>
+            <a href={`/${locale}#library`}>المكتبة</a>
+            <a href={`/${locale}#tools`}>الأدوات</a>
+            <a href={`/${locale}#trust`}>المنهجية</a>
             <Link href={`/${locale}/report`}>أبلغ عن خطأ</Link>
           </nav>
 

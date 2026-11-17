@@ -3,13 +3,12 @@ import Footer from "@/components/layout/Footer";
 import HomeInteractions from "@/components/HomeInteractions";
 import AnswerAnimator from "@/components/AnswerAnimator";
 import { legalDatabase } from "@/data/legal-database";
+import { knowledge } from "@/data/knowledge";
 import AgentTerminal from "@/components/aalada-ultimate/AgentTerminal";
 import HomeHeader from "@/components/home-moroccan/HomeHeader";
 import MoroccanHome from "@/components/home-moroccan/MoroccanHome";
 import { siteUrl } from "@/lib/site/config";
 import Link from "next/link";
-import "../home-moroccan.css";
-
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const messages = await getMessages(locale);
@@ -52,11 +51,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <HomeInteractions locale={locale} />
       <AnswerAnimator />
       <HomeHeader locale={locale} />
-      <main id="main">
+      <main id="main" className="legacy-home">
         <MoroccanHome locale={locale} />
 
         {/* ————— الطبقة القديمة: المعلومات والأدوات نفسها، دون حذف ————— */}
-        <div className="legacy-home">
+
           <section className="manifesto" aria-label="هوية AADALA">
             <div className="wrap manifesto-grid">
               <div className="manifesto-mark">A</div>
@@ -101,7 +100,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <h2>المكتبة القانونية</h2>
               <p className="sub">مصادر منشورة، تُقرأ كاملة وتُستخدم مرجعًا للمساعد.</p></div>
               <div className="shelf">
-                <Link className="book rv" style={{ "--c": "var(--aadala-teal)" } as React.CSSProperties} href={`/${locale}/legal/constitution-2011`}><span className="ty">دستور · <span className="badge">متاح</span></span><h3>دستور المملكة المغربية</h3><small>{(legalDatabase.find((r) => r.slug === "constitution-2011")?.articlesCount ?? 0) > 0 ? `${legalDatabase.find((r) => r.slug === "constitution-2011")?.articlesCount} مادة مفهرسة` : "2011 — يُحصَرم بالفصول"}</small><b>اقرأ النص ←</b></Link>
+                <Link className="book rv" style={{ "--c": "var(--aadala-teal)" } as React.CSSProperties} href={`/${locale}/legal/constitution-2011`}><span className="ty">دستور · <span className="badge">متاح</span></span><h3>دستور المملكة المغربية</h3><small>{(legalDatabase.find((r) => r.slug === "constitution-2011")?.articlesCount ?? 0) > 0 ? `${legalDatabase.find((r) => r.slug === "constitution-2011")?.articlesCount} مادة مفهرسة` : "2011 — يُقرأ بالفصول"}</small><b>اقرأ النص ←</b></Link>
                 <Link className="book" style={{ "--c": "#8A5F1C" } as React.CSSProperties} href={`/${locale}/legal/obligations-contrats`}><span className="ty">قانون · <span className="badge">متاح</span></span><h3>قانون الالتزامات والعقود</h3><small>{legalDatabase.find((r) => r.slug === "obligations-contrats")?.articlesCount} مادة مفهرسة</small><b>اقرأ النص ←</b></Link>
                 <Link className="book" style={{ "--c": "#6B4A8A" } as React.CSSProperties} href={`/${locale}/legal`}><span className="ty">مدونة · <span className="badge">قيد التجهيز</span><span className="badge-yellow">قرار مطلوب</span></span><h3>مدونة الأسرة</h3><small>القانون 70.03 — النص الكامل قيد الإدماج والتحقق</small><b>عرض الباحث ←</b></Link>
                 <Link className="book" style={{ "--c": "#2D4A7A" } as React.CSSProperties} href={`/${locale}/legal/droits-reels-2025`}><span className="ty">مدونة · <span className="badge">متاح</span></span><h3>مدونة الحقوق العينية</h3><small>القانون 39.08 — {legalDatabase.find((r) => r.slug === "droits-reels-2018")?.articlesCount} مادة في صيغة 2018</small><b>اقرأ النص ←</b></Link>
@@ -152,7 +151,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 </a>
                 <Link href={`/${locale}/knowledge`} className="tool" data-n="٩">
                   <h3>العلم — المعرفة القانونية</h3>
-                  <p>بطاقات مبسطة بـ32 بطاقة لأهم موضوعات القانون المغربي مع السند القانوني والتحقق.</p>
+                  <p>{knowledge.length} بطاقة مبسطة لأهم موضوعات القانون المغربي مع السند القانوني والتحقق.</p>
                 </Link>
               </div>
             </div>
@@ -193,8 +192,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </div>
             </div>
           </section>
-        </div>
-      </main>
+        </main>
       <Footer locale={locale} messages={messages} />
       <div className="legacy-agent">
         <AgentTerminal />

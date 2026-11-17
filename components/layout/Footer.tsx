@@ -21,7 +21,7 @@ export default function Footer({ locale, messages }: { locale: string; messages:
             <a className="underline" href={`/${locale}/ai`}>المساعد</a>
             <a className="underline" href={`/${locale}/procedures`}>المساطر والنماذج</a>
             <a className="underline" href="/mushkilati.html">مشكلتي</a>
-            <Link href="/profile/" className="underline">ملفي</Link>
+            <Link href={`/${locale}/dashboard`} className="underline">ملفي</Link>
             <a className="underline" href={`/${locale}/founder`}>عن المؤسس</a>
             <a className="underline" href={`/${locale}/ultimate`}>AALADA ULTIMATE</a>
             <a className="underline" href={`/${locale}/privacy`}>{f.privacy ?? "سياسة الخصوصية"}</a>

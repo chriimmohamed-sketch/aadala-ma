@@ -1,12 +1,9 @@
-import { getMessages } from "@/lib/i18n/getMessages";
-import Header from "@/components/layout/HeaderSupreme";
-import Footer from "@/components/layout/Footer";
+import V5Shell from "@/components/layout/V5Shell";
 import HangingCard from "@/components/HangingCard";
 export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params; const messages = await getMessages(locale);
+  const { locale } = await params;
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header locale={locale} messages={messages} />
+    <V5Shell locale={locale}>
       <main id="main" className="mx-auto w-full max-w-3xl flex-1 px-4 py-10">
         <h1 className="text-3xl font-bold">MOHAMED CHRAIM — محمد شرايم</h1>
         <div className="my-4 flex justify-center">
@@ -26,7 +23,6 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
         <p className="mt-2 text-sm text-graphite">العربية والأمازيغية، ومستوى أساسي في الفرنسية والإنجليزية.</p>
         <p className="mt-6 text-xs text-graphite">صفحة قيد المراجعة — لا تنشر معلومات شخصية دون موافقة صريحة.</p>
       </main>
-      <Footer locale={locale} messages={messages} />
-    </div>
+    </V5Shell>
   );
 }

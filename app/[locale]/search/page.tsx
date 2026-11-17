@@ -1,6 +1,4 @@
-import { getMessages } from "@/lib/i18n/getMessages";
-import Header from "@/components/layout/HeaderSupreme";
-import Footer from "@/components/layout/Footer";
+import V5Shell from "@/components/layout/V5Shell";
 import Link from "next/link";
 import { legalSources } from "@/data/legal-sources";
 import quality from "@/data/legal-quality.json";
@@ -12,11 +10,9 @@ export default async function SearchPage({ params, searchParams }: { params: Pro
   const { locale } = await params;
   const { q = "" } = await searchParams;
   const query = q.trim().slice(0, 300);
-  const messages = await getMessages(locale);
   const results = query ? retrieveWithRefs(query, 12) : [];
   return (
-    <div className="flex min-h-screen flex-col bg-ivory">
-      <Header locale={locale} messages={messages} />
+    <V5Shell locale={locale}>
       <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
         <h1 className="text-3xl font-bold text-navy">البحث في النصوص القانونية</h1>
         <div className="aadala-divider mt-3" />
@@ -54,7 +50,6 @@ export default async function SearchPage({ params, searchParams }: { params: Pro
           </p>
         )}
       </main>
-      <Footer locale={locale} messages={messages} />
-    </div>
+    </V5Shell>
   );
 }

@@ -1,6 +1,4 @@
-import { getMessages } from "@/lib/i18n/getMessages";
-import Header from "@/components/layout/HeaderSupreme";
-import Footer from "@/components/layout/Footer";
+import V5Shell from "@/components/layout/V5Shell";
 import CitationActions from "@/components/CitationActions";
 import LegalArticleView, { LegalTreeView } from "@/components/LegalArticle";
 import SourceCard from "@/components/SourceCard";
@@ -24,17 +22,14 @@ export async function generateStaticParams() {
 
 export default async function DetailPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale, slug } = await params;
-  const messages = await getMessages(locale);
   const src = legalSources.find((s) => s.slug === slug);
   if (!src) {
     return (
-      <div className="flex min-h-screen flex-col bg-ivory">
-        <Header locale={locale} messages={messages} />
+      <V5Shell locale={locale}>
         <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
           <h1 className="text-2xl font-bold text-navy">الصفحة غير موجودة</h1>
         </main>
-        <Footer locale={locale} messages={messages} />
-      </div>
+        </V5Shell>
     );
   }
   let text = "";
@@ -55,8 +50,7 @@ export default async function DetailPage({ params }: { params: Promise<{ locale:
   const structuredArticles = structured ? flattenArticles(structured) : [];
 
   return (
-    <div className="flex min-h-screen flex-col bg-ivory">
-      <Header locale={locale} messages={messages} />
+    <V5Shell locale={locale}>
       <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
         <p className="mb-2"><span className="badge">قيد المراجعة</span></p>
         <h1 className="text-3xl font-bold text-navy">{src.title}</h1>
@@ -101,7 +95,7 @@ export default async function DetailPage({ params }: { params: Promise<{ locale:
                 {q === "unreliable" ? "تحذير: استخراج النص من هذا الملف تالف إلى حد كبير، ولا يُعتمد عليه. ارجع إلى الجريدة الرسمية." : "تنبيه: أجزاء من هذا النص قد تكون تالفة الاستخراج."}
               </p>
             )}
-            <p className="mt-2 text-xs text-graphite-soft">قد يظهر في النص (ال) بدل (لا) و(إال) بدل (إلا) بسبب استخراج PDF؛ اقرأ المعنى بحذر.</p>
+            <p className="mt-2 text-xs text-graphite-soft">ملاحظة: قد يتأثر النص المستخرج من PDF بأخطاء تقنية طفيفة (مثل «ال» بدل «لا»)؛ اعتمد دائمًا النص الرسمي.</p>
             <pre className="aadala-card mt-4 max-h-[70vh] overflow-auto whitespace-pre-wrap p-4 text-sm leading-7">
               {text}
             </pre>
@@ -109,11 +103,10 @@ export default async function DetailPage({ params }: { params: Promise<{ locale:
         )}
 
         <nav aria-label="التنقل بين النصوص" className="mt-6 flex flex-wrap items-center justify-between gap-3">
-          {prev ? <Link href={`/${locale}/legal/${prev.slug}`} className="aadala-btn-ghost text-xs">← السابق: {prev.title}</Link> : <span className="text-xs text-graphite-soft">لا السابق</span>}
-          {next ? <Link href={`/${locale}/legal/${next.slug}`} className="aadala-btn-ghost text-xs">التالي: {next.title} →</Link> : <span className="text-xs text-graphite-soft">لا التالي</span>}
+          {prev ? <Link href={`/${locale}/legal/${prev.slug}`} className="aadala-btn-ghost text-xs">← السابق: {prev.title}</Link> : <span className="text-xs text-graphite-soft">أول مصدر</span>}
+          {next ? <Link href={`/${locale}/legal/${next.slug}`} className="aadala-btn-ghost text-xs">التالي: {next.title} →</Link> : <span className="text-xs text-graphite-soft">آخر مصدر</span>}
         </nav>
       </main>
-      <Footer locale={locale} messages={messages} />
-    </div>
+    </V5Shell>
   );
 }

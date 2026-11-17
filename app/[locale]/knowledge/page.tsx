@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import { getMessages } from "@/lib/i18n/getMessages";
-import Header from "@/components/layout/HeaderSupreme";
-import Footer from "@/components/layout/Footer";
+import V5Shell from "@/components/layout/V5Shell";
 import { knowledge, KNOWLEDGE_CATEGORIES } from "@/data/knowledge";
 import KnowledgeHub from "@/components/KnowledgeHub";
 import { locales } from "@/lib/i18n/config";
@@ -19,8 +17,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const description =
-    "٣٢ بطاقة مبسطة لأهم موضوعات القانون المغربي — الشغل، مدونة الأسرة، العقود والالتزامات، الجنائي، الإداري والدستوري، الجبائي والمالي، التجاري — مع السند القانوني وتنبيهات التحقق.";
+  const description = `${knowledge.length} بطاقة مبسطة لأهم موضوعات القانون المغربي — الشغل، مدونة الأسرة، العقود والالتزامات، الجنائي، الإداري والدستوري، الجبائي والمالي، التجاري، العقار — مع السند القانوني وتنبيهات التحقق.`;
   const languages = Object.fromEntries(locales.map((l) => [l, `${siteUrl}/${l}/knowledge`]));
   return {
     title: TITLE,
@@ -45,7 +42,6 @@ export default async function KnowledgePage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const messages = await getMessages(locale);
 
   const jsonLd = [
     {
@@ -80,8 +76,7 @@ export default async function KnowledgePage({
   ];
 
   return (
-    <div className="flex min-h-screen flex-col bg-bg">
-      <Header locale={locale} messages={messages} />
+    <V5Shell locale={locale}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <main id="main" className="flex-1">
@@ -92,7 +87,7 @@ export default async function KnowledgePage({
               المعرفة القانونية <em>بنصّها ومادّتها.</em>
             </h1>
             <p className="lead">
-              بطاقات مختصرة لأهم موضوعات القانون المغربي — من الحد الأدنى للأجر إلى المحكمة الدستورية — كل بطاقة
+              بطاقات مختصرة لأهم موضوعات القانون المغربي — من الحد الأدنى للأجر إلى محكمة النقض — كل بطاقة
               مع سندها القانوني وتنبيه التحقق، تُقرأ في دقيقتين وتفتح بابا لتعمّق أكثر.
             </p>
             <div className="kbd-disclaimer" role="note">
@@ -114,7 +109,6 @@ export default async function KnowledgePage({
         </section>
       </main>
 
-      <Footer locale={locale} messages={messages} />
-    </div>
+    </V5Shell>
   );
 }
